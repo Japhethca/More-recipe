@@ -1,0 +1,28 @@
+
+.nav-wrapper{
+    background-color: #3e2723;
+
+}
+
+a.brand-logo{
+
+    padding-left: 10px;
+}
+footer.page-footer{
+    background-color: #3e2723;
+}
+footer.container{
+    padding-bottom: 5px;
+}
+.image{
+    padding-top: 5px;
+    padding-right: 10px;
+    max-width: 200px;
+    padding: 5px auto;
+}
+.fav-title{
+    border-bottom: 2px;
+}
+.myprofile{
+    padding-left: 10px;
+}
