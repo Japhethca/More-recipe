@@ -3,3 +3,4 @@ More-Recipes​ ​provides​ ​a​ ​platform​ ​for​ ​users​ ​t
 ​Suppose​ ​a​ ​user​ ​comes​ ​up​ ​with​ ​a​ ​recipe,​ ​​ ​he/she​ ​can​ ​post​ ​it​ ​on
 More-Recipes​ ​and​ ​​ ​get​ ​feedback​ ​in​ ​form​ ​of​ ​reviews​ ​and​ ​votes​ ​from​ ​other​ ​users​ ​who​ ​explore​ ​that
 recipe.​ ​Users​ ​can​ ​also​ ​keep​ ​a​ ​list​ ​of​ ​their​ ​favorite​ ​recipes​ ​on​ ​the​ ​application.
+[More-recipe](https://github.com/JaphethCA/More-recipe)
