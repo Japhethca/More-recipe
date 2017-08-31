@@ -1,0 +1,16 @@
+{
+  "development": {
+    "username": "miotjdvv",
+    "password": "GFLLDyaagNNy8cDGqRQljB4YgwZSbZul",
+    "database": "miotjdvv",
+    "host": "babar.elephantsql.com",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "chidex",
+    "password": "chidex4me",
+    "database": "more-recipe",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
