@@ -8,9 +8,10 @@
       "es2015"
     ]
   },
-  "scripts": {   
+  "scripts": {
     "build": "babel server -d build",
-    "start:app": "nodemon ./build/app.js"
+    "start:app": "nodemon ./build/app.js",
+    "test": "mocha --compilers js:babel-register"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,14 @@
   },
   "homepage": "https://github.com/JaphethCA/More-recipe#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "dotenv": "^4.0.0",
     "express": "^4.15.4",
+    "jsonwebtoken": "^7.4.3",
+    "mocha": "^3.5.0",
     "nodemon": "^1.11.0",
     "pg": "^7.2.0",
     "pg-hstore": "^2.3.2",
@@ -32,6 +39,8 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-connect": "^6.0.2",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-latest": "^6.24.1"
   }
 }
