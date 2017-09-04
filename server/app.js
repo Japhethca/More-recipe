@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //routes
 app.use('/api', /* isLoggedIn, */ apiRouter);
 app.all('*', (req, res) => {
-  res.status(404).send("404: Not Found");
+  res.status(404).send("404: Not Found"); 
 });
 
 

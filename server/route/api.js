@@ -29,7 +29,7 @@ const isLoggedIn = (req, res, next) => {
       }
       else {
         res.status(200).json({message:"Authentication Successful!"});
-        req.decoded = decoded;
+        req.decoded = decoded; 
         next;
       }
     });
