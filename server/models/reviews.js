@@ -1,28 +1,24 @@
 'use strict';
-/**
- * Reviews Model for More-recipe database
- * And its association with other models
- */
-
-module.exports = (sequelize, DataTypes) => {
-  const Reviews = sequelize.define('Reviews', {
+module.exports = function(sequelize, DataTypes) {
+  var Reviews = sequelize.define('Reviews', {
+    title: {
+      type: DataTypes.STRING
+    },
     content: {
-      type:DataTypes.TEXT,
+      type: DataTypes.TEXT,
       allowNull:false
-      }
-  });
-// Many to one relationship with Recipe model
-   Reviews.associate = (models) => {
-    Reviews.belongsTo(models.Recipe, {
-      foreignKey: 'recipeId',
-      onDelete: 'CASCADE',
-    });
-  }
+    },
+    reviewer: {
+      type: DataTypes.STRING,
+      defaultValue: 'Anonymous'
+   },
+   RecipeId: {
+     type: DataTypes.INTEGER
+   },
+   UserId: {
+     type: DataTypes.INTEGER
+   }
 
-  Reviews.associate = (models) => {
-    Reviews.belongsTo(models.Users, {
-      foreignKey: 'usersId',
-    });
-  }
+  });
   return Reviews;
 };
