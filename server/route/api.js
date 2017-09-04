@@ -1,20 +1,46 @@
-import {Router} from 'express';
-import userController from '../controllers/userController';
-// import recipeController from '../controllers/recipeController';
+import express  from 'express';
+import { signin, signup } from '../controllers/userController';
+import {retrieve, create, all, filter, updateRecipe, deleteRecipe, RecipeRreview} from '../controllers/recipeController';
+import {jwt, app} from '../app';
 
-const apiRouter = Router();
+const apiRouter = express.Router();
 
-apiRouter.post('/users/signup', userController.signup);
-apiRouter.post('/users/signin', userController.signin);
-// apiRouter.post('/recipes', );
-// apiRouter.put('recipes/:recipeId', recipeController.update );
-// apiRouter.delete('/recipes/:recipeId',recipeController.destroy);
-// apiRouter.get('/recipes', recipeController.retrieve);
-// apiRouter.post('/recipes/:recipeId',recipeController.create);
-// apiRouter.get('/users/:userId/recipes',userController.recipes);
-// apiRouter.get('recipes?sort=upvotes&order=ascending',recipeController.sort);
-// apiRouter.get('/user/favorites',userController.favorites);
+
+//Routes for API navigation
+apiRouter.post('/users/signup', signup);
+apiRouter.post('/users/signin', signin);
+apiRouter.get('/recipes', all);
+apiRouter.put('/recipes/:recipeId', updateRecipe );
+apiRouter.delete('/recipes/:recipeId', deleteRecipe);
+apiRouter.post('/recipes', create);
+// apiRouter.get('/users/:userId/recipes',userRecipes);
+apiRouter.get('recipes?sort=upvotes&order=ascending',filter);
+// apiRouter.get('/user/:userId/favorites',userFavorites);
+// apiRouter.post('/user/:recipeId/favorites',userFavorites);
 // apiRouter.get('/recipes/:recipeId/upvotes', recipeController.upvotes);
-// apiRouter.get('/recipes/recipeId/reviews', recipeController.reviews);
+apiRouter.get('/recipes/recipeId/reviews', RecipeRreview);
 
-module.exports = apiRouter;
+const isLoggedIn = (req, res, next) => {
+  let token = req.body.token || req.query.token || req.headers['x-access-token'];
+  if (token){
+    jwt.verify(token, app.get('secret_key'),(err, decoded) => {
+      if (err){
+        return res.status(401).json({message: "Authentication failed!"});
+      }
+      else {
+        res.status(200).json({message:"Authentication Successful!"});
+        req.decoded = decoded;
+        next;
+      }
+    });
+  }
+  // if (req.url === '/users/signin' || req.url === '/users/signup'){
+  //   next();
+  // }
+ 
+  else{
+    res.status(403).json({message:"failed! No token."});
+  }
+}
+
+export { apiRouter,isLoggedIn };
