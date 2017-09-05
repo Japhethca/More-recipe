@@ -26,59 +26,50 @@ var signup = function signup(req, res) {
   var userFirstname = req.body.firstname;
   var userLastname = req.body.lastname;
   var aboutme = req.body.aboutme;
-
-  if (!Boolean(userEmail) && !Boolean(userPassword) && !Boolean(userName) && !Boolean(userFirstname) && !Boolean(userLastname) && !Boolean(aboutMe)) {
-    return res.status(406).json({ message: 'fields cannot be empty' });
-  }
-  var alreadyUsers = Users.findAll({
-    where: {
-      email: userEmail,
-      password: userPassword
+  return Users.findAll({ where: { email: userEmail } }).then(function (users) {
+    if (users.length > 0) {
+      res.status(400).json({ message: 'User already exists' });
+    } else {
+      res.status(200).json({ message: 'create uses' });
     }
-  }).then(function (users) {
-    if (users) {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = users[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var user = _step.value;
-
-          if (user.get('email') === userEmail) {
-            return res.json({ message: "User already exists! Try signing in with email and password" });
-          }
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-    }
-  });
-
-  return Users.create({
-    firstName: userFirstname,
-    lastName: userLastname,
-    userName: userName,
-    password: userPassword,
-    aboutMe: aboutme,
-    email: userEmail
-  }).then(function (user) {
-    return res.status(200).json({ message: 'Account Successfully created! You can now sign in with your email and password' });
-  }).catch(function (err) {
-    return res.status(500).json(err);
   });
 };
+
+/*  if (!Boolean(userEmail) && !Boolean(userPassword)
+   && !Boolean(userName) && !Boolean(userFirstname)
+   && !Boolean(userLastname) && !Boolean(aboutMe)) {
+   return res.status(406).json({ message: 'fields cannot be empty' });
+ }
+ let alreadyUsers =  Users.findAll({
+     where: {
+       email: userEmail,
+       password: userPassword
+     }
+   }).then(users => {
+     if (users) {
+       for (let user of users) {
+         if (user.get('email') === userEmail) {
+           return res/status(401).json({ message: "User already exists! Try signing in with email and password" });
+         }
+       }
+     }
+   })
+ 
+ return Users.create({
+   firstName: userFirstname,
+   lastName: userLastname,
+   userName: userName,
+   password: userPassword,
+   aboutMe: aboutme,
+   email: userEmail,
+ })
+   .then(user => {
+     return res.status(200).json({ message: 'Account Successfully created! You can now sign in with your email and password','user':user })
+   })
+   .catch(err => {
+     return res.status(500).json(err)
+   });
+ } */
 
 // proceses user sign in 
 var signin = function signin(req, res) {

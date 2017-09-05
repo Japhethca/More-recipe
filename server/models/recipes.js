@@ -1,27 +1,28 @@
-'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var Recipes = sequelize.define('Recipes', {
+
+
+module.exports = function (sequelize, DataTypes) {
+  let Recipes = sequelize.define('Recipes', {
     name: {
       type: DataTypes.STRING,
-      allowNull:false
+      allowNull: false,
     },
     descriptions: {
       type: DataTypes.TEXT,
-      allowNull:false
+      allowNull: false,
     },
     ingredients: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
     },
     directions: {
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
     },
     image: {
       type: DataTypes.STRING,
     },
-    UserId:{
-      type: DataTypes.INTEGER
-    }
+    UserId: {
+      type: DataTypes.INTEGER,
+    },
   });
   return Recipes;
 };

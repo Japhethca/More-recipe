@@ -1,15 +1,16 @@
-'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var Favorites = sequelize.define('Favorites', {
+
+
+module.exports = function (sequelize, DataTypes) {
+  let Favorites = sequelize.define('Favorites', {
     favorite: {
       type: DataTypes.STRING,
     },
-    UserId : {
-      type: DataTypes.INTEGER
+    UserId: {
+      type: DataTypes.INTEGER,
     },
     RecipeId: {
-      type: DataTypes.INTEGER
-    }
+      type: DataTypes.INTEGER,
+    },
   });
 
   return Favorites;

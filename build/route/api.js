@@ -19,7 +19,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var apiRouter = _express2.default.Router();
 
-//Routes for API navigation
+// Routes for API navigation
 apiRouter.post('/users/signup', _userController.signup);
 apiRouter.post('/users/signin', _userController.signin);
 apiRouter.get('/recipes', _recipeController.all);
@@ -38,12 +38,11 @@ var isLoggedIn = function isLoggedIn(req, res, next) {
   if (token) {
     _app.jwt.verify(token, _app.app.get('secret_key'), function (err, decoded) {
       if (err) {
-        return res.status(401).json({ message: "Authentication failed!" });
-      } else {
-        res.status(200).json({ message: "Authentication Successful!" });
-        req.decoded = decoded;
-        next;
+        return res.status(401).json({ message: 'Authentication failed!' });
       }
+      res.status(200).json({ message: 'Authentication Successful!' });
+      req.decoded = decoded;
+      next();
     });
   }
   // if (req.url === '/users/signin' || req.url === '/users/signup'){
@@ -51,7 +50,7 @@ var isLoggedIn = function isLoggedIn(req, res, next) {
   // }
 
   else {
-      res.status(403).json({ message: "failed! No token." });
+      res.status(403).json({ message: 'failed! No token.' });
     }
 };
 
