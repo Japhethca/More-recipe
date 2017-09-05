@@ -13,33 +13,34 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _api = require('./route/api');
-
 var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
+var _api = require('./route/api');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // library and controller initiazation
 var app = (0, _express2.default)();
 
-//secret for json web token
+// secret for json web token
 app.set('secret_key', process.env.SECRET_KEY);
-//for parsing body content
+
+// for parsing request body content
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 
-//routes
-app.use('/api', /* isLoggedIn, */_api.apiRouter);
+// routes
+app.use('/api', _api.isLoggedIn, _api.apiRouter);
 app.all('*', function (req, res) {
-  res.status(404).send("404: Not Found");
+  res.status(404).send('404: Not Found');
 });
 
 // server initialization
 var port = process.env.PORT || 3000;
 app.listen(port, function () {
-  console.log("Server running. listening on port: " + port);
+  console.log('Server running. listening on port: ' + port);
 });
 
 exports.app = app;

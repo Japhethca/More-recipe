@@ -70,7 +70,7 @@ const RecipeRreview = (req, res) => Recipes.findOne({
 const filter = (req, res) => {
   const sortBy = req.params.sort;
   const sortOrder = req.params.order;
-  if (sortOrder == 'ascending') {
+  if (sortOrder === 'ascending') {
     return Recipes.findAll({
       order: [
         [Votes, 'upVotes', 'ASC'],
@@ -87,7 +87,7 @@ const filter = (req, res) => {
 
 const updateRecipe = (req, res) => {
   const userid = req.session.userId;
-  const recipeId = req.params.recipeId;
+  const { recipeId } = req.params.recipeId;
   const rName = req.body.name;
   const rIngredients = req.body.ingredient;
   const rDescription = req.body.description;
@@ -97,33 +97,34 @@ const updateRecipe = (req, res) => {
     where: {
       id: recipeId,
     },
-  }).then((recipe) => {
-    if (!recipe) {
-      res.status(404).json({ message: 'Invalid recipe Id!' });
-    } else if ((recipe.get('UserId') === parseInt(userid))) {
-      recipe.update({
-        name: rName,
-        ingredients: rIngredients,
-        descriptions: rDescription,
-        directions: rDirection,
-      }).then((recipe) => {
-        res.json(201).json({
-          message: 'Recipe update Successful',
-          updated: recipe,
-        });
-      })
-        .catch((err) => {
-          res.status(500).json({ message: 'Update Unsuccessful!', error: err });
-        });
-    } else {
-      res.status(401).json({ message: 'User is not authorized to update this recipe!' });
-    }
-  });
+  })
+    .then((recipe) => {
+      if (!recipe) {
+        res.status(404).json({ message: 'Invalid recipe Id!' });
+      } else if ((recipe.UserId === parseInt(userid))) {
+        recipe.update({
+          name: rName,
+          ingredients: rIngredients,
+          descriptions: rDescription,
+          directions: rDirection,
+        }).then((recipe) => {
+          res.json(201).json({
+            message: 'Recipe update Successful',
+            updated: recipe,
+          });
+        })
+          .catch((err) => {
+            res.status(500).json({ message: 'Update Unsuccessful!', error: err });
+          });
+      } else {
+        res.status(401).json({ message: 'User is not authorized to update this recipe!' });
+      }
+    });
 };
 
 // controller for deleting recipe by recipeId
 const deleteRecipe = (req, res) => {
-  const recipeId = req.params.recipeId;
+  const { recipeId } = req.params.recipeId;
   return Recipes.findOne({
     where: {
       id: recipeId,

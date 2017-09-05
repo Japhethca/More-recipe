@@ -1,5 +1,5 @@
 import models from '../models';
-import { jwt } from '../app';
+import { jwt, app } from '../app';
 
 const Users = models.Users;
 const Recipes = models.Recipes;
@@ -79,7 +79,7 @@ const signin = (req, res) => {
         req.session.email = req.body.email;
         req.session.userId = user.get('id');
 
-        // let token = jwt.sign(user, app.get('secret_key'), {expiresInMinutes: 1440});
+        let token = jwt.sign(user, app.get('secret_key'), { expiresInMinutes: 1440 });
         res.status(200).json({ username: user.userName, message: 'Login Sucessful!' });
       } else {
         res.status(406).send('Invalid Username or Password');
