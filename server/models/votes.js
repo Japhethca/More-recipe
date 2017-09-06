@@ -10,6 +10,9 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    views: {
+      type: DataTypes.INTEGER
+    },
     RecipeId: {
       type: DataTypes.INTEGER,
     },
