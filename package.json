@@ -42,8 +42,10 @@
     "babel-connect": "^6.0.2",
     "babel-preset-env": "^1.6.0",
     "babel-preset-latest": "^6.24.1",
+    "coveralls": "^2.13.1",
     "eslint": "^4.6.1",
     "eslint-config-airbnb-base": "^12.0.0",
-    "eslint-plugin-import": "^2.7.0"
+    "eslint-plugin-import": "^2.7.0",
+    "mocha-lcov-reporter": "^1.3.0"
   }
 }
