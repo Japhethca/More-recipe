@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.userRecipes = exports.signup = exports.signin = undefined;
 
 var _models = require('../models');
 
@@ -16,103 +15,101 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Users = _models2.default.Users;
 var Recipes = _models2.default.Recipes;
 var Favorites = _models2.default.Favorites;
-// export default class UserController
 
-
+// A controller that accepts user details
+// and creates a new user in the database
 var signup = function signup(req, res) {
-  var userEmail = req.body.email;
-  var userPassword = req.body.password;
-  var userName = req.body.username;
-  var userFirstname = req.body.firstname;
-  var userLastname = req.body.lastname;
-  var aboutme = req.body.aboutme;
-  return Users.findAll({ where: { email: userEmail } }).then(function (users) {
-    if (users.length > 0) {
-      res.status(400).json({ message: 'User already exists' });
-    } else {
-      res.status(200).json({ message: 'create uses' });
+  Users.findAll({
+    where: {
+      email: req.body.email
     }
+  }).then(function (users) {
+    // checks if the user is already in the databse
+    if (users.length > 0) {
+      return res.status(400).json({ message: 'User already exists' });
+    } // creates new user
+    return Users.create({
+      firstName: req.body.firstname,
+      lastName: req.body.lastname,
+      userName: req.body.username,
+      password: req.body.password,
+      aboutMe: req.body.aboutme,
+      email: req.body.email
+    }).then(function (user) {
+      return res.status(200).json({
+        message: 'Account Successfully created!', 'User  details': user
+      }).catch(function (err) {
+        return res.status(500).json({ message: 'Server Error', Error: err });
+      });
+    });
   });
 };
 
-/*  if (!Boolean(userEmail) && !Boolean(userPassword)
-    && !Boolean(userName) && !Boolean(userFirstname)
-    && !Boolean(userLastname) && !Boolean(aboutMe)) {
-    return res.status(406).json({ message: 'fields cannot be empty' });
-  }
-  let alreadyUsers =  Users.findAll({
-      where: {
-        email: userEmail,
-        password: userPassword
-      }
-    }).then(users => {
-      if (users) {
-        for (let user of users) {
-          if (user.get('email') === userEmail) {
-            return res/status(401).json({ message: "User already exists! Try signing in with email and password" });
-          }
-        }
-      }
-    })
-
-  return Users.create({
-    firstName: userFirstname,
-    lastName: userLastname,
-    userName: userName,
-    password: userPassword,
-    aboutMe: aboutme,
-    email: userEmail,
-  })
-    .then(user => {
-      return res.status(200).json({ message: 'Account Successfully created! You can now sign in with your email and password','user':user })
-    })
-    .catch(err => {
-      return res.status(500).json(err)
-    });
-  } */
-
-// proceses user sign in
+// Use login details of otther users
 var signin = function signin(req, res) {
-  var emails = req.body.email;
-  var passwords = req.body.password;
-  if (!emails && !passwords) {
-    return res.status(406).json({ message: 'Email or Password Should not be empty' });
-  }
-  return Users.findOne({
+  Users.findOne({
     where: {
-      email: emails,
-      password: passwords
+      email: req.body.email
     }
   }).then(function (user) {
-    if (user.email) {
-      req.session.email = req.body.email;
-      req.session.userId = user.get('id');
-
-      // let token = jwt.sign(user, app.get('secret_key'), {expiresInMinutes: 1440});
-      res.status(200).json({ username: user.userName, message: 'Login Sucessful!' });
-    } else {
-      res.status(406).send('Invalid Username or Password');
+    if (!user) {
+      res.status(400).json({ message: 'User does not exist' });
+    } else if (user) {
+      if (req.body.password === user.password) {
+        var token = _app.jwt.sign({ id: user.id }, _app.app.get('secret_key'), { expiresIn: 84000 });
+        res /* .headers('token', token) */.status(200).json({ message: 'Login Successful!', 'User detail': user });
+        res.headers('token', token);
+      } else {
+        res.status(400).json({ message: 'Login Failed!' });
+      }
+    }
+  }, function (err) {
+    if (err) {
+      res.status(403).json({ message: 'Invalid request!', Error: err });
     }
   }).catch(function (err) {
-    res.status(400).json({ Error: err });
+    return res.status(500).json({ message: 'Server Error', Error: err });
   });
 };
 
-// returns all recipes that is added by a particular user
-var userRecipes = function userRecipes(req, res) {
-  var userId = parseInt(req.params.userId);
-
-  return Recipes.findAll({
+// controller to handle request for user favorites
+var getFavorites = function getFavorites(req, res) {
+  return Favorites.findAll({
     where: {
-      usersId: userId
+      UserId: req.decode.id
     }
   }).then(function (recipes) {
-    res.status(201).json(recipes);
+    if (!recipes) {
+      res.status(404).json({ message: 'You Don\'t have any Favorite Recipe ' });
+    } else {
+      res.status(200).json({ message: 'Favorite Recipes:', Recipes: recipes });
+    }
   }).catch(function (err) {
-    res.statu(500).json({ message: err });
+    res.status(500).json({ message: 'Server Error', Error: err });
   });
 };
 
-exports.signin = signin;
-exports.signup = signup;
-exports.userRecipes = userRecipes;
+// controller for saving a recipe as a favorite
+var setFavorites = function setFavorites(req, res) {
+  Recipes.findOne({
+    where: {
+      id: req.params.recipeId
+    }
+  }).then(function (recipe) {
+    if (!recipe) {
+      res.status(404).json({ message: 'Recipe does not exist' });
+    } else {
+      Favorites.create({
+        UserId: req.decode.id,
+        recipeId: recipe.id
+      });
+    }
+  }, function (err) {
+    res.status(500).json({ message: 'Invalid Request', Error: err });
+  }).catch(function (err) {
+    res.status(500).json({ message: 'Server Error', Error: err });
+  });
+};
+exports.default = {
+  signin: signin, signup: signup, setFavorites: setFavorites, getFavorites: getFavorites
+};

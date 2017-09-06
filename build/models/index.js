@@ -16,7 +16,7 @@ var db = {};
 
 var devConf = _dotenv2.default.config().parsed;
 
-var sequelize = new Sequelize(devConf.database, devConf.username, devConf.password, devConf);
+var sequelize = new Sequelize(devConf.DB, devConf.DB_USER, devConf.DB_PASS, devConf);
 
 fs.readdirSync(__dirname).filter(function (file) {
   return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js';
@@ -41,6 +41,7 @@ db.Favorites.belongsTo(db.Recipes);
 db.Votes.belongsTo(db.Recipes);
 db.Reviews.belongsTo(db.Recipes);
 db.Users.hasMany(db.Reviews);
+db.Users.hasMany(db.Votes);
 
-// db.sequelize.sync({'force':true});
+// db.sequelize.sync();
 module.exports = db;

@@ -32,15 +32,15 @@ app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 
 // routes
-app.use('/api', _api.isLoggedIn, _api.apiRouter);
+app.use('/api', _api.apiRouter);
 app.all('*', function (req, res) {
   res.status(404).send('404: Not Found');
 });
 
 // server initialization
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 8000;
 app.listen(port, function () {
-  console.log('Server running. listening on port: ' + port);
+  console.log('Server running. listening on port: ${port} ' + port);
 });
 
 exports.app = app;

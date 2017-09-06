@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.RecipeRreview = exports.deleteRecipe = exports.updateRecipe = exports.filter = exports.all = exports.create = undefined;
 
 var _models = require('../models');
 
@@ -14,6 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Recipes = _models2.default.Recipes;
 var Users = _models2.default.Users;
 var Votes = _models2.default.Votes;
+var Reviews = _models2.default.Reviews;
 
 // creating new recipe from response
 var create = function create(req, res) {
@@ -21,7 +21,7 @@ var create = function create(req, res) {
   var rIngredients = req.body.ingredient;
   var rDescription = req.body.description;
   var rDirection = req.body.direction;
-  var author = req.session.userId;
+  var author = req.decoded.id;
 
   if (!rName && !rIngredients) {
     return res.status(406).json({ message: 'Recipe name & ingredients must not be empty' });
@@ -37,43 +37,81 @@ var create = function create(req, res) {
     descriptions: rDescription,
     directions: rDirection,
     UserId: author
-
   }).then(function (recipe) {
-    return res.json({ message: 'Recipe Created!' });
+    return res.json({ message: 'Recipe Created!', Recipe: recipe });
   }).catch(function (err) {
-    res.status(404).send(err);
+    res.status(404).json({ err: err });
   });
 };
 
 // get all recipes in the application
 var all = function all(req, res) {
   return Recipes.findAll().then(function (recipes) {
-    return res.status(200).json(recipes);
+    return res.status(200).json({
+      'All recipes': recipes
+    });
   });
 };
 
-// Allows user to post a review on a recipe
-var RecipeRreview = function RecipeRreview(req, res) {
+// gets a single recipe by ID
+var getRecipeById = function getRecipeById(req, res) {
   return Recipes.findOne({
     where: {
-      id: parseInt(req.params.recipeId)
+      id: req.params.recipeId
     }
   }).then(function (recipe) {
-    // checks if content is empty
-    if (!(req.body.content === '')) {
-      Reviews.create({
-        title: req.body.title,
-        content: req.body.content,
-        reviewer: reviewName,
-        UserId: req.session.userId
-      }).then(function (review) {
-        res.status(200).json({ message: 'Review updated successfully' });
-      });
+    if (!recipe) {
+      res.status(400).json({ message: 'Recipe does not exist!' });
     } else {
-      res.status(401).json({ message: 'content must not be empty' });
+      res.status(200).json(recipe);
+    }
+  });
+};
+
+var recipeReview = function recipeReview(req, res) {
+  return Recipes.findOne({
+    where: {
+      id: req.params.recipeId
+    }
+  }).then(function (recipe) {
+    if (!recipe) {
+      return res.status(400).json(req.param);
+    }
+  });
+};
+// Allows user to post a review on a recipe
+/* const recipeReview = (req, res) => Recipes.findOne({ where: { id: req.params.recipeId } })
+  .then((recipe) => {
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe Does not exist!' });
+    }
+    return Reviews.create({
+      title: res.body.title,
+      content: req.body.content,
+      RecipeId: req.params.id,
+      UserId: req.decoded.id,
+    }).then((review) => { res.status(201).json(review); })
+      .catch(err => res.status(500).json({ message: 'Server Error', Error: err.name }));
+  }).catch(err => res.status(500).json(err.name));
+ */
+// Controller for getting the review of a single recipe by its id
+var getRecipeReview = function getRecipeReview(req, res) {
+  return Reviews.findAll({
+    where: {
+      RecipeId: req.params.recipeId
+    }
+  }).then(function (reviews) {
+    if (!reviews) {
+      res.status(404).json({ message: 'Invalid Recipe Id' });
+    } else {
+      res.status(200).json({ message: 'Recipe Reviews', Reviews: reviews });
+    }
+  }, function (err) {
+    if (err) {
+      res.status(500).json({ message: 'Cannot Request', Error: err });
     }
   }).catch(function (err) {
-    res.status.json({ message: 'Server Error' });
+    res.json(500).json({ message: 'Server', Error: err });
   });
 };
 
@@ -83,6 +121,7 @@ var filter = function filter(req, res) {
   var sortBy = req.params.sort;
   var sortOrder = req.params.order;
   if (sortOrder === 'ascending') {
+    // let sort = {ascending: '', descending}
     return Recipes.findAll({
       order: [[Votes, 'upVotes', 'ASC']]
     });
@@ -93,10 +132,10 @@ var filter = function filter(req, res) {
   });
 };
 
+/* controller for updating a single recipe */
 var updateRecipe = function updateRecipe(req, res) {
-  var userid = req.session.userId;
-  var recipeId = req.params.recipeId.recipeId;
-
+  var userid = req.decoded.id;
+  var recipeId = req.params.recipeId;
   var rName = req.body.name;
   var rIngredients = req.body.ingredient;
   var rDescription = req.body.description;
@@ -109,17 +148,21 @@ var updateRecipe = function updateRecipe(req, res) {
   }).then(function (recipe) {
     if (!recipe) {
       res.status(404).json({ message: 'Invalid recipe Id!' });
-    } else if (recipe.UserId === parseInt(userid)) {
+    } else if (recipe.UserId === parseInt(userid, 10)) {
       recipe.update({
         name: rName,
         ingredients: rIngredients,
         descriptions: rDescription,
         directions: rDirection
-      }).then(function (recipe) {
-        res.json(201).json({
+      }).then(function () {
+        res.json(200).json({
           message: 'Recipe update Successful',
           updated: recipe
         });
+      }, function (err) {
+        if (err) {
+          res.status(400).json({ message: 'Server Error', Error: err });
+        }
       }).catch(function (err) {
         res.status(500).json({ message: 'Update Unsuccessful!', error: err });
       });
@@ -131,27 +174,22 @@ var updateRecipe = function updateRecipe(req, res) {
 
 // controller for deleting recipe by recipeId
 var deleteRecipe = function deleteRecipe(req, res) {
-  var recipeId = req.params.recipeId.recipeId;
-
   return Recipes.findOne({
     where: {
-      id: recipeId
+      id: req.params.recipeId
     }
   }).then(function (recipe) {
-    if (recipe.get('UserId') === parseInt(req.session.userId)) {
+    if (recipe.UserId === req.decoded.id) {
       recipe.destroy();
-      res.status(204).json({ message: 'Recipe deleted successfully' });
+      res.status(200).json({ message: 'Recipe deleted successfully' });
     } else {
-      res.status(401).json({ message: 'You are not authorised to delete this recipe!' });
-      console.log(recipe.get('UserId'));
+      res.status(403).json({ message: 'You are not authorised to delete this recipe!' });
     }
   }).catch(function (err) {
-    res.status(501).json({ message: 'Server Error', Error: err });
+    res.status(500).json({ message: 'Server Error', Error: err });
   });
 };
-exports.create = create;
-exports.all = all;
-exports.filter = filter;
-exports.updateRecipe = updateRecipe;
-exports.deleteRecipe = deleteRecipe;
-exports.RecipeRreview = RecipeRreview;
+
+exports.default = {
+  create: create, all: all, filter: filter, updateRecipe: updateRecipe, deleteRecipe: deleteRecipe, recipeReview: recipeReview, getRecipeReview: getRecipeReview, getRecipeById: getRecipeById
+};
