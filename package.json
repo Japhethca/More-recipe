@@ -11,7 +11,7 @@
   "scripts": {
     "build": "babel server -d build",
     "start:app": "nodemon ./build/app.js",
-    "test": "mocha --compilers js:babel-register"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
