@@ -1,54 +1,89 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../server/app';
-
-let expect = chai.expect
-
 
 chai.use(chaiHttp);
 
-let url = 'http://localhost:3000';
-describe("Recipes", () => {
-  it('should list all recipes on /api/recipes GET', (done) => {
-    chai.request(url)
+const expect = chai.expect;
+describe('EndPoint /api/recipes', () => {
+  it('Should list all recipes', (done) => {
+    chai.request('http://127.0.0.1:8000')
       .get('/api/recipes')
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res).to.be.json;
-        expect(res.body).to.be.a('array');
-        expect(res.body[0]).to.have.property('name');
-        expect(res.body[0]).to.have.property('ingredients');
+        expect(res.body).have.property('All recipes');
+        expect(res.body['All recipes']).length.be.greaterThan = 0;
         done();
       });
   });
-
-  it('should get a single recipe on  /api/recipes/<recipeId> GET',(done) => {
-    chai.request(url)
-      .get('/api/recipes/1')
-      .end((err,res) => {
-        expect(res).to.have.status(200);
-        expect(res).to.be.json;
-        expect(res).to.be.a('object');
-        expect(res.body).to.have.property('name');
-        res.
-        done();
-      });
-  });
-  it('should delete single recipe on /api/recipes/<recipeId> DELETE', (done) => {
-    chai.request(url)
-      .get
-  });
-  it('should modify single recipe on /api/recipes/<recipeId> PUT');
-  it('should add recipe on /api/recipes POST');
-  it('should order recipes by upvotes on  /api/recipes?sort=upvotes&votes=ascending GET');
-  it('should list recipe reviews on /api/recipes/<recipeId>review GET');
-  it('should add recipe review on /api/recipes/<recipeId>/review POST', (done) => {
-    chai.request(url)
-      .post('/api/recipes/1/review')
-      .send({content:'this recipe rock! Thanks for sharing',title:'awesome recipe'})
+  it('should create new recipes', (done) => {
+    chai.request('http://127.0.0.1:8000')
+      .post('/api/recipes')
+      .send({ name: 'ofe akwu recipes', description: 'this is how to prepare ofe akwu', direction: 'follow the procedure' })
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res).to.be.json;
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.equal = 'Recipe Created!';
+        done();
       });
   });
-})
+  it('should not accept empty  value data', (done) => {
+    chai.request('http://127.0.0.1:8000')
+      .post('/api/recipes')
+      .send({ name: 'ofe akwu recipes', description: 'this is how to prepare ofe akwu', direction: 'follow the procedure' })
+      .end((err, res) => {
+        expect(res).to.have.status(406);
+        expect(res).to.be.json;
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.equal = 'Recipe name & ingredients must not be empty';
+        done();
+      });
+  });
+  it('should update created recipes', (done) => {
+    chai.request('http://127.0.0.1:8000')
+      .put('/api/recipes/12' )
+      .send({ name: '', description: 'this is how to prepare ofe akwu', direction: '' })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.equal = 'Recipe update Successful';
+        done();
+      });
+  });
+  it('should get recipe by id', (done) => {
+    chai.request('http://127.0.0.1:8000')
+      .get('/api/recipes/5')
+      .end((err, res) => {
+        expect(res, 'response should have a status code of 200').to.have.status(200);
+        expect(res, 'response should be json').to.be.json;
+        expect(res.body, 'body should have a property id').to.have.property('id');
+        expect(res.body.id, 'id should be equal to 5').to.be.equal = 5;
+        done();
+      });
+  });
+  it('should not get recipe with invalid id', (done) => {
+    chai.request('http://127.0.0.1:8000')
+      .get('/api/recipes/6778')
+      .end((err, res) => {
+        expect(re, 'should have a 400 status code').to.have.status(400);
+        expect(res, 'response should be json').to.be.json;
+        expect(res.body).to.have.property('message')
+        expect(res.body.message, 'message should be "Recipe does not exist"').to.be.equal = 'Recipe does not exist!';
+        done();
+      });
+  });
+  it('should get the review of a recipe by id', (done) => {
+    chai.request('http://127.0.0.1:8000')
+      .get('/api/recipes/5/reviews')
+      .end((err, res) => {
+        expect(res, 'should have status 200').to.have.status(200);
+        expect(res, 'should be json').to.be.json;
+        expect(res.body, 'should have a message property').to.have.property('message');
+        expect(res.body, 'should have a property review').to.have.property('reviews');
+        expect(res.body.reviews).to.not.be.null;
+        done();
+      });
+  });
+});

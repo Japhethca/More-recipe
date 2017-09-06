@@ -1,61 +1,70 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import server from '../server/app';
-
 
 chai.use(chaiHttp);
-let expect = chai.expect;
-let url = 'http://localhost:3000';
 
-describe('User API', () => {
-  it('should sign in user on /api/users/signin POST', (done) => {
-    chai.request(url)
+const expect = chai.expect;
+describe('API /API/USERS/SIGNIN', () => {
+  it('Should login Users', (done) => {
+    chai.request('http://127.0.0.1:8000')
       .post('/api/users/signin')
-      .send({email:'you@yourmail.com', password:'password'})
-      .end((err,res) => {
+      .send({ email: 'chidexj@gmail.com', password: 'chidex4me' })
+      .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
-        expect(res.body).to.be.a('object');
-        rxpect(res.body).to.have.property('message');
+        expect(res.body).have.property('message');
+        expect(res.body.message).to.eql = 'Login Successful!';
         done();
       });
   });
-  it('should register new users on /api/users/signup POST', (done) => {
-    chai.request(url)
+  it('should not login non users', (done) => {
+    chai.request('http://127.0.0.1:8000')
+      .post('/api/users/signin')
+      .send({ email: 'chidexj@gil.c', password: 'chidexe' })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).have.property('message');
+        expect(res.body.message).to.eql = 'Login Failed!';
+        done();
+      });
+  });
+});
+
+describe('API /API/USERS/SIGNUP', () => {
+  it('Should be able to sign up new users', (done) => {
+    chai.request('http://127.0.0.1:8000')
       .post('/api/users/signup')
-      .send({firstname:'japheth', lastname:'anyigor',username:'japheth85',
-          password:'password',email:'you@yourmail.com',aboutme:'just me'})
+      .send({ email: 'mymail@.com', password: 'mymail', firstname:'youname',lastname:'myname',aboutme:'just me', username:'myname' })
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res).to.be.json;
-        expect(res.body).to.be.a('object');
-        expect(res.body).to.have.property('message');
-        done();
-      })
-  });
-  it('should list users favorite recipe on /api/users/<usersId>/recipes GET', (done) => {
-    chai.request(url)
-      .get('/api/users/1/recipes')
-      .end((err,res) => {
-        expect(res).to.have.status(200);
-        expect(res).to.be.json;
-        expect(res.body).to.be.a('array');
-        expect(res.body[0]).to.be.a('object');
-        expect(res.body[0]).to.have.property('name');
-        expect(res.body[0]).to.have.property('ingredients');
-        done();
-      })
-  });
-  it('should add favorites to user on /api/user/<recipeId>/favoirites POST', (done) => {
-    chai.request(url)
-      .post('/api/users/1/favorites')
-      .end((err, res) => {  
-        expect(res).to.have.status(200);
-        expect(res).to.be.json;
-        expect(res.body).to.be.a('object');
-        expect(res.body).to.have.property('SUCCESS');
+        expect(res.body).have.property('message');
+        expect(res.body.message).to.eql = 'Account Successfully created!';
         done();
       });
   });
+  it('Should prevent old users from creating new acount with the same details', (done) => {
+    chai.request('http://127.0.0.1:8000')
+      .post('/api/users/signup')
+      .send({ email: 'mymail@.com', password: 'mymail', firstname:'youname',lastname:'myname',aboutme:'just me', username:'myname' })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res).to.be.json;
+        expect(res.body).have.property('message');
+        expect(res.body.message).to.eql = 'User already exists';
+        done();
+      });
+  });
+  it('', (done) => {
+    chai.request('http://127.0.0.1:8000')
+      .post('/api/users/signup')
+      .send({ email: 'mymail@.com', password: 'mymail', firstname:'youname',lastname:'myname',aboutme:'just me', username:'myname' })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res).to.be.json;
+        expect(res.body).have.property('message');
+        expect(res.body.message).to.eql = 'User already exists';
+        done();
+      });
+  });
+});
 
-})
