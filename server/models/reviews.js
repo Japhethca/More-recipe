@@ -1,7 +1,7 @@
 
 
 module.exports = function (sequelize, DataTypes) {
-  let Reviews = sequelize.define('Reviews', {
+  const Reviews = sequelize.define('Reviews', {
     title: {
       type: DataTypes.STRING,
     },
