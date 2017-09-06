@@ -2,7 +2,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
-import { apiRouter, isLoggedIn } from './route/api';
+import { apiRouter } from './route/api';
 
 
 const app = express();
@@ -15,16 +15,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // routes
-app.use('/api', isLoggedIn, apiRouter);
+app.use('/api', apiRouter);
 app.all('*', (req, res) => {
   res.status(404).send('404: Not Found');
 });
 
 
 // server initialization
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 app.listen(port, () => {
-  console.log('Server running. listening on port: ' + port);
+  console.log(`Server running. listening on port: \${port} ${port}`);
 });
 
 
