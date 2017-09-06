@@ -3,6 +3,7 @@ import models from '../models';
 const Recipes = models.Recipes;
 const Users = models.Users;
 const Votes = models.Votes;
+const Reviews = models.Reviews;
 
 
 // creating new recipe from response
@@ -11,7 +12,7 @@ const create = (req, res) => {
   const rIngredients = req.body.ingredient;
   const rDescription = req.body.description;
   const rDirection = req.body.direction;
-  const author = req.session.userId;
+  const author = req.decoded.id;
 
   if (!rName && !rIngredients) {
     return res.status(406).json({ message: 'Recipe name & ingredients must not be empty' });
@@ -27,43 +28,79 @@ const create = (req, res) => {
     descriptions: rDescription,
     directions: rDirection,
     UserId: author,
-
   })
-    .then(recipe => res.json({ message: 'Recipe Created!' }))
+    .then(recipe => res.status(200).json({ message: 'Recipe Created!', Recipe: recipe }))
     .catch((err) => {
-      res.status(404).send(err);
+      res.status(404).json({ err });
     });
 };
 
 
 // get all recipes in the application
 const all = (req, res) => Recipes.findAll()
-  .then(recipes => res.status(200).json(recipes));
+  .then(recipes => res.status(200).json({
+    'All recipes': recipes,
+  }));
 
-// Allows user to post a review on a recipe
-const RecipeRreview = (req, res) => Recipes.findOne({
+
+// gets a single recipe by ID
+const getRecipeById = (req, res) => Recipes.findOne({
   where: {
-    id: parseInt(req.params.recipeId),
+    id: req.params.recipeId,
   },
-})
-  .then((recipe) => {
-    // checks if content is empty
-    if (!(req.body.content === '')) {
-      Reviews.create({
-        title: req.body.title,
-        content: req.body.content,
-        reviewer: reviewName,
-        UserId: req.session.userId,
-      }).then((review) => {
-        res.status(200).json({ message: 'Review updated successfully' });
-      });
-    } else {
-      res.status(401).json({ message: 'content must not be empty' });
+}).then((recipe) => {
+  if (!recipe) {
+    res.status(400).json({ message: 'Recipe does not exist!' });
+  } else {
+    res.status(200).json(recipe);
+  }
+});
+
+const recipeReview = function (req, res) {
+  return Recipes.findOne({
+    where: {
+      id: req.params.recipeId,
+    },
+  }).then((recipe) => {
+    if (!recipe) {
+      return res.status(400).json(req.param);
     }
-  })
-  .catch((err) => {
-    res.status.json({ message: 'Server Error' });
   });
+};
+// Allows user to post a review on a recipe
+/* const recipeReview = (req, res) => Recipes.findOne({ where: { id: req.params.recipeId } })
+  .then((recipe) => {
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe Does not exist!' });
+    }
+    return Reviews.create({
+      title: res.body.title,
+      content: req.body.content,
+      RecipeId: req.params.id,
+      UserId: req.decoded.id,
+    }).then((review) => { res.status(201).json(review); })
+      .catch(err => res.status(500).json({ message: 'Server Error', Error: err.name }));
+  }).catch(err => res.status(500).json(err.name));
+ */
+// Controller for getting the review of a single recipe by its id
+const getRecipeReview = (req, res) => Reviews.findAll({
+  where: {
+    RecipeId: req.params.recipeId,
+  },
+}).then((reviews) => {
+  if (!reviews) {
+    res.status(404).json({ message: 'Invalid Recipe Id' });
+  } else {
+    res.status(200).json({ message: 'Recipe Reviews', Reviews: reviews });
+  }
+}, (err) => {
+  if (err) {
+    res.status(500).json({ message: 'Cannot Request', Error: err });
+  }
+}).catch((err) => {
+  res.json(500).json({ message: 'Server', Error: err });
+});
+
 
 // Sorts recipes according to parameter provided
 // in  the URL
@@ -71,6 +108,7 @@ const filter = (req, res) => {
   const sortBy = req.params.sort;
   const sortOrder = req.params.order;
   if (sortOrder === 'ascending') {
+    // let sort = {ascending: '', descending}
     return Recipes.findAll({
       order: [
         [Votes, 'upVotes', 'ASC'],
@@ -85,9 +123,11 @@ const filter = (req, res) => {
   });
 };
 
+
+/* controller for updating a single recipe */
 const updateRecipe = (req, res) => {
-  const userid = req.session.userId;
-  const { recipeId } = req.params.recipeId;
+  const userid = req.decoded.id;
+  const recipeId = req.params.recipeId;
   const rName = req.body.name;
   const rIngredients = req.body.ingredient;
   const rDescription = req.body.description;
@@ -101,17 +141,21 @@ const updateRecipe = (req, res) => {
     .then((recipe) => {
       if (!recipe) {
         res.status(404).json({ message: 'Invalid recipe Id!' });
-      } else if ((recipe.UserId === parseInt(userid))) {
+      } else if ((recipe.UserId === parseInt(userid, 10))) {
         recipe.update({
           name: rName,
           ingredients: rIngredients,
           descriptions: rDescription,
           directions: rDirection,
-        }).then((recipe) => {
-          res.json(201).json({
+        }).then(() => {
+          res.json(200).json({
             message: 'Recipe update Successful',
             updated: recipe,
           });
+        }, (err) => {
+          if (err) {
+            res.status(400).json({ message: 'Server Error', Error: err });
+          }
         })
           .catch((err) => {
             res.status(500).json({ message: 'Update Unsuccessful!', error: err });
@@ -122,25 +166,26 @@ const updateRecipe = (req, res) => {
     });
 };
 
+
 // controller for deleting recipe by recipeId
-const deleteRecipe = (req, res) => {
-  const { recipeId } = req.params.recipeId;
-  return Recipes.findOne({
-    where: {
-      id: recipeId,
-    },
+const deleteRecipe = (req, res) => Recipes.findOne({
+  where: {
+    id: req.params.recipeId,
+  },
+})
+  .then((recipe) => {
+    if (recipe.UserId === req.decoded.id) {
+      recipe.destroy();
+      res.status(200).json({ message: 'Recipe deleted successfully' });
+    } else {
+      res.status(403).json({ message: 'You are not authorised to delete this recipe!' });
+    }
   })
-    .then((recipe) => {
-      if ((recipe.get('UserId')) === parseInt(req.session.userId)) {
-        recipe.destroy();
-        res.status(204).json({ message: 'Recipe deleted successfully' });
-      } else {
-        res.status(401).json({ message: 'You are not authorised to delete this recipe!' });
-        console.log(recipe.get('UserId'));
-      }
-    })
-    .catch((err) => {
-      res.status(501).json({ message: 'Server Error', Error: err });
-    });
+  .catch((err) => {
+    res.status(500).json({ message: 'Server Error', Error: err });
+  });
+
+
+export default {
+  create, all, filter, updateRecipe, deleteRecipe, recipeReview, getRecipeReview, getRecipeById,
 };
-export { create, all, filter, updateRecipe, deleteRecipe, RecipeRreview };
