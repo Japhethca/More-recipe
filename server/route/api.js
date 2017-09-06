@@ -1,13 +1,11 @@
-const express = require('express');
-const userController = require('../controllers/userController');
-const recipeController = require('../controllers/recipeController');
+import express from 'express';
+import { apiV1 } from './v1';
+// import { authenticate } from '../middlewares/authenticator';
 
 const apiRouter = express.Router();
 
-apiRouter.post('/users/signup',  );
-apiRouter.post('/users/signin', );
-apiRouter.post('/recipes',  );
-apiRouter.put('recipes/:recipeId',  );
-apiRouter.delete('');
+// apiRouter.use(authenticate);
+apiRouter.use(apiV1);
+apiRouter.use('/v1', apiV1);
 
-module.exports = apiRouter;
+export { apiRouter };

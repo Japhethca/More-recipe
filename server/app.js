@@ -1,16 +1,31 @@
+// library and controller initiazation
+import express from 'express';
+import bodyParser from 'body-parser';
+import jwt from 'jsonwebtoken';
+import { apiRouter } from './route/api';
 
-const express = require('express');
-const api = require('./route/api')
 
 const app = express();
 
-app.use('/api', api)
+// secret for json web token
+app.set('secret_key', process.env.SECRET_KEY);
 
+// for parsing request body content
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// routes
+app.use('/api', apiRouter);
 app.all('*', (req, res) => {
-  res.status(404).send("404: Not Found");
+  res.status(404).send('404: Not Found');
 });
 
-app.listen(8000,'127.0.0.1', () => {
-  console.log("Server runnging. listening on port: 8000");
+
+// server initialization
+const port = process.env.PORT || 8000;
+app.listen(port, () => {
+  console.log(`Server running. listening on port: \${port} ${port}`);
 });
 
+
+export { app, jwt };

@@ -1,5 +1,6 @@
 'use strict';
-module.exports = (sequelize, DataTypes) => {
+
+module.exports = function (sequelize, DataTypes) {
   var Recipe = sequelize.define('Recipe', {
     name: {
       type: DataTypes.STRING,
@@ -20,20 +21,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  Recipe.associate = (models) => {
+  Recipe.associate = function (models) {
     Recipe.belongsTo(models.Users, {
       foreignKey: 'usersId',
       onDelete: 'CASCADE'
     });
   };
 
-  Recipe.associate = (models) => {
+  Recipe.associate = function (models) {
     Recipe.hasMany(models.Votes, {
       foreignKey: 'votesId',
       as: 'userVotes'
     });
   };
-  Recipe.associate = (models) => {
+  Recipe.associate = function (models) {
     Recipe.hasMany(models.Reviews, {
       foreignKey: 'reviewsId',
       as: 'userReviews'
