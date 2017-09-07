@@ -35,7 +35,8 @@
     "nodemon": "^1.11.0",
     "pg": "^7.2.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.7.5"
+    "sequelize": "^4.7.5",
+    "validatorjs": "^3.13.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
