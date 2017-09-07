@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.apiRouter = undefined;
 
 var _express = require('express');
 
@@ -11,14 +10,18 @@ var _express2 = _interopRequireDefault(_express);
 
 var _v = require('./v1');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _v2 = _interopRequireDefault(_v);
 
-// import { authenticate } from '../middlewares/authenticator';
+var _authenticator = require('../middlewares/authenticator');
+
+var _authenticator2 = _interopRequireDefault(_authenticator);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var apiRouter = _express2.default.Router();
 
-// apiRouter.use(authenticate);
-apiRouter.use(_v.apiV1);
-apiRouter.use('/v1', _v.apiV1);
+apiRouter.use(_authenticator2.default.authenticate);
+apiRouter.use(_v2.default);
+apiRouter.use('/v1', _v2.default);
 
-exports.apiRouter = apiRouter;
+exports.default = apiRouter;

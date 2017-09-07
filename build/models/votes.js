@@ -2,20 +2,17 @@
 
 module.exports = function (sequelize, DataTypes) {
   var Votes = sequelize.define('Votes', {
-    upVotes: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0
-    },
-    downVotes: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0
-    },
-    views: {
+
+    votes: {
       type: DataTypes.INTEGER
     },
     RecipeId: {
       type: DataTypes.INTEGER
+    },
+    UserId: {
+      type: DataTypes.INTEGER
     }
+
   });
   return Votes;
 };
