@@ -20,9 +20,17 @@ module.exports = function (sequelize, DataTypes) {
     image: {
       type: DataTypes.STRING,
     },
+    upVotes: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    downVotes: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
     UserId: {
       type: DataTypes.INTEGER,
-    },
+    }
   });
   return Recipes;
 };
