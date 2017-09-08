@@ -33,7 +33,14 @@ app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 
 // routes
+
+
+// more recipe api routes
 app.use('/api', _api2.default);
+
+app.get('/', function (req, res) {
+  res.status(200).json({ message: "Welcome to the more recipe app" });
+});
 app.all('*', function (req, res) {
   res.status(404).send('404: Not Found');
 });
