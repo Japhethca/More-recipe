@@ -9,7 +9,7 @@
     ]
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
     "build": "babel server -d build",
     "migrate": "sequelize db:migrate",
     "start:app": "nodemon ./build/app.js",
