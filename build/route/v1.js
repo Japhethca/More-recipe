@@ -56,7 +56,10 @@ apiV1.get('/users/:usersId/favorites', _favoriteContr2.default.getFavorites).all
 
 // Endpoint for adding recipe to users favorites
 apiV1.post('/users/:recipeId/favorites', _favoriteContr2.default.setFavorites);
-// apiV1.get('/recipes/:recipeId/upvotes', RecipeController.default.upvotes);
+
+// routes  for up voting and down voting recipes
+apiV1.put('/recipes/:recipeId/upvotes', _votesContr2.default.upVotes);
+apiV1.put('/recipes/:recipeId/downvotes', _votesContr2.default.downVote);
 
 // Recipe review and update API endpoints
 apiV1.post('/recipes/:recipeId/reviews', _reviewsContr2.default.recipeReview).get('/recipes/:recipeId/reviews', _reviewsContr2.default.getRecipeReview).all('/recipes/:recipeId/reviews', _authenticator2.default.notImplemented);
