@@ -19,25 +19,21 @@ var Votes = _models2.default.Votes,
     Recipes = _models2.default.Recipes;
 var idRules = {
   recipeId: 'integer',
-  userId: 'interger,'
+  userId: 'integer,'
 };
 
 var VotingController = {
   upVotes: function upVotes(req, res) {
     var idValidator = new _validatorjs2.default(req.params, idRules);
     if (idValidator.passes()) {
-      return Recipes.findOne({
-        where: {
-          id: req.params.recipeId
-        }
-      }).then(function (recipe) {
+      return Recipes.findById(req.params.recipeId).then(function (recipe) {
         if (Object.getOwnPropertyNames(recipe).length === 0) {
           return res.status(404).json({ message: 'Recipe does not exist!' });
         }
         recipe.increment('upVotes');
         res.status(200).json({ message: 'Recipe updated Successfully' });
       }).catch(function (err) {
-        res.status(400).json({ message: err });
+        res.status(400).json({ message: err.name });
       });
     } else {
       res.status(400).json({ message: 'Error' });
@@ -46,11 +42,7 @@ var VotingController = {
   downVote: function downVote(req, res) {
     var idValidator = new _validatorjs2.default(req.params, idRules);
     if (idValidator.passes()) {
-      return Recipes.findOne({
-        where: {
-          id: req.params.recipeId
-        }
-      }).then(function (recipe) {
+      return Recipes.findById(req.params.id).then(function (recipe) {
         if (Object.getOwnPropertyNames(recipe).length === 0) {
           return res.status(404).json({ message: 'Recipe does not exist!' });
         }

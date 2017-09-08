@@ -14,7 +14,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // routes
+
+
+
+// more recipe api routes
 app.use('/api', apiRouter);
+
+app.get('/', (req,res) => {
+  res.status(200).json({message: "Welcome to the more recipe app"});
+});
 app.all('*', (req, res) => {
   res.status(404).send('404: Not Found');
 });

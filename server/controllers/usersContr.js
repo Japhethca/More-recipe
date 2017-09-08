@@ -1,12 +1,12 @@
 import validator from 'validatorjs';
 import jwt  from 'jsonwebtoken';
 import models from '../models';
-
+import app from '../app';
 const Users = models.Users;
 
 const signinRules = {
   email : 'string|required',
-  password : 'required|min:8',
+  password : 'required|min:5',
 
 };
 const signupRules = {
@@ -68,12 +68,14 @@ const UserController = {
         },
       })
       .then((user) => {
-          console.log(user);
-          if (!user && !user.length) {
+          
+          if (user.length > 0 ) {
             return res.status(400).json({ message: 'User does not exist' });
-          } 
-          // const token = jwt.sign({ id: user.id }, app.get('secret_key'), { expiresIn: 84000 });
+          }
+          else { 
+          const token = jwt.sign({ id: user.id }, app.get('secret_key'), { expiresIn: 84000 });
           res.status(200).json({ message: 'Login Successful!', 'User detail': user, Token: token });
+          }
       })
       .catch(err => res.status(500).json(({
          message: 'Request could not be Processed',

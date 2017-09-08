@@ -3,8 +3,9 @@
 module.exports = function (sequelize, DataTypes) {
   var Votes = sequelize.define('Votes', {
 
-    votes: {
-      type: DataTypes.INTEGER
+    vote: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     RecipeId: {
       type: DataTypes.INTEGER

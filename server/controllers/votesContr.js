@@ -7,25 +7,23 @@ const Votes = models.Votes,
   Recipes = models.Recipes;
 const idRules = {
   recipeId: 'integer',
-  userId: 'interger,'
+  userId: 'integer,'
 }
 
 const VotingController = {
   upVotes(req,res){
     const idValidator = new validator(req.params, idRules);
     if (idValidator.passes()){
-      return Recipes.findOne({
-        where: {
-          id: req.params.recipeId,
-        }
-      }).then(recipe => {
+      return Recipes.findById(req.params.recipeId)
+      .then(recipe => {
         if (Object.getOwnPropertyNames(recipe).length === 0){
           return res.status(404).json({message: 'Recipe does not exist!'});
         }
         recipe.increment('upVotes');
         res.status(200).json({message: 'Recipe updated Successfully'})
-      }).catch(err => {
-        res.status(400).json({message: err});
+      })
+      .catch(err => {
+        res.status(400).json({message: err.name});
       });
     }
     else {
@@ -36,17 +34,15 @@ const VotingController = {
   downVote(req, res){
     const idValidator = new validator(req.params, idRules);
     if (idValidator.passes()){
-      return Recipes.findOne({
-        where: {
-          id: req.params.recipeId,
-        }
-      }).then(recipe => {
+      return Recipes.findById(req.params.id)
+      .then(recipe => {
         if (Object.getOwnPropertyNames(recipe).length === 0){
           return res.status(404).json({message: 'Recipe does not exist!'});
         }
         recipe.increment('downVotes');
         res.status(200).json({message: 'Recipe updated Successfully'})
-      }).catch(err => {
+      })
+      .catch(err => {
         res.status(400).json({message: err});
       });
     }

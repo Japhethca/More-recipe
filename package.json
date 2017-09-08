@@ -10,8 +10,10 @@
   },
   "scripts": {
     "build": "babel server -d build",
+    "migrate": "sequelize db:migrate",
     "start:app": "nodemon ./build/app.js",
-    "test": "mocha --compiller babel-register"
+    "heroku-postbuild": "npm run migrate",
+    "test": "mocha --compilers js:babel-register"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,8 @@
   },
   "homepage": "https://github.com/JaphethCA/More-recipe#readme",
   "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "chai": "^4.1.2",

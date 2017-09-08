@@ -16,13 +16,17 @@ var _models = require('../models');
 
 var _models2 = _interopRequireDefault(_models);
 
+var _app = require('../app');
+
+var _app2 = _interopRequireDefault(_app);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Users = _models2.default.Users;
 
 var signinRules = {
   email: 'string|required',
-  password: 'required|min:8'
+  password: 'required|min:5'
 
 };
 var signupRules = {
@@ -80,12 +84,13 @@ var UserController = {
           password: req.body.password
         }
       }).then(function (user) {
-        console.log(user);
-        if (!user && !user.length) {
+
+        if (user.length > 0) {
           return res.status(400).json({ message: 'User does not exist' });
+        } else {
+          var token = _jsonwebtoken2.default.sign({ id: user.id }, _app2.default.get('secret_key'), { expiresIn: 84000 });
+          res.status(200).json({ message: 'Login Successful!', 'User detail': user, Token: token });
         }
-        // const token = jwt.sign({ id: user.id }, app.get('secret_key'), { expiresIn: 84000 });
-        res.status(200).json({ message: 'Login Successful!', 'User detail': user, Token: token });
       }).catch(function (err) {
         return res.status(500).json({
           message: 'Request could not be Processed',
