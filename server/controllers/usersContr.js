@@ -2,13 +2,16 @@ import validator from 'validatorjs';
 import jwt  from 'jsonwebtoken';
 import models from '../models';
 import app from '../app';
+
+
+
 const Users = models.Users;
 
 const signinRules = {
   email : 'string|required',
   password : 'required|min:5',
-
 };
+
 const signupRules = {
   firstname: 'required|string|min:3',
   lastname: 'required|string|min:3',
@@ -16,6 +19,8 @@ const signupRules = {
   email: 'required|email',
   password: 'required|min:5'
 };
+
+
 // A controller that accepts user details
 // and creates a new user in the database
 const UserController = {
@@ -77,17 +82,18 @@ const UserController = {
           res.status(200).json({ message: 'Login Successful!', 'User detail': user, Token: token });
           }
       })
-      .catch(err => res.status(500).json(({
+      .catch(err => res.status(500).json({
          message: 'Request could not be Processed',
          Error: err.name 
         }
-      )));
+      ));
     }
     else {
       res.status(400).json({message: signinValidator.errors})
     }
   },
 
+  
   // return all users in the database
   users(req,res){
     return Users.findAll().then(users => {

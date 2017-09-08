@@ -1,11 +1,14 @@
 // models import statement 
 import model from '../models';
+import validator from 'validatorjs';
 
 const Users = model.Users,
   Recipes = model.Recipes,
   Reviews = model.Reviews;
 
-
+const reviewRules = {
+  title: 'required',
+}
 
 const ReviewController = {
 

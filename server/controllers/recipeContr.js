@@ -1,24 +1,37 @@
 import models from '../models';
-// import { validateInt, validateStr } from '../middlewares/validators';
+// import validator from 'valitatorjs';
 
 const Recipes = models.Recipes;
 const Users = models.Users;
 
+// const recipeRules = {
+//   name: 'required',
+//   ingredients: 'required',
+//   descriptions: 'required',
+// };
 
 // get all recipes in the application
 const RecipeController = {
 
   all(req, res){
     return Recipes.findAll()
-      .then(recipes => res.status(200).json(
-      {
-        'All recipes': recipes,
+      .then(recipes => {
+        if(recipe.length > 0){
+          res.status(200).json({'All recipes': recipes})
+        }
+        else {
+        res.status(404).json('No recipes');
+        }
       })
-    );
+      .catch(err => {
+        res.status(403).json(err);
+      });
+    }
   },
 
 // creating new recipe from response
-  create(req, res){
+
+  create = (req, res) => {
     return Recipes.create({
       name: req.body.name,
       ingredients: req.body.ingredient,
@@ -27,11 +40,12 @@ const RecipeController = {
       UserId: req.decoded.id,
     
     })
-    .then((recipe) => {
+    .then(recipe => {
+      console.log(recipe)
       if (!recipe){
-        return res.status(403).json(
+        return res.status(400).json(
           {
-            message: 'Recipe with this name already exists'
+            message: 'Recipe was not created'
           }
         )
       }
@@ -52,7 +66,7 @@ const RecipeController = {
 
 
 // gets a single recipe by ID
-  getRecipeById(req, res){
+  getRecipeById = (req, res) => {
     Recipes.findOne(
     {
       where: {
@@ -68,7 +82,7 @@ const RecipeController = {
   },
 
 /* controller for updating a single recipe */
-  updateRecipe(req, res){
+  updateRecipe = (req, res) => {
     return Recipes.findOne(
       {
         where: {
@@ -113,7 +127,7 @@ const RecipeController = {
   },
 
 // controller for deleting recipe by recipeId
-  deleteRecipe(req, res) {
+  deleteRecipe = (req, res) => {
     Recipes.findOne({
       where: 
       {
@@ -133,6 +147,5 @@ const RecipeController = {
       res.status(500).json({ message: 'Server Error', Error: err });
     });
   }
-}
 
 export default RecipeController;

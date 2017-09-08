@@ -2,7 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 chai.use(chaiHttp);
-chai.request.
+
 
 const expect = chai.expect;
 describe('API /API/USERS/SIGNIN', () => {

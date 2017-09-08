@@ -42,5 +42,5 @@ db.Reviews.belongsTo(db.Users);
 db.Recipes.hasMany(db.Reviews);
 db.Users.hasMany(db.Votes);
 
-db.sequelize.sync({ force: true });
+// db.sequelize.sync({ force: true });
 module.exports = db;
