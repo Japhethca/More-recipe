@@ -9,10 +9,6 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    reviewer: {
-      type: DataTypes.STRING,
-      defaultValue: 'Anonymous',
-    },
     RecipeId: {
       type: DataTypes.INTEGER,
     },

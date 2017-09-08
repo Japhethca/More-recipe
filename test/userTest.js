@@ -2,6 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 chai.use(chaiHttp);
+chai.request.
 
 const expect = chai.expect;
 describe('API /API/USERS/SIGNIN', () => {
@@ -10,6 +11,9 @@ describe('API /API/USERS/SIGNIN', () => {
       .post('/api/users/signin')
       .send({ email: 'chidexj@gmail.com', password: 'chidex4me' })
       .end((err, res) => {
+        if (res.body.token){
+          token = res.body.token;
+        }
         expect(res).to.have.status(200);
         expect(res.body).have.property('message');
         expect(res.body.message).to.eql = 'Login Successful!';
@@ -20,6 +24,7 @@ describe('API /API/USERS/SIGNIN', () => {
     chai.request('http://127.0.0.1:8000')
       .post('/api/users/signin')
       .send({ email: 'chidexj@gil.c', password: 'chidexe' })
+      .set('token', token)
       .end((err, res) => {
         expect(res).to.have.status(400);
         expect(res.body).have.property('message');

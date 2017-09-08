@@ -1,19 +1,19 @@
 
-import dotenv from 'dotenv';
+'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
+var fs        = require('fs');
+var path      = require('path');
+var Sequelize = require('sequelize');
+var basename  = path.basename(module.filename);
+var env       = process.env.NODE_ENV || 'development';
+var config    = require(__dirname + '/../config/config.js')[env];
+var db        = {};
 
-const basename = path.basename(module.filename);
-
-
-const db = {};
-
-const devConf = dotenv.config().parsed;
-
-
-const sequelize = new Sequelize(devConf.DB, devConf.DB_USER, devConf.DB_PASS, devConf);
+if (config.use_env_variable) {
+  var sequelize = new Sequelize(process.env[config.use_env_variable]);
+} else {
+  var sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 
 
 fs
@@ -38,9 +38,9 @@ db.Users.hasMany(db.Recipes, { as: 'usersId' });
 db.Users.hasMany(db.Favorites);
 db.Favorites.belongsTo(db.Recipes);
 db.Votes.belongsTo(db.Recipes);
-db.Reviews.belongsTo(db.Recipes);
-db.Users.hasMany(db.Reviews);
+db.Reviews.belongsTo(db.Users);
+db.Recipes.hasMany(db.Reviews);
 db.Users.hasMany(db.Votes);
 
-// db.sequelize.sync();
+db.sequelize.sync({ force: true });
 module.exports = db;

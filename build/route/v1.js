@@ -3,43 +3,65 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.apiV1 = undefined;
 
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _userController = require('../controllers/userController');
+var _authenticator = require('../middlewares/authenticator');
 
-var UserController = _interopRequireWildcard(_userController);
+var _authenticator2 = _interopRequireDefault(_authenticator);
 
-var _recipeController = require('../controllers/recipeController');
+var _usersContr = require('../controllers/usersContr');
 
-var RecipeController = _interopRequireWildcard(_recipeController);
+var _usersContr2 = _interopRequireDefault(_usersContr);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+var _recipeContr = require('../controllers/recipeContr');
+
+var _recipeContr2 = _interopRequireDefault(_recipeContr);
+
+var _reviewsContr = require('../controllers/reviewsContr');
+
+var _reviewsContr2 = _interopRequireDefault(_reviewsContr);
+
+var _favoriteContr = require('../controllers/favoriteContr');
+
+var _favoriteContr2 = _interopRequireDefault(_favoriteContr);
+
+var _votesContr = require('../controllers/votesContr');
+
+var _votesContr2 = _interopRequireDefault(_votesContr);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var apiV1 = _express2.default.Router();
 
 // API route for user creation and and Login route
-apiV1.post('/users/signup', UserController.default.signup);
-apiV1.post('/users/signin', UserController.default.signin);
+apiV1.post('/users/signup', _usersContr2.default.signup).all('/users/signup', _authenticator2.default.notImplemented);
+apiV1.post('/users/signin', _usersContr2.default.signin).all('/users/signin', _authenticator2.default.notImplemented);
 
 // API routes for GETting and POSTing recipes
-apiV1.get('/recipes', RecipeController.default.all).post('/recipes', RecipeController.default.create);
+apiV1.get('/recipes', _recipeContr2.default.all).post('/recipes', _recipeContr2.default.create).all('/recipes', _authenticator2.default.notImplemented);
 
 // API end point for updating and deleting a single recipe
-apiV1.put('/recipes/:recipeId', RecipeController.default.updateRecipe).delete('/recipes/:recipeId', RecipeController.default.deleteRecipe).get('/recipes/:recipeId', RecipeController.default.getRecipeById);
+apiV1.put('/recipes/:recipeId', _recipeContr2.default.updateRecipe).delete('/recipes/:recipeId', _recipeContr2.default.deleteRecipe).get('/recipes/:recipeId', _recipeContr2.default.getRecipeById).all('/recipes/:recipeId', _authenticator2.default.notImplemented);
 
 // apiV1.get('/users/:userId/recipes',userRecipes);
-apiV1.get('recipes?sort=upvotes&order=descending', RecipeController.default.filter);
-// apiV1.get('/user/:userId/favorites',userFavorites);
-// apiV1.post('/user/:recipeId/favorites',userFavorites);
-// apiV1.get('/recipes/:recipeId/upvotes', RecipeController.default.upvotes);
+apiV1.get('/recipes?sort=upvotes&order=descending', _authenticator2.default.notImplemented).all('/recipes?sort=upvotes&order=descending', _authenticator2.default.notImplemented);
+
+apiV1.get('/users/:userId/recipes', _favoriteContr2.default.getFavorites).all('/users/:userId/recipes', _authenticator2.default.notImplemented);
+
+// End point for users to get  favorite recipes 
+apiV1.get('/users/:usersId/favorites', _favoriteContr2.default.getFavorites).all('/users/:usersId/favorites', _authenticator2.default.notImplemented);
+
+// Endpoint for adding recipe to users favorites
+apiV1.post('/users/:recipeId/favorites', _favoriteContr2.default.setFavorites);
+
+// routes  for up voting and down voting recipes
+apiV1.put('/recipes/:recipeId/upvotes', _votesContr2.default.upVotes);
+apiV1.put('/recipes/:recipeId/downvotes', _votesContr2.default.downVote);
 
 // Recipe review and update API endpoints
-apiV1.post('/recipes/:recipeId/reviews', RecipeController.default.recipeReview).get('/recipes/:recipeId/reviews', RecipeController.default.getRecipeReview);
+apiV1.post('/recipes/:recipeId/reviews', _reviewsContr2.default.recipeReview).get('/recipes/:recipeId/reviews', _reviewsContr2.default.getRecipeReview).all('/recipes/:recipeId/reviews', _authenticator2.default.notImplemented);
 
-exports.apiV1 = apiV1;
+exports.default = apiV1;

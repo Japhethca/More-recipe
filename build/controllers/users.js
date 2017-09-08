@@ -57,7 +57,7 @@ var signin = function signin(req, res) {
     } else if (user) {
       if (req.body.password === user.password) {
         var token = _app.jwt.sign({ id: user.id }, _app.app.get('secret_key'), { expiresIn: 84000 });
-        res /* .headers('token', token) */.status(200).json({ message: 'Login Successful!', 'User detail': user });
+        res.status(200).json({ message: 'Login Successful!', 'User detail': user });
         res.headers('token', token);
       } else {
         res.status(400).json({ message: 'Login Failed!' });
