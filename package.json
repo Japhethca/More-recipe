@@ -11,9 +11,7 @@
   "scripts": {
     "start": "node index.js",
     "build": "babel server -d build",
-    "migrate": "node /server/models/index.js",
     "start:app": "nodemon ./build/app.js",
-    "heroku-postbuild": "npm run migrate",
     "test": "mocha --compilers js:babel-register"
   },
   "repository": {
