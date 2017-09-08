@@ -16,6 +16,10 @@ var _authenticator = require('../middlewares/authenticator');
 
 var _authenticator2 = _interopRequireDefault(_authenticator);
 
+var _usersContr = require('../controllers/usersContr');
+
+var _usersContr2 = _interopRequireDefault(_usersContr);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var apiRouter = _express2.default.Router();
@@ -23,5 +27,6 @@ var apiRouter = _express2.default.Router();
 apiRouter.use(_authenticator2.default.authenticate);
 apiRouter.use(_v2.default);
 apiRouter.use('/v1', _v2.default);
+apiRouter.get('/admin/users', _usersContr2.default.users);
 
 exports.default = apiRouter;
