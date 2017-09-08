@@ -24,11 +24,11 @@ var idRules = {
 
 var VotingController = {
   upVotes: function upVotes(req, res) {
-    var idValidator = new _validatorjs2.default(req.body, idRules);
+    var idValidator = new _validatorjs2.default(req.params, idRules);
     if (idValidator.passes()) {
       return Recipes.findOne({
         where: {
-          id: recipeId
+          id: req.params.recipeId
         }
       }).then(function (recipe) {
         if (Object.getOwnPropertyNames(recipe).length === 0) {
@@ -44,11 +44,11 @@ var VotingController = {
     }
   },
   downVote: function downVote(req, res) {
-    var idValidator = new _validatorjs2.default(req.body, idRules);
+    var idValidator = new _validatorjs2.default(req.params, idRules);
     if (idValidator.passes()) {
       return Recipes.findOne({
         where: {
-          id: recipeId
+          id: req.params.recipeId
         }
       }).then(function (recipe) {
         if (Object.getOwnPropertyNames(recipe).length === 0) {
