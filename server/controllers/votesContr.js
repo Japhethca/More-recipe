@@ -6,9 +6,12 @@ const Votes = models.Votes,
   Users = models.Users,
   Recipes = models.Recipes;
 
- const sortRule = {
-  sort: 'required|string',
-  order:  'required|integer',
+ 
+const sortObject = (obj) => {
+  let list = []
+  for (let prop in obj){
+    
+  }
 }
 // controllers for handling voting in application
 const VotingController = {
@@ -82,25 +85,30 @@ const VotingController = {
         res.status(400).json({message: err});
       });
   },
+
+  // controller for sorting recipes in ascending or descending order
   sortRecipe(req,res){
-    let sortvalidator = new validator(req.params, sortRule);
+    let sortvalidator = new validator(req.query, sortRule);
     if (sortvalidator.passes()){
-      if (req.params.sort === 'ascending'){
-        res.redirect('/api/recipes');
-      }
-      else{
-        return Recipes.findAll({
-          order: [
-            ['upvotes', 'DESC']
-          ],
-        }).then(sorted => {
+      if (req.query.sort === 'upVotes' && req.query.order === 'descending'){
+        Recipes.findAll().then(sorted => {
           if (sorted.length < 1){
-            res.status(404).json({message: 'No recipe found'})
+            return res.status(404).json({message: 'No recipe found'})
           }
-          res.status(200).json({message: 'Sorted', Recipes: sorted })
+          sortedRecipe = sorted.sort((a,b) => b.upVotes - a.upVotes);
+          res.status(200).json({message: 'Sorted', Recipes: sortedRecipe })
         }).catch(err => {
           res.status(500).json({message: 'Request was not processed', Error: err })
         });
+      } else {
+        if (req.query.order === 'ascending'){
+          Recipes.findAll().then(recipes => {
+            if (recipes.length < 0){
+              res.status(400).json({message:'No recipes found'})
+            }
+            res.status(200).json(recipes);
+          })
+        }
       }
     }
     else{

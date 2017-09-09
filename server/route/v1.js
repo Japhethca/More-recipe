@@ -13,6 +13,7 @@ apiV1.post('/users/signup', UserController.signup)
   .all('/users/signup', auth.notImplemented);
 apiV1.post('/users/signin', UserController.signin)
   .all('/users/signin', auth.notImplemented);
+// sortes recipes in ascending order
 
 // API routes for GETting and POSTing recipes
 apiV1.get('/recipes', RecipeController.all)
@@ -27,8 +28,8 @@ apiV1.put('/recipes/:recipeId', RecipeController.updateRecipe)
 
 
 // apiV1.get('/users/:userId/recipes',userRecipes);
-apiV1.get('/recipes?sort=upvotes&order=descending', auth.notImplemented)
-  .all('/recipes?sort=upvotes&order=descending', auth.notImplemented);
+// apiV1.get('/recipes?sort=upvotes&order=descending', votes.sortRecipe)
+  // .all('/recipes?sort=upvotes&order=descending', auth.notImplemented);
 
 // endpoint for getting users favorite recipes
 apiV1.get('/users/:userId/recipes', FavoriteController.getFavorites)
@@ -47,7 +48,7 @@ apiV1.put('/recipes/:recipeId/upvotes', votes.upVotes)
 apiV1.put('/recipes/:recipeId/downvotes', votes.downVote)
   .all('/recipes/:recipeId/downvotes', auth.notImplemented);
   
-apiV1.get('/recipes?sort=upvotes&order=ascending', votes.sortRecipe)
+
 // Recipe review and update API endpoints
 apiV1.post('/recipes/:recipeId/reviews', ReviewController.recipeReview)
   .get('/recipes/:recipeId/reviews', ReviewController.getRecipeReview)

@@ -11,11 +11,19 @@ const recipeRules = {
   direction: 'required'
 };
 
+const sortRule = {
+  sort: 'required|string',
+  order:  'required|string',
+}
+
+
 const RecipeController = {
 // get all recipes in the application
   all(req, res){
     return Recipes.findAll().then(recipes => {
       if (recipes.length > 0){
+        if (req.query)
+
         return res.status(200).json({ message: "All recipes:", List: recipes });
       }
       res.status(404).json({message: 'No Recipes found'});

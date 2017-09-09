@@ -18,11 +18,12 @@ var Votes = _models2.default.Votes,
     Users = _models2.default.Users,
     Recipes = _models2.default.Recipes;
 
-var sortRule = {
-  sort: 'required|string',
-  order: 'required|integer'
-  // controllers for handling voting in application
-};var VotingController = {
+var sortObject = function sortObject(obj) {
+  var list = [];
+  for (var prop in obj) {}
+};
+// controllers for handling voting in application
+var VotingController = {
   // controller for handling upvotes
   upVotes: function upVotes(req, res) {
     if (req.params.recipeId < 1) {
@@ -88,22 +89,33 @@ var sortRule = {
       res.status(400).json({ message: err });
     });
   },
+
+
+  // controller for sorting recipes in ascending or descending order
   sortRecipe: function sortRecipe(req, res) {
-    var sortvalidator = new _validatorjs2.default(req.params, sortRule);
+    var sortvalidator = new _validatorjs2.default(req.query, sortRule);
     if (sortvalidator.passes()) {
-      if (req.params.sort === 'ascending') {
-        res.redirect('/api/recipes');
-      } else {
-        return Recipes.findAll({
-          order: [['upvotes', 'DESC']]
-        }).then(function (sorted) {
+      if (req.query.sort === 'upVotes' && req.query.order === 'descending') {
+        Recipes.findAll().then(function (sorted) {
           if (sorted.length < 1) {
-            res.status(404).json({ message: 'No recipe found' });
+            return res.status(404).json({ message: 'No recipe found' });
           }
-          res.status(200).json({ message: 'Sorted', Recipes: sorted });
+          sortedRecipe = sorted.sort(function (a, b) {
+            return b.upVotes - a.upVotes;
+          });
+          res.status(200).json({ message: 'Sorted', Recipes: sortedRecipe });
         }).catch(function (err) {
           res.status(500).json({ message: 'Request was not processed', Error: err });
         });
+      } else {
+        if (req.query.order === 'ascending') {
+          Recipes.findAll().then(function (recipes) {
+            if (recipes.length < 0) {
+              res.status(400).json({ message: 'No recipes found' });
+            }
+            res.status(200).json(recipes);
+          });
+        }
       }
     } else {
       res.status(403).json(sortvalidator.errors);
