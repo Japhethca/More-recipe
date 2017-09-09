@@ -54,7 +54,7 @@ const RecipeController = {
             res.status(400).json({ message: 'Recipe with this name already exists' });
           }
         }).then(() => Recipes.create({
-          name: req.body.title,
+          name: req.body.name,
           ingredients: req.body.ingredient,
           directions: req.body.direction,
           descriptions: req.body.description,

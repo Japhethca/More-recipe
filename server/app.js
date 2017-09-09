@@ -3,6 +3,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 import apiRouter from './route/api';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
