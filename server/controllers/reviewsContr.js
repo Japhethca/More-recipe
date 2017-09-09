@@ -5,17 +5,17 @@ import Validator from 'validatorjs';
 const Users = model.Users,
   Recipes = model.Recipes,
   Reviews = model.Reviews;
-
+/* 
 const reviwRules = {
   title: 'required',
   content: 'required',
-};
+}; */
 const ReviewController = {
 
 
   recipeReview(req, res) {
-    const validReview = new Validator(req.body, reviwRules);
-    if (validReview.passes()) {
+    /* const validReview = new Validator(req.body, reviwRules);
+    if (validReview.passes()) { */
       return Recipes.findOne({
         where: {
           id: req.params.recipeId,
@@ -51,8 +51,8 @@ const ReviewController = {
             Error: err,
           });
         });
-    }
-    res.status(400).json(validReview.errors);
+   /*  }
+    res.status(400).json(validReview.errors); */
   },
 
 
