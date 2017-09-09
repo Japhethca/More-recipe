@@ -73,8 +73,8 @@ const UserController = {
         },
       })
       .then((user) => {
-          
-          if (user.length > 0 ) {
+          console.log(user);
+          if (!user) {
             return res.status(400).json({ message: 'User does not exist' });
           }
           else { 
@@ -93,7 +93,7 @@ const UserController = {
     }
   },
 
-  
+
   // return all users in the database
   users(req,res){
     return Users.findAll().then(users => {
