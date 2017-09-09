@@ -22,7 +22,8 @@ var _app2 = _interopRequireDefault(_app);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Users = _models2.default.Users;
+var Users = _models2.default.Users.Users;
+
 
 var signinRules = {
   email: 'string|required',
@@ -69,9 +70,9 @@ var UserController = {
           });
         });
       });
-    } else {
-      res.status(400).json({ message: validate.errors });
     }
+
+    res.status(400).json({ message: validate.errors });
   },
 
 
@@ -88,19 +89,19 @@ var UserController = {
         console.log(user);
         if (!user) {
           return res.status(400).json({ message: 'User does not exist' });
-        } else {
-          var token = _jsonwebtoken2.default.sign({ id: user.id }, _app2.default.get('secret_key'), { expiresIn: 84000 });
-          res.status(200).json({ message: 'Login Successful!', 'User detail': user, Token: token });
         }
+
+        var token = _jsonwebtoken2.default.sign({ id: user.id }, _app2.default.get('secret_key'), { expiresIn: 84000 });
+        res.status(200).json({ message: 'Login Successful!', 'User detail': user, Token: token });
       }).catch(function (err) {
         return res.status(500).json({
           message: 'Request could not be Processed',
           Error: err.name
         });
       });
-    } else {
-      res.status(400).json({ message: signinValidator.errors });
     }
+
+    res.status(400).json({ message: signinValidator.errors });
   },
 
 

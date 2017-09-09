@@ -18,10 +18,6 @@ var Votes = _models2.default.Votes,
     Users = _models2.default.Users,
     Recipes = _models2.default.Recipes;
 
-var sortObject = function sortObject(obj) {
-  var list = [];
-  for (var prop in obj) {}
-};
 // controllers for handling voting in application
 var VotingController = {
   // controller for handling upvotes
@@ -107,15 +103,13 @@ var VotingController = {
         }).catch(function (err) {
           res.status(500).json({ message: 'Request was not processed', Error: err });
         });
-      } else {
-        if (req.query.order === 'ascending') {
-          Recipes.findAll().then(function (recipes) {
-            if (recipes.length < 0) {
-              res.status(400).json({ message: 'No recipes found' });
-            }
-            res.status(200).json(recipes);
-          });
-        }
+      } else if (req.query.order === 'ascending') {
+        Recipes.findAll().then(function (recipes) {
+          if (recipes.length < 0) {
+            res.status(400).json({ message: 'No recipes found' });
+          }
+          res.status(200).json(recipes);
+        });
       }
     } else {
       res.status(403).json(sortvalidator.errors);

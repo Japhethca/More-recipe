@@ -1,6 +1,6 @@
 import model from '../models';
 
-const { Favorites } = model.Favorites;
+const Favorites = model.Favorites;
 
 
 // handles GET​ : /api/users/<userId>/recipes

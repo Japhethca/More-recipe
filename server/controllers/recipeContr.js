@@ -1,7 +1,7 @@
 import models from '../models';
 import validator from 'validatorjs';
 
-const { Recipes } = models.Recipes;
+const Recipes = models.Recipes;
 
 const recipeRules = {
   title: 'required',
