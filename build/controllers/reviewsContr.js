@@ -15,10 +15,9 @@ var _validatorjs2 = _interopRequireDefault(_validatorjs);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // models import statement
-var Users = _models2.default.Users.Users,
-    Recipes = _models2.default.Recipes.Recipes,
-    Reviews = _models2.default.Reviews.Reviews;
-
+var Users = _models2.default.Users,
+    Recipes = _models2.default.Recipes,
+    Reviews = _models2.default.Reviews;
 
 var reviewRules = {
   title: 'required'

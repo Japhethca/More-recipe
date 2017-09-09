@@ -22,8 +22,7 @@ var _app2 = _interopRequireDefault(_app);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Users = _models2.default.Users.Users;
-
+var Users = _models2.default.Users;
 
 var signinRules = {
   email: 'string|required',
