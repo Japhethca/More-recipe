@@ -46,9 +46,9 @@ app.all('*', function (req, res) {
 });
 
 // server initialization
-var port = process.env.PORT || 8000;
+var port = process.env.PORT || 8008;
 app.listen(port, function () {
-  console.log('Server running. listening on port: ${port} ' + port);
+  console.log('Server running. listening on port:  ' + port);
 });
 
 exports.default = app;

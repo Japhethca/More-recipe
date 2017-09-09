@@ -29,9 +29,9 @@ app.all('*', (req, res) => {
 
 
 // server initialization
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8008;
 app.listen(port, () => {
-  console.log(`Server running. listening on port: \${port} ${port}`);
+  console.log(`Server running. listening on port:  ${port}`);
 });
 
 export default app;
