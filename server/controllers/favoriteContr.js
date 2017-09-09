@@ -1,60 +1,56 @@
 import model from '../models';
-// import { isValidInt, isValidStr } from '../middlewares/validators';
+import validator from 'validatorjs';
 
 const Favorites = model.Favorites;
 const Users = model.Users;
-const Recipe = model.Recipes;
+const Recipes = model.Recipes;
 
+const favoritesRule = {
+
+}
 
 // handles GET​ : /api/users/<userId>/recipes
 // controller for getting users favorietes
-
 const FavoriteController = { 
   getFavorites(req, res) {
     Favorites.findAll({
-      where: {
-        UserId: req.params.usersId,
-      },
+      where : {
+        UserId: req.params.userId
+      }    
+    }).then(favorites => {
+      if (favorites.length < 1){
+        res.status(404).json({message: 'User does not have any favorites'});
+      }
+      res.status(200).json(favorites);
+    }).catch(err => {
+      res.status(400).json({message:"Request was not processed"})
     })
-    .then((favorites) => {
-      if (!(favorites.length > 0)) {
-        return res.status(404).json({ message: 'User has no Favorites' });
-      } 
-      res.status(200).json({
-        message: 'Your favorites',
-        Favorites: favorites,
-      });
-    })
-    .catch((err) => {
-      res.status(403).json(
-        {
-          Error: true,
-        }
-      );
-    });
   },
+
 
 // Sets favorites for a user when given a recipe id
   setFavorites(req, res){
+    if (req.params.recipeId < 1){
+      return res.status(404).json({message: 'No recipe with that id exists'})
+    }
     return Favorites.create(
       {
-        title: req.body.title,
-        content: req.body.content,
-        userId: req.decode.id,
-        RecipeId: res.params.recipeId,
-      }
-    )
-    .then(favorite => {
-      if (!favorite) {
-        res.status(401).json({ message: 'Favorites not added', Error: true });
-      }
-    })
-    .catch((err) => {
-      if (err) {
-        res.status(400).json({ Error: true });
-      }
-    });
-  },
+        favorite: req.body.favorite,
+        UserId: req.decoded.id,
+        RecipeId: req.params.recipeId,
+      }).then(favorite => {
+        res.status(200).json({message: 'Recipe Successfully added to favorites'})
+      }).catch(err => {
+        if (err.name === 'SequelizeForeignKeyConstraintError'){
+          return res.status(404).json({message: 'recipe with the provided id does not exist'});
+        }
+        res.status(500).json({message: 'Request was not be Processed', Error: err})
+      });
+    }
+   
 }
+
+
+
 
 export default FavoriteController;

@@ -8,12 +8,20 @@ var _models = require('../models');
 
 var _models2 = _interopRequireDefault(_models);
 
+var _validatorjs = require('validatorjs');
+
+var _validatorjs2 = _interopRequireDefault(_validatorjs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// models import statement 
 var Users = _models2.default.Users,
     Recipes = _models2.default.Recipes,
-    Reviews = _models2.default.Reviews; // models import statement 
+    Reviews = _models2.default.Reviews;
 
+var reviewRules = {
+  title: 'required'
+};
 
 var ReviewController = {
   recipeReview: function recipeReview(req, res) {

@@ -27,8 +27,8 @@ var Users = _models2.default.Users;
 var signinRules = {
   email: 'string|required',
   password: 'required|min:5'
-
 };
+
 var signupRules = {
   firstname: 'required|string|min:3',
   lastname: 'required|string|min:3',
@@ -36,6 +36,7 @@ var signupRules = {
   email: 'required|email',
   password: 'required|min:5'
 };
+
 // A controller that accepts user details
 // and creates a new user in the database
 var UserController = {
@@ -84,8 +85,8 @@ var UserController = {
           password: req.body.password
         }
       }).then(function (user) {
-
-        if (user.length > 0) {
+        console.log(user);
+        if (!user) {
           return res.status(400).json({ message: 'User does not exist' });
         } else {
           var token = _jsonwebtoken2.default.sign({ id: user.id }, _app2.default.get('secret_key'), { expiresIn: 84000 });
