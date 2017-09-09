@@ -3,8 +3,16 @@ import validator from 'validatorjs';
 
 const Recipes = models.Recipes;
 
-const recipeRules = {
-  title: 'required',
+
+const createRules = {
+  name: 'required',
+  ingredient: 'required',
+  description: 'required',
+  direction: 'required'
+};
+
+const updateRules = {
+  name: 'required',
   ingredient: 'required',
   description: 'required',
   direction: 'required'
@@ -25,7 +33,7 @@ const RecipeController = {
 
   // creating new recipe from response
   createRecipe(req, res) {
-    const recipeValidator = new validator(req.body, recipeRules);
+    const recipeValidator = new validator(req.body, createRules);
     if (recipeValidator.passes()) {
       Recipes.findAll({ where: { name: req.body.title } })
         .then((recipes) => {
@@ -68,7 +76,7 @@ const RecipeController = {
 
   /* controller for updating a single recipe */
   updateRecipe(req, res) {
-    const validateValues = new validator(req.body, recipeRules);
+    const validateValues = new validator(req.body, updateRules);
     // all the values are valid
     if (validateValues.passes()) {
       return Recipes.findOne({

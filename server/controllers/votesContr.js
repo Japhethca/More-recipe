@@ -1,12 +1,15 @@
 import validator from 'validatorjs';
 import models from '../models';
-
+import sequelize from 'sequelize';
 
 const Votes = models.Votes,
   Users = models.Users,
   Recipes = models.Recipes;
 
-
+const sortRule = {
+  sort: 'string',
+  order: 'string',
+};
 // controllers for handling voting in application
 const VotingController = {
   // controller for handling upvotes
@@ -14,26 +17,28 @@ const VotingController = {
     if (req.params.recipeId < 1) {
       return res.status(403).json({ message: 'Recipe id does not exist' });
     }
+    // finds all votes that matches the given user and recipe id
     Votes.findAll({
       where: {
         UserId: req.decoded.id,
         RecipeId: req.params.recipeId
       }
     }).then((vote) => {
+      // if vote is found
       if (vote.length > 0) {
         return res.status(403).json({ message: 'Already upvoted recipe' });
-      }
+      }// find a single recipe by id
     }).then(() => Recipes.findById(req.params.recipeId))
       .then((recipe) => {
         if (!recipe) {
           return res.status(404).json({ message: 'Recipe does not exist!' });
-        }
+        } // create a new vote if user has not voted before
         Votes.create({
           vote: 1,
           RecipeId: req.params.recipeId,
           UserId: req.decoded.id,
-
         });
+        // adds a new vote to the recipe
         recipe.increment('upVotes');
         res.status(200).json({ message: 'Recipe upvoted Successfully', Recipe: recipe });
       })
@@ -75,6 +80,7 @@ const VotingController = {
   },
 
   // controller for sorting recipes in ascending or descending order
+
   sortRecipe(req, res) {
     const sortvalidator = new validator(req.query, sortRule);
     if (sortvalidator.passes()) {
@@ -83,7 +89,7 @@ const VotingController = {
           if (sorted.length < 1) {
             return res.status(404).json({ message: 'No recipe found' });
           }
-          sortedRecipe = sorted.sort((a, b) => b.upVotes - a.upVotes);
+          const sortedRecipe = sorted.sort((a, b) => b.upVotes - a.upVotes);
           res.status(200).json({ message: 'Sorted', Recipes: sortedRecipe });
         }).catch((err) => {
           res.status(500).json({ message: 'Request was not processed', Error: err });
@@ -99,7 +105,15 @@ const VotingController = {
     } else {
       res.status(403).json(sortvalidator.errors);
     }
-  }
+  },
+  listUpvotes(req, res) {
+    return sequelize.query(`
+                        SELECT DISTINCT
+                        (SELECT * FROM "Recipes"),
+                        ORDER BY upVotes DESC`, { type: sequelize.QueryTypes.SELECT })
+      .then(recipes => res.status(200).json({ message: 'All Recipes displayed', recipes }))
+      .catch(err => res.status(400));
+  },
 };
 
 export default VotingController;

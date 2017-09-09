@@ -27,12 +27,11 @@ apiV1.put('/recipes/:recipeId', RecipeController.updateRecipe)
   .all('/recipes/:recipeId', auth.notImplemented);
 
 
-// apiV1.get('/users/:userId/recipes',userRecipes);
 // apiV1.get('/recipes?sort=upvotes&order=descending', votes.sortRecipe)
 // .all('/recipes?sort=upvotes&order=descending', auth.notImplemented);
 
 // endpoint for getting users favorite recipes
-apiV1.get('/users/:userId/recipes', FavoriteController.getFavorites)
+apiV1.get('/users/:usersId/recipes', FavoriteController.getFavorites)
   .all('/users/:userId/recipes', auth.notImplemented);
 
 // End point for users to get and set favorite recipes
