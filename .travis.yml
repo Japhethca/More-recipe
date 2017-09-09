@@ -1,0 +1,25 @@
+language: node_js
+
+node_js: "7"
+
+install:
+- npm install
+
+script:
+- npm test
+
+env:
+- NODE_ENV=test
+
+cache:
+  directories:
+  - "node_modules"
+
+services:
+- postgresql
+
+before_script:
+- createuser more-recipe -s -U postgres
+- createdb moreRecipesTest --username=postgres
+
+after_success: npm run coverage

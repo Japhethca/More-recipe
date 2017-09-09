@@ -1,0 +1,55 @@
+{
+  "name": "more-recipe",
+  "version": "1.0.0",
+  "description": "More-Recipes​ ​provides​ ​a​ ​platform​ ​for​ ​users​ ​to​ ​share​ ​the​ ​awesome​ ​and​ ​exciting​ ​​ ​recipe​ ​ideas​ ​they have​ ​invented​ ​or​ ​learnt. ​Suppose​ ​a​ ​user​ ​comes​ ​up​ ​with​ ​a​ ​recipe,​ ​​ ​he/she​ ​can​ ​post​ ​it​ ​on More-Recipes​ ​and​ ​​ ​get​ ​feedback​ ​in​ ​form​ ​of​ ​reviews​ ​and​ ​votes​ ​from​ ​other​ ​users​ ​who​ ​explore​ ​that recipe.​ ​Users​ ​can​ ​also​ ​keep​ ​a​ ​list​ ​of​ ​their​ ​favorite​ ​recipes​ ​on​ ​the​ ​application. [More-recipe](https://japhethca.github.io/More-recipe/)",
+  "main": "index.js",
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "scripts": {
+    "start": "node index.js",
+    "build": "babel server -d build",
+    "start:app": "nodemon ./build/app.js",
+    "test": "mocha --compilers js:babel-register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaphethCA/More-recipe.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JaphethCA/More-recipe/issues"
+  },
+  "homepage": "https://github.com/JaphethCA/More-recipe#readme",
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.17.2",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^7.4.3",
+    "mocha": "^3.5.0",
+    "nodemon": "^1.11.0",
+    "pg": "^7.2.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.7.5",
+    "validatorjs": "^3.13.5"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-connect": "^6.0.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-latest": "^6.24.1",
+    "coveralls": "^2.13.1",
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "mocha-lcov-reporter": "^1.3.0"
+  }
+}
