@@ -28,7 +28,7 @@ const RecipeController = {
       return sequelize.query(`
       SELECT * FROM "Recipes" AS "Recipes" ORDER BY "upVotes" DESC;`, { type: Sequelize.QueryTypes.SELECT })
         .then(recipes => res.status(200).json({ message: 'All Recipes displayed in Descending order', recipes }))
-        .catch(err => res.status(400));
+        .catch(err => res.status(400).json(err));
     }
     next();
   },
@@ -63,7 +63,7 @@ const RecipeController = {
         .then((recipe) => {
           res.status(200).json({ message: 'Recipe successfully created', Details: recipe });
         })
-        .catch((err) => {
+        .catch(() => {
           res.status(400).json({ message: 'Request was not processed' });
         });
     } else {

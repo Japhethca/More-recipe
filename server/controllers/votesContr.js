@@ -1,4 +1,5 @@
-import validator from 'validatorjs';
+// this file contains fuctions for controlling recipe voting 
+// Both upvotes and downvotes
 import models from '../models';
 
 
