@@ -10,11 +10,10 @@ var _models2 = _interopRequireDefault(_models);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Favorites = _models2.default.Favorites.Favorites;
+var Favorites = _models2.default.Favorites;
 
 // handles GET​ : /api/users/<userId>/recipes
 // controller for getting users favorietes
-
 var FavoriteController = {
   getFavorites: function getFavorites(req, res) {
     Favorites.findAll({
