@@ -54,7 +54,7 @@ apiV1.put('/recipes/:recipeId', _recipeContr2.default.updateRecipe).delete('/rec
 // endpoint for getting users favorite recipes
 apiV1.get('/users/:userId/recipes', _favoriteContr2.default.getFavorites).all('/users/:userId/recipes', _authenticator2.default.notImplemented);
 
-// End point for users to get and set favorite recipes 
+// End point for users to get and set favorite recipes
 apiV1.get('/users/:usersId/favorites', _favoriteContr2.default.getFavorites).post('/users/:recipeId/favorites', _favoriteContr2.default.setFavorites).all('/users/:usersId/favorites', _authenticator2.default.notImplemented);
 
 // routes  for up voting and down voting recipes

@@ -4,7 +4,7 @@ import models from '../models';
 import app from '../app';
 
 
-const { Users } = models.Users;
+const  Users  = models.Users;
 
 const signinRules = {
   email: 'string|required',

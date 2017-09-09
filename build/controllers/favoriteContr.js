@@ -8,20 +8,13 @@ var _models = require('../models');
 
 var _models2 = _interopRequireDefault(_models);
 
-var _validatorjs = require('validatorjs');
-
-var _validatorjs2 = _interopRequireDefault(_validatorjs);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Favorites = _models2.default.Favorites;
-var Users = _models2.default.Users;
-var Recipes = _models2.default.Recipes;
-
-var favoritesRule = {};
+var Favorites = _models2.default.Favorites.Favorites;
 
 // handles GET​ : /api/users/<userId>/recipes
 // controller for getting users favorietes
+
 var FavoriteController = {
   getFavorites: function getFavorites(req, res) {
     Favorites.findAll({
@@ -34,7 +27,7 @@ var FavoriteController = {
       }
       res.status(200).json(favorites);
     }).catch(function (err) {
-      res.status(400).json({ message: "Request was not processed" });
+      res.status(400).json({ message: 'Request was not processed' });
     });
   },
 
@@ -48,7 +41,7 @@ var FavoriteController = {
       favorite: req.body.favorite,
       UserId: req.decoded.id,
       RecipeId: req.params.recipeId
-    }).then(function (favorite) {
+    }).then(function () {
       res.status(200).json({ message: 'Recipe Successfully added to favorites' });
     }).catch(function (err) {
       if (err.name === 'SequelizeForeignKeyConstraintError') {

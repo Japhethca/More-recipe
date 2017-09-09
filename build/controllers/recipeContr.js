@@ -15,7 +15,6 @@ var _validatorjs2 = _interopRequireDefault(_validatorjs);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Recipes = _models2.default.Recipes;
-var Users = _models2.default.Users;
 
 var recipeRules = {
   title: 'required',
@@ -24,17 +23,14 @@ var recipeRules = {
   direction: 'required'
 };
 
-var sortRule = {
-  sort: 'required|string',
-  order: 'required|string'
-};
-
 var RecipeController = {
   // get all recipes in the application
   all: function all(req, res) {
     return Recipes.findAll().then(function (recipes) {
       if (recipes.length > 0) {
-        if (req.query) return res.status(200).json({ message: "All recipes:", List: recipes });
+        if (req.query) {
+          return res.status(200).json({ message: 'All recipes:', List: recipes });
+        }
       }
       res.status(404).json({ message: 'No Recipes found' });
     });
@@ -118,9 +114,9 @@ var RecipeController = {
           Error: err
         });
       });
-    } else {
-      res.status(403).json(validateValues.errors);
     }
+
+    res.status(403).json(validateValues.errors);
   },
 
 
