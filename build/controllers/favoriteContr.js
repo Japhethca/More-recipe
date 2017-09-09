@@ -10,21 +10,21 @@ var _models2 = _interopRequireDefault(_models);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Favorites = _models2.default.Favorites;
+var Favorites = _models2.default.Favorites,
+    Recipes = _models2.default.Recipes;
 
 // handles GET​ : /api/users/<userId>/recipes
 // controller for getting users favorietes
 var FavoriteController = {
   getFavorites: function getFavorites(req, res) {
     Favorites.findAll({
-      where: {
-        UserId: req.params.userId
-      }
+      where: { UserId: req.params.usersId },
+      include: [Recipes]
     }).then(function (favorites) {
       if (favorites.length < 1) {
-        res.status(404).json({ message: 'User does not have any favorites' });
+        return res.status(404).json({ message: 'User does not have any favorites' });
       }
-      res.status(200).json(favorites);
+      res.status(200).json({ message: 'User ' + req.params.usersId, Recipes: favorites });
     }).catch(function (err) {
       res.status(400).json({ message: 'Request was not processed' });
     });

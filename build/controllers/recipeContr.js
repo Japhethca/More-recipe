@@ -16,8 +16,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Recipes = _models2.default.Recipes;
 
-var recipeRules = {
-  title: 'required',
+var createRules = {
+  name: 'required',
+  ingredient: 'required',
+  description: 'required',
+  direction: 'required'
+};
+
+var updateRules = {
+  name: 'required',
   ingredient: 'required',
   description: 'required',
   direction: 'required'
@@ -39,7 +46,7 @@ var RecipeController = {
 
   // creating new recipe from response
   createRecipe: function createRecipe(req, res) {
-    var recipeValidator = new _validatorjs2.default(req.body, recipeRules);
+    var recipeValidator = new _validatorjs2.default(req.body, createRules);
     if (recipeValidator.passes()) {
       Recipes.findAll({ where: { name: req.body.title } }).then(function (recipes) {
         if (recipes.length > 0) {
@@ -81,7 +88,7 @@ var RecipeController = {
 
   /* controller for updating a single recipe */
   updateRecipe: function updateRecipe(req, res) {
-    var validateValues = new _validatorjs2.default(req.body, recipeRules);
+    var validateValues = new _validatorjs2.default(req.body, updateRules);
     // all the values are valid
     if (validateValues.passes()) {
       return Recipes.findOne({
