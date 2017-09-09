@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _validatorjs = require('validatorjs');
-
-var _validatorjs2 = _interopRequireDefault(_validatorjs);
-
 var _models = require('../models');
 
 var _models2 = _interopRequireDefault(_models);
@@ -19,6 +15,8 @@ var Votes = _models2.default.Votes,
     Recipes = _models2.default.Recipes;
 
 // controllers for handling voting in application
+// this file contains fuctions for controlling recipe voting 
+// Both upvotes and downvotes
 var VotingController = {
   // controller for handling upvotes
   upVotes: function upVotes(req, res) {

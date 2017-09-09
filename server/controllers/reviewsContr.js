@@ -1,50 +1,58 @@
 // models import statement
 import model from '../models';
-import validator from 'validatorjs';
+import Validator from 'validatorjs';
 
 const Users = model.Users,
   Recipes = model.Recipes,
   Reviews = model.Reviews;
-
-
+/* 
+const reviwRules = {
+  title: 'required',
+  content: 'required',
+}; */
 const ReviewController = {
 
+
   recipeReview(req, res) {
-    return Recipes.findOne({
-      where: {
-        id: req.params.recipeId,
-      },
-    })
-      .then((recipe) => {
-        if (!recipe) {
-          return res.status(400).json({ message: 'Invalid recipe Id' });
-        }
-        Reviews.create({
-          title: req.body.title,
-          content: req.body.content,
-          RecipeId: recipe.id,
-          UserId: req.decoded.id,
-        })
-          .then((review) => {
-            res.status(200).json({
-              message: 'Review Created',
-              Recipe: recipe,
-              Review: review,
-            });
-          })
-          .catch((err) => {
-            res.status(400).Json({
-              message: 'Request was not process',
-              Error: err,
-            });
-          });
+    /* const validReview = new Validator(req.body, reviwRules);
+    if (validReview.passes()) { */
+      return Recipes.findOne({
+        where: {
+          id: req.params.recipeId,
+        },
       })
-      .catch((err) => {
-        res.status(400).json({
-          message: 'Request was not processed',
-          Error: err,
+        .then((recipe) => {
+          if (!recipe) {
+            return res.status(400).json({ message: 'Invalid recipe Id' });
+          }
+          Reviews.create({
+            title: req.body.title,
+            content: req.body.content,
+            RecipeId: recipe.id,
+            UserId: req.decoded.id,
+          })
+            .then((review) => {
+              res.status(200).json({
+                message: 'Review Created',
+                Recipe: recipe,
+                Review: review,
+              });
+            })
+            .catch((err) => {
+              res.status(400).json({
+                message: 'Request was not process',
+                Error: err,
+              });
+            });
+        })
+        .catch((err) => {
+          res.status(400).json({
+            message: 'Request was not processed',
+            Error: err,
+          });
         });
-      });
+   /*  }
+    res.status(400).json(validReview.errors); */
   },
 
 

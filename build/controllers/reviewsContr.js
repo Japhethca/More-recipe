@@ -19,43 +19,47 @@ var Users = _models2.default.Users,
     Recipes = _models2.default.Recipes,
     Reviews = _models2.default.Reviews;
 
-var reviewRules = {
-  title: 'required'
+var reviwRules = {
+  title: 'required',
+  content: 'required'
 };
-
 var ReviewController = {
   recipeReview: function recipeReview(req, res) {
-    return Recipes.findOne({
-      where: {
-        id: req.params.recipeId
-      }
-    }).then(function (recipe) {
-      if (!recipe) {
-        return res.status(400).json({ message: 'Invalid recipe Id' });
-      }
-      Reviews.create({
-        title: req.body.title,
-        content: req.body.content,
-        RecipeId: recipe.id,
-        UserId: req.decoded.id
-      }).then(function (review) {
-        res.status(200).json({
-          message: 'Review Created',
-          Recipe: recipe,
-          Review: review
+    var validReview = new _validatorjs2.default(req.body, reviwRules);
+    if (validReview.passes()) {
+      return Recipes.findOne({
+        where: {
+          id: req.params.recipeId
+        }
+      }).then(function (recipe) {
+        if (!recipe) {
+          return res.status(400).json({ message: 'Invalid recipe Id' });
+        }
+        Reviews.create({
+          title: req.body.title,
+          content: req.body.content,
+          RecipeId: recipe.id,
+          UserId: req.decoded.id
+        }).then(function (review) {
+          res.status(200).json({
+            message: 'Review Created',
+            Recipe: recipe,
+            Review: review
+          });
+        }).catch(function (err) {
+          res.status(400).json({
+            message: 'Request was not process',
+            Error: err
+          });
         });
       }).catch(function (err) {
-        res.status(400).Json({
-          message: 'Request was not process',
+        res.status(400).json({
+          message: 'Request was not processed',
           Error: err
         });
       });
-    }).catch(function (err) {
-      res.status(400).json({
-        message: 'Request was not processed',
-        Error: err
-      });
-    });
+    }
+    res.status(400).json(validReview.errors);
   },
 
 

@@ -46,7 +46,7 @@ var RecipeController = {
       return sequelize.query('\n      SELECT * FROM "Recipes" AS "Recipes" ORDER BY "upVotes" DESC;', { type: _sequelize2.default.QueryTypes.SELECT }).then(function (recipes) {
         return res.status(200).json({ message: 'All Recipes displayed in Descending order', recipes: recipes });
       }).catch(function (err) {
-        return res.status(400);
+        return res.status(400).json(err);
       });
     }
     next();
@@ -76,7 +76,7 @@ var RecipeController = {
         }
       }).then(function () {
         return Recipes.create({
-          name: req.body.title,
+          name: req.body.name,
           ingredients: req.body.ingredient,
           directions: req.body.direction,
           descriptions: req.body.description,
@@ -84,7 +84,7 @@ var RecipeController = {
         });
       }).then(function (recipe) {
         res.status(200).json({ message: 'Recipe successfully created', Details: recipe });
-      }).catch(function (err) {
+      }).catch(function () {
         res.status(400).json({ message: 'Request was not processed' });
       });
     } else {
