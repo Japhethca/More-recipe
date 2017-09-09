@@ -1,18 +1,23 @@
-
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var fs = require('fs');
 var path = require('path');
 var Sequelize = require('sequelize');
+
 var basename = path.basename(module.filename);
 var env = process.env.NODE_ENV || 'development';
 var config = require(__dirname + '/../config/config.js')[env];
 var db = {};
 
+var sequelize = void 0;
 if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable]);
+  sequelize = new Sequelize(process.env[config.use_env_variable]);
 } else {
-  var sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 fs.readdirSync(__dirname).filter(function (file) {
@@ -41,4 +46,4 @@ db.Recipes.hasMany(db.Reviews);
 db.Users.hasMany(db.Votes);
 
 // db.sequelize.sync({ force: true });
-module.exports = db;
+exports.default = db;

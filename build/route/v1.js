@@ -42,13 +42,10 @@ apiV1.post('/users/signin', _usersContr2.default.signin).all('/users/signin', _a
 // sortes recipes in ascending order
 
 // API routes for GETting and POSTing recipes
-apiV1.get('/recipes', _recipeContr2.default.all).post('/recipes', _recipeContr2.default.createRecipe).all('/recipes', _authenticator2.default.notImplemented);
+apiV1.get('/recipes', _recipeContr2.default.listUpvotes, _recipeContr2.default.all).post('/recipes', _recipeContr2.default.createRecipe).all('/recipes', _authenticator2.default.notImplemented);
 
 // API end point for updating and deleting a single recipe
 apiV1.put('/recipes/:recipeId', _recipeContr2.default.updateRecipe).delete('/recipes/:recipeId', _recipeContr2.default.deleteRecipe).get('/recipes/:recipeId', _recipeContr2.default.getRecipeById).all('/recipes/:recipeId', _authenticator2.default.notImplemented);
-
-// apiV1.get('/recipes?sort=upvotes&order=descending', votes.sortRecipe)
-// .all('/recipes?sort=upvotes&order=descending', auth.notImplemented);
 
 // endpoint for getting users favorite recipes
 apiV1.get('/users/:usersId/recipes', _favoriteContr2.default.getFavorites).all('/users/:userId/recipes', _authenticator2.default.notImplemented);

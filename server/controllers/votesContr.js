@@ -1,15 +1,12 @@
 import validator from 'validatorjs';
 import models from '../models';
-import sequelize from 'sequelize';
+
 
 const Votes = models.Votes,
   Users = models.Users,
   Recipes = models.Recipes;
 
-const sortRule = {
-  sort: 'string',
-  order: 'string',
-};
+
 // controllers for handling voting in application
 const VotingController = {
   // controller for handling upvotes
@@ -71,7 +68,7 @@ const VotingController = {
           UserId: req.decoded.id,
 
         });
-        recipe.decrement('downVotes');
+        recipe.increment('downVotes');
         res.status(200).json({ message: 'Recipe downvoted Successfully', Recipe: recipe });
       })
       .catch((err) => {
@@ -79,41 +76,6 @@ const VotingController = {
       });
   },
 
-  // controller for sorting recipes in ascending or descending order
-
-  sortRecipe(req, res) {
-    const sortvalidator = new validator(req.query, sortRule);
-    if (sortvalidator.passes()) {
-      if (req.query.sort === 'upVotes' && req.query.order === 'descending') {
-        Recipes.findAll().then((sorted) => {
-          if (sorted.length < 1) {
-            return res.status(404).json({ message: 'No recipe found' });
-          }
-          const sortedRecipe = sorted.sort((a, b) => b.upVotes - a.upVotes);
-          res.status(200).json({ message: 'Sorted', Recipes: sortedRecipe });
-        }).catch((err) => {
-          res.status(500).json({ message: 'Request was not processed', Error: err });
-        });
-      } else if (req.query.order === 'ascending') {
-        Recipes.findAll().then((recipes) => {
-          if (recipes.length < 0) {
-            res.status(400).json({ message: 'No recipes found' });
-          }
-          res.status(200).json(recipes);
-        });
-      }
-    } else {
-      res.status(403).json(sortvalidator.errors);
-    }
-  },
-  listUpvotes(req, res) {
-    return sequelize.query(`
-                        SELECT DISTINCT
-                        (SELECT * FROM "Recipes"),
-                        ORDER BY upVotes DESC`, { type: sequelize.QueryTypes.SELECT })
-      .then(recipes => res.status(200).json({ message: 'All Recipes displayed', recipes }))
-      .catch(err => res.status(400));
-  },
 };
 
 export default VotingController;

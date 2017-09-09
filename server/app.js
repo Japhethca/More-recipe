@@ -2,7 +2,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
-import apiRouter  from './route/api';
+import apiRouter from './route/api';
 
 const app = express();
 
@@ -13,15 +13,12 @@ app.set('secret_key', 'myverysecuresecretkey');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// routes
-
-
 
 // more recipe api routes
 app.use('/api', apiRouter);
 
-app.get('/', (req,res) => {
-  res.status(200).json({message: "Welcome to the more recipe app"});
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Welcome to the more recipe app' });
 });
 app.all('*', (req, res) => {
   res.status(404).send('404: Not Found');
@@ -29,7 +26,7 @@ app.all('*', (req, res) => {
 
 
 // server initialization
-const port = process.env.PORT || 8008;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running. listening on port:  ${port}`);
 });

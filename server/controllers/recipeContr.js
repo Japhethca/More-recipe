@@ -1,8 +1,10 @@
 import models from '../models';
 import validator from 'validatorjs';
+import Sequelize from 'sequelize';
+import db from '../models/index';
 
 const Recipes = models.Recipes;
-
+const sequelize = db.sequelize;
 
 const createRules = {
   name: 'required',
@@ -21,6 +23,17 @@ const updateRules = {
 
 const RecipeController = {
 // get all recipes in the application
+  listUpvotes(req, res, next) {
+    if (req.query.order && req.query.sort) {
+      return sequelize.query(`
+      SELECT * FROM "Recipes" AS "Recipes" ORDER BY "upVotes" DESC;`, { type: Sequelize.QueryTypes.SELECT })
+        .then(recipes => res.status(200).json({ message: 'All Recipes displayed in Descending order', recipes }))
+        .catch(err => res.status(400));
+    }
+    next();
+  },
+
+  // controller for returning all recipe in the application
   all(req, res) {
     return Recipes.findAll().then((recipes) => {
       if (recipes.length > 0) {
