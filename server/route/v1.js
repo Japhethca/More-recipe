@@ -16,7 +16,7 @@ apiV1.post('/users/signin', UserController.signin)
 // sortes recipes in ascending order
 
 // API routes for GETting and POSTing recipes
-apiV1.get('/recipes', RecipeController.all)
+apiV1.get('/recipes', RecipeController.listUpvotes, RecipeController.all)
   .post('/recipes', RecipeController.createRecipe)
   .all('/recipes', auth.notImplemented);
 
@@ -27,12 +27,8 @@ apiV1.put('/recipes/:recipeId', RecipeController.updateRecipe)
   .all('/recipes/:recipeId', auth.notImplemented);
 
 
-// apiV1.get('/users/:userId/recipes',userRecipes);
-// apiV1.get('/recipes?sort=upvotes&order=descending', votes.sortRecipe)
-// .all('/recipes?sort=upvotes&order=descending', auth.notImplemented);
-
 // endpoint for getting users favorite recipes
-apiV1.get('/users/:userId/recipes', FavoriteController.getFavorites)
+apiV1.get('/users/:usersId/recipes', FavoriteController.getFavorites)
   .all('/users/:userId/recipes', auth.notImplemented);
 
 // End point for users to get and set favorite recipes

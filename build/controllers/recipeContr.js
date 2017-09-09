@@ -12,12 +12,28 @@ var _validatorjs = require('validatorjs');
 
 var _validatorjs2 = _interopRequireDefault(_validatorjs);
 
+var _sequelize = require('sequelize');
+
+var _sequelize2 = _interopRequireDefault(_sequelize);
+
+var _index = require('../models/index');
+
+var _index2 = _interopRequireDefault(_index);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Recipes = _models2.default.Recipes;
+var sequelize = _index2.default.sequelize;
 
-var recipeRules = {
-  title: 'required',
+var createRules = {
+  name: 'required',
+  ingredient: 'required',
+  description: 'required',
+  direction: 'required'
+};
+
+var updateRules = {
+  name: 'required',
   ingredient: 'required',
   description: 'required',
   direction: 'required'
@@ -25,6 +41,19 @@ var recipeRules = {
 
 var RecipeController = {
   // get all recipes in the application
+  listUpvotes: function listUpvotes(req, res, next) {
+    if (req.query.order && req.query.sort) {
+      return sequelize.query('\n      SELECT * FROM "Recipes" AS "Recipes" ORDER BY "upVotes" DESC;', { type: _sequelize2.default.QueryTypes.SELECT }).then(function (recipes) {
+        return res.status(200).json({ message: 'All Recipes displayed in Descending order', recipes: recipes });
+      }).catch(function (err) {
+        return res.status(400);
+      });
+    }
+    next();
+  },
+
+
+  // controller for returning all recipe in the application
   all: function all(req, res) {
     return Recipes.findAll().then(function (recipes) {
       if (recipes.length > 0) {
@@ -39,7 +68,7 @@ var RecipeController = {
 
   // creating new recipe from response
   createRecipe: function createRecipe(req, res) {
-    var recipeValidator = new _validatorjs2.default(req.body, recipeRules);
+    var recipeValidator = new _validatorjs2.default(req.body, createRules);
     if (recipeValidator.passes()) {
       Recipes.findAll({ where: { name: req.body.title } }).then(function (recipes) {
         if (recipes.length > 0) {
@@ -81,7 +110,7 @@ var RecipeController = {
 
   /* controller for updating a single recipe */
   updateRecipe: function updateRecipe(req, res) {
-    var validateValues = new _validatorjs2.default(req.body, recipeRules);
+    var validateValues = new _validatorjs2.default(req.body, updateRules);
     // all the values are valid
     if (validateValues.passes()) {
       return Recipes.findOne({

@@ -16,7 +16,8 @@ const signupRules = {
   lastname: 'required|string|min:3',
   username: 'required|string|min:3',
   email: 'required|email',
-  password: 'required|min:5'
+  password: 'required|min:5',
+  verifyPassword: 'required|min:5',
 };
 
 
@@ -38,6 +39,9 @@ const UserController = {
               message: 'User already exists'
             });
           } // creates new user
+          if (req.body.password !== req.body.verifyPassword) {
+            return res.status(403).json({ message: 'password did not match' });
+          }
           return Users.create({
             firstName: req.body.firstname,
             lastName: req.body.lastname,
@@ -68,7 +72,6 @@ const UserController = {
         },
       })
         .then((user) => {
-          console.log(user);
           if (!user) {
             return res.status(400).json({ message: 'User does not exist' });
           }

@@ -1,10 +1,20 @@
 import models from '../models';
 import validator from 'validatorjs';
+import Sequelize from 'sequelize';
+import db from '../models/index';
 
 const Recipes = models.Recipes;
+const sequelize = db.sequelize;
 
-const recipeRules = {
-  title: 'required',
+const createRules = {
+  name: 'required',
+  ingredient: 'required',
+  description: 'required',
+  direction: 'required'
+};
+
+const updateRules = {
+  name: 'required',
   ingredient: 'required',
   description: 'required',
   direction: 'required'
@@ -13,6 +23,17 @@ const recipeRules = {
 
 const RecipeController = {
 // get all recipes in the application
+  listUpvotes(req, res, next) {
+    if (req.query.order && req.query.sort) {
+      return sequelize.query(`
+      SELECT * FROM "Recipes" AS "Recipes" ORDER BY "upVotes" DESC;`, { type: Sequelize.QueryTypes.SELECT })
+        .then(recipes => res.status(200).json({ message: 'All Recipes displayed in Descending order', recipes }))
+        .catch(err => res.status(400));
+    }
+    next();
+  },
+
+  // controller for returning all recipe in the application
   all(req, res) {
     return Recipes.findAll().then((recipes) => {
       if (recipes.length > 0) {
@@ -25,7 +46,7 @@ const RecipeController = {
 
   // creating new recipe from response
   createRecipe(req, res) {
-    const recipeValidator = new validator(req.body, recipeRules);
+    const recipeValidator = new validator(req.body, createRules);
     if (recipeValidator.passes()) {
       Recipes.findAll({ where: { name: req.body.title } })
         .then((recipes) => {
@@ -68,7 +89,7 @@ const RecipeController = {
 
   /* controller for updating a single recipe */
   updateRecipe(req, res) {
-    const validateValues = new validator(req.body, recipeRules);
+    const validateValues = new validator(req.body, updateRules);
     // all the values are valid
     if (validateValues.passes()) {
       return Recipes.findOne({

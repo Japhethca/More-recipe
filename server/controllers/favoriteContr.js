@@ -1,6 +1,7 @@
 import model from '../models';
 
-const Favorites = model.Favorites;
+const Favorites = model.Favorites,
+  Recipes = model.Recipes;
 
 
 // handles GET​ : /api/users/<userId>/recipes
@@ -8,14 +9,13 @@ const Favorites = model.Favorites;
 const FavoriteController = {
   getFavorites(req, res) {
     Favorites.findAll({
-      where: {
-        UserId: req.params.userId
-      }
+      where: { UserId: req.params.usersId },
+      include: [Recipes]
     }).then((favorites) => {
       if (favorites.length < 1) {
-        res.status(404).json({ message: 'User does not have any favorites' });
+        return res.status(404).json({ message: 'User does not have any favorites' });
       }
-      res.status(200).json(favorites);
+      res.status(200).json({ message: `User ${req.params.usersId}`, Recipes: favorites });
     }).catch((err) => {
       res.status(400).json({ message: 'Request was not processed' });
     });
