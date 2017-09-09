@@ -1,28 +1,25 @@
-env:
-  global:
-    - CC_TEST_REPORTER_ID: "450b9ebbc4d02a84268fc22984177fc4a7888d944157f30d887ad035b3585e7f"
 language: node_js
-node_js:
-  - "6.10.0"
+
+node_js: "7"
+
+install:
+- npm install
+
+script:
+- npm test
+
 env:
-  - NODE_ENV=test
+- NODE_ENV=test
 
 cache:
   directories:
   - "node_modules"
 
-addons:
-  code_climate:
-    repo_token: "e895d45cfaffba8fb9a9fb36c8b3175563b0292e639308921059da19bf4fc5d2"
-
-script:
-  - npm run test
-
 services:
-  - postgresql
+- postgresql
 
 before_script:
-  - createuser more-recipes -s -U postgres
-  - createdb more-recipes_test --username=more-recipes
+- createuser more-recipe -s -U postgres
+- createdb moreRecipesTest --username=postgres
 
 after_success: npm run coverage
