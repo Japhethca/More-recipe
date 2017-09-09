@@ -1,6 +1,6 @@
 
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   let Favorites = sequelize.define('Favorites', {
     favorite: {
       type: DataTypes.STRING,

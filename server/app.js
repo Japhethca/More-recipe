@@ -7,7 +7,7 @@ import apiRouter from './route/api';
 const app = express();
 
 // secret for json web token
-app.set('secret_key', 'myverysecuresecretkey');
+app.set('secret_key', process.env.SECRET_KEY);
 
 // for parsing request body content
 app.use(bodyParser.json());

@@ -6,9 +6,6 @@ const Users = model.Users,
   Recipes = model.Recipes,
   Reviews = model.Reviews;
 
-const reviewRules = {
-  title: 'required',
-};
 
 const ReviewController = {
 
