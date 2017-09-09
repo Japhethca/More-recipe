@@ -1,7 +1,7 @@
 import express from 'express';
-import apiV1  from './v1';
-import auth  from '../middlewares/authenticator';
-import User from '../controllers/usersContr'
+import apiV1 from './v1';
+import auth from '../middlewares/authenticator';
+import User from '../controllers/usersContr';
 
 const apiRouter = express.Router();
 
