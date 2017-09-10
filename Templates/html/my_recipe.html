@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>My Recipes More Recipe</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- icon fonts from google -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-   <!-- materialize include -->
-   <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
-   <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <!-- materialize include -->
+    <link rel="stylesheet" type="text/css" href="../css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
-<body>              <!-- site navigation -->
-                <nav class="nav-wrapper">
-                    <div class="container">
-                        <a href="home.html" class="brand-logo">More Recipe</a>
-                        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-                        <ul class="nav-mobile right hide-on-med-and-down" id="">
-                            <li ><input type="search" name="search" placeholder="Find Recipes"  class="input-field"></li>
-                            <li><button type="search" class="btn brown lighten-2">Search</button></li>
-                            <li><a href="home.html">Top Recipe</a></li>
-                            <li><a href="favorites.html">Favorites</a></li>
-                            <li><a href="profile.html"> Profile</a></li>
-                        </ul>
-                        <!-- testing navbar -->
-                        
-                        <!-- end of testing  -->
-                    </div>
-                </nav>
-                <!-- end of site navigation  -->
-<!-- user details -->
+
+<body>
+    <!-- site navigation -->
+    <nav class="nav-wrapper">
+        <div class="container">
+            <a href="home.html" class="brand-logo">More Recipe</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul class="nav-mobile right hide-on-med-and-down" id="">
+                <li><input type="search" name="search" placeholder="Find Recipes" class="input-field"></li>
+                <li><button type="search" class="btn brown lighten-2">Search</button></li>
+                <li><a href="home.html">Top Recipe</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+                <li><a href="profile.html"> Profile</a></li>
+            </ul>
+            <!-- testing navbar -->
+
+            <!-- end of testing  -->
+        </div>
+    </nav>
+    <!-- end of site navigation  -->
+    <!-- user details -->
 
     <div class="container">
         <div class="row">
@@ -53,13 +56,13 @@
                         <a href="details.html"><img src="../../images/image.jpg" alt="Recipe image"></a>
                     </div>
                     <div class="card-panel">
-                            <a href="details.html"><span class="card-title middle">My first favorite recipe </span></a>
-                            <p>by chidex</p>
-                            <div class="card-title">
-                                <a href="#reviews" class="btn brown darken-2">Reviews <span id="reivews">(7)</span></a>
-                                <a href="#" class="btn brown darken-2"><i class="material-icons ">thumb_up</i><span class="" id="up_vote">12</span></a>
-                                <a href="#" class="btn brown darken-2 "><i class="material-icons ">thumb_down</i><span id="down_vote">3</span> </a>
-                            </div>
+                        <a href="details.html"><span class="card-title middle">My first favorite recipe </span></a>
+                        <p>by chidex</p>
+                        <div class="card-title">
+                            <a href="#reviews" class="btn brown darken-2">Reviews <span id="reivews">(7)</span></a>
+                            <a href="#" class="btn brown darken-2"><i class="material-icons ">thumb_up</i><span class="" id="up_vote">12</span></a>
+                            <a href="#" class="btn brown darken-2 "><i class="material-icons ">thumb_down</i><span id="down_vote">3</span> </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,67 +72,67 @@
                         <a href="details.html"><img src="../../images/image.jpg" alt="Recipe image"></a>
                     </div>
                     <div class="card-panel">
-                            <a href="details.html"><span class="card-title middle">My first favorite recipe </span></a>
-                            <p>by chidiebere</p>
-                            <div class="card-title">
-                                <a href="#reviews" class="btn brown darken-2">Reviews <span id="reivews">(7)</span></a>
-                                <a href="#" class="btn brown darken-2"><i class="material-icons ">thumb_up</i><span class="" id="up_vote">12</span></a>
-                                <a href="#" class="btn brown darken-2 "><i class="material-icons ">thumb_down</i><span id="down_vote">3</span> </a>
-                            </div>
+                        <a href="details.html"><span class="card-title middle">My first favorite recipe </span></a>
+                        <p>by chidiebere</p>
+                        <div class="card-title">
+                            <a href="#reviews" class="btn brown darken-2">Reviews <span id="reivews">(7)</span></a>
+                            <a href="#" class="btn brown darken-2"><i class="material-icons ">thumb_up</i><span class="" id="up_vote">12</span></a>
+                            <a href="#" class="btn brown darken-2 "><i class="material-icons ">thumb_down</i><span id="down_vote">3</span> </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-            <hr>
-            <!-- end of list of added recipe -->
-            <div>
-                <!-- form for adding new recipe -->
-                <h4>Add Recipe</h4>
-                <div class="row">
-                    <form action="" id="add_recipe">
-                        <div class="col s12 m8">
-                            
-                                <div class="input-field">
-                                    <input type="text" name="title">
-                                     <label for="title">Recipe Title/Name</label>
-                                </div>
-                                <div class="input-field">
-                                    <textarea name="description" id="" cols="30" rows="10" class="materialize-textarea"></textarea>
-                                     <label for="description">Description</label>
-                                </div>
-                                <div class="input-field">
-                                    <textarea name="ingredients" id="" cols="30" rows="10" class="materialize-textarea"></textarea>
-                                     <label for="ingredients">Ingredients</label>
-                                </div>
-                                <div class="file-field input-field">
-                                        <div class="btn brown lighten-3">
-                                          <span>Image</span>
-                                          <input type="file" multiple>
-                                        </div>
-                                        <div class="file-path-wrapper">
-                                          <input class="file-path validate" type="text" placeholder="Upload Recipe image">
-                                        </div>
-                                      </div>
-                                
-                                <button type="submit" class="btn brown darken-2">Add Recipe</button>
-                        </div>  
-                    </form>
-                </div>
-            </div>
-    </div>
-        
-       <!-- site footer -->
-        <footer class="page-footer">
-            <div class="footer-copywrite">
-            <div class="container center">
-                    2017 &copy Food Recipes 
-            </div>
-        </div>  
-        </footer>  
-              
+        <hr>
+        <!-- end of list of added recipe -->
+        <div>
+            <!-- form for adding new recipe -->
+            <h4>Add Recipe</h4>
+            <div class="row">
+                <form action="" id="add_recipe">
+                    <div class="col s12 m8">
 
+                        <div class="input-field">
+                            <input type="text" name="title">
+                            <label for="title">Recipe Title/Name</label>
+                        </div>
+                        <div class="input-field">
+                            <textarea name="description" id="" cols="30" rows="10" class="materialize-textarea"></textarea>
+                            <label for="description">Description</label>
+                        </div>
+                        <div class="input-field">
+                            <textarea name="ingredients" id="" cols="30" rows="10" class="materialize-textarea"></textarea>
+                            <label for="ingredients">Ingredients</label>
+                        </div>
+                        <div class="file-field input-field">
+                            <div class="btn brown lighten-3">
+                                <span>Image</span>
+                                <input type="file" multiple>
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Upload Recipe image">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn brown darken-2">Add Recipe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- site footer -->
+    <footer class="page-footer">
+        <div class="footer-copyright">
+            <div class="container center">
+                © 2017 More Recipe
+            </div>
+        </div>
+    </footer>
+    <!--end of site footer  -->
     <!-- materialize and jquery includes -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../js/materialize.min.js"></script>
 </body>
+
 </html>
