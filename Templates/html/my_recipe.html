@@ -26,9 +26,9 @@
                 <li><a href="profile.html"> Profile</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="home.html">Top Recipe</a></li>
-                <li><a href="favorites.html">Favorites</a></li>
-                <li><a href="profile.html"> Profile</a></li>
+                <li><a class="btn brown"  href="home.html">Top Recipe</a></li>
+                <li><a class="btn brown" href="favorites.html">Favorites</a></li>
+                <li><a class="btn brown" href="profile.html"> Profile</a></li>
             </ul>
         </div>
     </nav>
@@ -36,6 +36,13 @@
     <!-- user details -->
 
     <div class="container" id="main">
+        <!-- search on mobile -->
+        <div class="hide-on-med-and-up">
+            <form action="">
+                <input type="search" name="search" placeholder="Find Recipes" class="input-field">
+                <button type="search" class="btn brown lighten-2">Search</button>
+            </form>
+        </div>     
         <div class="row">
             <div class="col s12 m4">
                 <img src="../../images/avatar.png" class="image" alt="">

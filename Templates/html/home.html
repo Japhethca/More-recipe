@@ -26,15 +26,22 @@
                 <li><a href="profile.html"> Profile</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="favorites.html">Favorites</a></li>
-                <li><a href="my_recipe.html">My Recipe</a></li>
-                <li><a href="profile.html"> Profile</a></li>
+                <li><a class="btn brown" href="favorites.html">Favorites</a></li>
+                <li><a class="btn brown" href="my_recipe.html">My Recipe</a></li>
+                <li><a class="btn brown" href="profile.html"> Profile</a></li>
             </ul>
         </div>
     </nav>
     <!-- end of navigation -->
     <!-- body of the page after navigation -->
     <div class="container" id="main">
+        <!-- search on mobile -->
+            <div class="hide-on-med-and-up">
+                    <form action="">
+                        <input type="search" name="search" placeholder="Find Recipes" class="input-field">
+                        <button type="search" class="btn brown lighten-2">Search</button>
+                    </form>
+                </div>     
         <h2 class="">Top Recipes</h2>
         <hr>
         <!-- list of recipes -->

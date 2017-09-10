@@ -52,7 +52,14 @@
                         </form>
                     </div>
             </div>
-    <div class="container" id="main">            
+    <div class="container" id="main">    
+        <!-- search on mobile -->
+            <div class="hide-on-med-and-up">
+                    <form action="">
+                        <input type="search" name="search" placeholder="Find Recipes" class="input-field">
+                        <button type="search" class="btn brown lighten-2">Search</button>
+                    </form>
+                </div>             
         <!-- recipe details -->
         <div class="row">
             <h1>Recipe one: making egusi soup</h1>
@@ -93,7 +100,7 @@
         <div class="row">
             <div class="col s12 m6">
                 <h4>Reviews</h4>
-                <div class="my-review">
+                <div class="my-review z-depth-3">
                     <h6><strong>Wow! nice recipe</strong> </h6>
                     <hr>
                     <p>As a cake decorator, I've tried a lot of different "doctored cake mix" recipes. This is one of the best I've tried. I love how it only takes 1 cup of sour cream (others take 2 cups)
@@ -103,12 +110,12 @@
                 </div>
                 <br>
                 <form action="" class="">
-                    <div class="input-field">
+                    <div class="input-field" id="reviews">
                         <input type="text" name="title" disabled>
                         <label for="title">Review Title</label>
                     </div>
                     <div class="input-field">
-                        <textarea name="reviews" id="reviews" cols="30" rows="10" disabled class="materialize-textarea"></textarea>
+                        <textarea name="reviews"  cols="30" rows="10" disabled class="materialize-textarea"></textarea>
                         <label for="reviews">Enter your reviews</label>
                     </div>
                     <button type="submit" class="btn brown darken-2">Post Review</button>
