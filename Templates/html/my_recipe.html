@@ -48,7 +48,7 @@
             </div>
         </div>
         <hr>
-        <h4 class="fav-title">My Recipes <a href="#add_recipe" class="right">Add New  <span class="btn-floating brown darken-2"><i class="material-icons">add</i></span></a></h4>
+        <h4 class="fav-title">My Recipes <a class="waves-effect waves-light btn brown darken-2 modal-trigger right" href="#new">Add New</a></h4>
         <hr>
         <!-- list of favorite recipes -->
         <div class="row">
@@ -125,6 +125,43 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div id="new" class="modal">
+            <div class="modal-content">
+                    <h4>Add New Recipe</h4>
+                    <form action="" id="add_recipe">
+                            <div class="col s12 m8">
+        
+                                <div class="input-field">
+                                    <input type="text" name="title">
+                                    <label for="title">Recipe Title/Name</label>
+                                </div>
+                                <div class="input-field">
+                                    <textarea name="description" id="" cols="30" rows="10" class="materialize-textarea"></textarea>
+                                    <label for="description">Description</label>
+                                </div>
+                                <div class="input-field">
+                                    <textarea name="ingredients" id="" cols="30" rows="10" class="materialize-textarea"></textarea>
+                                    <label for="ingredients">Ingredients</label>
+                                </div>
+                                <div class="input-field">
+                                    <textarea name="direction" id="" cols="30" rows="10" class="materialize-textarea"></textarea>
+                                    <label for="direction">Direction</label>
+                                </div>
+                                <div class="file-field input-field">
+                                    <div class="btn brown lighten-3">
+                                        <span>Image</span>
+                                        <input type="file" multiple>
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" placeholder="Upload Recipe image">
+                                    </div>
+                                </div>
+        
+                                <button type="submit" class="btn brown darken-2">Add Recipe</button>
+                            </div>
+                        </form>
+            </div>
     </div>
 
     <!-- site footer -->
