@@ -56,3 +56,10 @@ footer.container{
     border: 2px  color;
 
 }
+
+.card-title > a {
+    font-size: 15px;
+    padding-right: 7px;
+    padding-left: 7px;
+
+}
