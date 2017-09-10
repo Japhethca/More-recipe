@@ -1,9 +1,19 @@
 
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  #main {
+    flex: 1 0 auto;
+  }
+
 .nav-wrapper{
     background-color: #3e2723;
 
 }
-
 a.brand-logo{
 
     padding-left: 10px;
