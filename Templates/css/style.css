@@ -42,9 +42,17 @@ footer.container{
 .footer-text {
     padding-bottom: 10px;
 }
-.card-title{
 
-}
 #review-size {
     font-size: 20px;
+}
+.author {
+    color: grey;
+    text-transform: italic;
+}
+.my-review{
+    background-color: #efebe9;
+    padding: 10px;
+    border: 2px  color;
+
 }
