@@ -21,7 +21,7 @@
                 <a href="#!" class="brand-logo">More Recipe</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a class="btn brown darken-2" href="./Templates/html/login.html">Login | SignUp</a></li>
+                    <a class="waves-effect waves-light btn brown modal-trigger" href="#login">Login | SignUp</a>
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <li><a class="btn brown darken-2" href="./Templates/html/login.html">Login | SignUp</a></li>
@@ -31,6 +31,31 @@
         </div>
     </nav>
     <!-- end of navigation -->
+
+      <!-- Login or signup Modal  -->
+      <div id="login" class="modal">
+        <div class="modal-content">
+                <div class="col s12 m4">
+                        <h4>Login Form:</h4>
+                    </div>
+                    <form class="col s12" action="./Templates/html/home.html">
+        
+                        <div class="row">
+                            <div class="input-field col s12 ">
+                                <input id="email" type="email" class="validate" placeholder="Email or Username">
+                                <label for="email" data-error="wrong" data-success="right">Username</label>
+                            </div>
+                            <div class="input-field col s12 ">
+                                <input type="password" name="password" placeholder="password">
+                                <label for="password">Password</label>
+                            </div>
+                        </div>
+                        <button class="btn  brown darken-2">Login</button>
+                        <span>Forgot password?  <a href="#">Click here</a> or <a href="./Templates/html/registration.html">Sign Up</a></span>
+                    </form>
+                </div>
+        </div>
+<!-- end of login modal -->
     <!-- body of the page after navigation -->
     <div class="container" id="main">
         <h2 class="">Top Recipes</h2>
