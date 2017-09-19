@@ -44,6 +44,8 @@ const VotingController = {
         res.status(400).json({ message: err.name });
       });
   },
+
+
   // controller for handling downvotes in application
   downVote(req, res) {
     if (req.params.recipeId < 1) {
@@ -55,6 +57,10 @@ const VotingController = {
         RecipeId: req.params.recipeId
       }
     }).then((vote) => {
+      
+      /* checks if there's any vote found in the db
+      * if any is found, return an already exist message
+      */
       if (vote.length > 0) {
         return res.status(403).json({ message: 'Already upvoted recipe' });
       }

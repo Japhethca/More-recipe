@@ -56,7 +56,7 @@ var UserController = {
           });
         } // creates new user
         if (req.body.password !== req.body.verifyPassword) {
-          return res.status(403).json({ message: 'password did not match' });
+          return res.status(400).json({ message: 'password did not match' });
         }
         return Users.create({
           firstName: req.body.firstname,
@@ -90,7 +90,7 @@ var UserController = {
         }
       }).then(function (user) {
         if (!user) {
-          return res.status(400).json({ message: 'User does not exist' });
+          return res.status(404).json({ message: 'User does not exist' });
         }
 
         var token = _jsonwebtoken2.default.sign({ id: user.id }, _app2.default.get('secret_key'), { expiresIn: 84000 });
