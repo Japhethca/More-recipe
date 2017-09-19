@@ -40,7 +40,7 @@ const UserController = {
             });
           } // creates new user
           if (req.body.password !== req.body.verifyPassword) {
-            return res.status(403).json({ message: 'password did not match' });
+            return res.status(400).json({ message: 'password did not match' });
           }
           return Users.create({
             firstName: req.body.firstname,
@@ -73,7 +73,7 @@ const UserController = {
       })
         .then((user) => {
           if (!user) {
-            return res.status(400).json({ message: 'User does not exist' });
+            return res.status(404).json({ message: 'User does not exist' });
           }
 
           const token = jwt.sign({ id: user.id }, app.get('secret_key'), { expiresIn: 84000 });
