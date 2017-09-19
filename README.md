@@ -1,5 +1,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/JaphethCA/More-recipe/badge.svg?branch=staging)](https://coveralls.io/github/JaphethCA/More-recipe?branch=staging)
 [![Build Status](https://travis-ci.org/JaphethCA/More-recipe.svg?branch=ft-user-rest-api-150574931)](https://travis-ci.org/JaphethCA/More-recipe)
+[![Code Climate](https://codeclimate.com/github/JaphethCA/More-recipe/badges/gpa.svg)](https://codeclimate.com/github/JaphethCA/More-recipe)
 # More-recipe
 More-Recipes​ ​provides​ ​a​ ​platform​ ​for​ ​users​ ​to​ ​share​ ​the​ ​awesome​ ​and​ ​exciting​ ​​ ​recipe​ ​ideas​ ​they have​ ​invented​ ​or​ ​learnt.
 ## Getting started
