@@ -4,89 +4,128 @@ import app from '../server/app';
 
 chai.use(chaiHttp);
 
-
 const expect = chai.expect;
+const url = 'http://127.0.0.1:3000';
 
-let signupData = {
-  firstname: 'benjamin',
-  lastname: 'anyigor',
-  username: 'ben10',
-  email: 'benjamanyigor@gmail.com',
-  password: 'ben104real',
-  comfirmPassword: 'ben104real'
-};
-let signinData = {
-  email: 'benjaminanyigor@gmail.com',
-  password: 'ben104real'
-};
-
-
-describe("Home", () => {
-  before(done){
-    chai.request(app)
-      .post('/api/users/signin')
-      .send({email:'chidexj@gmail.com', password: 'chidex4me'})
-  }
-  
-  it('Should return 200 Ok on GET "/" ', (done) => {
-    chai.request('http://127.0.0.1:3000')
-      .get('/')
+describe('Users Signup endpoint: ', () => {
+  let userData = {
+    firstname : 'benjamin',
+    lastname: 'anyigor',
+    username: 'ben10',
+    email: 'benjaminanyigor@gmail.com',
+    password: 'benjamin',
+    verifyPassword: 'benjamin',
+  };
+  it('should allow creation of new users', (done) => {
+    chai.request(url)
+      .post('/api/users/signup')
+      .send(userData)
       .end((err, res) => {
         expect(res).to.have.status(200);
+        expect(res).to.be.json;
+        expect(res).to.have.property('body');
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.eql = 
+        expect(res.body.message).to.be.eql = 'Account Successfully created!';
         done();
       });
   });
-  it('should not login non users', (done) => {
-    chai.request('http://127.0.0.1:3000')
+
+  it('should not allow creation of users with any fields', (done) => {
+    chai.request(url)
+      .post('/api/users/signup')
+      .send({
+        firstname : '',
+        lastname: '',
+        username: 'ben10',
+        email: 'benjaminanyigor@gmail.com',
+        password: 'benjamin',
+        verifyPassword: 'benjamin',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res).to.be.json;
+        done();
+      });
+  });
+
+  it('should not allow creation of users if password does not match', (done) => {
+    chai.request(url)
+      .post('/api/users/signup')
+      .send({
+        firstname : 'benjamin',
+        lastname: 'anyigor',
+        username: 'ben10',
+        email: 'benjaminanyigor@gmail.com',
+        password: 'benjamin',
+        verifyPassword: 'benj',
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res).to.be.json;
+        expect(res).to.have.property('body');
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'password did not match';
+        done();
+      });
+  });
+
+  it('should not allow users to create account using same details', (done) => {
+    chai.request(url)
+      .post('/api/users/signup')
+      .send(userData)
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res).to.be.json;
+        expect(res).to.have.property('body');
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.equal('User already exists');
+        done();
+      });
+  });
+});
+
+
+describe("Users Signin endpoint", () => {
+  let signinData = {
+    email: 'benjaminanyigor@gmail.com',
+    password: 'benjamin',
+  };
+
+  it('should signin if users does not exist', (done) => {
+    chai.request(url)
+      .post('/api/users/signin')
+      .send({email:'invalidmail@gmail.com', password:'password'})
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res).to.be.json;
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.equal = 'User does not exist';
+        done();
+      });
+  });
+
+
+  it('should should not allow signin with empty fields', (done) => {
+    chai.request(url)
       .post('/api/users/signin')
       .send(signinData)
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res.body).have.property('message');
-        expect(res.body.message).to.eql = 'Login Failed!';
+        expect(res).to.be.json;
+        done();
+      });
+  });
+  
+  it('should signin users with their details', (done) => {
+    chai.request(url)
+      .post('/api/users/signin')
+      .send(signinData)
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res).to.be.json;
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.equal = 'User does not exist';
         done();
       });
   });
 });
-
-describe('API /API/USERS/SIGNUP', () => {
-  it('Should be able to sign up new users', (done) => {
-    chai.request('http://127.0.0.1:3000')
-      .post('/api/users/signup')
-      .send(signupData)
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res).to.be.json;
-        expect(res.body).have.property('message');
-        expect(res.body.message).to.eql = 'Account Successfully created!';
-        done();
-      });
-  });
-  it('Should prevent users from creating new acount with the same details', (done) => {
-    chai.request('http://127.0.0.1:3000')
-      .post('/api/users/signup')
-      .send(signupData)
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res).to.be.json;
-        expect(res.body).have.property('message');
-        expect(res.body.message).to.eql = 'User already exists';
-        done();
-      });
-  });
-  it('should prevent signed users from signing in again', (done) => {
-    chai.request('http://127.0.0.1:3000')
-      .post('/api/users/signup')
-      .send({ email: 'mymail@.com', password: 'mymail', firstname:'youname',lastname:'myname',aboutme:'just me', username:'myname' })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res).to.be.json;
-        expect(res.body).have.property('message');
-        expect(res.body.message).to.eql = 'User already exists';
-        done();
-      });
-  });
-});
-

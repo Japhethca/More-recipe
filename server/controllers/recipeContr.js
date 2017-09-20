@@ -117,11 +117,11 @@ const RecipeController = {
                 res.status(500).json({ message: 'Update Unsuccessful!', error: err });
               });
           } else {
-            res.status(401).json({ message: 'User is not authorized to update this recipe!' });
+            res.status(403).json({ message: 'User is not authorized to update this recipe!' });
           }
         })
         .catch((err) => {
-          res.status(403).json({
+          res.status(400).json({
             message: 'Request cannot be processed',
             Error: err
           });
@@ -134,7 +134,7 @@ const RecipeController = {
   // controller for deleting recipe by recipeId
   deleteRecipe(req, res) {
     if (req.params.recipeId < 1) {
-      return res.status(403).json({ message: 'Recipe Id cannot be less than 1' });
+      return res.status(400).json({ message: 'Recipe Id cannot be less than 1' });
     }
     Recipes.findOne({
       where:
