@@ -9,9 +9,7 @@
     ]
   },
   "scripts": {
-    "start": "node index.js",
-    "build": "babel server -d build",
-    "start:app": "nodemon ./build/app.js",
+    "start": "nodemon --watch server --exec babel-node server/app.js",
     "test": "mocha --compilers js:babel-register"
   },
   "repository": {
