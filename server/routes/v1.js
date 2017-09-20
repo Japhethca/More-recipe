@@ -49,4 +49,11 @@ apiV1.post('/recipes/:recipeId/reviews', ReviewController.recipeReview)
   .get('/recipes/:recipeId/reviews', ReviewController.getRecipeReview)
   .all('/recipes/:recipeId/reviews', auth.notImplemented);
 
+// Route for getting recipes created by a single user
+apiV1.get('/users/recipes', RecipeController.getUserRecipes)
+  .all('/users/recipes', auth.notImplemented);
+
+apiV1.get('/admin/users', UserController.users);
+
+
 export default apiV1;
