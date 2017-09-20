@@ -4,7 +4,10 @@ import Sequelize from 'sequelize';
 import db from '../models/index';
 
 const Recipes = models.Recipes;
+const Users = models.Users;
+
 const sequelize = db.sequelize;
+
 
 const createRules = {
   name: 'required',
@@ -22,7 +25,7 @@ const updateRules = {
 
 
 const RecipeController = {
-// get all recipes in the application
+  // get all recipes in the application
   listUpvotes(req, res, next) {
     if (req.query.order && req.query.sort) {
       return sequelize.query(`
@@ -48,10 +51,10 @@ const RecipeController = {
   createRecipe(req, res) {
     const recipeValidator = new validator(req.body, createRules);
     if (recipeValidator.passes()) {
-      Recipes.findAll({ where: { name: req.body.title } })
-        .then((recipes) => {
-          if (recipes.length > 0) {
-            res.status(400).json({ message: 'Recipe with this name already exists' });
+      return Recipes.findOne({ where: { name: req.body.name } })
+        .then((recipe) => {
+          if (recipe) {
+            return res.status(400).json({ message: 'Recipe with this name already exists' });
           }
         }).then(() => Recipes.create({
           name: req.body.name,
@@ -66,9 +69,8 @@ const RecipeController = {
         .catch(() => {
           res.status(400).json({ message: 'Request was not processed' });
         });
-    } else {
-      res.status(403).json(recipeValidator.errors);
     }
+    res.status(403).json(recipeValidator.errors);
   },
 
 
@@ -133,14 +135,35 @@ const RecipeController = {
 
   // controller for deleting recipe by recipeId
   deleteRecipe(req, res) {
+    const thisRecipeId = req.params.recipeId;
+
+    if (thisRecipeId < 1) {
+      return res.status(404).json({ message: 'Recipe does not exist' });
+    }
+    return Recipes.findById(thisRecipeId).then((recipe) => {
+      if (!recipe) {
+        res.status(404).json({ message: 'Recipe does not exist' });
+      }
+
+      if (recipe.UserId === req.decoded.id) {
+        res.status(200).json({ message: 'Recipe deleted successfully' });
+        recipe.destroy();
+      } else {
+        res.status(403).json({ message: 'User is not authorised to delete this recipe' });
+      }
+    })
+      .catch(Error => res.status(500).json({ message: 'Server Error', Error }));
+  },
+
+  /* deleteRecipe(req, res) {
     if (req.params.recipeId < 1) {
       return res.status(400).json({ message: 'Recipe Id cannot be less than 1' });
     }
     Recipes.findOne({
       where:
-        {
-          id: req.params.recipeId,
-        },
+      {
+        id: req.params.recipeId,
+      },
     })
       .then((recipe) => {
         if (recipe == null || recipe.length < 0) {
@@ -156,7 +179,29 @@ const RecipeController = {
       .catch((err) => {
         res.status(500).json({ message: 'Server Error', Error: err });
       });
+  }, */
+
+  getUserRecipes(req, res) {
+    return Recipes.findAll({
+      where: {
+        UserId: req.decoded.id,
+      }
+    }).then((recipes) => {
+      if (recipes.length > 0) {
+        Users.findById(req.decoded.id).then((user) => {
+          if (!user) {
+            res.status(404).json({ message: 'User does not exist' });
+          }
+          const Username = user.get('userName');
+          res.status(200).json({ Username, Recipes: recipes });
+        }).catch(error => res.status(500).json({ error }));
+      } else {
+        res.status(400).json({ message: 'User has not created any recipe' });
+      }
+    }).catch(error => res.status(500).json({ error }));
   },
+
 };
+
 
 export default RecipeController;
