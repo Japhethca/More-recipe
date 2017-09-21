@@ -146,8 +146,9 @@ const RecipeController = {
       }
 
       if (recipe.UserId === req.decoded.id) {
-        res.status(200).json({ message: 'Recipe deleted successfully' });
         recipe.destroy();
+        res.status(200).json({ message: 'Recipe deleted successfully' });
+       
       } else {
         res.status(403).json({ message: 'User is not authorised to delete this recipe' });
       }
@@ -155,32 +156,7 @@ const RecipeController = {
       .catch(Error => res.status(500).json({ message: 'Server Error', Error }));
   },
 
-  /* deleteRecipe(req, res) {
-    if (req.params.recipeId < 1) {
-      return res.status(400).json({ message: 'Recipe Id cannot be less than 1' });
-    }
-    Recipes.findOne({
-      where:
-      {
-        id: req.params.recipeId,
-      },
-    })
-      .then((recipe) => {
-        if (recipe == null || recipe.length < 0) {
-          res.status(404).json({ message: 'Cannot delete recipe, does not exist' });
-        }
-        if (recipe.UserId === req.decoded.id) {
-          recipe.destroy();
-          res.status(200).json({ message: 'Recipe deleted successfully' });
-        } else {
-          res.status(403).json({ message: 'You are not authorised to delete this recipe!' });
-        }
-      })
-      .catch((err) => {
-        res.status(500).json({ message: 'Server Error', Error: err });
-      });
-  }, */
-
+  
   getUserRecipes(req, res) {
     return Recipes.findAll({
       where: {

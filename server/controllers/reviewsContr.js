@@ -51,8 +51,6 @@ const ReviewController = {
           Error: err,
         });
       });
-    /*  }
-    res.status(400).json(validReview.errors); */
   },
 
 
