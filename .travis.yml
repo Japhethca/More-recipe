@@ -1,25 +1,18 @@
-language: node_js
-
-node_js: "7"
-
-install:
-- npm install
-
-script:
-- npm test
-
-env:
-- NODE_ENV=test
-
-cache:
-  directories:
-  - "node_modules"
-
+ language: node_js
+node_js:
+  - 'node'
 services:
-- postgresql
-
+  - postgresql
 before_script:
-- createuser more-recipe -s -U postgres
-- createdb moreRecipesTest --username=postgres
+  - npm install -g mocha
+  - npm install -g nyc
+  - npm install -g sequelize-cli
+  - psql -c 'create database recipe_test;' -U postgres
+script:
+  - npm test
+after_script: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
-after_success: npm run coverage
+after_success: 
+  - npm install -g codeclimate-test-reporter
+  - codeclimate-test-reporter < ./coverage/lcov.info
+  - ./node_modules/.bin/coveralls --verbose < coverage/lcov.info
