@@ -26,21 +26,23 @@ const VotingController = {
       if (vote) {
         const upvoted = vote.get('vote');
         // if recipe has been upvoted
-        if (upvoted === 1) {
-          res.status(403).json({ message: 'Already upvoted recipe' });
-        } else if (upvoted === 0) {
-          // upvote if recipe has been downvoted before
-          Recipes.findById(req.params.recipeId).then((recipe) => {
-            if (!recipe) {
-              res.status(404).json({ message: 'No such recipe exists' });
-            } else {
+        // upvote if recipe has been downvoted before
+        Recipes.findById(req.params.recipeId).then((recipe) => {
+          if (!recipe) {
+            res.status(404).json({ message: 'No such recipe exists' });
+          } else if (recipe) {
+            if (upvoted === 1) {
+              recipe.decrement('upVotes');
+              vote.destroy();
+              res.status(200).json({ message: 'Recipe Unvoted', Recipe: recipe });
+            } else if (upvoted === 0) {
               recipe.increment('upVotes');
               recipe.decrement('downVotes');
               vote.update({ vote: 1 });
-              res.status(200).json({ message: 'Recipe upvoted' });
+              res.status(200).json({ message: 'Recipe Upvoted', Recipe: recipe });
             }
-          });
-        }
+          }
+        });
       } else {
         // if recipe has not been voted by user
         // find recipe and increment its upvotes field
@@ -55,7 +57,7 @@ const VotingController = {
               UserId: req.decoded.id,
             });
             recipe.increment('upVotes');
-            res.status(200).json({ message: 'Recipe upvoted', Recipe: recipe });
+            res.status(200).json({ message: 'Recipe Upvoted', Recipe: recipe });
           });
       }
       // find a single recipe by id
@@ -82,22 +84,22 @@ const VotingController = {
       */
       if (vote) {
         const downvoted = vote.get('vote');
-        // if recipe has been downvoted
-        if (downvoted === 0) {
-          res.status(403).json({ message: 'Already downvoted recipe' });
-        } else if (downvoted === 1) {
-          // upvote if recipe has been downvoted before
-          Recipes.findById(req.params.recipeId).then((recipe) => {
-            if (!recipe) {
-              res.status(404).json({ message: 'No such recipe exists' });
-            } else {
+        Recipes.findById(req.params.recipeId).then((recipe) => {
+          if (!recipe) {
+            res.status(404).json({ message: 'No such recipe exists' });
+          } else if (recipe) {
+            if (downvoted === 0) {
+              recipe.decrement('downVotes');
+              vote.destroy();
+              res.status(200).json({ message: 'Recipe Unvoted', Recipe: recipe });
+            } else if (downvoted === 1) {
               recipe.increment('downVotes');
               recipe.decrement('upVotes');
               vote.update({ vote: 0 });
-              res.status(200).json({ message: 'Recipe downvoted' });
+              res.status(200).json({ message: 'Recipe Downvoted', Recipe: recipe });
             }
-          });
-        }
+          }
+        });
       } else {
         // if recipe has not been voted by user
         // find recipe and increment its upvotes field
@@ -112,7 +114,7 @@ const VotingController = {
               UserId: req.decoded.id,
             });
             recipe.increment('upVotes');
-            res.status(200).json({ message: 'Recipe downvoted', Recipe: recipe });
+            res.status(200).json({ message: 'Recipe Downvoted', Recipe: recipe });
           });
       }
       // find a single recipe by id
