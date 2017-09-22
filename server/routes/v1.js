@@ -28,12 +28,13 @@ apiV1.put('/recipes/:recipeId', RecipeController.updateRecipe)
 
 
 // endpoint for getting users favorite recipes
-apiV1.get('/users/:usersId/recipes', FavoriteController.getFavorites)
+apiV1.get('/users/:usersId/recipes', FavoriteController.getUserFavorites)
   .all('/users/:userId/recipes', auth.notImplemented);
 
 // End point for users to get and set favorite recipes
 apiV1.get('/users/:usersId/favorites', FavoriteController.getFavorites)
   .post('/users/:recipeId/favorites', FavoriteController.setFavorites)
+  .delete('/users/:recipeId/favorites', FavoriteController.removeRecipeFromFavorites)
   .all('/users/:usersId/favorites', auth.notImplemented);
 
 
@@ -48,5 +49,12 @@ apiV1.put('/recipes/:recipeId/downvotes', votes.downVote)
 apiV1.post('/recipes/:recipeId/reviews', ReviewController.recipeReview)
   .get('/recipes/:recipeId/reviews', ReviewController.getRecipeReview)
   .all('/recipes/:recipeId/reviews', auth.notImplemented);
+
+// Route for getting recipes created by a single user
+apiV1.get('/users/recipes', RecipeController.getUserRecipes)
+  .all('/users/recipes', auth.notImplemented);
+
+apiV1.get('/admin/users', UserController.users);
+
 
 export default apiV1;

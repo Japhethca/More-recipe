@@ -2,7 +2,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
-import apiRouter from './route/api';
+import apiRouter from './routes/api';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api', apiRouter);
 
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the more recipe app' });
+  res.status(200).json({ message: 'Welcome to more recipe app' });
 });
 app.all('*', (req, res) => {
   res.status(404).send('404: Not Found');
