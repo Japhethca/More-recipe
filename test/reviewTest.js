@@ -26,7 +26,7 @@ describe('Review Recipe Endpoint: ', () => {
   beforeEach((done) => {
     chai.request(url)
       .post('/')
-      .send({'token': token})
+      .set({ token })
       .end((err, res) => {
         done();
       });

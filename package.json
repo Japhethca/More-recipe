@@ -11,7 +11,7 @@
   "scripts": {
     "start": "nodemon --watch server --exec babel-node server/app.js",
     "build": "babel server -d build",
-    "test": "mocha --compilers js:babel-register",
+    "test:b": "mocha --compilers js:babel-register",
     "test:db:migrate": "cross-env NODE_ENV=test sequelize db:migrate:undo:all && cross-env NODE_ENV=test sequelize db:migrate",
     "test:db:seed": "cross-env NODE_ENV=test sequelize db:seed:all",
     "start:test:db": "npm run test:db:migrate && npm run test:db:seed",

@@ -49,11 +49,11 @@ describe('END POINT /API/RECIPES', () => {
   beforeEach((done) => {
     chai.request(url)
       .get('/')
-      .send({'token': token})
+      .set({ token })
       .end((err, res) => {
         done();
       });
-  })
+  });
 
 
   it('should create new recipes', (done) => {
