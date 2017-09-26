@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import path from 'path';
-import webpackConfig from '../webpack.config.dev';
+import webpackConfig from './webpack.config.dev';
 import apiRouter from './routes/api';
 
 
