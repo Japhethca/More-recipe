@@ -3,7 +3,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default {
   devtool: 'eval-source-map',
-  entry: [path.join(__dirname, 'client/index.js'),
+  entry: [path.join(__dirname, '../client/index.js'),
     // path.join(__dirname, 'client/scss/style.scss')
   ],
   output: {
@@ -14,7 +14,7 @@ export default {
     loaders: [
       {
         test: /\.js$/,
-        include: [path.join(__dirname, 'client'),
+        include: [path.join(__dirname, '../client'),
           path.join(__dirname, 'server/inputValidators')],
         loaders: ['babel-loader'],
       },
