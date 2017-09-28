@@ -3,15 +3,12 @@ module.exports = {
   development: {
     username: 'chidex',
     password: 'chidex4me',
-    database: 'new',
+    database: 'test',
     host: '',
     dialect: 'postgres'
   },
   test: {
-    username: 'chidex',
-    password: 'chidex4me',
-    database: 'test',
-    host: '',
+    use_env_variable: 'MORE_RECIPE_DB',
     dialect: 'postgres'
   },
   production: {
