@@ -3,10 +3,7 @@ node_js:
 services:
   - postgresql
 before_script:
-  - npm install -g mocha
-  - npm install -g nyc
-  - npm install -g sequelize
-  - npm install -g cross-env
+  - npm install
   - psql -c 'create database test;' -U postgres
 script:
   - npm test
