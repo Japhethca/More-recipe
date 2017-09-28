@@ -9,13 +9,22 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    RecipeId: {
+    recipeId: {
       type: DataTypes.INTEGER,
     },
-    UserId: {
+    userId: {
       type: DataTypes.INTEGER,
     },
 
   });
+  Reviews.associate = (models) => {
+    Reviews.belongsTo(models.Recipes, {
+      foreignKey: 'recipeId',
+      onDelete: 'CASCADE',
+    });
+    Reviews.belongsTo(models.Users, {
+      foreignKey: 'userId',
+    });
+  };
   return Reviews;
 };

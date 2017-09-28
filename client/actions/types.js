@@ -1,0 +1,3 @@
+export const GET_ALL_RECIPES = 'GET_ALL_RECIPES';
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+

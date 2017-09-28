@@ -7,7 +7,7 @@ import app from '../app';
 const Users = models.Users;
 
 const signinRules = {
-  email: 'string|required',
+  email: 'required|email',
   password: 'required|min:5',
 };
 
@@ -43,11 +43,11 @@ const UserController = {
             return res.status(400).json({ message: 'password did not match' });
           }
           return Users.create({
-            firstName: req.body.firstname,
-            lastName: req.body.lastname,
-            userName: req.body.username,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            username: req.body.username,
             password: req.body.password,
-            aboutMe: req.body.aboutme,
+            aboutme: req.body.aboutme,
             email: req.body.email,
           })
             .then(user => res.status(200).json({
@@ -57,7 +57,7 @@ const UserController = {
         });
     }
 
-    res.status(400).json({ message: validate.errors });
+    res.status(400).json({ message: validate.errors.errors });
   },
 
 
@@ -76,7 +76,7 @@ const UserController = {
             return res.status(404).json({ message: 'User does not exist' });
           }
 
-          const token = jwt.sign({ id: user.id }, app.get('secret_key'), { expiresIn: 84000 });
+          const token = jwt.sign({ id: user.id, user: user.email }, app.get('secret_key'), { expiresIn: 84000 });
           res.status(200).json({ message: 'Login Successful!', 'User detail': user, Token: token });
         })
         .catch(err => res.status(500).json({
@@ -85,7 +85,7 @@ const UserController = {
         }));
     }
 
-    res.status(400).json({ message: signinValidator.errors });
+    res.status(400).json({ message: signinValidator.errors.errors });
   },
 
 

@@ -30,7 +30,7 @@ const FavoriteController = {
   getUserFavorites(req, res) {
     Favorites.findAll({
       where: {
-        UserId: req.params.usersId
+        userId: req.params.usersId
       },
       attributes: [],
       include: [
@@ -49,7 +49,7 @@ const FavoriteController = {
 
   getFavorites(req, res) {
     Favorites.findAll({
-      where: { UserId: req.params.usersId },
+      where: { userId: req.params.usersId },
       include: [Recipes]
     }).then((favorites) => {
       if (favorites.length < 1) {

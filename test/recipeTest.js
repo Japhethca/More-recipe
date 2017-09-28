@@ -1,11 +1,13 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+import app from '../server/app';
+
 
 chai.use(chaiHttp);
 
 const expect = chai.expect;
 
-const url = 'http://127.0.0.1:3000';
+const url = app;
 
 
 describe('API ROOT', () => {
