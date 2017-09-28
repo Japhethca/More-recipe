@@ -4,7 +4,7 @@ import app from '../app';
 
 const auth = {
   authenticate(req, res, next) {
-    const token = req.body.token || req.query.token || req.headers.body;
+    const token = req.body.token || req.query.token || req.headers.token;
 
     if (req.url === '/users/signin' || req.url === '/users/signup') {
       next();
