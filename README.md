@@ -79,5 +79,5 @@ $ npm run mocha --compilers js:babel-register
 
 ###  Site Links
 [More-recipe (Template)](https://japhethca.github.io/More-recipe/)
-
 [More-recipe (Hosted on heroku)](https://more-recipe-cj.herokuapp.com/)
+[More-recipe (API docs)](http://docs.anyigorchidieberejapheth.apiary.io)
