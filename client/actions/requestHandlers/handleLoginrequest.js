@@ -12,11 +12,12 @@ export function setCurrentUser(user) {
 
 export function logout() {
   return (dispatch) => {
-    localStorage.removeItem(localStorage.token);
+    delete localStorage.token;
     setAuthorizationToken(false);
     dispatch(setCurrentUser({}));
   };
 }
+
 export function handleLoginRequest(userdata) {
   // handles loging request
   return dispatch => axios.post('/api/users/signin', userdata).then((res) => {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavigationBar from '../components/NavigationBar';
-import Latest from '../components/Latest';
+import TopRecipes from '../components/recipeComponents/TopRecipe';
 
 
 class Home extends Component {
@@ -8,7 +8,7 @@ class Home extends Component {
     return (
       <div>
         <NavigationBar />
-        <Latest />
+        <TopRecipes/>
       </div>
     )
   }
