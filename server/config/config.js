@@ -8,10 +8,7 @@ module.exports = {
     dialect: 'postgres'
   },
   test: {
-    username: 'chidex',
-    password: '',
-    database: 'test',
-    host: '',
+    use_env_variable: 'MORE_RECIPE_DB',
     dialect: 'postgres'
   },
   production: {
