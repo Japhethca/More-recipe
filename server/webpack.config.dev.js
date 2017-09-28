@@ -8,7 +8,6 @@ export default {
   ],
   output: {
     path: '/',
-    filename: 'main.js'
 
   },
   module: {
