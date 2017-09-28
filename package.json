@@ -61,6 +61,7 @@
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6",
     "sequelize": "^4.7.5",
+    "sequelize-cli": "^3.0.0",
     "validator": "^8.2.0",
     "validatorjs": "^3.13.5",
     "webpack": "^3.6.0",
