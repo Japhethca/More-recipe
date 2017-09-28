@@ -28,8 +28,8 @@ const ReviewController = {
         Reviews.create({
           title: req.body.title,
           content: req.body.content,
-          RecipeId: recipe.id,
-          UserId: req.decoded.id,
+          recipeId: recipe.id,
+          userId: req.decoded.id,
         })
           .then((review) => {
             res.status(200).json({
@@ -58,7 +58,7 @@ const ReviewController = {
   getRecipeReview(req, res) {
     return Reviews.findAll({
       where: {
-        RecipeId: req.params.recipeId,
+        recipeId: req.params.recipeId,
       },
     })
       .then((reviews) => {

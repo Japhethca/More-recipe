@@ -29,7 +29,7 @@ const RecipeController = {
   listUpvotes(req, res, next) {
     if (req.query.order && req.query.sort) {
       return sequelize.query(`
-      SELECT * FROM "Recipes" AS "Recipes" ORDER BY "upVotes" DESC;`, { type: Sequelize.QueryTypes.SELECT })
+      SELECT * FROM "Recipes" AS "Recipes" ORDER BY "upvotes" DESC;`, { type: Sequelize.QueryTypes.SELECT })
         .then(recipes => res.status(200).json({ message: 'All Recipes displayed in Descending order', recipes }))
         .catch(err => res.status(400).json(err));
     }
@@ -59,9 +59,9 @@ const RecipeController = {
         }).then(() => Recipes.create({
           name: req.body.name,
           ingredients: req.body.ingredient,
-          directions: req.body.direction,
-          descriptions: req.body.description,
-          UserId: req.decoded.id,
+          direction: req.body.direction,
+          description: req.body.description,
+          userId: req.decoded.id,
         }))
         .then((recipe) => {
           res.status(200).json({ message: 'Recipe successfully created', Details: recipe });
@@ -102,12 +102,12 @@ const RecipeController = {
         .then((recipe) => {
           if (!recipe) {
             res.status(404).json({ message: 'Recipe does not exist' });
-          } else if (recipe.UserId === req.decoded.id) {
+          } else if (recipe.userId === req.decoded.id) {
             recipe.update({
               name: req.body.name,
               ingredients: req.body.ingredient,
-              descriptions: req.body.description,
-              directions: req.body.direction,
+              description: req.body.description,
+              direction: req.body.direction,
             })
               .then(() => {
                 res.json(200).json({
@@ -145,7 +145,7 @@ const RecipeController = {
         res.status(404).json({ message: 'Recipe does not exist' });
       }
 
-      if (recipe.UserId === req.decoded.id) {
+      if (recipe.userId === req.decoded.id) {
         recipe.destroy();
         res.status(200).json({ message: 'Recipe deleted successfully' });
        
@@ -160,7 +160,7 @@ const RecipeController = {
   getUserRecipes(req, res) {
     return Recipes.findAll({
       where: {
-        UserId: req.decoded.id,
+        userId: req.decoded.id,
       }
     }).then((recipes) => {
       if (recipes.length > 0) {
@@ -168,7 +168,7 @@ const RecipeController = {
           if (!user) {
             res.status(404).json({ message: 'User does not exist' });
           }
-          const Username = user.get('userName');
+          const Username = user.get('username');
           res.status(200).json({ Username, Recipes: recipes });
         }).catch(error => res.status(500).json({ error }));
       } else {

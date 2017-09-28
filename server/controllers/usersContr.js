@@ -43,11 +43,11 @@ const UserController = {
             return res.status(400).json({ message: 'password did not match' });
           }
           return Users.create({
-            firstName: req.body.firstname,
-            lastName: req.body.lastname,
-            userName: req.body.username,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            username: req.body.username,
             password: req.body.password,
-            aboutMe: req.body.aboutme,
+            aboutme: req.body.aboutme,
             email: req.body.email,
           })
             .then(user => res.status(200).json({
