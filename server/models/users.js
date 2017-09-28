@@ -2,15 +2,15 @@
 
 module.exports = (sequelize, DataTypes) => {
   let Users = sequelize.define('Users', {
-    firstName: {
+    firstname: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lastName: {
+    lastname: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    userName: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -18,17 +18,36 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    aboutMe: {
+    aboutme: {
       type: DataTypes.STRING,
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      isEmail: true
     },
     photo: {
       type: DataTypes.STRING,
     },
 
   });
+  Users.associate = (models) => {
+    Users.hasMany(models.Recipes, {
+      foreignKey: 'userId',
+      as: 'recipe',
+    });
+    Users.hasMany(models.Reviews, {
+      foreignKey: 'userId',
+      as: 'reviews',
+    });
+    Users.hasMany(models.Favorites, {
+      foreignKey: 'userId',
+      as: 'favorites',
+    });
+    Users.hasMany(models.Votes, {
+      foreignKey: 'userId',
+      as: 'votes',
+    });
+  };
   return Users;
 };

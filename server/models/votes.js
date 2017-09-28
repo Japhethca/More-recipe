@@ -7,13 +7,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    RecipeId: {
+    recipeId: {
       type: DataTypes.INTEGER,
     },
-    UserId: {
+    userId: {
       type: DataTypes.INTEGER,
     },
-
   });
+  Votes.associate = (models) => {
+    Votes.belongsTo(models.Recipes, {
+      foreignKey: 'recipeId',
+      
+    });
+    Votes.belongsTo(models.Users, {
+      foreignKey: 'userId',
+    });
+  };
   return Votes;
 };

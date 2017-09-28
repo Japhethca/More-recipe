@@ -3,10 +3,10 @@
 module.exports = (sequelize, DataTypes) => {
   let Recipes = sequelize.define('Recipes', {
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
-    descriptions: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
@@ -14,23 +14,45 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    directions: {
+    direction: {
       type: DataTypes.TEXT,
+      allowNull: false,
     },
     image: {
       type: DataTypes.STRING,
     },
-    upVotes: {
+    upvotes: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
-    downVotes: {
+    views: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
-    UserId: {
+    downvotes: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    userId: {
       type: DataTypes.INTEGER,
     }
   });
+  Recipes.associate = (models) => {
+    Recipes.belongsTo(models.Users, {
+      foreignKey: 'userId',
+    });
+    Recipes.hasMany(models.Reviews, {
+      foreignKey: 'recipeId',
+      as: 'reviews',
+    });
+    Recipes.hasMany(models.Favorites, {
+      foreignKey: 'recipeId',
+      as: 'favorites',
+    });
+    Recipes.hasMany(models.Votes, {
+      foreignKey: 'recipeId',
+      as: 'votes',
+    });
+  };
   return Recipes;
 };

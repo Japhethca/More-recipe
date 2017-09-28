@@ -36,13 +36,13 @@ db.Sequelize = Sequelize;
 
 
 // Model relationship definitions
-db.Users.hasMany(db.Recipes, { as: 'usersId' });
-db.Users.hasMany(db.Favorites);
-db.Favorites.belongsTo(db.Recipes);
-db.Votes.belongsTo(db.Recipes);
-db.Reviews.belongsTo(db.Users);
-db.Recipes.hasMany(db.Reviews);
-db.Users.hasMany(db.Votes);
+// db.Users.hasMany(db.Recipes, { as: 'usersId' });
+// db.Users.hasMany(db.Favorites);
+// db.Favorites.belongsTo(db.Recipes);
+// db.Votes.belongsTo(db.Recipes);
+// db.Reviews.belongsTo(db.Users);
+// db.Recipes.hasMany(db.Reviews);
+// db.Users.hasMany(db.Votes);
 
-db.sequelize.sync({ force: true });
-export default db;
+// db.sequelize.sync({ force: true });
+module.exports = db;
