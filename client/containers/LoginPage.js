@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux'; 
 import NavigationBar from '../components/NavigationBar';
-import LoginForm from '../components/userComponent/LoginForm';
+import LoginForm from '../components/LoginForm';
 import {handleLoginRequest} from '../actions/requestHandlers/handleLoginrequest';
 
 
