@@ -3,7 +3,7 @@ module.exports = {
   development: {
     username: 'chidex',
     password: 'chidex4me',
-    database: 'test',
+    database: 'new',
     host: '',
     dialect: 'postgres'
   },

@@ -83,7 +83,7 @@ const RecipeController = {
     })
       .then((recipe) => {
         if (!recipe) {
-          return res.status(400).json({ message: 'Recipe does not exist!' });
+          return res.status(404).json({ message: 'Recipe does not exist!' });
         }
         res.status(200).json(recipe);
       });
