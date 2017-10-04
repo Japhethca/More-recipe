@@ -1,45 +1,40 @@
-import path from 'path';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-export default {
+module.exports = {
   devtool: 'eval-source-map',
-  entry: [path.join(__dirname, '../client/index.js'),
+  entry: [path.join(__dirname, './client/index.js'),
     // path.join(__dirname, 'client/scss/style.scss')
   ],
   output: {
-    path: path.resolve(__dirname, '/public'),
-    filename: 'main.js'
+    filename: 'bundle.js'
 
   },
   module: {
     loaders: [
       {
         test: /\.js$/,
-        include: [path.join(__dirname, '../client'),
+        include: [path.join(__dirname, './client'),
           path.join(__dirname, 'server/inputValidators')],
         loaders: ['babel-loader'],
       },
-    ],
-    /* rules: [
       {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract({ loader: 'css-loader?importLoaders=1', }),
-      },
-      {
-        test: /\.(sass|scss)$/,
-        loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('css-loader!sass-loader')
       }
-    ] */
+    ],
   },
   resolve: {
     extensions: [' ', '.js']
-  },/* 
-  plugins: [
-    new ExtractTextPlugin({ filename: 'client/css/main.css', allChunks: true, }),
-  ], */
+  },
   node: {
     net: 'empty',
     dns: 'empty'
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin('style.css', {
+      allChunks: true
+    })
+  ]
 
 };
