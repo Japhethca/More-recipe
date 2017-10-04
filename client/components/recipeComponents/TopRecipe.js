@@ -16,21 +16,19 @@ class TopRecipes extends Component {
   
   componentDidMount() {
     this.props.getAllRecipes().then(
-      (res) => {console.log(res.data)},
-      (err) => {console.log(res.dadta)}
+      (res) => {this.setState({['recipes']:res.data.List})},
+      (err) => {console.log(err.data)}
     )
   }
-  
   render() {
-    const allrrecipes = this.state.recipes;
-    if (allrrecipes.length > 0){
-      allrrecipes.map((recipe) => {
-        <Recipe recipe={recipe} />
-      })
-    }
+    let items = this.state.recipes;
     return (
       <div className='container'>
-        <Recipe />
+        <ul className='row'>
+          {items.map((val)=> {
+            return <li className='col s12 m4'> <Recipe key={val.id} recipe={val} history={this.props.history} /> </li>
+          })}
+        </ul>
       </div>
     )
   }
@@ -38,6 +36,10 @@ class TopRecipes extends Component {
 
 
 TopRecipes.propTypes = {
-  getAllRecipes: PropTypes.func.isRequired
+  getAllRecipes: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 }
+
+
+
 export default connect(null, {getAllRecipes})(TopRecipes);
