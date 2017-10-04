@@ -33,11 +33,16 @@ const VotingController = {
           } else if (recipe) {
             if (upvoted === 1) {
               recipe.decrement('upvotes');
-              vote.destroy();
+              Votes.destroy({
+                where: {
+                  userId: req.decoded.id,
+                  recipeId: req.params.recipeId
+                }
+              });
               res.status(200).json({ message: 'Recipe Unvoted', Recipe: recipe });
             } else if (upvoted === 0) {
-              recipe.increment('upvotes');
               recipe.decrement('downvotes');
+              Recipes.increment('upvotes', { where: { id: req.params.recipeId } });
               vote.update({ vote: 1 });
               res.status(200).json({ message: 'Recipe Upvoted', Recipe: recipe });
             }
@@ -56,7 +61,7 @@ const VotingController = {
               recipeId: req.params.recipeId,
               userId: req.decoded.id,
             });
-            recipe.increment('upvotes');
+            recipe.increment('upvotes', { where: { id: req.params.recipeId } });
             res.status(200).json({ message: 'Recipe Upvoted', Recipe: recipe });
           });
       }
@@ -89,13 +94,23 @@ const VotingController = {
             res.status(404).json({ message: 'No such recipe exists' });
           } else if (recipe) {
             if (downvoted === 0) {
-              recipe.decrement('downvotes');
-              vote.destroy();
+              Recipes.findById(req.params.recipeId).then(rec => rec.decrement('downvotes'));
+              Votes.destroy({
+                where: {
+                  userId: req.decoded.id,
+                  recipeId: req.params.recipeId
+                }
+              });
               res.status(200).json({ message: 'Recipe Unvoted', Recipe: recipe });
             } else if (downvoted === 1) {
-              recipe.increment('downvotes');
-              recipe.decrement('upvotes');
-              vote.update({ vote: 0 });
+              Recipes.increment('downvotes', { where: { id: req.params.recipeId } });
+              Recipes.findById(req.params.recipeId).then(rec => rec.decrement('upvotes'));
+              Votes.update({ vote: 0 }, {
+                where: {
+                  userId: req.decoded.id,
+                  recipeId: req.params.recipeId
+                }
+              });
               res.status(200).json({ message: 'Recipe Downvoted', Recipe: recipe });
             }
           }
@@ -109,11 +124,11 @@ const VotingController = {
               return res.status(404).json({ message: 'Recipe does not exist!' });
             } // create a new vote if user has not voted before
             Votes.create({
-              vote: 1,
+              vote: 0,
               recipeId: req.params.recipeId,
               userId: req.decoded.id,
             });
-            recipe.increment('upvotes');
+            Recipes.increment('downvotes', { where: { id: req.params.recipeId } });
             res.status(200).json({ message: 'Recipe Downvoted', Recipe: recipe });
           });
       }
@@ -125,5 +140,6 @@ const VotingController = {
   },
 
 };
+
 
 export default VotingController;

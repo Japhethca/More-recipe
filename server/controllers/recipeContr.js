@@ -125,7 +125,7 @@ const RecipeController = {
         .catch((err) => {
           res.status(400).json({
             message: 'Request cannot be processed',
-            Error: err
+            Error: err.name
           });
         });
     }

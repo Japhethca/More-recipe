@@ -5,6 +5,7 @@ import RecipeController from '../controllers/recipeContr';
 import ReviewController from '../controllers/reviewsContr';
 import FavoriteController from '../controllers/favoriteContr';
 import votes from '../controllers/votesContr';
+import fileUpload from '../controllers/fileUpload';
 
 const apiV1 = express.Router();
 
@@ -55,6 +56,8 @@ apiV1.get('/users/recipes', RecipeController.getUserRecipes)
   .all('/users/recipes', auth.notImplemented);
 
 apiV1.get('/admin/users', UserController.users);
+// handle file upload
+apiV1.post('/upload', fileUpload);
 
 
 export default apiV1;

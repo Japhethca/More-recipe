@@ -65,7 +65,7 @@ const ReviewController = {
         if (!(reviews.length > 0)) {
           return res.status(404).json({ message: 'No reviews for this recipe' });
         }
-        res.status(200).json({ message: 'Recipe Reviews', 'All Reviews': reviews });
+        res.status(200).json({ message: 'Recipe Reviews', 'Reviews': reviews });
       })
       .catch((err) => {
         res.json(400).json({
