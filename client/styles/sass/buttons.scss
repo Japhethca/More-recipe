@@ -1,0 +1,18 @@
+$action-btn-color: #9E9EBB;
+
+.action-btns > span {
+  display: inline-block;
+  border-radius: 2px;
+  margin: 5px;
+  padding: 5px 5px;
+}
+.btn-list{
+  background-color: #F7F3F3;
+  padding: 7px;
+}
+.btn-list > li {
+  display: inline-block;
+  list-style-type: none;
+  padding-left: 3px;
+  padding-right: 3px;
+}
