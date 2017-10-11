@@ -12,7 +12,17 @@ const reviwRules = {
 }; */
 const ReviewController = {
 
+  getAllReview(req, res) {
+    return Reviews.findAll({ order: [['createdAt', 'DESC']] }).then((reviews) => {
+      if (reviews.length < 1) {
+        res.status(404).json({ message: 'There are no review in the application yet' });
+      } else {
+        res.status(200).json(reviews);
+      }
+    }).catch(error => res.status(500).json(error));
+  },
 
+  
   recipeReview(req, res) {
     /* const validReview = new Validator(req.body, reviwRules);
     if (validReview.passes()) { */
@@ -65,7 +75,7 @@ const ReviewController = {
         if (!(reviews.length > 0)) {
           return res.status(404).json({ message: 'No reviews for this recipe' });
         }
-        res.status(200).json({ message: 'Recipe Reviews', 'Reviews': reviews });
+        res.status(200).json({ message: 'Recipe Reviews', Reviews: reviews });
       })
       .catch((err) => {
         res.json(400).json({

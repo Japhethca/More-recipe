@@ -5,6 +5,7 @@ import app from '../app';
 
 
 const Users = models.Users;
+const Recipes = models.Recipes;
 
 const signinRules = {
   email: 'required|email',
@@ -81,7 +82,7 @@ const UserController = {
         })
         .catch(err => res.status(500).json({
           message: 'Request could not be Processed',
-          Error: err.name
+          err
         }));
     }
 
@@ -90,11 +91,56 @@ const UserController = {
 
 
   // return all users in the database
-  users(req, res) {
-    return Users.findAll().then((users) => {
-      res.status(200).json(users);
-    }).catch(err => res.status.json({ Message: 'An arror Occured', Error: err }));
+  user(req, res) {
+    return Users.findOne({
+      where: {
+        id: req.params.userId
+      },
+      attributes: ['id', 'username', 'email', 'firstname', 'lastname']
+    }).then((user) => {
+      res.status(200).json(user);
+    }).catch(err => res.status(500).json({ Message: 'An arror Occured', Error: err }));
   },
+
+  userProfile(req, res) {
+    if (!req.decoded.id) {
+      res.status(403).json({ message: 'You are not allowed to view this page' });
+    }
+    return Users.findOne({
+      where: {
+        id: req.decoded.id
+      },
+    }).then(user => res.status(200).json(user))
+      .catch(err => res.status(500).json(err));
+  },
+
+
+  updateProfile(req, res) {
+    if (!req.decoded.id) {
+      res.status(403).json({ message: 'Invalid request' });
+    }
+    if (req.body.newPassword && req.body.password === req.body.newPassword) {
+      res.status(400).json({ message: 'password Must Differ' });
+    }
+    Users.findOne({
+      where: {
+        email: req.decoded.user
+      }
+    }).then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: 'User Does Not Exist / Invalid User' });
+      }
+      user.update({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        username: req.body.username,
+        password: req.body.newPassword ? req.body.newPassword : req.body.password,
+        aboutme: req.body.aboutme,
+        photo: '',
+      }).then(() => res.status(200).json({ message: 'Profile Update Successful', profile: user }))
+        .catch(err => res.status(500).json({ Error: err }));
+    });
+  }
 };
 
 export default UserController;

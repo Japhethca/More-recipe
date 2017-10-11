@@ -55,9 +55,15 @@ apiV1.post('/recipes/:recipeId/reviews', ReviewController.recipeReview)
 apiV1.get('/users/recipes', RecipeController.getUserRecipes)
   .all('/users/recipes', auth.notImplemented);
 
-apiV1.get('/admin/users', UserController.users);
+// Endpoint for getting user based on id and also get user profile
+apiV1.get('/admin/user/:userId', UserController.user);
+apiV1.get('/users/profile', UserController.userProfile);
+apiV1.post('/users/profile', UserController.updateProfile);
+
 // handle file upload
 apiV1.post('/upload', fileUpload);
 
+// gets all review in the application
+apiV1.get('/reviews', ReviewController.getAllReview);
 
 export default apiV1;

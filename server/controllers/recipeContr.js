@@ -5,6 +5,7 @@ import db from '../models/index';
 
 const Recipes = models.Recipes;
 const Users = models.Users;
+const Reviews = models.Reviews;
 
 const sequelize = db.sequelize;
 
@@ -38,7 +39,9 @@ const RecipeController = {
 
   // controller for returning all recipe in the application
   all(req, res) {
-    return Recipes.findAll().then((recipes) => {
+    return Recipes.findAll({
+      include: [Reviews], order: [['createdAt', 'DESC']]
+    }).then((recipes) => {
       if (recipes.length > 0) {
         if (req.query) { return res.status(200).json({ message: 'All recipes:', List: recipes }); }
       }
@@ -161,7 +164,9 @@ const RecipeController = {
     return Recipes.findAll({
       where: {
         userId: req.decoded.id,
-      }
+      },
+      order: [['createdAt', 'DESC']]
+
     }).then((recipes) => {
       if (recipes.length > 0) {
         Users.findById(req.decoded.id).then((user) => {

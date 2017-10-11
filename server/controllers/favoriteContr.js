@@ -7,24 +7,6 @@ const Favorites = model.Favorites,
 
 // handles GET​ : /api/users/<userId>/recipes
 // controller for getting users favorietes
-const findRecipesById = (favorites) => {
-  const recipes = [];
-  if (favorites.length < 0) {
-    return 'User has no favorite recipes';
-  }
-
-  favorites.forEach((id) => {
-    Recipes.findById(parseInt(id, 10)).then((recipe) => {
-      if (recipe) {
-        recipes.push('recipe not found');
-      } else {
-        recipes.push('not found');
-      }
-    });
-  });
-
-  return recipes;
-};
 
 const FavoriteController = {
   getUserFavorites(req, res) {
@@ -32,7 +14,6 @@ const FavoriteController = {
       where: {
         userId: req.params.usersId
       },
-      attributes: [],
       include: [
         {
           model: Recipes
@@ -42,7 +23,7 @@ const FavoriteController = {
       if (favorites.length < 1) {
         res.status(404).json({ message: 'User has no favorites' });
       } else {
-        res.status(200).json({ 'User favorites': favorites });
+        res.status(200).json({ Favorites: favorites });
       }
     }).catch(Errors => res.status(500).json({ Errors }));
   },
@@ -71,7 +52,8 @@ const FavoriteController = {
 
     return Favorites.findAll({
       where: {
-        RecipeId: req.params.recipeId
+        recipeId: req.params.recipeId,
+        userId: req.decoded.id
       }
     }).then((recipe) => {
       if (recipe.length > 0) {
@@ -79,9 +61,8 @@ const FavoriteController = {
       }
 
       Favorites.create({
-        favorite: req.body.favorite,
-        UserId: req.decoded.id,
-        RecipeId: req.params.recipeId,
+        userId: req.decoded.id,
+        recipeId: req.params.recipeId,
       }).then(() => {
         res.status(200).json({ message: 'Recipe Successfully added to favorites' });
       });
@@ -97,7 +78,7 @@ const FavoriteController = {
   removeRecipeFromFavorites(req, res) {
     Favorites.findOne({
       where: {
-        RecipeId: req.params.recipeId
+        recipeId: req.params.recipeId
       }
     }).then((recipe) => {
       if (!recipe) {
