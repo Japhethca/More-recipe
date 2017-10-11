@@ -4,11 +4,11 @@ import {connect} from 'react-redux';
 import {Link, withRouter} from 'react-router-dom';
 import DeleteButton from '../buttons/DeleteButton';
 import UpdateButton from '../buttons/UpdateButton';
+import ActionButtons from '../buttons/ActionButtons';
 import handleDeleteRecipe from '../../actions/requestHandlers/handleDeleteRecipe';
-import getReviews from '../../actions/requestHandlers/getReviews';
-import ReviewButton from '../buttons/ReviewButton';
-import DownvoteButton from '../buttons/DownvoteButton';
 import getRecipe from '../../actions/requestHandlers/getRecipe';
+import UserDetail from '../userComponent/UserDetail';
+import {getFavorites, setFavorites, removeFavorite} from '../../actions/requestHandlers/handleUserFavorites';
 require('../../styles/sass/recipe_card.scss');
 
 
@@ -16,59 +16,64 @@ class Recipe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipe: this.props.recipe
+      hasNoReview: false
     }
-    this.setNewState = this.setNewState.bind(this);
-  }  
-  setNewState(){
-    this.props.getRecipe(this.props.recipe.id).then(
-      (res) => {this.setState({recipe: res.data})},
-      (err) => {}
-    )
-  }
+  } 
   render() {
-    const {recipe, auth, history} = this.props;
+    const {recipe, auth, history, reviews, setFavorites, removeFavorite} = this.props;
+    const favorites = this.props.favorites;/* .filter((favorite) => favorite.userId == this.props.auth.user.id); */
     return (
       <div className='row' id='recipe-card'>
         <div className="card col s12">
           <div className="card-image">
             <Link to={`/recipe/${recipe.id}`}   > 
-              <img src={require('../../../images/image.jpg')}  alt='' className='img'/>            
+              <img src={require('../../../images/image.jpg')}  alt='Recipe Image' className='img image'/>            
             </Link>
           </div>
-          <div className="card-content">
+          <div className="card-content center">
             <h5>{recipe.name}</h5>
           </div>
+          <div>
+            <UserDetail userId={recipe.userId} />
+          </div>
           <div className='card-title'>
-            <ReviewButton history={history} getReviews={this.props.getReviews} recipe={recipe} />
-            <DownvoteButton setNewState={this.setNewState} recipe={recipe} />
+            <ActionButtons recipe={recipe} reviews={reviews} favorites={favorites} setFavorites={setFavorites} removeFavorite={removeFavorite} />
           </div>
           <div>            
-              {recipe.userId === auth.user.id  
-                ? (
+              {this.props.showButtons &&
                   <div className="card-action">
-                  <DeleteButton id={recipe.id} handleDeleteRecipe={this.props.handleDeleteRecipe} />
-                  <UpdateButton recipe={recipe} history={history}/>
-                  </div>) : <p/>}
+                    <DeleteButton id={recipe.id} handleDeleteRecipe={this.props.handleDeleteRecipe} />
+                    <UpdateButton recipe={recipe} history={history}/>
+                  </div> }
           </div>
+          
         </div>
       </div>
     )
   }
 }
 Recipe.propTypes = {
-  recipe: PropTypes.object,
+  recipe: PropTypes.object.isRequired,
   handleDeleteRecipe: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  getReviews: PropTypes.func.isRequired,
-  getRecipe: PropTypes.func.isRequired
+  reviews: PropTypes.array.isRequired,
+  favorites: PropTypes.array.isRequired,
+  setFavorites: PropTypes.func.isRequired,
+  removeFavorite: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state){
   return {
-    auth: state.auth
+    auth: state.auth,
+    reviews: state.reviews,
+    favorites: state.favorites
   };
 } 
 
-export default withRouter(connect(mapStateToProps,{handleDeleteRecipe, getReviews, getRecipe})(Recipe));
+export default withRouter(connect(mapStateToProps,{
+  handleDeleteRecipe, 
+  getRecipe,
+  setFavorites,
+  removeFavorite
+  })(Recipe));

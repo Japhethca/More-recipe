@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import '../../styles/sass/recipe_update_form.scss';
 
 class RecipeUpdate extends Component {
   constructor(props) {
@@ -20,9 +21,8 @@ class RecipeUpdate extends Component {
     e.preventDefault();
      
     this.props.handleRecipeUpdate(this.state).then(
-      (res) => {this.props.history.push('/myrecipes')},
-      (err) => {}
-    )
+      (res) => {this.props.history.push('/myrecipes')}
+    );
   }
   onChange(e){
     this.setState({[e.target.name]: e.target.value})
@@ -31,10 +31,13 @@ class RecipeUpdate extends Component {
   render() {
     const {name, ingredient, description, direction} = this.state; 
     return (
-      <div>
-        <div>
-          <form onSubmit={this.onSubmit}>
-            <h3> Update Recipe </h3>
+      <div className='update-form'>
+        <div className='row  z-depth-3'>
+          <form onSubmit={this.onSubmit} className='col s12 m8 offset-m2'>
+            <div className='update-title'>
+              <h3> Update Recipe Details </h3>
+            </div>
+            
             <div className='input-field' >
               <input 
                 type='text'
@@ -42,7 +45,7 @@ class RecipeUpdate extends Component {
                 onChange={this.onChange}
                 value={name}
                 />
-                <label htmlFor='name' > Name </label>
+                <label htmlFor='name' className='active' > Name </label>
             </div>
             <div className='input-field' >
               <textarea
@@ -51,7 +54,7 @@ class RecipeUpdate extends Component {
                 value={description}
                 className='materialize-textarea'
                 />
-                <label htmlFor='description' > Description </label>
+                <label htmlFor='description' className='active' > Description </label>
             </div> <div className='input-field' >
               <textarea 
                 name='direction'
@@ -59,7 +62,7 @@ class RecipeUpdate extends Component {
                 value={direction}
                 className='materialize-textarea'
                 />
-                <label htmlFor='direction' > Direction </label>
+                <label htmlFor='direction' className='active' > Direction </label>
             </div> <div className='input-field' >
               <textarea 
                 name='ingredient'
@@ -67,10 +70,10 @@ class RecipeUpdate extends Component {
                 value={ingredient}
                 className='materialize-textarea'
                 />
-                <label htmlFor='ingredient' > Ingredient </label>
+                <label htmlFor='ingredient' className='active' > Ingredient </label>
             </div>
-            <div>
-              <button className='btn brown waves-effect waves-ripple' type='submit'> Update </button>
+            <div className='row'>
+              <button className='btn-large brown waves-effect waves-ripple col s6 offset-3 m6 offset-m3 center'  type='submit'> Update </button>
             </div>
           </form>
         </div>
