@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import {Redirect} from 'react-router-dom';
+import {Redirect, Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import classname from 'classnames';
-import TextField from '../TextField';
+import {addFlashMessage} from '../../actions/flashMessage';
 import { signinValidator } from '../../utils/validators';
+import '../../styles/sass/login_form.scss';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -12,7 +14,8 @@ class LoginForm extends Component {
       email: '',
       password: '',
       errors: '',
-      redirect: false
+      redirect: false,
+      hasErrored: false
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -37,47 +40,71 @@ class LoginForm extends Component {
     if (this.isValid()){
       this.setState({inputIsValid: true})
       this.props.handleLoginRequest(this.state).then(
-        (res) => {this.setState({redirect: true})},
+        (res) => {
+          this.props.addFlashMessage({
+            type: 'Success',
+            text: "Login Successful"
+          });
+          this.setState({redirect: true
+          })},
         (err) => this.setState({errors: err})
         );
     }
   }
 
   render() {
-    const {errors, email, password} = this.state;
+    const {errors, email, password, hasErrored} = this.state;
     if (this.state.redirect){
       return <Redirect to='/' />
     }
     return (
-      <div className='row'>
-      <div className='card-panel col s12 m10 offset-m1 l6 offset-l3 z-depth-4'>
-        <h4>Login Form</h4>
+
+      <div className='row login-form'>
+      <div className='card-panel col s12 m6 offset-m3 l4 offset-l4 z-depth-4'>
+        <div className='input-field s12 center login-text'>
+          <h4>LOGIN FORM</h4>
+        </div>
+        {hasErrored ? (
+          <div>
+            <strong>Invalid Credentials</strong>
+          </div>
+        ): <span></span> }
         <form className='' onSubmit={this.onSubmit}>
-          <div className={classname('input-field','row',{'red-text':errors.email})} >
+          <div className='row' >
+            <div className='input-field col s12 m12'>
+              <i className='material-icons prefix'>person</i>
                 <input 
-                  className='col s12 m12'
                   type='text'
                   onChange = {this.onChange}
                   name='email'
+                  placeholder='Email Address'
                   />
-                <label htmlFor='email' > Email</label>
-                {errors.email && <span> {errors.email[0]}</span>}
-            </div>
-            <div className={classname('input-field','row',{'red-text':errors.password})} >
-              <input 
-                className='col s12 m12'
-                type='password'
-                onChange = {this.onChange}
-                name='password'
-                />
-              <label htmlFor='password' > Password</label>
-              {errors.password && <span>{errors.password[0]}</span>}
+                <label htmlFor='email' className='active'  > Email</label>
+                {errors.email && <span className='error-text'> {errors.email[0]}</span>}
+            </div>    
           </div>
+          <div className='row'>
+            <div className='input-field col s12 m12' >
+                <i className='material-icons prefix'>lock</i>
+                <input 
+                  type='password'
+                  onChange = {this.onChange}
+                  name='password'
+                  placeholder='Enter Your Password'
+                  />
+                <label htmlFor='password'  className='active' > Password</label>
+                {errors.password && <span className='error-text'>{errors.password[0]}</span>}
+            </div>
+          </div>
+            
           <div className="row">
               <div className="input-field col s12">
-                <button className="btn brown waves-effect waves-light col m4 right" type="submit">Login
+                <button className="btn-large brown waves-effect waves-light col s12 m6 offset-m3 center" type="submit">Login
                 </button>
-            </div>
+              </div>
+          </div>
+          <div className='sign-up-link'>
+            <span>Don't have login? <Link to='/signup'>Sign Up Here</Link></span>
           </div>
         </form>
       </div>
@@ -87,7 +114,8 @@ class LoginForm extends Component {
 }
 
 LoginForm.propTypes = {
-  handleLoginRequest: PropTypes.func.isRequired
+  handleLoginRequest: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired
 }
 
-export default LoginForm;
+export default connect(null, {addFlashMessage})(LoginForm);
