@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     Recipes.hasMany(models.Reviews, {
       foreignKey: 'recipeId',
-      as: 'reviews',
+      // as: 'reviews',
     });
     Recipes.hasMany(models.Favorites, {
       foreignKey: 'recipeId',
