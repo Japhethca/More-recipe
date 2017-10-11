@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import swal from 'sweetalert';
 
 class DeleteButton extends Component {
   constructor(props) {
@@ -8,13 +9,19 @@ class DeleteButton extends Component {
     this.onClick = this.onClick.bind(this)
   }
   onClick(e){
-    e.preventDefault();
-    this.props.handleDeleteRecipe(this.props.id)
+    swal("Are you sure you want to delete this recipe?", {
+      dangerMode: true,
+      buttons: ["No", "Yes"],
+    }).then(value => {
+      if (value) {
+        this.props.handleDeleteRecipe(this.props.id);
+      }
+    });
   }
   render() {
     return (
       <div>
-        <button onClick={this.onClick} type='delete' className='btn-floating red waves-effect waves-light right'>
+        <button onClick={this.onClick} className='btn-floating red waves-effect waves-light right'>
           <i className='material-icons right'>delete</i>  
         </button>
       </div>

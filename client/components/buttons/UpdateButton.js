@@ -1,20 +1,14 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class UpdateButton extends Component {
-  constructor(props) {
-    super(props)
-
-    this.onClick = this.onClick.bind(this)
-  }
-  onClick(e){
-    e.preventDefault();
+  onClick(e){    
     this.props.history.push('/recipe/update', this.props.recipe)
   }
   render() {
     return (
       <div>
-        <button onClick={this.onClick} type='delete' className='btn-floating blue waves-effect waves-light'>
+        <button onClick={this.onClick.bind(this)} className='btn-floating blue waves-effect waves-light'>
           <i className='material-icons right'>edit</i>  
         </button>
       </div>
