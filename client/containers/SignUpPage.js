@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux'; 
 import SignUpForm from '../components/userComponent/SignUpForm';
 import NavigationBar from '../components/NavigationBar';
+import Footer from '../components/Footer';
 import handleSignUpRequest from '../actions/requestHandlers/handleSignUprequest';
 
 class SignUpPage extends Component {
@@ -11,6 +12,7 @@ class SignUpPage extends Component {
       <div>
         <NavigationBar />
         <SignUpForm handleSignUpRequest={this.props.handleSignUpRequest} />
+        <Footer/>
       </div>
     )
   }
