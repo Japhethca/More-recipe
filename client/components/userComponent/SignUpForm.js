@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import {Redirect} from 'react-router';
+import {Redirect, Link} from 'react-router-dom';
+import {connect } from 'react-redux';
 import { signUpValidator } from '../../utils/validators';
+import {addFlashMessage} from '../../actions/flashMessage';
+import '../../styles/sass/signup_form.scss';
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -14,6 +17,7 @@ class SignUpForm extends Component {
       password: '',
       verifyPassword: '',
       errors: '',
+      hasSignedUp: false
     };
 
     this.onChange = this.onChange.bind(this);
@@ -34,7 +38,13 @@ class SignUpForm extends Component {
     e.preventDefault();
     if (this.isValid()){
       this.props.handleSignUpRequest(this.state).then(
-        (res) => {},
+        (res) => {
+          this.props.addFlashMessage({
+            type: 'Success',
+            text: "Registration Successful"
+          });
+          this.setState({hasSignedUp: true})
+        },
         (err) => this.setState({errors: err})
         );
     }
@@ -44,15 +54,18 @@ class SignUpForm extends Component {
     const {errors} = this.state;
     const {hasSignedUp} = this.state;
     if (hasSignedUp){
-      return <Redirect to='/' />
+      return <Redirect to='/signin' />
     } 
     return (
-      <div className='row'>
+      <div className='row signup-form'>
       <div className='card-panel col s12 m12 l8 offset-l2 z-depth-4'>
-        <h4>User Registration Form</h4>
+        <div className='input-field s12 center signup-text'>
+          <h4>USER REGISTRATION</h4>
+        </div>
         <form className='' onSubmit={this.onSubmit}>
             <div className='row'>
                 <div className='input-field col s12 m6'>
+                  <i className='material-icons prefix'>account_circle</i>
                   <input 
                     type='text'
                     onChange = {this.onChange}
@@ -64,6 +77,7 @@ class SignUpForm extends Component {
                 </div>
 
                 <div className='input-field col s12 m6'>
+                  <i className='material-icons prefix'>account_circle</i>
                   <input 
                     type='text'
                     onChange = {this.onChange}
@@ -76,6 +90,7 @@ class SignUpForm extends Component {
           </div>
           <div className='row' >
             <div className='input-field col s12 m6'>
+              <i className='material-icons prefix'>person_outline</i>
               <input 
                 type='text'
                 onChange = {this.onChange}
@@ -86,6 +101,7 @@ class SignUpForm extends Component {
               {errors.username && <span className='error1'>{errors.username[0]}</span>}
             </div>
             <div className='input-field col s12 m6'>
+              <i className='material-icons prefix'>mail</i>
               <input 
                 type='email'
                 onChange = {this.onChange}
@@ -98,6 +114,7 @@ class SignUpForm extends Component {
           </div>
           <div className='row'>
             <div className='input-field col s12 m6'>
+              <i className='material-icons prefix'>lock</i>
               <input 
                 type='password'
                 onChange = {this.onChange}
@@ -108,6 +125,7 @@ class SignUpForm extends Component {
               {errors.password && <span className='error1'>{errors.password[0]}</span>}
             </div>
             <div className='input-field col s12 m6'>
+              <i className='material-icons prefix'>lock</i>
               <input 
                 type='password'
                 onChange = {this.onChange}
@@ -119,11 +137,16 @@ class SignUpForm extends Component {
             </div>
           </div>
           <div className="row">
-              <div className="input-field col s12">
-                <button className="btn brown waves-effect waves-light col m4 right" type="submit">Register
+            <div className="input-field col s12 m6 center">
+                <button className="btn-large brown waves-effect waves-light col s12 m4" type="submit">Register
                 </button>
             </div>
+            
+            <div className='login-link right'>
+              <span>Have login details? <Link to='/signin'>Signin Here</Link></span>
+            </div>
           </div>
+          
         </form>
       </div>
       </div>
@@ -132,7 +155,8 @@ class SignUpForm extends Component {
 }
 
 SignUpForm.propTypes = {
-  handleSignUpRequest: PropTypes.func.isRequired
+  handleSignUpRequest: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
 }
 
-export default SignUpForm;
+export default connect(null, {addFlashMessage})(SignUpForm);
