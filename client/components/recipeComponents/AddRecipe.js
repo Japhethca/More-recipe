@@ -24,22 +24,14 @@ class AddRecipe extends Component {
   }
   onSubmit(e){
     e.preventDefault();
-    this.props.handleCreateRecipe(this.state).then(
-      (res) => {
-        this.props.addFlashMessage({
-          type:'success',
-          text: 'Recipe Added Successfully'
-        });
-        this.props.history.push('/myrecipes')
-      },
-      (err) => {this.setState({errors: err.data})}
-    )
+    this.props.handleCreateRecipe(this.state);
+    this.addRecipeForm.reset();
   }
   render() {
     return (
       <div>
         <div  className='card'>
-          <form onSubmit={this.onSubmit} >
+          <form onSubmit={this.onSubmit} ref={(node) => this.addRecipeForm = node}>
             <h4> Add New Recipe </h4>
             <div className='input-field' >
               <input 
@@ -56,14 +48,19 @@ class AddRecipe extends Component {
                 className='materialize-textarea'
                 />
                 <label htmlFor='description' > Description </label>
-            </div> <div className='input-field' >
+            </div> 
+            <span>Add list of direction separated by comma (,).</span>
+            <div className='input-field' >
               <textarea 
                 name='direction'
                 onChange={this.onChange}
                 className='materialize-textarea'
                 />
                 <label htmlFor='direction' > Direction </label>
-            </div> <div className='input-field' >
+            </div>
+            <span>Add list of ingredients  separated by comma (,).</span>
+            <div className='input-field' >
+              
               <textarea 
                 name='ingredient'
                 onChange={this.onChange}
@@ -71,6 +68,15 @@ class AddRecipe extends Component {
                 />
                 <label htmlFor='ingredient' > Ingredient </label>
             </div>
+            <div className="file-field input-field">
+            <div className="btn blue-text white">
+              <span>Image</span>
+              <input type="file" name='image' />
+            </div>
+            <div className="file-path-wrapper">
+              <input className="file-path validate" type="text" />
+            </div>
+          </div>
             <div>
               <button className='btn brown waves-effect waves-ripple' type='submit'> Submit </button>
             </div>
