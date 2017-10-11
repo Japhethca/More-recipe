@@ -15,6 +15,10 @@ import NotFoundPage from './containers/404Page';
 import setAuthorizationToken from './utils/setAuthorization';
 import { setCurrentUser } from './actions/requestHandlers/handleLoginrequest';
 import rootReducers from './reducers/rootReducer';
+import Authenticate from '../client/components/Authenticate';
+import NavigationBar from '../client/components/NavigationBar';
+import UserProfilePage from './containers/UserProfilePage';
+import FavoritesPage from './containers/FavoritesPage';
 
 
 const store = createStore(
@@ -34,13 +38,16 @@ render((
 
   <Provider store={store}>
     <BrowserRouter>
-      <Switch>
+      <Switch component={NavigationBar}>
+        <Route path='/' exact component={Home} />
         <Route path='/recipe/update'  component={RecipeUpdatePage} /> 
         <Route path='/recipe/:id'  component={RecipeDetailsPage} /> 
+        <Route path='/myrecipes' component={MyRecipesPage} />
+        <Route path='/profile' component={UserProfilePage} />
+        <Route path='/profile/edit' component={UserProfilePage} />        
+        <Route path='/favorites' component={FavoritesPage} />
         <Route path='/signin' component={LoginPage} />
         <Route path='/signup' component={SignUpPage} />
-        <Route path='/myrecipes' component={MyRecipesPage} />
-        <Route path='/' exact={true} component={Home} />
         <Route component={NotFoundPage} />  
       </Switch>
     </BrowserRouter>
