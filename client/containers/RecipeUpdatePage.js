@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import NaviigationBar from '../components/NavigationBar';
+import Footer from '../components/Footer';
 import RecipeUpdate from '../components/recipeComponents/RecipeUpdate';
 import handleRecipeUpdate from '../actions/requestHandlers/handleRecipeUpdate';
 
@@ -22,6 +23,7 @@ class RecipeUpdatePage extends Component {
             handleRecipeUpdate={this.props.handleRecipeUpdate}
           />
         </div>  
+        <Footer/>
       </div>
     )
   }
