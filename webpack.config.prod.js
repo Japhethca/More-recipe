@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  // devtool: 'eval-source-map',
+  devtool: 'eval-source-map',
   entry: [
     './client/index.js'
   ],
