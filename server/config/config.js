@@ -11,13 +11,13 @@ module.exports = {
     dialect: 'postgres'
   },
   test: {
-    // username: 'chidex',
-    // password: 'chidex4me',
-    // database: 'test',
-    // host: '',
-    // dialect: 'postgres'
-    use_env_variable: 'MORE_RECIPE_DB',
+    username: 'chidex',
+    password: 'chidex4me',
+    database: 'test',
+    host: '',
     dialect: 'postgres'
+    // use_env_variable: 'MORE_RECIPE_DB',
+    // dialect: 'postgres'
   },
   production: {
     use_env_variable: 'DATABASE_URL',

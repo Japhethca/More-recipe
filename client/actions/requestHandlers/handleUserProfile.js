@@ -1,4 +1,5 @@
 import axios from 'axios';
+import upload from './handleFileUpload';
 import { EDIT_USER_PROFILE, GET_USER_PROFILE } from '../types';
 
 const cloudinary_url = 'https://api.cloudinary.com/v1_1/dcmxbxzyj/image/upload';
@@ -19,33 +20,27 @@ function editUserProfile(newProfile) {
     newProfile
   };
 }
-/* function imageUpload(filedata) {
-  const formdata = new FormData(filedata);
-  formdata.append('file', filedata);
-  formdata.append('form-preset', cloudinary_url);
 
-  axios({
-    url: cloudinary_url,
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/x-www-form-urlencoded'
-    },
-    data: formdata
-  }).then((res) => { console.log(res); }).catch((err) => { console.log(err); });
-} */
 export function handleEditUserProfile(data) {
-  // console.log(data.photo);
-  // const formdata = new FormData();
-  // formdata.append('file', data.photo);
-  // formdata.append('form-preset', cloudinary_url);
-
-  // axios({
-  //   url: cloudinary_url,
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-type': 'application/x-www-form-urlencoded'
-  //   },
-  //   data: formdata
-  // }).then((res) => { console.log(res); }).catch((err) => { console.log(err); });
-  return dispatch => axios.post('/api/users/profile', data).then(res => dispatch(editUserProfile(res.data.profile)));
+  return (dispatch) => {
+    if (typeof (data.photo) === 'object') {
+      upload(data.photo).end((err, res) => {
+        if (!err || res.ok) {
+          data.photo = res.body.url;
+          axios.post('/api/users/profile', data).then((res) => {
+            dispatch(editUserProfile(res.data.profile));
+            Materialize.toast('Profile Successfully updated!', 4000);
+          }).catch(err => Materialize.toast('Update Unsuccessful!', 4000));
+        } else {
+          Materialize.toast('Unable to load image', 4000);
+        }
+      });
+    } else {
+      axios.post('/api/users/profile', data).then((res) => {
+        dispatch(editUserProfile(res.data.profile));
+        Materialize.toast('Profile Successfully updated!', 4000);
+      }).catch(err => Materialize.toast('Update Unsuccessful!', 4000));
+    }
+  };
 }
+
