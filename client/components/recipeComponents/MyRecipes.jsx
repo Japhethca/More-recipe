@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Recipe from './Recipe';
 import handleDeleteRecipe from '../../actions/requestHandlers/handleDeleteRecipe';
 import getMyRecipes from '../../actions/requestHandlers/getMyRecipes';
-import {connect} from 'react-redux';
 import '../../styles/sass/my_recipes_page.scss';
 
 class MyRecipes extends Component {
@@ -12,16 +12,15 @@ class MyRecipes extends Component {
     this.state = {
       hasErrored: false
     };
-
   }
-  componentDidMount(){
-    this.props.getMyRecipes();/* .catch(
-      err => this.setState({hasErrored: true})
-    ); */
+
+  componentDidMount() {
+    this.props.getMyRecipes();
   }
   render() {
-    let {userRecipes} = this.props.userRecipes;
-    if (this.state.hasErrored){
+    const { userRecipes } = this.props.userRecipes;
+    console.log(this.props.favorites);
+    if (this.state.hasErrored) {
       return (
         <div>
           <h5>User has not added any recipe, try adding one.</h5>
@@ -30,16 +29,11 @@ class MyRecipes extends Component {
     }
     return (
       <div>
-        
-      
-        <ul className='row'>
-            {userRecipes.map((recipe) => {
-              return <li className='col s12'> <Recipe key={recipe.id} handleDeleteRecipe={this.props.handleDeleteRecipe} recipe={recipe} showButtons/> </li>
-            })}
+        <ul className="row">
+          {userRecipes.map(recipe => <li className="col s12 m4"> <Recipe key={recipe.id} handleDeleteRecipe={this.props.handleDeleteRecipe} favorites={this.props.favorites} recipe={recipe} showButtons /> </li>)}
         </ul>
-       
       </div>
-    )
+    );
   }
 }
 
@@ -48,10 +42,9 @@ MyRecipes.propTypes = {
   handleDeleteRecipe: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => {
-  return {
-    userRecipes: state
-  }
-}
+const mapStateToProps = state => ({
+  userRecipes: state,
+  favorites: state.favorites
+});
 
-export default connect(mapStateToProps, {getMyRecipes,handleDeleteRecipe})(MyRecipes);
+export default connect(mapStateToProps, { getMyRecipes, handleDeleteRecipe })(MyRecipes);

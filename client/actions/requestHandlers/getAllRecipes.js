@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ALL_RECIPES, ERROR_GETTING_RECIPES } from '../types';
+import { GET_ALL_RECIPES } from '../types';
 
 function getRecipes(recipes) {
   return {
