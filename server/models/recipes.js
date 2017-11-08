@@ -1,7 +1,7 @@
 
 
 module.exports = (sequelize, DataTypes) => {
-  let Recipes = sequelize.define('Recipes', {
+  const Recipes = sequelize.define('Recipes', {
     name: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     Recipes.hasMany(models.Reviews, {
       foreignKey: 'recipeId',
-      as: 'reviews',
+      // as: 'reviews',
     });
     Recipes.hasMany(models.Favorites, {
       foreignKey: 'recipeId',

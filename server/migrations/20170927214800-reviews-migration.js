@@ -6,10 +6,6 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    title: {
-      type: Sequelize.TEXT,
-      allowNull: false,
-    },
     content: {
       type: Sequelize.TEXT,
       allowNull: false,

@@ -15,6 +15,7 @@ export function logout() {
     localStorage.removeItem(localStorage.token);
     setAuthorizationToken(false);
     dispatch(setCurrentUser({}));
+    dispatch({ type: 'RESET' });
   };
 }
 export function handleLoginRequest(userdata) {

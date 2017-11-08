@@ -4,7 +4,6 @@ import models from '../models';
 
 
 const Votes = models.Votes,
-  Users = models.Users,
   Recipes = models.Recipes;
 
 
@@ -25,21 +24,30 @@ const VotingController = {
       // if vote is found
       if (vote) {
         const upvoted = vote.get('vote');
-        // if recipe has been upvoted
-        // upvote if recipe has been downvoted before
+        // if user has voted before
+        // look for the recipe
         Recipes.findById(req.params.recipeId).then((recipe) => {
           if (!recipe) {
             res.status(404).json({ message: 'No such recipe exists' });
           } else if (recipe) {
+            // if the the user upvote the recipe before decrement the upvotes
             if (upvoted === 1) {
-              recipe.decrement('upvotes');
               vote.destroy();
-              res.status(200).json({ message: 'Recipe Unvoted', Recipe: recipe });
+              recipe.decrement('upvotes').then(() => {
+                recipe.reload().then(() => {
+                  res.status(200).json({ message: 'Upvote Sucessful', Recipe: recipe });
+                });
+              });
+            // if not increment the upvotes and decrement downvotes
             } else if (upvoted === 0) {
-              recipe.increment('upvotes');
-              recipe.decrement('downvotes');
               vote.update({ vote: 1 });
-              res.status(200).json({ message: 'Recipe Upvoted', Recipe: recipe });
+              recipe.decrement('downvotes').then(() => {
+                recipe.increment('upvotes').then(() => {
+                  recipe.reload();
+                }).then(() => {
+                  res.status(200).json({ message: 'Recipe Upvoted', Recipe: recipe });
+                });
+              });
             }
           }
         });
@@ -56,11 +64,14 @@ const VotingController = {
               recipeId: req.params.recipeId,
               userId: req.decoded.id,
             });
-            recipe.increment('upvotes');
-            res.status(200).json({ message: 'Recipe Upvoted', Recipe: recipe });
+            recipe.increment('upvotes').then(() => {
+              recipe.reload().then(() => {
+                res.status(200).json({ message: 'Recipe Upvoted', Recipe: recipe });
+              });
+            });
           });
       }
-      // find a single recipe by id
+      // catch any error that occurs
     })
       .catch((err) => {
         res.status(400).json({ message: err.name });
@@ -89,14 +100,21 @@ const VotingController = {
             res.status(404).json({ message: 'No such recipe exists' });
           } else if (recipe) {
             if (downvoted === 0) {
-              recipe.decrement('downvotes');
               vote.destroy();
-              res.status(200).json({ message: 'Recipe Unvoted', Recipe: recipe });
+              recipe.decrement('downvotes').then(() => {
+                recipe.reload().then(() => {
+                  res.status(200).json({ message: 'Recipe Unvoted', Recipe: recipe });
+                });
+              });
             } else if (downvoted === 1) {
-              recipe.increment('downvotes');
-              recipe.decrement('upvotes');
               vote.update({ vote: 0 });
-              res.status(200).json({ message: 'Recipe Downvoted', Recipe: recipe });
+              recipe.increment('downvotes').then(() => {
+                recipe.decrement('upvotes').then(() => {
+                  recipe.reload();
+                }).then(() => {
+                  res.status(200).json({ message: 'Recipe Downvoted', Recipe: recipe });
+                });
+              });
             }
           }
         });
@@ -109,21 +127,22 @@ const VotingController = {
               return res.status(404).json({ message: 'Recipe does not exist!' });
             } // create a new vote if user has not voted before
             Votes.create({
-              vote: 1,
+              vote: 0,
               recipeId: req.params.recipeId,
               userId: req.decoded.id,
             });
-            recipe.increment('upvotes');
-            res.status(200).json({ message: 'Recipe Downvoted', Recipe: recipe });
+            recipe.increment('downvotes').then(() => {
+              recipe.reload().then(() => {
+                res.status(200).json({ message: 'Recipe Downvoted', Recipe: recipe });
+              });
+            });
           });
       }
-      // find a single recipe by id
     })
       .catch((err) => {
         res.status(400).json({ message: err.name });
       });
   },
-
 };
 
 export default VotingController;

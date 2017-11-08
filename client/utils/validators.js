@@ -44,3 +44,47 @@ export function signUpValidator(data) {
     errors: validate.errors.errors
   };
 }
+
+export function recipeFormValidator(data) {
+  const formRules = {
+    name: 'required',
+    ingredients: 'required',
+    direction: 'required',
+    description: 'required'
+  };
+  const validator = new Validator(data, formRules);
+  const errors = {};
+  const isValid = false;
+  if (validator.passes()) {
+    return {
+      isValid: true,
+      errors
+    };
+  }
+  return {
+    isValid,
+    errors: validator.errors.errors
+  };
+}
+
+export function profileUpdateFormValidator(data) {
+  const formRules = {
+    firstname: 'required',
+    lastname: 'required',
+    password: 'required',
+    username: 'required'
+  };
+  const validator = new Validator(data, formRules);
+  const errors = {};
+  const isValid = false;
+  if (validator.passes()) {
+    return {
+      isValid: true,
+      errors
+    };
+  }
+  return {
+    isValid,
+    errors: validator.errors.errors
+  };
+}

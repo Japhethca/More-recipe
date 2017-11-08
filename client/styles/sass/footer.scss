@@ -1,0 +1,15 @@
+@import 'navigationBar';
+
+footer{
+  flex: 0 auto;
+}
+footer.page-footer{
+  background-color: $nav-background-color;
+}
+footer.container{
+  padding-bottom: 5px;
+}
+
+.footer-text {
+  padding-bottom: 10px;
+}
