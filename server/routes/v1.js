@@ -5,7 +5,6 @@ import RecipeController from '../controllers/recipeContr';
 import ReviewController from '../controllers/reviewsContr';
 import FavoriteController from '../controllers/favoriteContr';
 import votes from '../controllers/votesContr';
-import fileUpload from '../controllers/fileUpload';
 
 const apiV1 = express.Router();
 
@@ -33,7 +32,7 @@ apiV1.get('/users/:usersId/recipes', FavoriteController.getUserFavorites)
   .all('/users/:userId/recipes', auth.notImplemented);
 
 // End point for users to get and set favorite recipes
-apiV1.get('/users/:usersId/favorites', FavoriteController.getFavorites)
+apiV1.get('/users/:usersId/favorites', FavoriteController.getUserFavorites)
   .post('/users/:recipeId/favorites', FavoriteController.setFavorites)
   .delete('/users/:recipeId/favorites', FavoriteController.removeRecipeFromFavorites)
   .all('/users/:usersId/favorites', auth.notImplemented);
@@ -60,8 +59,6 @@ apiV1.get('/admin/user/:userId', UserController.user);
 apiV1.get('/users/profile', UserController.userProfile);
 apiV1.post('/users/profile', UserController.updateProfile);
 
-// handle file upload
-apiV1.post('/upload', fileUpload);
 
 // gets all review in the application
 apiV1.get('/reviews', ReviewController.getAllReview);
