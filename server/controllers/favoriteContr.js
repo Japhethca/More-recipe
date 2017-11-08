@@ -1,8 +1,7 @@
 import model from '../models';
 
 const Favorites = model.Favorites,
-  Recipes = model.Recipes,
-  Users = model.Users;
+  Recipes = model.Recipes;
 
 
 // handles GET​ : /api/users/<userId>/recipes
@@ -27,22 +26,6 @@ const FavoriteController = {
       }
     }).catch(Errors => res.status(500).json({ Errors }));
   },
-
-  getFavorites(req, res) {
-    Favorites.findAll({
-      where: { userId: req.params.usersId },
-      include: [Recipes]
-    }).then((favorites) => {
-      if (favorites.length < 1) {
-        return res.status(404).json({ message: 'User does not have any favorites' });
-      }
-
-      res.status(200).json({ message: `User ${req.params.usersId}`, Recipes: favorites });
-    }).catch((errors) => {
-      res.status(400).json({ message: 'Request was not processed', errors });
-    });
-  },
-
 
   // Sets favorites for a user when given a recipe id
   setFavorites(req, res) {
@@ -89,7 +72,6 @@ const FavoriteController = {
       }
     }).catch(errors => res.status(500).json({ errors }));
   }
-
 };
 
 

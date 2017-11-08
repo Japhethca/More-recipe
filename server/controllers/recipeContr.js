@@ -1,7 +1,7 @@
-import models from '../models';
 import validator from 'validatorjs';
 import Sequelize from 'sequelize';
 import db from '../models/index';
+import models from '../models';
 
 const Recipes = models.Recipes;
 const Users = models.Users;
@@ -31,7 +31,7 @@ const RecipeController = {
     if (req.query.order && req.query.sort) {
       return sequelize.query(`
       SELECT * FROM "Recipes" AS "Recipes" ORDER BY "upvotes" DESC;`, { type: Sequelize.QueryTypes.SELECT })
-        .then(recipes => res.status(200).json({ message: 'All Recipes displayed in Descending order', recipes }))
+        .then(recipes => res.status(200).json({ message: 'All Recipes displayed in Descending order', List: recipes }))
         .catch(err => res.status(400).json(err));
     }
     next();
@@ -40,7 +40,7 @@ const RecipeController = {
   // controller for returning all recipe in the application
   all(req, res) {
     return Recipes.findAll({
-      include: [Reviews], order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'DESC']]
     }).then((recipes) => {
       if (recipes.length > 0) {
         if (req.query) { return res.status(200).json({ message: 'All recipes:', List: recipes }); }
@@ -65,6 +65,7 @@ const RecipeController = {
           direction: req.body.direction,
           description: req.body.description,
           userId: req.decoded.id,
+          image: req.body.image
         }))
         .then((recipe) => {
           res.status(200).json({ message: 'Recipe successfully created', Details: recipe });
@@ -73,7 +74,8 @@ const RecipeController = {
           res.status(400).json({ message: 'Request was not processed' });
         });
     }
-    res.status(403).json(recipeValidator.errors);
+    const errors = Object.values(recipeValidator.errors.errors).map(val => val[0]);
+    res.status(403).json({ message: errors });
   },
 
 
@@ -111,12 +113,13 @@ const RecipeController = {
               ingredients: req.body.ingredient,
               description: req.body.description,
               direction: req.body.direction,
+              image: req.body.image
             })
               .then(() => {
-                res.json(200).json({
-                  message: 'Recipe update Successful',
+                recipe.reload().then(recipe => res.status(200).json({
+                  message: 'Recipe updated Successful',
                   updated: recipe,
-                });
+                }));
               })
               .catch((err) => {
                 res.status(500).json({ message: 'Update Unsuccessful!', error: err });
@@ -132,8 +135,8 @@ const RecipeController = {
           });
         });
     }
-
-    res.status(403).json(validateValues.errors);
+    const errors = Object.values(validateValues.errors.errors).map(val => val[0]);
+    res.status(403).json({ message: errors });
   },
 
   // controller for deleting recipe by recipeId
@@ -147,11 +150,9 @@ const RecipeController = {
       if (!recipe) {
         res.status(404).json({ message: 'Recipe does not exist' });
       }
-
       if (recipe.userId === req.decoded.id) {
         recipe.destroy();
         res.status(200).json({ message: 'Recipe deleted successfully' });
-       
       } else {
         res.status(403).json({ message: 'User is not authorised to delete this recipe' });
       }
@@ -159,7 +160,7 @@ const RecipeController = {
       .catch(Error => res.status(500).json({ message: 'Server Error', Error }));
   },
 
-  
+
   getUserRecipes(req, res) {
     return Recipes.findAll({
       where: {
