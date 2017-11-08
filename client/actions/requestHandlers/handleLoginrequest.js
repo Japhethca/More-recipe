@@ -15,6 +15,7 @@ export function logout() {
     delete localStorage.token;
     setAuthorizationToken(false);
     dispatch(setCurrentUser({}));
+    dispatch({ type: 'RESET' });
   };
 }
 

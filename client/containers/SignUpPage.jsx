@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux'; 
+import { connect } from 'react-redux';
 import SignUpForm from '../components/userComponent/SignUpForm';
 import NavigationBar from '../components/NavigationBar';
 import Footer from '../components/Footer';
@@ -12,13 +12,13 @@ class SignUpPage extends Component {
       <div>
         <NavigationBar />
         <SignUpForm handleSignUpRequest={this.props.handleSignUpRequest} />
-        <Footer/>
+        <Footer />
       </div>
-    )
+    );
   }
 }
 SignUpPage.propTypes = {
   handleSignUpRequest: PropTypes.func.isRequired
 };
 
-export default connect(null, {handleSignUpRequest})(SignUpPage);
+export default connect(null, { handleSignUpRequest })(SignUpPage);
