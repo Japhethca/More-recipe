@@ -6,8 +6,6 @@ import app from '../server/app';
 chai.use(chaiHttp);
 
 const { expect } = chai;
-
-const url = app;
 let token;
 
 

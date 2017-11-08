@@ -1,18 +1,29 @@
-$action-btn-color: #9E9EBB;
+$action-button-bg-color: #fff;
+$button-color: rgb(41, 16, 16);
 
-.action-btns > span {
-  display: inline-block;
-  border-radius: 2px;
-  margin: 5px;
-  padding: 5px 5px;
-}
-.btn-list{
-  background-color: #F7F3F3;
-  padding: 7px;
-}
-.btn-list > li {
-  display: inline-block;
-  list-style-type: none;
-  padding-left: 3px;
-  padding-right: 3px;
+
+.action-btns {
+  color: rgb(117, 114, 114);
+  font-size: 15px;
+  cursor: pointer;
+    span {
+    display: inline-block;
+    margin: 5px;
+    padding-left: 4px;
+  }
+} 
+
+.btn-list {
+  padding-left: 20px;
+  text-justify: distribute-all-lines;
+  text-align: center;
+    li {
+    display: inline-block;
+    list-style-type: none;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+} 
+.favorite {
+      color: red;
 }

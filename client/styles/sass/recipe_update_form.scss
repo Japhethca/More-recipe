@@ -1,9 +1,14 @@
  .update-title {
    padding-bottom: 10px;
-   text-transform: uppercase;
+   text-transform: capitalize;
    font-size: 20px;
  }
 
  .update-form{
    padding-top: 20px;
+ }
+ form{
+   button{
+     margin-bottom: 10px;
+   }
  }

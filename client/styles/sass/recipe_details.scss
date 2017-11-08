@@ -1,21 +1,12 @@
-.card-image {
-  max-height: 600px;
-  align-content: center;
-  clear: both;
+.recipe-details{
+  h2,h4{
+    text-align: center;
+    text-transform: capitalize;
+  }
+  .description{
+    text-align: center;
+  }
 }
-.card-title {
-  clear: both;
-  padding: 5px 5px;
-}
-.z-depth-4{
-  padding: 10px 10px;
-}
-
-.card {
-  padding: 10px 10px;
-}
-.recipe-title{
-  text-transform: uppercase;
+.recipe-not-found{
   text-align: center;
-  font-size: 30px;
 }
