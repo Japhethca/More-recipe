@@ -1,47 +1,65 @@
-import path from 'path';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
-export default {
+const webpack = require('webpack');
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+
+module.exports = {
   devtool: 'eval-source-map',
-  entry: [path.join(__dirname, './client/index.js'),
-    // path.join(__dirname, 'client/scss/style.scss')
+  entry: [
+    './client/index.jsx'
   ],
+  target: 'web',
   output: {
-    path: '/',
+    path: path.join(__dirname, './public'),
     publicPath: '/',
     filename: 'bundle.js'
-
   },
+
+  resolve: {
+    extensions: [' ', '.js', '.jsx']
+  },
+
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
         include: [path.join(__dirname, './client')],
         loaders: ['babel-loader'],
       },
+
       {
-
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css-loader!sass-loader')
-
+        test: /\.jsx$/,
+        loaders: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015', 'react']
+        }
       },
+      // {
+      //   test: /\.scss$/,
+      //   loader: ExtractTextPlugin.extract('style-loader!css-loader!sass-loader')
+
+      // },
+      { test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
       {
         test: /\.(png|jpg)$/,
         loader: 'url-loader?limit=25000'
-      }
-    ],
+      },
+
+    ]
   },
-  resolve: {
-    extensions: [' ', '.js']
-  },
+
   node: {
     net: 'empty',
     dns: 'empty'
   },
+
   plugins: [
-    new ExtractTextPlugin('../style.css', {
+    new webpack.NoEmitOnErrorsPlugin(),
+    new ExtractTextPlugin('./public/style.css', {
       allChunks: true
     })
   ]
-
 };
