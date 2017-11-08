@@ -1,8 +1,0 @@
-{
-    "compilerOptions": {
-        "target": ["ES6", "react"]
-    },
-    "exclude": [
-        "node_modules"
-    ]
-}
