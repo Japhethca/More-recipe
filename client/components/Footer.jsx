@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import '../styles/sass/footer.scss';
 
 class Footer extends Component {
-  
   render() {
     return (
       <div>
