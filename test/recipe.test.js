@@ -56,23 +56,23 @@ describe('Recipes', () => {
         done();
       });
   });
-  it('should allow users to create new recipe', (done) => {
-    chai.request(app)
-      .post('/api/recipes')
-      .query({ token })
-      .send({
-        name: 'whateverjknnjn',
-        description: 'this is an afr soup',
-        ingredient: 'maggjnlkn',
-        direction: 'first do then the other',
-      })
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res).to.be.json;
-        expect(res.body).to.have.property('message');
-        done();
-      });
-  });
+  // it('should allow users to create new recipe', (done) => {
+  //   chai.request(app)
+  //     .post('/api/recipes')
+  //     .query({ token })
+  //     .send({
+  //       name: 'whateverjknnjn',
+  //       description: 'this is an afr soup',
+  //       ingredient: 'maggjnlkn',
+  //       direction: 'first do then the other',
+  //     })
+  //     .end((err, res) => {
+  //       expect(res).to.have.status(200);
+  //       expect(res).to.be.json;
+  //       expect(res.body).to.have.property('message');
+  //       done();
+  //     });
+  // });
   it('should allow users to update existing recipe', (done) => {
     chai.request(app)
       .put('/api/recipes/1')
