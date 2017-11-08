@@ -14,7 +14,7 @@ const rootReducers = combineReducers({
   favorites,
   reviews,
   auth,
-  flashMessages
+  flashMessages,
 });
 
 export default rootReducers;

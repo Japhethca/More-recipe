@@ -1,5 +1,5 @@
-import lodash from 'lodash';
 import { GET_RECIPE_REVIEW, ADD_NEW_REVIEW, GET_SINGLE_RECIPE_REVIEWS } from '../actions/types';
+
 
 export default function reviews(state = [], action) {
   switch (action.type) {

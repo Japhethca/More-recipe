@@ -10,7 +10,11 @@ function getUserFavorites(favorites) {
 }
 export function getFavorites(userId) {
   return dispatch => axios.get(`/api/users/${userId}/recipes`).then((res) => {
-    dispatch(getUserFavorites(res.data.Favorites));
+    const favorites = res.data.Favorites.map((favorite) => {
+      favorite = favorite.Recipe;
+      return favorite;
+    });
+    dispatch(getUserFavorites(favorites));
   }).catch((err) => {});
 }
 

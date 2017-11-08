@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ADD_NEW_REVIEW, GET_SINGLE_RECIPE_REVIEWS } from '../types';
+import { ADD_NEW_REVIEW } from '../types';
 
 
 function addNewReview(review) {
