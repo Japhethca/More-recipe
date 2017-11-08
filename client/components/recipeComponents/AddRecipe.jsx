@@ -21,12 +21,18 @@ class AddRecipe extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleImage = this.handleImage.bind(this);
+    this.imageChange = this.imageChange.bind(this);
   }
-
+  
   onChange(e) {
     if (e.target.name === 'image') {
       this.setState({ image: e.target.files[0] });
-      // this.handleImage(e.target.files[0]);
+      const reader = new FileReader();
+      reader.onload = () => {
+        const output = document.getElementById('img1');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(e.target.files[0]);
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
@@ -38,7 +44,14 @@ class AddRecipe extends Component {
     this.addRecipeForm.reset();
     // this.setState({ image: '' });
   }
-
+  imageChange(event) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      const output = document.getElementById('img1');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
   handleImage(data) {
     this.props.uploadImage(data).end((err, res) => {
       if (!err && res.ok) {
@@ -89,11 +102,16 @@ class AddRecipe extends Component {
               />
               <label htmlFor="ingredient" > Ingredient </label>
             </div>
-            <div className="choose-file">
-              <label className="btn brown" htmlFor="image">Upload Image</label>
-              <input type="file" id="image" onChange={this.onChange} name="image" accept=".jpg, .jpeg, .png" />
+
+            <div className="file-field input-field">
+              <div className="btn brown waves-effect">
+                <span>Image Upload</span>
+                <input type="file" onChange={this.onChange} name="image" accept=".jpg, .jpeg, .png"/>
+              </div>
+              <div className="file-path-wrapper">
+                <img id="img1" height={70} className="right" />
+              </div>
             </div>
-            <div className="image-preview" />
             <div>
               <button className="btn brown waves-effect waves-ripple" type="submit"> Submit </button>
             </div>

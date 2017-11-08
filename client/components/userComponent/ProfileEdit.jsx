@@ -29,6 +29,12 @@ class ProfileEdit extends Component {
   onChange(e) {
     if (e.target.name === 'photo') {
       this.setState({ photo: e.target.files[0] });
+      const reader = new FileReader();
+      reader.onload = () => {
+        const output = document.getElementById('img1');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(e.target.files[0]);
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
@@ -50,87 +56,95 @@ class ProfileEdit extends Component {
             </div>
             <form className="" onSubmit={this.onSubmit}>
               <div className="row">
-              <div className="input-field col s12 m6">
-                <i className="material-icons prefix">account_circle</i>
-                <input
+                <div className="input-field col s12 m6">
+                  <i className="material-icons prefix">account_circle</i>
+                  <input
                     type="text"
                     onChange={this.onChange}
                     name="firstname"
                     value={firstname}
                     className="input-field"
                   />
-                <label htmlFor="firstname" className="active" > Firstname </label>
-              </div>
+                  <label htmlFor="firstname" className="active" > Firstname </label>
+                </div>
 
-              <div className="input-field col s12 m6">
-                <i className="material-icons prefix">account_circle</i>
-                <input
+                <div className="input-field col s12 m6">
+                  <i className="material-icons prefix">account_circle</i>
+                  <input
                     type="text"
                     onChange={this.onChange}
                     name="lastname"
                     value={lastname}
                     className="input-field"
                   />
-                <label htmlFor="lastname" className="active"> Lastname </label>
+                  <label htmlFor="lastname" className="active"> Lastname </label>
+                </div>
               </div>
-            </div>
               <div className="row" >
-              <div className="input-field col s12 m6">
-                <i className="material-icons prefix">person_outline</i>
-                <input
-                  type="text"
-                  onChange={this.onChange}
-                  name="username"
-                  value={username}
-                  className="input-field"
-                />
-                <label htmlFor="username" className="active" > Username </label>
+                <div className="input-field col s12 m6">
+                  <i className="material-icons prefix">person_outline</i>
+                  <input
+                    type="text"
+                    onChange={this.onChange}
+                    name="username"
+                    value={username}
+                    className="input-field"
+                  />
+                  <label htmlFor="username" className="active" > Username </label>
+                </div>
+                <div className="input-field col s12 m6">
+                  <i className="material-icons prefix">mail</i>
+                  <textarea
+                    type="text"
+                    onChange={this.onChange}
+                    name="aboutme"
+                    value={aboutme}
+                    className="materialize-textarea"
+                  />
+                  <label htmlFor="aboutme" className="active" > About Me </label>
+                </div>
               </div>
-              <div className="input-field col s12 m6">
-                <i className="material-icons prefix">mail</i>
-                <textarea
-                  type="text"
-                  onChange={this.onChange}
-                  name="aboutme"
-                  value={aboutme}
-                  className="materialize-textarea"
-                />
-                <label htmlFor="aboutme" className="active" > About Me </label>
-              </div>
-            </div>
               <div className="row">
-              <div className="input-field col s12 m6">
-                <i className="material-icons prefix">lock</i>
-                <input
-                  type="password"
-                  onChange={this.onChange}
-                  name="password"
-                  value={password}
-                  className="input-field"
-                />
-                <label htmlFor="password" className="active" >Old Password </label>
+                <div className="input-field col s12 m6">
+                  <i className="material-icons prefix">lock</i>
+                  <input
+                    type="password"
+                    onChange={this.onChange}
+                    name="password"
+                    value={password}
+                    className="input-field"
+                  />
+                  <label htmlFor="password" className="active" >Old Password </label>
+                </div>
+                <div className="input-field col s12 m6">
+                  <i className="material-icons prefix">lock</i>
+                  <input
+                    type="password"
+                    onChange={this.onChange}
+                    name="newPassword"
+                    className="input-field"
+                  />
+                  <label htmlFor="newPassword" className="active" > New Password </label>
+                </div>
               </div>
-              <div className="input-field col s12 m6">
-                <i className="material-icons prefix">lock</i>
-                <input
-                  type="password"
-                  onChange={this.onChange}
-                  name="newPassword"
-                  className="input-field"
-                />
-                <label htmlFor="newPassword" className="active" > New Password </label>
+              <div className="file-field input-field">
+                <div className="btn brown waves-effect">
+                  <span>Image Upload</span>
+                  <input type="file" onChange={this.onChange} name="photo" accept=".jpg, .jpeg, .png" />
+                </div>
+                <div className="file-path-wrapper">
+                  <img id="img1" height={70} className="right" />
+                </div>
               </div>
-            </div>
-              <div className="choose-file">
-              <label className="btn brown" htmlFor="image">Upload Image</label>
-              <input type="file" id="image" onChange={this.onChange} name="photo" accept=".jpg, .jpeg, .png" />
-            </div>
               <div className="row">
-              <div className="input-field col s12 m6 center">
-                <button className="btn-large brown waves-effect waves-light col s12 m4" type="submit">Update Profile
-                </button>
+                <div className="input-field col s12 m6 center">
+                  <button 
+                    className="btn-large brown waves-effect waves-light col s12 m4"
+                    type="submit">
+                    Update Profile
+                  </button>
+                </div>
               </div>
-            </div>
             </form>
           </div>
         </div>

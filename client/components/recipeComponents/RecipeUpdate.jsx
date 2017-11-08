@@ -28,6 +28,12 @@ class RecipeUpdate extends Component {
   onChange(e) {
     if (e.target.name === 'image') {
       this.setState({ image: e.target.files[0] });
+      const reader = new FileReader();
+      reader.onload = () => {
+        const output = document.getElementById('img1');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(e.target.files[0]);
     } else {
       this.setState({ [e.target.name]: e.target.value });
     }
@@ -79,7 +85,7 @@ class RecipeUpdate extends Component {
                 className="materialize-textarea"
               />
               <label htmlFor="direction" className="active" > Direction </label>
-                   </div> <div className="input-field" >
+            </div> <div className="input-field" >
               <textarea
                 name="ingredient"
                 onChange={this.onChange}
@@ -88,9 +94,14 @@ class RecipeUpdate extends Component {
               />
               <label htmlFor="ingredient" className="active" > Ingredient </label>
             </div>
-            <div className="choose-file">
-              <label className="btn brown" htmlFor="image">Upload Image</label>
-              <input type="file" id="image" onChange={this.onChange} name="image" accept=".jpg, .jpeg, .png" />
+            <div className="file-field input-field">
+              <div className="btn brown waves-effect">
+                <span>Image Upload</span>
+                <input type="file" onChange={this.onChange} name="image" accept=".jpg, .jpeg, .png" />
+              </div>
+              <div className="file-path-wrapper">
+                <img id="img1" height={70} className="right" />
+              </div>
             </div>
             <div>
               <button className="btn-large brown waves-effect waves-ripple" type="submit"> Update </button>
