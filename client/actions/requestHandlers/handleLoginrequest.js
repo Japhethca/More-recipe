@@ -12,13 +12,12 @@ export function setCurrentUser(user) {
 
 export function logout() {
   return (dispatch) => {
-    delete localStorage.token;
+    localStorage.removeItem(localStorage.token);
     setAuthorizationToken(false);
     dispatch(setCurrentUser({}));
     dispatch({ type: 'RESET' });
   };
 }
-
 export function handleLoginRequest(userdata) {
   // handles loging request
   return dispatch => axios.post('/api/users/signin', userdata).then((res) => {
