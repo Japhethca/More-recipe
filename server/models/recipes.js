@@ -1,7 +1,7 @@
 
 
 module.exports = (sequelize, DataTypes) => {
-  let Recipes = sequelize.define('Recipes', {
+  const Recipes = sequelize.define('Recipes', {
     name: {
       type: DataTypes.TEXT,
       allowNull: false,
