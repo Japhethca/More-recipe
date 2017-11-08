@@ -56,23 +56,23 @@ describe('Recipes', () => {
         done();
       });
   });
-  /* it('should allow users to create new recipe', (done) => {
+  it('should allow users to create new recipe', (done) => {
     chai.request(app)
       .post('/api/recipes')
       .query({ token })
       .send({
-        name: 'whatever',
+        name: 'whateverjknnjn',
         description: 'this is an afr soup',
-        ingredient: 'magg',
-        direction: 'first do then the other'
+        ingredient: 'maggjnlkn',
+        direction: 'first do then the other',
       })
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res).to.be.json;
         expect(res.body).to.have.property('message');
         done();
-      }); */
-  // });
+      });
+  });
   it('should allow users to update existing recipe', (done) => {
     chai.request(app)
       .put('/api/recipes/1')
@@ -105,7 +105,7 @@ describe('Recipes', () => {
         done();
       });
   });
-  it('should not allow users to update that they didnt create', (done) => {
+  it('should not allow users to update recipe that they didnt create', (done) => {
     chai.request(app)
       .put('/api/recipes/2')
       .query({ token })
