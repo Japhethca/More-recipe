@@ -13,7 +13,7 @@ class ActionButtons extends Component {
     const {recipe, reviews, favorites, setFavorites, removeFavorite} = this.props;
     return (
       <div>
-        <ul className='btn-list center'>
+        <ul className='btn-list'>
           <li><ReviewButton recipe={recipe} reviews={reviews} 
             favorites={favorites} setFavorites={setFavorites} removeFavorite={removeFavorite} />
             </li>

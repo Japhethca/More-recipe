@@ -20,7 +20,8 @@
     "test:db:seed": "cross-env NODE_ENV=test sequelize db:seed:all",
     "start:test:db": "npm run test:db:migrate && npm run test:db:seed",
     "test-b": "cross-env NODE_ENV=test && nyc --reporter=html mocha --compilers js:babel-core/register --timeout 20000",
-    "test:client": "jest"
+    "test:client": "jest",
+    "coveralls": "nyc report --reporter=text-lcov  | coveralls"
   },
   "repository": {
     "type": "git",
