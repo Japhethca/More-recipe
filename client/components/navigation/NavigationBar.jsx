@@ -2,9 +2,16 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import SearchForm from './SearchForm';
-import { logout } from '../actions/requestHandlers/handleLoginrequest';
-import '../styles/sass/navigationBar.scss';
+import SearchForm from '../search/SearchForm';
+import { logout } from '../../actions/requestHandlers/handleLoginrequest';
+import './navigationBar.scss';
+
+
+const propTypes = {
+  user: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
+};
 
 class NavigationBar extends Component {
   constructor(props) {
@@ -59,7 +66,7 @@ class NavigationBar extends Component {
     const guestLinks = (
       <div>
         <ul className="side-nav" id="more-recipe">
-          <li ><NavLink className="btn" to="/signin"  >Login</NavLink></li>
+          <li ><NavLink className="btn" to="/signin" >Login</NavLink></li>
           <li><NavLink className="btn" to="/signup">SignUp</NavLink></li>
         </ul>
         <ul className="nav-mobile right hide-on-med-and-down">
@@ -72,9 +79,6 @@ class NavigationBar extends Component {
     return (
       <div>
         <nav className="nav-extended nav-menu">
-          <div className="nav-background">
-            {/* <div className="pattern active" style={"background-image: url('//cdn.shopify.com/s/files/1/2030/2737/files/icon-seamless_ef568d79-394b-49ab-a3c5-128827d788e8.png?v=1496294246');"}></div> */}
-          </div>
           <div className="nav-wrapper">
             <div className="container">
               <NavLink to="/" className="brand-logo"><img className="img image-responsive" src="http://res.cloudinary.com/dcmxbxzyj/image/upload/v1508597712/more-recipe-logo3_hssqkb.png" alt="" /></NavLink>
@@ -93,17 +97,10 @@ class NavigationBar extends Component {
   }
 }
 
-NavigationBar.propTypes = {
-  user: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+NavigationBar.propTypes = propTypes;
 
-};
-
-function mapStateToProps(state) {
-  return {
-    user: state.auth
-  };
-}
+const mapStateToProps = state => ({
+  user: state.auth
+});
 
 export default withRouter(connect(mapStateToProps, { logout })(NavigationBar));

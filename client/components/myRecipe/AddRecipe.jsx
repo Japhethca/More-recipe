@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import handleCreateRecipe from '../../actions/requestHandlers/handleCreateRecipe';
-import { uploadImage } from '../../actions/requestHandlers/handleFileUpload';
-import '../../styles/sass/add_new_recipe.scss';
+import './add_new_recipe.scss';
 
+
+const propTypes = {
+  handleCreateRecipe: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+};
 
 class AddRecipe extends Component {
   constructor(props) {
@@ -20,10 +24,8 @@ class AddRecipe extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.handleImage = this.handleImage.bind(this);
-    this.imageChange = this.imageChange.bind(this);
   }
-  
+
   onChange(e) {
     if (e.target.name === 'image') {
       this.setState({ image: e.target.files[0] });
@@ -42,24 +44,6 @@ class AddRecipe extends Component {
     e.preventDefault();
     this.props.handleCreateRecipe(this.state);
     this.addRecipeForm.reset();
-    // this.setState({ image: '' });
-  }
-  imageChange(event) {
-    const reader = new FileReader();
-    reader.onload = function () {
-      const output = document.getElementById('img1');
-      output.src = reader.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-  }
-  handleImage(data) {
-    this.props.uploadImage(data).end((err, res) => {
-      if (!err && res.ok) {
-        this.setState({ image: res.body.url });
-      } else {
-        console.log(err || res.error);
-      }
-    });
   }
 
   render() {
@@ -109,7 +93,7 @@ class AddRecipe extends Component {
                 <input type="file" onChange={this.onChange} name="image" accept=".jpg, .jpeg, .png"/>
               </div>
               <div className="file-path-wrapper">
-                <img id="img1" height={70} className="right" />
+                <img id="img1" height={70} alt="" className="right" />
               </div>
             </div>
             <div>
@@ -122,14 +106,6 @@ class AddRecipe extends Component {
   }
 }
 
-AddRecipe.propTypes = {
-  handleCreateRecipe: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  uploadImage: PropTypes.func.isRequired,
-  image: PropTypes.string.isRequired
-};
-const mapStateToProps = state => ({
-  image: state.image
-});
+AddRecipe.propTypes = propTypes;
 
-export default connect(mapStateToProps, { handleCreateRecipe, uploadImage })(AddRecipe);
+export default connect(null, { handleCreateRecipe })(AddRecipe);

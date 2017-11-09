@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import NavigationBar from '../components/NavigationBar';
-import Footer from '../components/Footer';
-import UserProfile from '../components/userComponent/UserProfile';
-import ProfileEdit from '../components/userComponent/ProfileEdit';
+import NavigationBar from '../components/navigation/NavigationBar';
+import Footer from '../components/navigation/Footer';
+import UserProfile from '../components/profile/UserProfile';
+import ProfileEdit from '../components/profile/ProfileEdit';
 import { handleEditUserProfile } from '../actions/requestHandlers/handleUserProfile';
 
+
+const propTypes = {
+  handleEditUserProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
+};
 
 class UserProfilePage extends Component {
   componentDidMount() {
@@ -37,10 +42,7 @@ class UserProfilePage extends Component {
   }
 }
 
-UserProfilePage.propTypes = {
-  handleEditUserProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
-};
+UserProfilePage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   profile: state.profile

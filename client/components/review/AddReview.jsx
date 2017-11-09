@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import handleRecipeReview from '../../actions/requestHandlers/handleRecipeReview';
 
+
+const propTypes = {
+  recipe: PropTypes.object.isRequired,
+  handleRecipeReview: PropTypes.func.isRequired
+};
+
 class AddReview extends Component {
   constructor(props) {
     super(props);
@@ -43,9 +49,6 @@ class AddReview extends Component {
   }
 }
 
-AddReview.propTypes = {
-  recipe: PropTypes.object.isRequired,
-  handleRecipeReview: PropTypes.func.isRequired
-};
+AddReview.propTypes = propTypes;
 
 export default connect(null, { handleRecipeReview })(AddReview);

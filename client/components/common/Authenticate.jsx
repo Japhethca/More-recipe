@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+const propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired
+};
 
 export default function (Comp) {
   class Authenticate extends Component {
@@ -21,13 +24,11 @@ export default function (Comp) {
     }
   }
 
-  Authenticate.propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired
-  };
-  function mapStateToProps(state) {
-    return {
-      isAuthenticated: state.auth.isAuthenticated
-    };
-  }
+  Authenticate.propTypes = propTypes;
+
+  const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+  });
+
   return connect(mapStateToProps, { })(Authenticate);
 }

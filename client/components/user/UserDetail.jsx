@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import getUserDetail from '../../actions/requestHandlers/getUserDetail';
-import '../../styles/sass/userDetails.scss';
+import './userDetails.scss';
+
+
+const propTypes = {
+  userId: PropTypes.number.isRequired,
+  getUserDetail: PropTypes.func.isRequired
+};
 
 class UserDetail extends Component {
   constructor(props) {
@@ -26,9 +32,6 @@ class UserDetail extends Component {
   }
 }
 
-UserDetail.propTypes = {
-  userId: PropTypes.number.isRequired,
-  getUserDetail: PropTypes.func.isRequired
-};
+UserDetail.propTypes = propTypes;
 
 export default connect(null, { getUserDetail })(UserDetail);

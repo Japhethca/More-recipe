@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import SignUpForm from '../components/userComponent/SignUpForm';
-import NavigationBar from '../components/NavigationBar';
-import Footer from '../components/Footer';
+import SignUpForm from '../components/signup/SignUpForm';
+import NavigationBar from '../components/navigation/NavigationBar';
+import Footer from '../components/navigation/Footer';
 import handleSignUpRequest from '../actions/requestHandlers/handleSignUprequest';
+
+
+const propTypes = {
+  handleSignUpRequest: PropTypes.func.isRequired
+};
 
 class SignUpPage extends Component {
   render() {
@@ -17,8 +22,6 @@ class SignUpPage extends Component {
     );
   }
 }
-SignUpPage.propTypes = {
-  handleSignUpRequest: PropTypes.func.isRequired
-};
+SignUpPage.propTypes = propTypes;
 
 export default connect(null, { handleSignUpRequest })(SignUpPage);

@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { UPDATE_RECIPE } from '../../actions/types';
-import { uploadImage } from '../../actions/requestHandlers/handleFileUpload';
-import '../../styles/sass/recipe_update_form.scss';
+import './recipe_update_form.scss';
+
+
+const propTypes = {
+  history: PropTypes.object.isRequired,
+  handleRecipeUpdate: PropTypes.func.isRequired,
+  uploadImage: PropTypes.func.isRequired
+};
 
 class RecipeUpdate extends Component {
   constructor(props) {
@@ -113,10 +118,6 @@ class RecipeUpdate extends Component {
   }
 }
 
-RecipeUpdate.propTypes = {
-  history: PropTypes.object.isRequired,
-  handleRecipeUpdate: PropTypes.func.isRequired,
-  uploadImage: PropTypes.func.isRequired
-};
+RecipeUpdate.propTypes = propTypes;
 
-export default connect(null, { uploadImage })(RecipeUpdate);
+export default connect(null, { })(RecipeUpdate);

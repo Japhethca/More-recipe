@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import '../styles/sass/search.scss';
+import './search.scss';
 
+
+const propTypes = {
+  recipes: PropTypes.array.isRequired
+};
 
 class SearchForm extends Component {
   constructor(props) {
@@ -72,9 +76,8 @@ class SearchForm extends Component {
   }
 }
 
-SearchForm.propTypes = {
-  recipes: PropTypes.array.isRequired
-};
+SearchForm.propTypes = propTypes;
+
 const mapStateToProps = state => ({
   recipes: state.recipes
 });

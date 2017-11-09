@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Review from './Review';
 import AddReview from './AddReview';
-import '../../styles/sass/reviewBox.scss';
+import './reviewBox.scss';
 
+
+const propTypes = {
+  recipe: PropTypes.object.isRequired
+};
 
 class Reviews extends Component {
   render() {
@@ -28,9 +32,7 @@ class Reviews extends Component {
   }
 }
 
-Reviews.propTypes = {
-  recipe: PropTypes.object.isRequired
-};
+Reviews.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   reviews: state.reviews

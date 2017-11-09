@@ -4,6 +4,11 @@ import classname from 'classnames';
 import { connect } from 'react-redux';
 import { setFavorites, removeFavorite } from '../../actions/requestHandlers/handleUserFavorites';
 
+const propTypes = {
+  recipe: PropTypes.object.isRequired,
+  setFavorites: PropTypes.func.isRequired,
+  removeFavorite: PropTypes.func.isRequired
+};
 
 class FavoritesButton extends Component {
   constructor(props) {
@@ -57,11 +62,8 @@ class FavoritesButton extends Component {
   }
 }
 
-FavoritesButton.propTypes = {
-  recipe: PropTypes.object.isRequired,
-  setFavorites: PropTypes.func.isRequired,
-  removeFavorite: PropTypes.func.isRequired
-};
+FavoritesButton.propTypes = propTypes;
+
 const mapStateToProps = state => ({
   favorites: state.favorites
 });

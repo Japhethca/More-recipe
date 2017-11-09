@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+
+const propTypes = {
+  history: PropTypes.object.isRequired,
+  recipe: PropTypes.object.isRequired
+};
+
 class UpdateButton extends Component {
-  onClick(e) {
+  onClick() {
     this.props.history.push('/recipe/update', this.props.recipe);
   }
 
@@ -17,9 +23,6 @@ class UpdateButton extends Component {
   }
 }
 
-UpdateButton.propTypes = {
-  history: PropTypes.object.isRequired,
-  recipe: PropTypes.object.isRequired
-};
+UpdateButton.propTypes = propTypes;
 
 export default UpdateButton;

@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 
 
+const propTypes = {
+  handleDeleteRecipe: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired
+};
+
 class DeleteButton extends Component {
   constructor(props) {
     super(props);
@@ -30,9 +35,6 @@ class DeleteButton extends Component {
   }
 }
 
-DeleteButton.propTypes = {
-  handleDeleteRecipe: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired
-};
+DeleteButton.propTypes = propTypes;
 
 export default DeleteButton;

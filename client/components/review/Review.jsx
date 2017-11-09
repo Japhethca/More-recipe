@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import UserDetails from '../userComponent/UserDetail';
-import '../../styles/sass/reviewBox.scss';
+import UserDetails from '../user/UserDetail';
+import './reviewBox.scss';
+
+
+const propTypes = {
+  reveiw: PropTypes.object.isRequired
+};
 
 class Review extends Component {
   render() {
@@ -21,8 +26,6 @@ class Review extends Component {
   }
 }
 
-Review.propTypes = {
-  reveiw: PropTypes.object.isRequired
-};
+Review.propTypes = propTypes;
 
 export default Review;

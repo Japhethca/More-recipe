@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Recipe from './Recipe';
-import { getFavorites } from '../../actions/requestHandlers/handleUserFavorites';
-import getAllRecipes from '../../actions/requestHandlers/getAllRecipes';
-import '../../styles/sass/topRecipes.scss';
+import './Recipes.scss';
 
-class TopRecipes extends Component {
+
+const propTypes = {
+  history: PropTypes.object,
+  favorites: PropTypes.array.isRequired
+};
+
+class Recipes extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +25,7 @@ class TopRecipes extends Component {
     }
   }
   render() {
-    const { recipes } = this.props.recipes;
+    const { recipes } = this.props;
     const { favorites } = this.props;
     if (this.state.hasErrored) {
       return (
@@ -42,23 +46,19 @@ class TopRecipes extends Component {
             }
           </ul>
         </div>
-
       </div>
     );
   }
 }
 
 
-TopRecipes.propTypes = {
-  history: PropTypes.object.isRequired,
-  favorites: PropTypes.array.isRequired
-};
+Recipes.propTypes = propTypes;
 
 const mapStateToProps = state => ({
-  recipes: state,
+  recipes: state.recipes,
   user: state.auth.user,
   favorites: state.favorites
 });
 
 
-export default connect(mapStateToProps, { })(TopRecipes);
+export default connect(mapStateToProps, { })(Recipes);

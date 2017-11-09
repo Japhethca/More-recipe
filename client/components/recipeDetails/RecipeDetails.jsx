@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import lodash from 'lodash';
 import getRecipe from '../../actions/requestHandlers/getRecipe';
-import '../../styles/sass/recipe_details.scss';
-import Reviews from '../reviewComponents/ReviewsComponent';
+import './recipe_details.scss';
+import Reviews from '../review/ReviewsComponent';
 import ActionButtons from '../buttons/ActionButtons';
-import UserDetail from '../userComponent/UserDetail';
+import UserDetail from '../user/UserDetail';
 import { setFavorites, removeFavorite } from '../../actions/requestHandlers/handleUserFavorites';
 
+const propTypes = {
+  match: PropTypes.object.isRequired,
+};
 
 class RecipeDetails extends Component {
   constructor(props, { match }) {
@@ -109,9 +112,9 @@ class RecipeDetails extends Component {
   }
 }
 
-RecipeDetails.propTypes = {
-  match: PropTypes.object.isRequired,
-};
+RecipeDetails.propTypes = propTypes;
+
+
 const mapStateToProps = state => ({
   favorites: state.favorites,
   reviews: state.reviews,

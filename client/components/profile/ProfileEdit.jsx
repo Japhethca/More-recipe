@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { uploadImage } from '../../actions/requestHandlers/handleFileUpload';
 
+
+const propTypes = {
+  profile: PropTypes.object.isRequired,
+  handleEditUserProfile: PropTypes.func.isRequired,
+};
 
 class ProfileEdit extends Component {
   constructor(props) {
@@ -153,10 +157,7 @@ class ProfileEdit extends Component {
   }
 }
 
-ProfileEdit.propTypes = {
-  profile: PropTypes.object.isRequired,
-  handleEditUserProfile: PropTypes.func.isRequired,
-  uploadImage: PropTypes.func.isRequired
-};
+ProfileEdit.propTypes = propTypes;
 
-export default connect(null, { uploadImage })(ProfileEdit);
+
+export default connect(null, {})(ProfileEdit);

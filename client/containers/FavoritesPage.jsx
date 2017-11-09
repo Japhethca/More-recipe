@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Favorites from '../components/recipeComponents/Favorites';
-import NavigationBar from '../components/NavigationBar';
-import Footer from '../components/Footer';
-import getAllRecipes from '../actions/requestHandlers/getAllRecipes';
-import getAllReview from '../actions/requestHandlers/getReviews';
+import Favorites from '../components/favorites/Favorites';
+import NavigationBar from '../components/navigation/NavigationBar';
 
+
+const propTypes = {
+  favorites: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+};
 
 class FavoritesPage extends Component {
   constructor(props) {
@@ -32,16 +34,12 @@ class FavoritesPage extends Component {
             </div>
           )}
         </div>
-        {/* <Footer /> */}
       </div>
     );
   }
 }
 
-FavoritesPage.propTypes = {
-  favorites: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired,
-};
+FavoritesPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   favorites: state.favorites,
