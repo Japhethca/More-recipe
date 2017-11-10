@@ -5,7 +5,10 @@ $nav-background-color: rgba(78, 31, 31, 0.877);
   .nav-menu{
   height: 90px;
   background-color: $nav-background-color;
-  ul{
+  .search-icon{
+    cursor: pointer;
+  }
+    ul{
     padding-top: 10px;
       a {
         text-transform: uppercase;

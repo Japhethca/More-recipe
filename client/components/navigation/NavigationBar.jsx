@@ -44,7 +44,7 @@ class NavigationBar extends Component {
     const userLinks = (
       <div>
         <ul>
-          <li className="hide-on-large-only right" onClick={this.toggleSearch} ><i className="material-icons medium" >search</i></li>
+          <li className="hide-on-large-only right search-icon" onClick={this.toggleSearch} ><i className="material-icons medium" >search</i></li>
         </ul>
         <ul className="nav-mobile right hide-on-med-and-down">
           <li><NavLink to="/myrecipes" activeClassName="active">My Recipes</NavLink></li>

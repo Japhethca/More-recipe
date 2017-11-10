@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { SEARCH_RECIPE } from '../../actions/types';
 import './search.scss';
 
 
 const propTypes = {
-  recipes: PropTypes.array.isRequired
+  recipes: PropTypes.array.isRequired,
 };
 
 class SearchForm extends Component {
@@ -27,13 +28,15 @@ class SearchForm extends Component {
   }
   onFocus() {
     this.setState({ isSearching: true });
+    console.log('focusing');
     return true;
   }
   onBlur() {
     this.setState({ isSearching: false });
+    console.log('blurring div');
   }
   onSubmit() {
-    this.handleSearch();
+    this.props.history.push('/');
   }
 
   handleSearch(keywords) {
@@ -57,18 +60,16 @@ class SearchForm extends Component {
   render() {
     return (
       <div>
-        <form className="row" onSubmit={this.onSubmit}>
+        <form className="row" onSubmit={this.onSubmit} >
           <div className="input-field col s12 m8 offset-m2">
-            <span className="search-btn right"><i className="material-icons prefix">search</i></span>
-            <input id="search" type="search" required onChange={this.onChange} autoFocus autoComplete="off" onFocus={this.onFocus} />
-            {this.state.isSearching &&
-            <div className="search-result" onBlur={this.onBlur}>
-              <ul>
+            <span className="search-btn right" ><i className="material-icons prefix">search</i></span>
+            <input id="search" list="results" type="search" required onChange={this.onChange} autoFocus autoComplete="off" onFocus={this.onFocus} />
+            <div className="search-result" tabIndex="0" onBlur={this.onBlur} >
+              <ul id="results">
                 {this.state.searchResults && this.state.searchResults.map(recipe =>
-                  <a key={recipe.id} className="itemLink" href={`/recipe/${recipe.id}`} ><img src={recipe.image} alt="" />{recipe.name }</a>)}
+                  <a key={recipe.id} className="itemLink" href={`/recipe/${recipe.id}`} ><img src={recipe.image} alt="" /><span>{recipe.name }</span></a>)}
               </ul>
             </div>
-            }
           </div>
         </form>
       </div>
