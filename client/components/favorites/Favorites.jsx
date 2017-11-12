@@ -10,7 +10,7 @@ class Favorites extends Component {
   render() {
     const { favorites } = this.props;
     return (
-      <div className="row">
+      <ul className="row">
         {favorites.map(favorite => (
           <li key={favorite.id} className="col s12 m4" >
             <Recipe
@@ -19,7 +19,7 @@ class Favorites extends Component {
             />
           </li>
          ))}
-      </div>
+      </ul>
     );
   }
 }

@@ -9,7 +9,10 @@ import RecipeDetails from '../components/recipeDetails/RecipeDetails';
 
 const propTypes = {
   match: PropTypes.object.isRequired,
-  favorites: PropTypes.array.isRequired
+  favorites: PropTypes.array.isRequired,
+  reviews: PropTypes.array.isRequired,
+  recipes: PropTypes.array.isRequired,
+
 };
 
 class RecipeDetailsPage extends Component {
@@ -18,7 +21,12 @@ class RecipeDetailsPage extends Component {
       <div>
         <NavigationBar />
         <div className="container">
-          <RecipeDetails match={this.props.match} favorites={this.props.favorites} />
+          <RecipeDetails
+            match={this.props.match}
+            favorites={this.props.favorites}
+            reviews={this.props.reviews}
+            recipes={this.props.recipes}
+          />
         </div>
         <Footer />
       </div>
@@ -28,7 +36,9 @@ class RecipeDetailsPage extends Component {
 RecipeDetailsPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
-  favorites: state.favorites
+  favorites: state.favorites,
+  reviews: state.reviews,
+  recipes: state.recipes,
 });
 
 

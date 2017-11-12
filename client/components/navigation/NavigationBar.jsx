@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import SearchForm from '../search/SearchForm';
 import { logout } from '../../actions/requestHandlers/handleLoginrequest';
@@ -20,13 +21,14 @@ class NavigationBar extends Component {
       isSearching: false
     };
     this.toggleSearch = this.toggleSearch.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
   componentDidMount() {
     $('.button-collapse').sideNav({
-      menuWidth: 300, // Default is 300
-      edge: 'left', // Choose the horizontal origin
-      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-      draggable: true, // Choose whether you can drag to open on touch screens,
+      menuWidth: 300,
+      edge: 'left',
+      closeOnClick: true,
+      draggable: true,
     });
     $('.collapsible').collapsible();
   }
@@ -36,6 +38,10 @@ class NavigationBar extends Component {
     this.props.history.push('/signin');
   }
   toggleSearch() {
+    const logo = document.getElementById('brand-logo');
+    const toggle = document.getElementById('toggle');
+    logo.style = !this.state.isSearching ? 'display:none' : '';
+    toggle.innerHTML = !this.state.isSearching ? 'close' : 'search';
     this.setState({ isSearching: !this.state.isSearching });
   }
   render() {
@@ -43,24 +49,40 @@ class NavigationBar extends Component {
 
     const userLinks = (
       <div>
-        <ul>
-          <li className="hide-on-large-only right search-icon" onClick={this.toggleSearch} ><i className="material-icons medium" >search</i></li>
+        <ul className="nav-mobile hide-on-large-only">
+          <li className="right search-icon" onClick={this.toggleSearch} ><i className="material-icons medium" id="toggle" >search</i></li>
+          {this.state.isSearching && 
+          <li>
+            <form className="navigation-search right">
+              <div className="input-field">
+                <input id="search" type="search" required placeholder="search for recipe" />
+                <label className="label-icon" htmlFor="search"><i className="material-icons">search</i></label>
+              </div>
+            </form>
+          </li>
+          }
         </ul>
-        <ul className="nav-mobile right hide-on-med-and-down">
-          <li><NavLink to="/myrecipes" activeClassName="active">My Recipes</NavLink></li>
-          <li ><NavLink to="/favorites" activeClassName="active">Favorites</NavLink></li>
-          <li><NavLink to="/profile" activeClassName="active"><i className="material-icons large left">account_circle</i>Profile</NavLink></li>
-          <li ><a className="btn" onClick={this.onClick.bind(this)}>Logout</a></li>
+        <ul className="nav-mobile hide-on-med-and-down right">
+          <li>
+            <form className="navigation-search">
+              <div className="input-field">
+                <input id="search" type="search" required placeholder="search for recipe" />
+                <label className="label-icon" htmlFor="search"><i className="material-icons">search</i></label>
+              </div>
+            </form>
+          </li>
+          <li><NavLink to="/myrecipes">My Recipes</NavLink></li>
+          <li ><NavLink to="/favorites">Favorites</NavLink></li>
+          <li><NavLink to="/profile"><i className="material-icons large left">account_circle</i>Profile</NavLink></li>
+          <li ><a className="btn" onClick={this.onClick}>Logout</a></li>
         </ul>
         <ul className="side-nav" id="more-recipe">
           <li><NavLink to="/myrecipes" activeClassName="active"><i className="fa fa-cutlery prefix" aria-hidden="true" />My Recipes</NavLink></li>
           <li><NavLink to="/favorites" activeClassName="active"><i className="fa fa-heart prefix" aria-hidden="true" />Favorites</NavLink></li>
           <li><NavLink to="/profile" activeClassName="active"><i className="fa fa-user prefix" aria-hidden="true" />Profile</NavLink></li>
-          <li ><a className="btn" onClick={this.onClick.bind(this)}>Logout</a></li>
+          <li ><a className="btn" alt="" onClick={this.onClick}>Logout</a></li>
         </ul>
       </div>
-
-
     );
 
     const guestLinks = (
@@ -74,24 +96,19 @@ class NavigationBar extends Component {
           <li><NavLink className="btn brown-text" to="/signup">SignUp</NavLink></li>
         </ul>
       </div>
-
     );
+
     return (
       <div>
         <nav className="nav-extended nav-menu">
           <div className="nav-wrapper">
             <div className="container">
-              <NavLink to="/" className="brand-logo"><img className="img image-responsive" src="http://res.cloudinary.com/dcmxbxzyj/image/upload/v1508597712/more-recipe-logo3_hssqkb.png" alt="" /></NavLink>
+              {<NavLink to="/" id="brand-logo" className="brand-logo"><img className="img image-responsive" src="http://res.cloudinary.com/dcmxbxzyj/image/upload/v1508597712/more-recipe-logo3_hssqkb.png" alt="" /></NavLink>}
               <NavLink to="" data-activates="more-recipe" className="button-collapse"><i className="material-icons">menu</i></NavLink>
-
               {isAuthenticated ? userLinks : guestLinks}
             </div>
           </div>
         </nav>
-        <div className="container">
-          {this.state.isSearching && <SearchForm />}
-        </div>
-
       </div>
     );
   }

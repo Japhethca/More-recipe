@@ -1,3 +1,19 @@
 #recipe-card{
   margin: 0 auto;
+  height: 400px;
+  img{
+     height: 200px;
+     width: fit-content;
+  }
+  img:hover{
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+   
+  }
+  a{
+    color: inherit;
+  }
+  a:hover{
+   text-decoration: underline; 
+  }
 }

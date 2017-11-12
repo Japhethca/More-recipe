@@ -32,10 +32,10 @@ class Recipe extends Component {
     return (
       <div className="row" id="recipe-card">
         <div className="card col s12">
-          <Link to={`/recipe/${recipe.id}`} className="card-image" >
-            <img src={recipe.image || require('../../../images/avatar.png')} className="responsive-img recipe-image" />
+          <Link to={`/recipe/${recipe.id}`} className="card-image" href >
+            <img src={recipe.image || require('../../../images/avatar.png')} className="responsive-img recipe-image" alt="recipe" />
+            <h5>{recipe.name}</h5>
           </Link>
-          <h5>{recipe.name}</h5>
           <UserDetail userId={recipe.userId} />
 
           <hr />
