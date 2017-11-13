@@ -34,7 +34,7 @@ class Recipe extends Component {
         <div className="card col s12">
           <Link to={`/recipe/${recipe.id}`} className="card-image" href >
             <img src={recipe.image || require('../../../images/avatar.png')} className="responsive-img recipe-image" alt="recipe" />
-            <h5>{recipe.name}</h5>
+            <h5 className="recipe-name">{recipe.name}</h5>
           </Link>
           <UserDetail userId={recipe.userId} />
 

@@ -1,11 +1,13 @@
-/* import SEARCH_RECIPE from '../types';
+import { SEARCH_RECIPE } from '../types';
 
 function searchData(data) {
   return {
     type: SEARCH_RECIPE,
-    data
+    result: data.result,
+    query: data.query
   };
 }
-function search(data, keyword, ) {
-[].
-} */
+
+export default function handleSearch(data) {
+  return dispatch => dispatch(searchData(data));
+}

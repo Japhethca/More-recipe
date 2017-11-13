@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import SearchForm from '../search/SearchForm';
 import { logout } from '../../actions/requestHandlers/handleLoginrequest';
@@ -52,25 +51,11 @@ class NavigationBar extends Component {
         <ul className="nav-mobile hide-on-large-only">
           <li className="right search-icon" onClick={this.toggleSearch} ><i className="material-icons medium" id="toggle" >search</i></li>
           {this.state.isSearching && 
-          <li>
-            <form className="navigation-search right">
-              <div className="input-field">
-                <input id="search" type="search" required placeholder="search for recipe" />
-                <label className="label-icon" htmlFor="search"><i className="material-icons">search</i></label>
-              </div>
-            </form>
-          </li>
+          <SearchForm history={this.props.history} />
           }
         </ul>
         <ul className="nav-mobile hide-on-med-and-down right">
-          <li>
-            <form className="navigation-search">
-              <div className="input-field">
-                <input id="search" type="search" required placeholder="search for recipe" />
-                <label className="label-icon" htmlFor="search"><i className="material-icons">search</i></label>
-              </div>
-            </form>
-          </li>
+          <SearchForm history={this.props.history} />
           <li><NavLink to="/myrecipes">My Recipes</NavLink></li>
           <li ><NavLink to="/favorites">Favorites</NavLink></li>
           <li><NavLink to="/profile"><i className="material-icons large left">account_circle</i>Profile</NavLink></li>
