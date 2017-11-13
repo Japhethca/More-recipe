@@ -1,4 +1,3 @@
-
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -68,7 +67,6 @@ module.exports = {
       sourceMap: true,
       minimize: false
     }),
-    new webpack.IgnorePlugin(/node_modules/),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin('./style.css', {

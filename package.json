@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "webpack": "webpack --config webpack.config.prod.js -p --progress --colors --display-modules --display-reasons --display-error-details",
+    "webpack": "webpack --config webpack.config.prod.js -p --progress --colors",
     "start": "NODE_ENV=production babel-node server/app.js",
     "start:dev": "nodemon --watch server --exec babel-node server/app.js",
     "build": "babel server -d build",
