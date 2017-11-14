@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setFavorites, removeFavorite } from '../../actions/requestHandlers/handleUserFavorites';
 
 const propTypes = {
-  recipe: PropTypes.object.isRequired,
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   setFavorites: PropTypes.func.isRequired,
   removeFavorite: PropTypes.func.isRequired
 };

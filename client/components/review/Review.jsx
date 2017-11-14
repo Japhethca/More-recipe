@@ -5,7 +5,7 @@ import './reviewBox.scss';
 
 
 const propTypes = {
-  reveiw: PropTypes.object.isRequired
+  review: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 class Review extends Component {

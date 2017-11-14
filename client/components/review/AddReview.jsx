@@ -5,7 +5,7 @@ import handleRecipeReview from '../../actions/requestHandlers/handleRecipeReview
 
 
 const propTypes = {
-  recipe: PropTypes.object.isRequired,
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   handleRecipeReview: PropTypes.func.isRequired
 };
 

@@ -10,7 +10,7 @@ import UserDetail from '../user/UserDetail';
 import { setFavorites, removeFavorite } from '../../actions/requestHandlers/handleUserFavorites';
 
 const propTypes = {
-  match: PropTypes.object.isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 class RecipeDetails extends Component {

@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/JaphethCA/More-recipe/badge.svg?branch=staging)](https://coveralls.io/github/JaphethCA/More-recipe?branch=staging)
+[![Coverage Status](https://coveralls.io/repos/github/JaphethCA/More-recipe/badge.svg?branch=ft-client-side-with-react-redux)](https://coveralls.io/github/JaphethCA/More-recipe?branch=ft-client-side-with-react-redux)
 [![Build Status](https://travis-ci.org/JaphethCA/More-recipe.svg?branch=staging)](https://travis-ci.org/JaphethCA/More-recipe)
 [![Code Climate](https://codeclimate.com/github/JaphethCA/More-recipe/badges/gpa.svg)](https://codeclimate.com/github/JaphethCA/More-recipe)
 # More-recipe

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Recipe from '../recipe/Recipe';
 
 const propTypes = {
-  favorites: PropTypes.array.isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 class Favorites extends Component {
