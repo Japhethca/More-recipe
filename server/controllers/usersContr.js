@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import models from '../models';
 import app from '../app';
 
-const Users = models.Users;
+const { Users } = models;
 
 // for password encryption
 const saltRound = 10;

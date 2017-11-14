@@ -1,13 +1,11 @@
 import validator from 'validatorjs';
 import Sequelize from 'sequelize';
-import db from '../models/index';
 import models from '../models';
 
-const Recipes = models.Recipes;
-const Users = models.Users;
-const Reviews = models.Reviews;
+const { Recipes } = models;
+const { Users } = models;
 
-const sequelize = db.sequelize;
+const { sequelize } = models;
 
 
 const createRules = {
