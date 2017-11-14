@@ -1,7 +1,34 @@
+$text-color: white;
+$btn-color: green;
 .landing-image{
   background-image: url("../../../images/more-recipe-cover.jpg");
   background-repeat: no-repeat;
   height: 100%;
   background-size: cover;
   background-position: center;
+  .quote-text {
+    font-family: 'Spectral SC', serif;
+    color: $text-color;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 150px;
+    & span{
+      font-style: italic;
+    }
+  }
+  .authenticate {
+    padding-top: 50px;
+    color: $text-color;
+    font-size: 20px;
+    text-align: center;
+    .landing-btn {
+      background-color: $btn-color;
+      color: $text-color;
+      display: block;
+      width: 30%;
+      border: none;
+      margin-left: 35%;
+      padding: 10px;
+    }
+  }
 }
