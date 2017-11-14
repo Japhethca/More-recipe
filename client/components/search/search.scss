@@ -1,41 +1,51 @@
+$white_color : #fff;
+$search_input_bg : rgb(66, 17, 17)
+
 .input-field input[type=search] {
-  background-color: #fff;
+  background-color:$white_color;
   margin-bottom: 0;
   padding-left: 4px;
 }
-.search-result{
-  a{
+
+.search-result {
+
+  a {
     list-style-type: none;
     padding: 5px 5px;
     display: block;
     color: green;
-    img{
+
+    img {
       max-height: 50px;
       max-width: 50px;
       padding: 5px;
       display: inline-block;
     }
   }
-  a:hover{
+
+  a:hover {
     background: grey;
-    color: #fff;
+    color: $white_color;
   }
+
   margin-top: 2px; 
-  background-color: #fff;
-  box-shadow: 4px 4px 4px rgb(46, 45, 45);
+  background-color: $white_color;
   max-height: 200px;
   overflow: scroll;
 }
-.search-btn{
+
+.search-btn {
   i{
     margin-left: -35px;
     padding-top: 5px;
   }
   cursor: pointer;
 }
-.search-btn:hover{
-  i{
-    
+
+.search-btn:hover {
+
+  i {
     color: rgb(66, 17, 17) !important;
   }
+
 }

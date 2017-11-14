@@ -3,8 +3,8 @@
 import models from '../models';
 
 
-const {Votes} = models,
-  {Recipes} = models;
+const { Votes } = models,
+  { Recipes } = models;
 
 
 // controllers for handling voting in application
