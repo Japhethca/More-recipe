@@ -10,7 +10,7 @@ import { handleEditUserProfile } from '../actions/requestHandlers/handleUserProf
 
 const propTypes = {
   handleEditUserProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
+  profile: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 class UserProfilePage extends Component {

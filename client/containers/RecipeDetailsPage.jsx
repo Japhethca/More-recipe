@@ -8,8 +8,8 @@ import RecipeDetails from '../components/recipeDetails/RecipeDetails';
 
 
 const propTypes = {
-  match: PropTypes.object.isRequired,
-  favorites: PropTypes.array.isRequired
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 class RecipeDetailsPage extends Component {

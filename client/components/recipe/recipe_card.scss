@@ -1,3 +1,8 @@
-#recipe-card{
+#recipe-card {
   margin: 0 auto;
+  .ellipses {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }

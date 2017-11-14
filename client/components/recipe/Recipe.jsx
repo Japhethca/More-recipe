@@ -13,12 +13,12 @@ import './recipe_card.scss';
 
 
 const propTypes = {
-  recipe: PropTypes.object.isRequired,
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   handleDeleteRecipe: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  reviews: PropTypes.array.isRequired,
-  favorites: PropTypes.array.isRequired,
+  auth: PropTypes.objectOf(PropTypes.string).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.object).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
   setFavorites: PropTypes.func.isRequired,
   removeFavorite: PropTypes.func.isRequired,
 };
@@ -32,12 +32,11 @@ class Recipe extends Component {
     return (
       <div className="row" id="recipe-card">
         <div className="card col s12">
-          <Link to={`/recipe/${recipe.id}`} className="card-image" >
-            <img src={recipe.image || require('../../../images/avatar.png')} className="responsive-img recipe-image" />
+          <Link to={`/recipe/${recipe.id}`} className="card-image" href>
+            <img src={recipe.image || require('../../../images/avatar.png')} alt={recipe.name} className="responsive-img recipe-image" />
           </Link>
-          <h5>{recipe.name}</h5>
+          <h5 className="ellipses">{recipe.name}</h5>
           <UserDetail userId={recipe.userId} />
-
           <hr />
 
           <div className="card-title">

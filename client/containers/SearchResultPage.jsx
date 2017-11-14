@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import NavigationBar from '../components/navigation/NavigationBar';
 import Recipe from '../components/recipe/Recipe';
 
-const propsTypes = {
-  favorites: PropTypes.array.isRequired
+const propTypes = {
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 class SearchResultPage extends Component {
   render() {
@@ -26,7 +26,7 @@ class SearchResultPage extends Component {
   }
 }
 
-SearchResultPage.propsTypes = propsTypes;
+SearchResultPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   result: state.search,

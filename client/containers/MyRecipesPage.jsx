@@ -9,7 +9,7 @@ import '../components/myRecipe/my_recipes_page.scss';
 
 
 const propTypes = {
-  history: PropTypes.object.isRequired
+  history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 class MyRecipesPage extends Component {
   componentDidMount() {

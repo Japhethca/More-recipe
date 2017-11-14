@@ -6,7 +6,7 @@ import './buttons.scss';
 
 
 const propTypes = {
-  recipe: PropTypes.object.isRequired,
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   handleUpvote: PropTypes.func.isRequired,
 };
 

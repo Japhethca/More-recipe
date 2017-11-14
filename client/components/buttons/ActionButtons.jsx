@@ -7,12 +7,12 @@ import UpvoteButton from './UpvoteButton';
 import './buttons.scss';
 
 const propTypes = {
-  recipe: PropTypes.object.isRequired,
-  reviews: PropTypes.array.isRequired,
-  favorites: PropTypes.array.isRequired,
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.object).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
   setFavorites: PropTypes.func.isRequired,
   removeFavorite: PropTypes.func.isRequired
-}
+};
 
 class ActionButtons extends Component {
   render() {

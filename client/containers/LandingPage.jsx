@@ -12,8 +12,8 @@ class LandingPage extends Component {
 
   render() {
     return (
-      <div classn="carousel carousel-slider">
-        <a classn="carousel-item" href="#one!"><img src="https://lorempixel.com/800/400/food/1" /></a>
+      <div className="landing-image">
+        <h1 className="center white-text">More Recipe</h1>
       </div>
     );
   }

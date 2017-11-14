@@ -40,7 +40,6 @@ class SignUpForm extends Component {
           this.setState({ hasSignedUp: true });
         },
         (err) => {
-          console.log(err);
           this.setState({ hasErrored: true });
         }
       );
@@ -85,11 +84,11 @@ class SignUpForm extends Component {
               <div className="input-field col s12 m6">
                 <i className="material-icons prefix">account_circle</i>
                 <input
-                type="text"
-                onChange={this.onChange}
-                name="lastname"
-                className="input-field"
-              />
+                  type="text"
+                  onChange={this.onChange}
+                  name="lastname"
+                  className="input-field"
+                />
                 <label htmlFor="lastname"> Lastname </label>
                 {errors.lastname && <span className="error1">{errors.lastname[0]}</span>}
               </div>
@@ -98,22 +97,22 @@ class SignUpForm extends Component {
               <div className="input-field col s12 m6">
                 <i className="material-icons prefix">person_outline</i>
                 <input
-                type="text"
-                onChange={this.onChange}
-                name="username"
-                className="input-field"
-              />
+                  type="text"
+                  onChange={this.onChange}
+                  name="username"
+                  className="input-field"
+                />
                 <label htmlFor="username"> Username </label>
                 {errors.username && <span className="error1">{errors.username[0]}</span>}
               </div>
               <div className="input-field col s12 m6">
                 <i className="material-icons prefix">mail</i>
                 <input
-                type="email"
-                onChange={this.onChange}
-                name="email"
-                className="input-field"
-              />
+                  type="email"
+                  onChange={this.onChange}
+                  name="email"
+                  className="input-field"
+                />
                 <label htmlFor="email"> Email </label>
                 {errors.email && <span className="error1">{errors.email[0]}</span>}
               </div>
@@ -122,22 +121,22 @@ class SignUpForm extends Component {
               <div className="input-field col s12 m6">
                 <i className="material-icons prefix">lock</i>
                 <input
-                type="password"
-                onChange={this.onChange}
-                name="password"
-                className="input-field"
-              />
+                  type="password"
+                  onChange={this.onChange}
+                  name="password"
+                  className="input-field"
+                />
                 <label htmlFor="password"> Password </label>
                 {errors.password && <span className="error1">{errors.password[0]}</span>}
               </div>
               <div className="input-field col s12 m6">
                 <i className="material-icons prefix">lock</i>
                 <input
-                type="password"
-                onChange={this.onChange}
-                name="verifyPassword"
-                className="input-field"
-              />
+                  type="password"
+                  onChange={this.onChange}
+                  name="verifyPassword"
+                  className="input-field"
+                />
                 <label htmlFor="verifyPassword"> VerifyPassword </label>
                 {errors.verifyPassword && <span className="error1">{errors.verifyPassword[0]}</span>}
               </div>
@@ -145,7 +144,7 @@ class SignUpForm extends Component {
             <div className="row">
               <div className="input-field col s12 m6 center">
                 <button className="btn-large brown waves-effect waves-light col s12 m4" type="submit">Register
-              </button>
+                </button>
               </div>
 
               <div className="login-link right">

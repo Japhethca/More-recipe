@@ -8,7 +8,6 @@ import './login_form.scss';
 
 const propTypes = {
   handleLoginRequest: PropTypes.func.isRequired,
-  addFlashMessage: PropTypes.func.isRequired
 };
 
 
@@ -42,7 +41,6 @@ class LoginForm extends Component {
           location.reload();
         },
         (err) => {
-          console.log(err.data);
           this.setState({ hasErrored: true });
         }
       );
