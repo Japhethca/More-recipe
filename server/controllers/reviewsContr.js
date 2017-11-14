@@ -2,8 +2,8 @@
 import Validator from 'validatorjs';
 import model from '../models';
 
-const Recipes = model.Recipes,
-  Reviews = model.Reviews;
+const { Recipes } = model,
+  { Reviews } = model;
 
 const createRules = {
   content: 'required'

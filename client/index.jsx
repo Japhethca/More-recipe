@@ -16,14 +16,15 @@ import NotFoundPage from './containers/404Page';
 import setAuthorizationToken from './utils/setAuthorization';
 import { setCurrentUser } from './actions/requestHandlers/handleLoginrequest';
 import rootReducers from './reducers/rootReducer';
-import Authenticate from '../client/components/Authenticate';
+import Authenticate from '../client/components/common/Authenticate';
 import UserProfilePage from './containers/UserProfilePage';
 import FavoritesPage from './containers/FavoritesPage';
 import getAllReviews from './actions/requestHandlers/getReviews';
 import getAllRecipes from './actions/requestHandlers/getAllRecipes';
 import { getFavorites } from './actions/requestHandlers/handleUserFavorites';
 import { handleGetUserProfile } from './actions/requestHandlers/handleUserProfile';
-import LandingPage from './components/LandingPage';
+import LandingPage from './containers/LandingPage';
+import SearchResultPage from './containers/SearchResultPage';
 import './styles/sass/index.scss';
 
 
@@ -58,6 +59,7 @@ render(
           <Route path="/profile" component={Authenticate(UserProfilePage)} />
           <Route path="/profile/edit" component={Authenticate(UserProfilePage)} />
           <Route path="/favorites" component={Authenticate(FavoritesPage)} />
+          <Route path="/search" component={Authenticate(SearchResultPage)} />
           <Route path="/signin" component={LoginPage} />
           <Route path="/landing" component={LandingPage} />
           <Route path="/signup" component={SignUpPage} />

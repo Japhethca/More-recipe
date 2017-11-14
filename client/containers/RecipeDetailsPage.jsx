@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import NavigationBar from '../components/NavigationBar';
-import Footer from '../components/Footer';
-import RecipeDetails from '../components/recipeComponents/RecipeDetails';
+import NavigationBar from '../components/navigation/NavigationBar';
+import Footer from '../components/navigation/Footer';
+import RecipeDetails from '../components/recipeDetails/RecipeDetails';
+
+
+const propTypes = {
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired
+};
 
 class RecipeDetailsPage extends Component {
   render() {
@@ -19,9 +25,8 @@ class RecipeDetailsPage extends Component {
     );
   }
 }
-RecipeDetailsPage.propTypes = {
-  match: PropTypes.object.isRequired,
-};
+RecipeDetailsPage.propTypes = propTypes;
+
 const mapStateToProps = state => ({
   favorites: state.favorites
 });

@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import handleUpvote from '../../actions/requestHandlers/handleUpvote';
-import '../../styles/sass/buttons.scss';
+import './buttons.scss';
+
+
+const propTypes = {
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleUpvote: PropTypes.func.isRequired,
+};
 
 class UpvoteButton extends Component {
   constructor(props) {
@@ -27,9 +33,6 @@ class UpvoteButton extends Component {
   }
 }
 
-UpvoteButton.propTypes = {
-  recipe: PropTypes.object.isRequired,
-  handleUpvote: PropTypes.func.isRequired,
-};
+UpvoteButton.propTypes = propTypes;
 
 export default connect(null, { handleUpvote })(UpvoteButton);

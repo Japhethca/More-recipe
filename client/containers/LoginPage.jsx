@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import NavigationBar from '../components/NavigationBar';
-import Footer from '../components/Footer';
-import LoginForm from '../components/userComponent/LoginForm';
+import NavigationBar from '../components/navigation/NavigationBar';
+import Footer from '../components/navigation/Footer';
+import LoginForm from '../components/login/LoginForm';
 import { handleLoginRequest } from '../actions/requestHandlers/handleLoginrequest';
 import '../styles/sass/index.scss';
 
+
+const propTypes = {
+  handleLoginRequest: PropTypes.func.isRequired
+};
 class LoginPage extends Component {
   componentDidMount() {
     document.title = 'Signin / Signin Form';
@@ -16,7 +20,9 @@ class LoginPage extends Component {
       <div>
         <NavigationBar />
         <div id="main">
-          <LoginForm handleLoginRequest={this.props.handleLoginRequest} />
+          <LoginForm
+            handleLoginRequest={this.props.handleLoginRequest}
+          />
         </div>
         <Footer />
       </div>
@@ -24,8 +30,6 @@ class LoginPage extends Component {
   }
 }
 
-LoginPage.propTypes = {
-  handleLoginRequest: PropTypes.func.isRequired
-};
+LoginPage.propTypes = propTypes;
 
 export default connect(null, { handleLoginRequest })(LoginPage);

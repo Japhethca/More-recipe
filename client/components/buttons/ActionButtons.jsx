@@ -3,10 +3,16 @@ import PropTypes from 'prop-types';
 import FavoritesButton from './FavoritesButton';
 import DownvoteButton from './DownvoteButton';
 import ReviewButton from './ReviewButton';
-import UpvoteButton from  './UpvoteButton';
-import '../../styles/sass/buttons.scss';
+import UpvoteButton from './UpvoteButton';
+import './buttons.scss';
 
-
+const propTypes = {
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.object).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setFavorites: PropTypes.func.isRequired,
+  removeFavorite: PropTypes.func.isRequired
+};
 
 class ActionButtons extends Component {
   render() {
@@ -26,12 +32,6 @@ class ActionButtons extends Component {
   }
 }
 
-ActionButtons.propTypes = {
-  recipe: PropTypes.object.isRequired,
-  reviews: PropTypes.array.isRequired,
-  favorites: PropTypes.array.isRequired,
-  setFavorites: PropTypes.func.isRequired,
-  removeFavorite: PropTypes.func.isRequired
-}
+ActionButtons.propTypes = propTypes;
 
 export default ActionButtons;

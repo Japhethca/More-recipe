@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import '../../styles/sass/buttons.scss';
+import './buttons.scss';
 
+const propTypes = {
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.object).isRequired
+};
 
 class ReviewButton extends Component {
-
   render() {
     const { recipe } = this.props;
     const reviews = this.props.reviews.filter(review => recipe.id === review.recipeId);
@@ -18,9 +21,6 @@ class ReviewButton extends Component {
   }
 }
 
-ReviewButton.propTypes = {
-  recipe: PropTypes.object.isRequired,
-  reviews: PropTypes.array.isRequired
-};
+ReviewButton.propTypes = propTypes;
 
 export default ReviewButton;

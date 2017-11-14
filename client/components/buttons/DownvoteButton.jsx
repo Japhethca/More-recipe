@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import handleDownvote from '../../actions/requestHandlers/handleDownvote';
-import '../../styles/sass/buttons.scss';
+import './buttons.scss';
+
+
+const propTypes = {
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleDownvote: PropTypes.func.isRequired,
+};
 
 class DownvoteButton extends Component {
   constructor(props) {
@@ -19,7 +25,6 @@ class DownvoteButton extends Component {
     e.preventDefault();
     this.toggleUpvote();
     this.props.handleDownvote(this.props.recipe.id);
-    // window.location.reload();
   }
 
   toggleUpvote() {
@@ -42,9 +47,7 @@ class DownvoteButton extends Component {
   }
 }
 
-DownvoteButton.propTypes = {
-  recipe: PropTypes.object.isRequired,
-  handleDownvote: PropTypes.func.isRequired,
-};
+DownvoteButton.propTypes = propTypes;
+
 
 export default connect(null, { handleDownvote })(DownvoteButton);

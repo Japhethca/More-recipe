@@ -1,7 +1,7 @@
 import model from '../models';
 
-const Favorites = model.Favorites,
-  Recipes = model.Recipes;
+const { Favorites } = model,
+  { Recipes } = model;
 
 
 // handles GET​ : /api/users/<userId>/recipes

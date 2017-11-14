@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import NavigationBar from '../components/NavigationBar';
-import Footer from '../components/Footer';
-import AddRecipe from '../components/recipeComponents/AddRecipe';
-import { addFlashMessage } from '../actions/flashMessage';
-import MyRecipes from '../components/recipeComponents/MyRecipes';
-import '../styles/sass/my_recipes_page.scss';
+import NavigationBar from '../components/navigation/NavigationBar';
+import Footer from '../components/navigation/Footer';
+import AddRecipe from '../components/myRecipe/AddRecipe';
+import MyRecipes from '../components/myRecipe/MyRecipes';
+import '../components/myRecipe/my_recipes_page.scss';
 
+
+const propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired
+};
 class MyRecipesPage extends Component {
   componentDidMount() {
     $('ul.tabs').tabs();
@@ -37,9 +40,6 @@ class MyRecipesPage extends Component {
   }
 }
 
-MyRecipesPage.PropTypes = {
-  addFlashMessage: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
-};
+MyRecipesPage.propTypes = propTypes;
 
-export default connect(null, { addFlashMessage })(MyRecipesPage);
+export default connect(null, { })(MyRecipesPage);
