@@ -3,16 +3,18 @@ import jwt from 'jsonwebtoken';
 import setAuthorizationToken from '../../utils/setAuthorization';
 import { SET_CURRENT_USER } from '../types';
 
-export function setCurrentUser(user) {
+
+export function setCurrentUser(user, errors) {
   return {
     type: SET_CURRENT_USER,
-    user
+    user,
+    errors
   };
 }
 
 export function logout() {
   return (dispatch) => {
-    localStorage.removeItem(localStorage.token);
+    localStorage.clear();
     setAuthorizationToken(false);
     dispatch(setCurrentUser({}));
     dispatch({ type: 'RESET' });
@@ -24,6 +26,8 @@ export function handleLoginRequest(userdata) {
     const token = res.data.Token;
     localStorage.setItem('token', token);
     setAuthorizationToken(token);
-    dispatch(setCurrentUser(jwt.decode(token)));
+    dispatch(setCurrentUser(jwt.decode(token), null));
+  }).catch((error) => {
+    dispatch(setCurrentUser(null, error.response.data.message));
   });
 }

@@ -1,13 +1,28 @@
 .card{
   margin: 10px;
   padding: 10px;
-  .choose-file{
+
+  .choose-file {
     margin:10px 0;
     padding:10px 0;
   }
+
   .choose-file  {
     input{
       display: none;
     }
+  }
+
+  .error-text {
+    font-size: small;
+    color: red;
+  }
+
+  input[type=text]:not(.browser-default) {
+    margin-bottom: 0px;
+  }
+
+  textarea.materialize-textarea {
+    margin-bottom: 0px;
   }
 }

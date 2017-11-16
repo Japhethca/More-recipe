@@ -7,7 +7,8 @@ import { setFavorites, removeFavorite } from '../../actions/requestHandlers/hand
 const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   setFavorites: PropTypes.func.isRequired,
-  removeFavorite: PropTypes.func.isRequired
+  removeFavorite: PropTypes.func.isRequired,
+  favorites: PropTypes.objectOf(PropTypes.object).isRequired
 };
 
 class FavoritesButton extends Component {
@@ -51,7 +52,6 @@ class FavoritesButton extends Component {
     }
   }
   render() {
-    const { favorites, recipe } = this.props;
     return (
       <div className="action-btns">
         <span onClick={this.onClick} className={classname({ favorite: this.state.isFavorite, '': !this.state.isFavorite })} >

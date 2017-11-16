@@ -15,7 +15,7 @@ import './recipe_card.scss';
 const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   handleDeleteRecipe: PropTypes.func.isRequired,
-  auth: PropTypes.objectOf(PropTypes.string).isRequired,
+  auth: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.object).isRequired,
   favorites: PropTypes.arrayOf(PropTypes.object).isRequired,

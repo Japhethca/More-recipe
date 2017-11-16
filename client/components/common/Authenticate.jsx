@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
+  isAuthenticated: PropTypes.bool.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 export default function (Comp) {
@@ -16,7 +16,7 @@ export default function (Comp) {
     }
     componentWillUpdate() {
       if (!this.props.isAuthenticated) {
-        <Redirect to="/signin" />;
+        this.props.history.push('/signin');
       }
     }
     render() {

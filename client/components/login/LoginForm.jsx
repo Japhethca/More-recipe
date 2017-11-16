@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { signinValidator } from '../../utils/validators';
 import './login_form.scss';
 
 
 const propTypes = {
   handleLoginRequest: PropTypes.func.isRequired,
+  auth: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 
@@ -17,58 +17,51 @@ class LoginForm extends Component {
     this.state = {
       email: '',
       password: '',
-      errors: '',
-      redirect: false,
-      hasErrored: false
+      serverErrors: this.props.auth.errors,
+      validationErrors: '',
     };
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.isValid = this.isValid.bind(this);
   }
-
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.errors !== null) {
+      this.setState({ serverErrors: nextProps.auth.errors });
+    }
+  }
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
     if (this.isValid()) {
-      this.setState({ inputIsValid: true });
-      this.props.handleLoginRequest(this.state).then(
-        (res) => {
-          this.setState({ redirect: true });
-          location.reload();
-        },
-        (err) => {
-          this.setState({ hasErrored: true });
-        }
-      );
+      this.props.handleLoginRequest(this.state);
     }
   }
 
   isValid() {
     const { errors, isValid } = signinValidator(this.state);
     if (!isValid) {
-      this.setState({ errors });
+      this.setState({ validationErrors: errors });
     }
     return isValid;
   }
 
   render() {
-    const {
-      errors, email, password, hasErrored
-    } = this.state;
-    if (this.state.redirect) {
+    const { validationErrors } = this.state;
+
+    if (this.props.auth.isAuthenticated) {
+      window.location.reload();
       return <Redirect to="/" />;
     }
     return (
-
       <div className="row login-form">
         <div className="card-panel col s12 m6 offset-m3 l4 offset-l4 z-depth-4">
           <div className="input-field s12 center login-text">
-            <h4>LOGIN FORM</h4>
-            {hasErrored && <span className="red-text align-center" > Invalid Credentials</span> }
+            <h4>Login Form</h4>
+            {this.state.serverErrors && <span className="red-text align-center" > {this.state.serverErrors} </span> }
           </div>
 
           <form className="" onSubmit={this.onSubmit}>
@@ -82,7 +75,7 @@ class LoginForm extends Component {
                   placeholder="Email Address"
                 />
                 <label htmlFor="email" className="active" > Email</label>
-                {errors.email && <span className="error-text"> {errors.email[0]}</span>}
+                {validationErrors.email && <span className="error-text"> { validationErrors.email[0] }</span>}
               </div>
             </div>
 
@@ -94,9 +87,10 @@ class LoginForm extends Component {
                   onChange={this.onChange}
                   name="password"
                   placeholder="Enter Your Password"
+                  className="validate"
                 />
-                <label htmlFor="password" className="active" > Password</label>
-                {errors.password && <span className="error-text">{errors.password[0]}</span>}
+                <label htmlFor="password" className="active "> Password</label>
+                {validationErrors.password && <span className="error-text"> { validationErrors.password[0]}</span>}
               </div>
             </div>
 
@@ -118,4 +112,4 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = propTypes;
 
-export default connect(null, {})(LoginForm);
+export default LoginForm;

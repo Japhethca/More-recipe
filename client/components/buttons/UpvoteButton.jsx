@@ -24,7 +24,7 @@ class UpvoteButton extends Component {
   render() {
     return (
       <div className="action-btns">
-        <span onClick={this.onClick} className="" data-index ={this.props.recipe.id}>
+        <span onClick={this.onClick} className="" data-index={this.props.recipe.id}>
           <i className="material-icons">thumb_up</i>&nbsp;
           {this.props.recipe.upvotes}
         </span>
