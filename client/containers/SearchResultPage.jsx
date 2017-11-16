@@ -5,22 +5,32 @@ import NavigationBar from '../components/navigation/NavigationBar';
 import Recipe from '../components/recipe/Recipe';
 
 const propTypes = {
-  favorites: PropTypes.arrayOf(PropTypes.object).isRequired
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
+  search: PropTypes.objectOf(PropTypes.any).isRequired,
+
 };
 class SearchResultPage extends Component {
   render() {
-    const searchResults = this.props.result.map(recipe =>
-      (
-        <li key={recipe.id}>
-          <Recipe
-            recipe={recipe}
-            favorites={this.props.favorites}
-          />
-        </li>));
+    let searchResults = [];
+    if (this.props.search.query !== null) {
+      searchResults = this.props.search.result.map(recipe =>
+        (
+          <li key={recipe.id} className="col s12 m4 l4">
+            <Recipe
+              recipe={recipe}
+              favorites={this.props.favorites}
+            />
+          </li>));
+    }
     return (
       <div>
         <NavigationBar />
-        {searchResults}
+        <div className="container">
+          <h4> { searchResults.length < 1 ? 'No' : ''} Search Results for {this.props.search.query ? this.props.search.query : " "}...</h4>
+          <ul className="row">
+            {searchResults}
+          </ul>
+        </div>
       </div>
     );
   }
@@ -29,7 +39,7 @@ class SearchResultPage extends Component {
 SearchResultPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
-  result: state.search,
+  search: state.search,
   favorites: state.favorites
 });
 

@@ -8,6 +8,11 @@ const propTypes = {
 };
 
 class UpdateButton extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onClick = this.onClick.bind(this);
+  }
   onClick() {
     this.props.history.push('/recipe/update', this.props.recipe);
   }
@@ -15,7 +20,7 @@ class UpdateButton extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.onClick.bind(this)} className="btn-floating white waves-effect waves-blue">
+        <button onClick={this.onClick} className="btn-floating white waves-effect waves-blue">
           <i className="material-icons blue-text">edit</i>
         </button>
       </div>

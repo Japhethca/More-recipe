@@ -22,13 +22,14 @@ class ActionButtons extends Component {
     return (
       <div>
         <ul className="btn-list">
-          <li><ReviewButton
-            recipe={recipe}
-            reviews={reviews}
-            favorites={favorites}
-            setFavorites={setFavorites}
-            removeFavorite={removeFavorite}
-          />
+          <li>
+            <ReviewButton
+              recipe={recipe}
+              reviews={reviews}
+              favorites={favorites}
+              setFavorites={setFavorites}
+              removeFavorite={removeFavorite}
+            />
           </li>
           <li><UpvoteButton recipe={recipe} /></li>
           <li><DownvoteButton recipe={recipe} /></li>

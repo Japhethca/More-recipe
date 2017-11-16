@@ -7,7 +7,6 @@ import './recipe_update_form.scss';
 const propTypes = {
   history: PropTypes.object.isRequired,
   handleRecipeUpdate: PropTypes.func.isRequired,
-  uploadImage: PropTypes.func.isRequired
 };
 
 class RecipeUpdate extends Component {
@@ -55,12 +54,12 @@ class RecipeUpdate extends Component {
 
   render() {
     const {
-      name, ingredient, description, direction
+      name, ingredient, description, direction, image
     } = this.state;
     return (
       <div className="">
         <div className="row">
-          <form onSubmit={this.onSubmit} className="card col s12 m6 offset-m3">
+          <form onSubmit={this.onSubmit} className="card col s12 m4 offset-m4">
             <div className="update-title">
               <h4> Update Recipe </h4>
             </div>
@@ -105,7 +104,7 @@ class RecipeUpdate extends Component {
                 <input type="file" onChange={this.onChange} name="image" accept=".jpg, .jpeg, .png" />
               </div>
               <div className="file-path-wrapper">
-                <img id="img1" height={70} className="right" />
+                <img id="img1" src={image} height={70} className="right" alt=" " />
               </div>
             </div>
             <div>

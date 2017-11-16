@@ -17,7 +17,7 @@ class ProfileEdit extends Component {
       username: this.props.profile.username,
       aboutme: this.props.profile.aboutme,
       password: this.props.profile.password,
-      newPassword: '',
+      newPassword: null,
       photo: this.props.profile.photo,
     };
 
@@ -49,7 +49,7 @@ class ProfileEdit extends Component {
   }
   render() {
     const {
-      errors, username, password, verifyPassword, firstname, lastname, aboutme
+      errors, username, password, verifyPassword, firstname, lastname, aboutme, photo
     } = this.state;
     return (
       <div>
@@ -137,7 +137,7 @@ class ProfileEdit extends Component {
                   <input type="file" onChange={this.onChange} name="photo" accept=".jpg, .jpeg, .png" />
                 </div>
                 <div className="file-path-wrapper">
-                  <img id="img1" height={70} className="right" />
+                  <img id="img1" height={70} className="right" src={photo} />
                 </div>
               </div>
               <div className="row">

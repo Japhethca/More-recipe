@@ -19,7 +19,7 @@ function updateRecipe(data) {
 export default data => (dispatch) => {
   if (typeof (data.image) === 'object') {
     upload(data.image).end((err, res) => {
-      if (!err || res.ok) {
+      if (!err || res) {
         data.image = res.body.url;
         Materialize.toast('Recipe Successfully Updated!', 4000);
         axios.put(`/api/recipes/${data.id}`, data).then((res) => {

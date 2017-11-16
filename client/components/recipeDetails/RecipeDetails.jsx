@@ -32,16 +32,15 @@ class RecipeDetails extends Component {
       .then((res) => {
         this.setState({ recipe: res.data });
       }).catch(err => this.setState({ hasErrored: true }));
-    this.setState({ favorites: this.props.favorites });
   }
 
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.recipes !== nextProps.recipes) {
-      const recipe = nextProps.recipes.filter(recipe => recipe.id === this.state.recipe.id);
-      this.setState({ recipe: recipe[0], favorites: nextProps.favorites, reviews: nextProps.reviews });
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (this.props.recipes !== nextProps.recipes) {
+  //     const recipe = nextProps.recipes.filter(recipe => recipe.id === this.state.recipe.id);
+  //     this.setState({ recipe: recipe[0], favorites: nextProps.favorites, reviews: nextProps.reviews });
+  //   }
+  // }
 
   displayList(items) {
     const listItems = lodash.split(items, ',');
@@ -70,6 +69,7 @@ class RecipeDetails extends Component {
           <img
             className="responsive-img center"
             src={image || require('../../../images/image-2.jpg')}
+            alt=""
           />
         </div>
 
@@ -83,6 +83,7 @@ class RecipeDetails extends Component {
             <ActionButtons
               recipe={this.state.recipe}
               reviews={this.props.reviews}
+              favorites={this.props.favorites}
               setFavorites={this.props.setFavorites}
               removeFavorite={this.props.removeFavorite}
             />
@@ -115,11 +116,4 @@ class RecipeDetails extends Component {
 RecipeDetails.propTypes = propTypes;
 
 
-const mapStateToProps = state => ({
-  favorites: state.favorites,
-  reviews: state.reviews,
-  recipes: state.recipes,
-});
-
-
-export default connect(mapStateToProps, { getRecipe, setFavorites, removeFavorite })(RecipeDetails);
+export default connect(null, { getRecipe, setFavorites, removeFavorite })(RecipeDetails);
