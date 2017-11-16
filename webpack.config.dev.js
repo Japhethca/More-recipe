@@ -1,7 +1,6 @@
 
 const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
 module.exports = {
@@ -37,11 +36,6 @@ module.exports = {
           presets: ['es2015', 'react']
         }
       },
-      // {
-      //   test: /\.scss$/,
-      //   loader: ExtractTextPlugin.extract('style-loader!css-loader!sass-loader')
-
-      // },
       { test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
       {
         test: /\.(png|jpg)$/,
@@ -58,8 +52,5 @@ module.exports = {
 
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
-    new ExtractTextPlugin('./public/style.css', {
-      allChunks: true
-    })
   ]
 };

@@ -2,37 +2,70 @@ $nav-background-color: rgba(78, 31, 31, 0.877);
 
 
 
-  .nav-menu{
-  height: 90px;
-  background-color: $nav-background-color;
-  ul{
-    padding-top: 10px;
+  .nav-menu {
+    height: 90px;
+    background-color: $nav-background-color;
+
+    .search-icon {
+      cursor: pointer;
+      margin-right: 15px;
+      margin-top: 5px;
+      padding: 4px;
+    }
+
+    .search-icon:hover {
+      background-color: rgb(53, 12, 12);
+    }
+
+    ul {
+      padding-top: 10px;
       a {
         text-transform: uppercase;
-        &:hover{
+        &:hover {
           background-color: lighten($nav-background-color, .50);
           border-radius: 10px;
         }
+      }
+    }
+
+    .btn {
+      background-color: #fff;
+      color: rgb(53, 12, 12);
+      border: 2px solid black;
+      border-radius: 7px;
+      padding-left: 10px;
+      padding-right: 10px;
+      &:hover {
+        @extend .btn;
+        background-color: rgb(197, 197, 194)
+      }
     }
   }
 
-  
-  .btn{
-    background-color: #fff;
-    color: rgb(53, 12, 12);
-    border: 2px solid black;
-    border-radius: 7px;
-    padding-left: 10px;
-    padding-right: 10px;
-    &:hover{
-      @extend .btn;
-      background-color: rgb(197, 197, 194)
-    }
-  }
-}
+
 nav.nav-extended{
   height: 90px;
   .button-collapse{
     padding-top: 15px;
+  }
+}
+
+
+.navigation-search{
+  height: 70%;
+  background-color: lighten($nav-background-color, .50);
+  input[type=search]:focus{
+    background-color: lighten($nav-background-color, .55);
+    color: #fff;
+    
+  }
+  input[type=search]:not(.browser-default):focus:not([readonly]){
+    border-bottom: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .search-btn{
+    display: inline-block;
+    color: red;
   }
 }

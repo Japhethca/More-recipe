@@ -12,7 +12,7 @@ export function setCurrentUser(user) {
 
 export function logout() {
   return (dispatch) => {
-    localStorage.removeItem(localStorage.token);
+    localStorage.clear();
     setAuthorizationToken(false);
     dispatch(setCurrentUser({}));
     dispatch({ type: 'RESET' });
