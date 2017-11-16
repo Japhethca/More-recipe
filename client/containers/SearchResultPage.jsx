@@ -5,8 +5,9 @@ import NavigationBar from '../components/navigation/NavigationBar';
 import Recipe from '../components/recipe/Recipe';
 
 const propTypes = {
-  favorites: PropTypes.array.isRequired,
-  search: PropTypes.object.isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
+  search: PropTypes.objectOf(PropTypes.any).isRequired,
+
 };
 class SearchResultPage extends Component {
   render() {

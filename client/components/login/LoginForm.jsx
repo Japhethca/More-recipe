@@ -41,7 +41,6 @@ class LoginForm extends Component {
           location.reload();
         },
         (err) => {
-          console.log(err.data);
           this.setState({ hasErrored: true });
         }
       );

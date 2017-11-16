@@ -20,9 +20,9 @@ class Reviews extends Component {
         <div>
           <AddReview recipe={recipe} />
           <div className="row">
-            {reviews.map((review, id) => (
-              <div key={review.id} className="col s12 m4">
-                <Review review={review} />
+            {reviews.map(review => (
+              <div className="col s12 m4">
+                <Review key={review.id} review={review} />
               </div>
               ))}
           </div>

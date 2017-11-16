@@ -8,7 +8,7 @@ import handleRecipeUpdate from '../actions/requestHandlers/handleRecipeUpdate';
 
 
 const propTypes = {
-  history: PropTypes.object.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
   handleRecipeUpdate: PropTypes.func.isRequired
 };
 

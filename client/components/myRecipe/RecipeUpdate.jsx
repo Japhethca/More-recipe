@@ -59,7 +59,7 @@ class RecipeUpdate extends Component {
     return (
       <div className="">
         <div className="row">
-          <form onSubmit={this.onSubmit} className="card col s12 m6 offset-m3">
+          <form onSubmit={this.onSubmit} className="card col s12 m4 offset-m4">
             <div className="update-title">
               <h4> Update Recipe </h4>
             </div>

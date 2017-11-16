@@ -6,19 +6,12 @@ import NavigationBar from '../components/navigation/NavigationBar';
 
 
 const propTypes = {
-  favorites: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
+  user: PropTypes.objectOf(PropTypes.any).isRequired,
+  recipes: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 class FavoritesPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      favorites: this.props.favorites,
-      hasErrored: false
-    };
-  }
-
   render() {
     const { user, favorites, recipes } = this.props;
     const hasFavorites = favorites.length > 0;

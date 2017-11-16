@@ -59,13 +59,13 @@ class NavigationBar extends Component {
           <li><NavLink to="/myrecipes">My Recipes</NavLink></li>
           <li ><NavLink to="/favorites">Favorites</NavLink></li>
           <li><NavLink to="/profile"><i className="material-icons large left">account_circle</i>Profile</NavLink></li>
-          <li ><a className="btn" onClick={this.onClick}>Logout</a></li>
+          <li ><button className="btn" onClick={this.onClick}>Logout</button></li>
         </ul>
         <ul className="side-nav" id="more-recipe">
           <li><NavLink to="/myrecipes" activeClassName="active"><i className="fa fa-cutlery prefix" aria-hidden="true" />My Recipes</NavLink></li>
           <li><NavLink to="/favorites" activeClassName="active"><i className="fa fa-heart prefix" aria-hidden="true" />Favorites</NavLink></li>
           <li><NavLink to="/profile" activeClassName="active"><i className="fa fa-user prefix" aria-hidden="true" />Profile</NavLink></li>
-          <li ><a className="btn" alt="" onClick={this.onClick}>Logout</a></li>
+          <li ><button className="btn" alt="" onClick={this.onClick}>Logout</button></li>
         </ul>
       </div>
     );

@@ -7,7 +7,7 @@ import Recipes from '../components/recipe/Recipes';
 
 
 const propTypes = {
-  history: PropTypes.object.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 class Home extends Component {

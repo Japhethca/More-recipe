@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 
 const propTypes = {
-  history: PropTypes.object.isRequired,
-  recipe: PropTypes.object.isRequired
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 class UpdateButton extends Component {

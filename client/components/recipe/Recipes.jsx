@@ -6,8 +6,9 @@ import './Recipes.scss';
 
 
 const propTypes = {
-  history: PropTypes.object,
-  favorites: PropTypes.array.isRequired
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
+  recipes: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 class Recipes extends Component {
@@ -26,7 +27,6 @@ class Recipes extends Component {
   }
   render() {
     const { recipes } = this.props;
-    const { favorites } = this.props;
     if (this.state.hasErrored) {
       return (
         <div className="container">

@@ -10,10 +10,7 @@ import UserDetail from '../user/UserDetail';
 import { setFavorites, removeFavorite } from '../../actions/requestHandlers/handleUserFavorites';
 
 const propTypes = {
-  match: PropTypes.object.isRequired,
-  setFavorites: PropTypes.func.isRequired,
-  removeFavorite: PropTypes.func.isRequired,
-  getRecipe: PropTypes.func.isRequired
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 class RecipeDetails extends Component {

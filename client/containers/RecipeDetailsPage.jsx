@@ -8,11 +8,10 @@ import RecipeDetails from '../components/recipeDetails/RecipeDetails';
 
 
 const propTypes = {
-  match: PropTypes.object.isRequired,
-  favorites: PropTypes.array.isRequired,
-  reviews: PropTypes.array.isRequired,
-  recipes: PropTypes.array.isRequired,
-
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.object).isRequired,
+  recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 class RecipeDetailsPage extends Component {

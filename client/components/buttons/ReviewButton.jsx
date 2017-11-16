@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import './buttons.scss';
 
 const propTypes = {
-  recipe: PropTypes.object.isRequired,
-  reviews: PropTypes.array.isRequired
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 class ReviewButton extends Component {

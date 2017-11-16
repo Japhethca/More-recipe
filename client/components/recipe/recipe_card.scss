@@ -1,22 +1,31 @@
-#recipe-card{
+#recipe-card {
   margin: 0 auto;
   height: 400px;
+
   img{
      height: 200px;
      width: fit-content;
   }
-  img:hover{
+  img:hover {
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
    
   }
-  a{
+
+  .ellipses {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  a {
     color: inherit;
   }
-  a:hover{
+
+  a:hover {
    text-decoration: underline; 
   }
-  .recipe-name{
+  .recipe-name {
     text-overflow: ellipsis;
   }
 }
