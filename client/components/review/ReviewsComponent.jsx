@@ -21,8 +21,8 @@ class Reviews extends Component {
           <AddReview recipe={recipe} />
           <div className="row">
             {reviews.map(review => (
-              <div className="col s12 m4">
-                <Review key={review.id} review={review} />
+              <div key={review.id} className="col s12 m4">
+                <Review review={review} />
               </div>
               ))}
           </div>

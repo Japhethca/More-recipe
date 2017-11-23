@@ -29,6 +29,14 @@ const signupRules = {
  *  and creates a new user in the database
  */
 const UserController = {
+
+  /**
+   *
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} Http response
+   */
   signup(req, res) {
     const validate = new validator(req.body, signupRules);
 
@@ -68,7 +76,13 @@ const UserController = {
   },
 
 
-  // Use login details of otther users
+  /**
+   *
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} Http response
+   */
   signin(req, res) {
     const signinValidator = new validator(req.body, signinRules);
     if (signinValidator.passes()) {
@@ -96,7 +110,13 @@ const UserController = {
   },
 
 
-  // return all users in the database
+  /**
+   *
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} Http response
+   */
   user(req, res) {
     return Users.findOne({
       where: {
@@ -110,7 +130,13 @@ const UserController = {
       res.status(200).json(user);
     }).catch(err => res.status(500).json({ Message: 'An arror Occured', Error: err }));
   },
-
+  /**
+ *
+ *
+ * @param {object} req
+ * @param {object} res
+ * @returns {object} Http response
+ */
   userProfile(req, res) {
     if (!req.decoded.id) {
       res.status(403).json({ message: 'You are not allowed to view this page' });
@@ -123,7 +149,13 @@ const UserController = {
       .catch(err => res.status(500).json(err));
   },
 
-
+  /**
+ *
+ *
+ * @param {object} req
+ * @param {object} res
+ * @returns {object} Http response
+ */
   updateProfile(req, res) {
     if (!req.decoded.id) {
       res.status(403).json({ message: 'Invalid request' });

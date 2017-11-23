@@ -14,7 +14,7 @@ class ReviewButton extends Component {
     return (
       <div className="action-btns">
         <span >
-          <i className="material-icons">people</i><span id="reivews" > {reviews.length || 0 } </span>
+          <i className="material-icons">rate_review</i><span id="reivews" > {reviews.length || 0 } </span>
         </span >
       </div>
     );

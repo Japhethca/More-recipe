@@ -1,7 +1,7 @@
 #recipe-card {
   margin: 0 auto;
   height: 400px;
-
+  
   img{
      height: 200px;
      width: fit-content;
@@ -25,7 +25,5 @@
   a:hover {
    text-decoration: underline; 
   }
-  .recipe-name {
-    text-overflow: ellipsis;
-  }
+  
 }

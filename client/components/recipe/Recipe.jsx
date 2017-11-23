@@ -24,9 +24,22 @@ const propTypes = {
 };
 
 class Recipe extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      recipe: this.props.recipe,
+      reviews: this.props.reviews
+    };
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.recipe !== nextProps.recipe) {
+      this.setState({ recipe: nextProps.recipe });
+    }
+  }
   render() {
+    const { recipe, reviews } = this.state;
     const {
-      recipe, auth, history, reviews, setFavorites, removeFavorite
+      auth, history, setFavorites, removeFavorite
     } = this.props;
     const { favorites } = this.props;
     return (
@@ -34,8 +47,8 @@ class Recipe extends Component {
         <div className="card col s12">
           <Link to={`/recipe/${recipe.id}`} className="card-image" href>
             <img src={recipe.image || require('../../../images/avatar.png')} alt={recipe.name} className="responsive-img recipe-image" />
+            <h5 className="ellipses">{recipe.name}</h5>
           </Link>
-          <h5 className="ellipses">{recipe.name}</h5>
           <UserDetail userId={recipe.userId} />
 
           <hr />

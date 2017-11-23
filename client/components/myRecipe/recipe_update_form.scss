@@ -3,7 +3,26 @@
    text-transform: capitalize;
    font-size: 20px;
    text-align: center;
+   color: 1B421E;
  }
+ .submit-btn {
+  background-color: 1B421E;
+  color: #fff;
+  &:hover{
+    background-color: #fff;
+    color: 1B421E;
+    border: 23px solid  1B421E;
+  }
+}
+.upload-btn {
+  background-color: 1B421E;
+  color: #fff;
+  &:hover{
+    background-color: #fff;
+    color: 1B421E;
+    border: 23px solid  1B421E;
+  }
+}
 
  .update-form{
    padding-top: 20px;

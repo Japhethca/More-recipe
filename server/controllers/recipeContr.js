@@ -1,11 +1,8 @@
 import validator from 'validatorjs';
-import Sequelize from 'sequelize';
 import models from '../models';
 
 const { Recipes } = models;
 const { Users } = models;
-
-const { sequelize } = models;
 
 
 const createRules = {
@@ -24,13 +21,24 @@ const updateRules = {
 
 
 const RecipeController = {
-  // get all recipes in the application
+  /**
+   *
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {callback} next -function
+   * @returns {object} HTTP response object
+   */
   listUpvotes(req, res, next) {
     if (req.query.order && req.query.sort) {
-      return sequelize.query(`
-      SELECT * FROM "Recipes" AS "Recipes" ORDER BY "upvotes" DESC;`, { type: Sequelize.QueryTypes.SELECT })
-        .then(recipes => res.status(200).json({ message: 'All Recipes displayed in Descending order', List: recipes }))
-        .catch(err => res.status(400).json(err));
+      const validSort = ['ingredients', 'createdAt', 'updatedAt', 'id', 'name', 'direction', 'description'];
+      const order = req.query.order === 'DESC' ? 'DESC' : '';
+      if (validSort.filter(sort => req.query.sort === sort).length > 0) {
+        Recipes.findAll({
+          order: [[req.query.sort, order]]
+        }).then(recipes => res.status(200).json({ message: 'Successful', Recipes: recipes }))
+          .catch(errors => res.status(500).json({ Error: errors }));
+      }
     }
     next();
   },
@@ -48,7 +56,13 @@ const RecipeController = {
   },
 
 
-  // creating new recipe from response
+  /**
+   *
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} HTTP response
+   */
   createRecipe(req, res) {
     const recipeValidator = new validator(req.body, createRules);
     if (recipeValidator.passes()) {
@@ -77,7 +91,13 @@ const RecipeController = {
   },
 
 
-  // gets a single recipe by ID
+  /**
+   *
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} HTTP response
+   */
   getRecipeById(req, res) {
     Recipes.findOne({
       where: {
@@ -92,7 +112,13 @@ const RecipeController = {
       });
   },
 
-  /* controller for updating a single recipe */
+  /**
+   *
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} HTTP respsonse
+   */
   updateRecipe(req, res) {
     const validateValues = new validator(req.body, updateRules);
     // all the values are valid
@@ -137,7 +163,13 @@ const RecipeController = {
     res.status(403).json({ message: errors });
   },
 
-  // controller for deleting recipe by recipeId
+  /**
+   *
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} Http response
+   */
   deleteRecipe(req, res) {
     const thisRecipeId = req.params.recipeId;
 
@@ -158,7 +190,13 @@ const RecipeController = {
       .catch(Error => res.status(500).json({ message: 'Server Error', Error }));
   },
 
-
+  /**
+ *
+ *
+ * @param {object} req
+ * @param {object} res
+ * @returns {object} Http response
+ */
   getUserRecipes(req, res) {
     return Recipes.findAll({
       where: {

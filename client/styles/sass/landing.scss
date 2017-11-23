@@ -1,17 +1,22 @@
 $text-color: white;
-$btn-color: green;
+$btn-color: BD8E8C;
+$btn-hover: 946463;
+.header-logo {
+  padding: 10px;
+}
 .landing-image{
   background-image: url("../../../images/more-recipe-cover.jpg");
   background-repeat: no-repeat;
   height: 100%;
   background-size: cover;
   background-position: center;
+  margin: 0px;
   .quote-text {
     font-family: 'Spectral SC', serif;
     color: $text-color;
     font-size: 30px;
     text-align: center;
-    margin-top: 150px;
+    margin-top: 40px;
     & span{
       font-style: italic;
     }
@@ -22,6 +27,7 @@ $btn-color: green;
     font-size: 20px;
     text-align: center;
     .landing-btn {
+      margin-top: 20px;
       background-color: $btn-color;
       color: $text-color;
       display: block;
@@ -29,6 +35,13 @@ $btn-color: green;
       border: none;
       margin-left: 35%;
       padding: 10px;
+      &:hover{
+        background-color: $btn-hover;
+      }
+      a {
+        color: inherit;
+      }
     }
   }
+  
 }

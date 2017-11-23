@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import LoadingIndicator from '../common/LoadingIndicator';
 import { recipeFormValidator } from '../../utils/validators';
 import handleCreateRecipe from '../../actions/requestHandlers/handleCreateRecipe';
 import './add_new_recipe.scss';
@@ -9,6 +10,7 @@ import './add_new_recipe.scss';
 const propTypes = {
   handleCreateRecipe: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  isLoading: PropTypes.bool
 };
 
 class AddRecipe extends Component {
@@ -25,7 +27,11 @@ class AddRecipe extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isLoading === false) {
+      // window.location.reload();
+    }
+  }
   onChange(e) {
     if (e.target.name === 'image') {
       this.setState({ image: e.target.files[0] });
@@ -107,6 +113,7 @@ class AddRecipe extends Component {
               <div className="file-path-wrapper">
                 <img id="img1" height={70} alt="" className="right" />
               </div>
+              <LoadingIndicator />
             </div>
             <div>
               <button className="btn brown waves-effect waves-ripple" type="submit"> Submit </button>
@@ -118,6 +125,13 @@ class AddRecipe extends Component {
   }
 }
 
+AddRecipe.defaultProps = {
+  isLoading: false
+};
 AddRecipe.propTypes = propTypes;
+const mapStateToProps = state => ({
+  isLoading: state.isLoading
+});
 
-export default connect(null, { handleCreateRecipe })(AddRecipe);
+
+export default connect(mapStateToProps, { handleCreateRecipe })(AddRecipe);

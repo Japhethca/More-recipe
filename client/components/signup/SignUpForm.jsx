@@ -65,8 +65,10 @@ class SignUpForm extends Component {
     return (
       <div className="row signup-form">
         <div className="card-panel col s12 m4 offset-m4 z-depth-4">
-          <div className="input-field s12 center signup-text">
+          <div className="auth-text">
             <h4>Sign Up</h4>
+          </div>
+          <div className="input-field s12 center">
             {this.state.serverErrors && <span className="red-text">{this.state.serverErrors}</span>}
           </div>
           <form className="" onSubmit={this.onSubmit}>
@@ -147,7 +149,7 @@ class SignUpForm extends Component {
             </div>
 
             <div className="login-link right">
-              <span>Have login details? <Link to="/signin" href >Signin Here</Link></span>
+              <span>Have login details? <Link to="/signin" href >Login Here</Link></span>
             </div>
           </form>
         </div>

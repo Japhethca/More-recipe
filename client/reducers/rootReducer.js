@@ -5,7 +5,7 @@ import userRecipes from './userRecipes';
 import reviews from './recipeReviews';
 import profile from './profile';
 import favorites from './favorites';
-import search from './search';
+import isLoading from './loading';
 
 const rootReducers = combineReducers({
   userRecipes,
@@ -14,7 +14,7 @@ const rootReducers = combineReducers({
   favorites,
   reviews,
   auth,
-  search
+  isLoading,
 });
 
 export default rootReducers;

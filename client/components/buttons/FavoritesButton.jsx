@@ -8,7 +8,7 @@ const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   setFavorites: PropTypes.func.isRequired,
   removeFavorite: PropTypes.func.isRequired,
-  favorites: PropTypes.objectOf(PropTypes.object).isRequired
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 class FavoritesButton extends Component {
@@ -54,7 +54,7 @@ class FavoritesButton extends Component {
   render() {
     return (
       <div className="action-btns">
-        <span onClick={this.onClick} className={classname({ favorite: this.state.isFavorite, '': !this.state.isFavorite })} >
+        <span onClick={this.onClick} role="button" className={classname({ favorite: this.state.isFavorite, '': !this.state.isFavorite })} >
           <i className={classname('material-icons')}>favorite</i>
         </span >
       </div>

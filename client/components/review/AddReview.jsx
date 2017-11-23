@@ -13,7 +13,6 @@ class AddReview extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
       content: '',
     };
     this.onChange = this.onChange.bind(this);
@@ -27,19 +26,19 @@ class AddReview extends Component {
     this.props.handleRecipeReview(this.props.recipe.id, this.state);
     this.reviewForm.reset();
   }
-                            
+
   render() {
     return (
       <div>
         <div >
           <form onSubmit={this.onSubmit} ref={node => this.reviewForm = node}>
             <div className="input-field" >
-            <i className="material-icons prefix">mode_edit</i>
+              <i className="material-icons prefix">mode_edit</i>
               <textarea type="text" name="content" onChange={this.onChange} id="reviewText" className="materialize-textarea" />
               <label htmlFor="reviewText">Write a Review</label>
             </div>
             <div className="input-field">
-              <button type="submit" className="btn grey" >Post Review</button>
+              <button type="submit" className="btn brown" >Post Review</button>
             </div>
 
           </form>

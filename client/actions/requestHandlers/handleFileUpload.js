@@ -1,6 +1,12 @@
 import superagent from 'superagent';
 import sha1 from 'sha1';
 
+/**
+ *
+ *
+ * @param {object} data - image object
+ * @returns {function} uploadRequest -function
+ */
 const upload = (data) => {
   const cloudName = 'dcmxbxzyj';
   const url = `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`;

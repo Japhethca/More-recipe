@@ -59,8 +59,10 @@ class LoginForm extends Component {
     return (
       <div className="row login-form">
         <div className="card-panel col s12 m6 offset-m3 l4 offset-l4 z-depth-4">
-          <div className="input-field s12 center login-text">
-            <h4>Login Form</h4>
+          <div className="auth-text">
+            <h4>Log In</h4>
+          </div>
+          <div className="input-field s12 center">
             {this.state.serverErrors && <span className="red-text align-center" > {this.state.serverErrors} </span> }
           </div>
 
@@ -96,12 +98,12 @@ class LoginForm extends Component {
 
             <div className="row">
               <div className="input-field col s12">
-                <button className="btn-large brown waves-effect waves-light col s12 m6 offset-m3 center" type="submit">Login
+                <button className="btn-large sign-up-btn" type="submit">Login
                 </button>
               </div>
             </div>
             <div className="sign-up-link">
-              <span> Don't have login? <Link to="/signup" href=" "> Sign Up Here </Link></span>
+              <span> Have an Account? <Link to="/signup" href=" "> Sign Up Here </Link></span>
             </div>
           </form>
         </div>

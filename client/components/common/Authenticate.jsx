@@ -11,12 +11,12 @@ export default function (Comp) {
   class Authenticate extends Component {
     componentWillMount() {
       if (!this.props.isAuthenticated) {
-        this.props.history.push('/signin');
+        this.props.history.push('/landing');
       }
     }
     componentWillUpdate() {
       if (!this.props.isAuthenticated) {
-        this.props.history.push('/signin');
+        this.props.history.push('/landing');
       }
     }
     render() {

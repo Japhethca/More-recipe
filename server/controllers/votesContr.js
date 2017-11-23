@@ -10,6 +10,13 @@ const { Votes } = models,
 // controllers for handling voting in application
 const VotingController = {
   // controller for handling upvotes
+  /**
+   *
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} Http response
+   */
   upVotes(req, res) {
     if (req.params.recipeId < 1) {
       return res.status(403).json({ message: 'Recipe id does not exist' });
@@ -71,7 +78,7 @@ const VotingController = {
             });
           });
       }
-      // catch any error that occurs
+      // catch object error that occurs
     })
       .catch((err) => {
         res.status(400).json({ message: err.name });
@@ -79,7 +86,13 @@ const VotingController = {
   },
 
 
-  // controller for handling downvotes in application
+  /**
+   *
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} Http response
+   */
   downVote(req, res) {
     if (req.params.recipeId < 1) {
       return res.status(403).json({ message: 'Recipe id does not exist' });

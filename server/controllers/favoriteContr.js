@@ -4,10 +4,14 @@ const { Favorites } = model,
   { Recipes } = model;
 
 
-// handles GET​ : /api/users/<userId>/recipes
-// controller for getting users favorietes
-
 const FavoriteController = {
+  /**
+   *
+   *
+   * @param {object} req -http request object
+   * @param {object} res -http response object
+   * @returns {object} res - http response
+   */
   getUserFavorites(req, res) {
     Favorites.findAll({
       where: {
@@ -27,7 +31,13 @@ const FavoriteController = {
     }).catch(Errors => res.status(500).json({ Errors }));
   },
 
-  // Sets favorites for a user when given a recipe id
+  /**
+   *
+   *
+   * @param {object} req -HTTP request
+   * @param {object} res -HTTP response
+   * @returns {object} res object
+   */
   setFavorites(req, res) {
     if (req.params.recipeId < 1) {
       return res.status(404).json({ message: 'No recipe with that id exists' });
@@ -57,7 +67,13 @@ const FavoriteController = {
         res.status(500).json({ message: 'Request was not be Processed', Error: err });
       });
   },
-
+  /**
+ *
+ *
+ * @param {onbject} req -HTTP request
+ * @param {onbject} res -HTTP response
+ * @returns {object} HTTP response object
+ */
   removeRecipeFromFavorites(req, res) {
     Favorites.findOne({
       where: {

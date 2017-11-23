@@ -59,7 +59,7 @@ render(
           <Route path="/profile" component={Authenticate(UserProfilePage)} />
           <Route path="/profile/edit" component={Authenticate(UserProfilePage)} />
           <Route path="/favorites" component={Authenticate(FavoritesPage)} />
-          <Route path="/search" component={Authenticate(SearchResultPage)} />
+          <Route path="/search/:query" component={Authenticate(SearchResultPage)} />
           <Route path="/signin" component={LoginPage} />
           <Route path="/landing" component={LandingPage} />
           <Route path="/signup" component={SignUpPage} />

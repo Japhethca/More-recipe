@@ -21,6 +21,7 @@ class RecipeDetailsPage extends Component {
         <NavigationBar />
         <div className="container">
           <RecipeDetails
+            history={this.props.history}
             match={this.props.match}
             favorites={this.props.favorites}
             reviews={this.props.reviews}

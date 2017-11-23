@@ -5,25 +5,24 @@ import './recipe_update_form.scss';
 
 
 const propTypes = {
-  history: PropTypes.object.isRequired,
   handleRecipeUpdate: PropTypes.func.isRequired,
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 class RecipeUpdate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ingredient: this.props.history.location.state.ingredients,
-      name: this.props.history.location.state.name,
-      direction: this.props.history.location.state.direction,
-      description: this.props.history.location.state.description,
-      image: this.props.history.location.state.image,
-      id: this.props.history.location.state.id
+      ingredient: this.props.recipe.ingredients,
+      name: this.props.recipe.name,
+      direction: this.props.recipe.direction,
+      description: this.props.recipe.description,
+      image: this.props.recipe.image,
+      id: this.props.recipe.id
     };
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.handleFile = this.handleFile.bind(this);
   }
   onSubmit(e) {
     e.preventDefault();
@@ -42,24 +41,15 @@ class RecipeUpdate extends Component {
       this.setState({ [e.target.name]: e.target.value });
     }
   }
-  handleFile(data) {
-    this.props.uploadImage(data).end((err, res) => {
-      if (!err && res.ok) {
-        this.setState({ image: res.body.url });
-      } else {
-        console.log(err || res.error);
-      }
-    });
-  }
 
   render() {
     const {
       name, ingredient, description, direction, image
     } = this.state;
     return (
-      <div className="">
-        <div className="row">
-          <form onSubmit={this.onSubmit} className="card col s12 m4 offset-m4">
+      <div className={this.props.modal} id={this.props.id}>
+        <div className={`row ${this.props.modalContent}`}>
+          <form onSubmit={this.onSubmit} className="card col s12 m6 offset-m3 l6 offset-l3">
             <div className="update-title">
               <h4> Update Recipe </h4>
             </div>
@@ -81,7 +71,8 @@ class RecipeUpdate extends Component {
                 className="materialize-textarea"
               />
               <label htmlFor="description" className="active" > Description </label>
-            </div> <div className="input-field" >
+            </div>
+            <div className="input-field" >
               <textarea
                 name="direction"
                 onChange={this.onChange}
@@ -89,7 +80,8 @@ class RecipeUpdate extends Component {
                 className="materialize-textarea"
               />
               <label htmlFor="direction" className="active" > Direction </label>
-            </div> <div className="input-field" >
+            </div>
+            <div className="input-field" >
               <textarea
                 name="ingredient"
                 onChange={this.onChange}
@@ -99,7 +91,7 @@ class RecipeUpdate extends Component {
               <label htmlFor="ingredient" className="active" > Ingredient </label>
             </div>
             <div className="file-field input-field">
-              <div className="btn brown waves-effect">
+              <div className="btn brown upload-btn">
                 <span>Image Upload</span>
                 <input type="file" onChange={this.onChange} name="image" accept=".jpg, .jpeg, .png" />
               </div>
@@ -108,7 +100,7 @@ class RecipeUpdate extends Component {
               </div>
             </div>
             <div>
-              <button className="btn-large brown waves-effect waves-ripple" type="submit"> Update </button>
+              <button className="btn-large submit-btn" type="submit"> Update </button>
             </div>
           </form>
         </div>

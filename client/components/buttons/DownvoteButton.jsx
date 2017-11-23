@@ -23,7 +23,7 @@ class DownvoteButton extends Component {
 
   onClick(e) {
     e.preventDefault();
-    this.toggleUpvote();
+    // this.toggleUpvote();
     this.props.handleDownvote(this.props.recipe.id);
   }
 

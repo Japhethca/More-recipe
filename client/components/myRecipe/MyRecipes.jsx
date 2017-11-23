@@ -17,15 +17,21 @@ class MyRecipes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasErrored: false
+      hasErrored: false,
+      myRecipes: this.props.userRecipes || []
     };
   }
 
   componentDidMount() {
     this.props.getMyRecipes();
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.userRecipes.userRecipes !== this.props.userRecipes.userRecipes) {
+      this.setState({ myRecipes: nextProps.userRecipes });
+    }
+  }
   render() {
-    const { userRecipes } = this.props.userRecipes;
+    const { userRecipes } = this.state.myRecipes;
     if (this.state.hasErrored) {
       return (
         <div>
@@ -38,7 +44,7 @@ class MyRecipes extends Component {
         <ul className="row">
           {userRecipes.map(recipe =>
             (
-              <li key={recipe.id} className="col s12 m4">
+              <li key={recipe.id} className="col s12 m6 l4">
                 <Recipe
                   handleDeleteRecipe={this.props.handleDeleteRecipe}
                   favorites={this.props.favorites}

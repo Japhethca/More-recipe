@@ -37,10 +37,10 @@ class Recipes extends Component {
     return (
       <div className="container">
         <div className="recipe-list-container">
-          <h4>Top Recipes</h4>
+          <h4>Latest Recipes</h4>
           <ul className="row" id="list">
             {recipes.map(val => (
-              <li className="col s12 m4" key={val.id}>
+              <li className="col s12 m6 l4" key={val.id}>
                 {this.state.favorites && <Recipe key={val.id} recipe={val} history={this.props.history} favorites={this.props.favorites} /> }
               </li>))
             }

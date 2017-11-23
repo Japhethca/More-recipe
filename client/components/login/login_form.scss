@@ -1,10 +1,18 @@
+$nav-background-color: rgba(78, 31, 31, 0.877);
+$btn-color: 562624;
+$btn-hover-color: BD8E8C; 
+
 .login-form {
   margin-top: 30px;
 
-  .login-text {
-    padding: 5px 5px;
-    margin-bottom: 10px;
+  .auth-text {
+    background-color: $nav-background-color;
+    margin: 10px -12px;
+    margin-top: -5px;
+    padding: 10px;
+    color: white;
   }
+
   .error-text {
     font-size: small;
     margin-left: 42px;
@@ -15,17 +23,27 @@
     padding-right: 10px;
   }
   .sign-up-btn {
-    background-color: 1B421E;
+    background-color: $btn-color;
     color: #fff;
     width: 100%;
+    border-radius: 15px;
     &:hover{
-      background-color: #fff;
-      color: 1B421E;
-      border-bottom: 1px solid  1B421E;
+      background-color:$btn-hover-color;
+      color: white;
     }
+    
   }
   .sign-up-link {
     margin-bottom: 5px;
+    float: right;
+    padding-bottom: 15px;
+    & a{
+      color: $btn-hover-color;
+    }
+    & a:hover{
+      color: $btn-color;
+      text-decoration: underline;
+    }
   }
   .input-field .prefix ~ input {
     margin-bottom: 0px;

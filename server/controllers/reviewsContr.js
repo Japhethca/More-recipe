@@ -3,6 +3,7 @@ import Validator from 'validatorjs';
 import model from '../models';
 
 const { Recipes } = model,
+  { Users } = model,
   { Reviews } = model;
 
 const createRules = {
@@ -10,9 +11,22 @@ const createRules = {
 };
 
 const ReviewController = {
-
+/**
+ *
+ *
+ * @param {object} req
+ * @param {object} res
+ * @returns {object} Http response
+ */
   getAllReview(req, res) {
-    return Reviews.findAll({ order: [['createdAt', 'DESC']] }).then((reviews) => {
+    return Reviews.findAll({
+      order: [['createdAt', 'DESC']],
+      include: [
+        {
+          model: Users,
+          attributes: ['username', 'firstname', 'photo']
+        }]
+    }).then((reviews) => {
       if (reviews.length < 1) {
         res.status(404).json({ message: 'There are no review in the application yet' });
       } else {
@@ -21,7 +35,13 @@ const ReviewController = {
     }).catch(error => res.status(500).json(error));
   },
 
-
+  /**
+ *
+ *
+ * @param {object} req
+ * @param {object} res
+ * @returns {object} Http response
+ */
   recipeReview(req, res) {
     const validReview = new Validator(req.body, createRules);
     if (validReview.passes()) {
@@ -45,12 +65,6 @@ const ReviewController = {
                 Recipe: recipe,
                 Review: review,
               });
-            })
-            .catch((err) => {
-              res.status(400).json({
-                message: 'Request was not processed',
-                Error: err,
-              });
             });
         })
         .catch((err) => {
@@ -65,7 +79,13 @@ const ReviewController = {
   },
 
 
-  // returns the reviews of a particular recipe
+  /**
+   *
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} Http response
+   */
   getRecipeReview(req, res) {
     if (isNaN(parseInt(req.params.recipeId, 10))) {
       res.status(403).json({ message: 'Invalid request params' });

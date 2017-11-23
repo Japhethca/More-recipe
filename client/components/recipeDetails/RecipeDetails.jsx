@@ -35,12 +35,14 @@ class RecipeDetails extends Component {
   }
 
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.props.recipes !== nextProps.recipes) {
-  //     const recipe = nextProps.recipes.filter(recipe => recipe.id === this.state.recipe.id);
-  //     this.setState({ recipe: recipe[0], favorites: nextProps.favorites, reviews: nextProps.reviews });
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.recipes !== nextProps.recipes) {
+      this.props.getRecipe(this.props.match.params.id)
+        .then((res) => {
+          this.setState({ recipe: res.data });
+        }).catch(err => this.setState({ hasErrored: true }));
+    }
+  }
 
   displayList(items) {
     const listItems = lodash.split(items, ',');
@@ -97,13 +99,13 @@ class RecipeDetails extends Component {
           <div className="col s12 m6">
             <h4> Ingredients </h4>
             <ol>
-              {this.displayList(ingredients).map(item => (<li >{item}</li>))}
+              {this.displayList(ingredients).map(item => (<li key={item}>{item}</li>))}
             </ol>
           </div>
           <div className="col s12 m6">
             <h4> Directions </h4>
             <ol>
-              {this.displayList(direction).map(item => (<li>{item}</li>))}
+              {this.displayList(direction).map(item => (<li key={item}>{item}</li>))}
             </ol>
           </div>
         </div>

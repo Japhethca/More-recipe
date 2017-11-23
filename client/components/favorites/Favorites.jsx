@@ -7,12 +7,23 @@ const propTypes = {
 };
 
 class Favorites extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      favorites: this.props.favorites
+    };
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.favorites !== this.props.favorites) {
+      this.setState({ favorites: nextProps.favorites });
+    }
+  }
   render() {
-    const { favorites } = this.props;
+    const { favorites } = this.state;
     return (
       <ul className="row">
         {favorites.map(favorite => (
-          <li key={favorite.id} className="col s12 m4" >
+          <li key={favorite.id} className="col s12 m6 l4" >
             <Recipe
               recipe={favorite}
               favorites={this.props.favorites}
