@@ -11,6 +11,12 @@ import { setFavorites, removeFavorite } from '../../actions/requestHandlers/hand
 
 const propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.object).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setFavorites: PropTypes.func.isRequired,
+  removeFavorite: PropTypes.func.isRequired,
+  getRecipe: PropTypes.func.isRequired,
+  recipes: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 class RecipeDetails extends Component {
@@ -21,7 +27,6 @@ class RecipeDetails extends Component {
       favorites: [],
       reviews: [],
       hasErrored: false,
-      hasNoReview: false
     };
 
     this.displayList = this.displayList.bind(this);
@@ -31,7 +36,11 @@ class RecipeDetails extends Component {
     this.props.getRecipe(this.props.match.params.id)
       .then((res) => {
         this.setState({ recipe: res.data });
-      }).catch(err => this.setState({ hasErrored: true }));
+      }).catch((err) => {
+        if (err.response.status === 404) {
+          this.setState({ hasErrored: true });
+        }
+      });
   }
 
 
@@ -70,7 +79,7 @@ class RecipeDetails extends Component {
         <div className="center" >
           <img
             className="responsive-img center"
-            src={image || require('../../../images/image-2.jpg')}
+            src={image || require('../../../images/recipe-card-placeholder.jpg')}
             alt=""
           />
         </div>

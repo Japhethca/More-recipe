@@ -6,7 +6,9 @@ import './recipe_update_form.scss';
 
 const propTypes = {
   handleRecipeUpdate: PropTypes.func.isRequired,
-  recipe: PropTypes.objectOf(PropTypes.any).isRequired
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  modalContent: PropTypes.string.isRequired,
+  modal: PropTypes.string.isRequired
 };
 
 class RecipeUpdate extends Component {

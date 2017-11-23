@@ -9,8 +9,6 @@ import './add_new_recipe.scss';
 
 const propTypes = {
   handleCreateRecipe: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  isLoading: PropTypes.bool
 };
 
 class AddRecipe extends Component {
@@ -27,11 +25,7 @@ class AddRecipe extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isLoading === false) {
-      // window.location.reload();
-    }
-  }
+  
   onChange(e) {
     if (e.target.name === 'image') {
       this.setState({ image: e.target.files[0] });
@@ -125,13 +119,7 @@ class AddRecipe extends Component {
   }
 }
 
-AddRecipe.defaultProps = {
-  isLoading: false
-};
 AddRecipe.propTypes = propTypes;
-const mapStateToProps = state => ({
-  isLoading: state.isLoading
-});
 
 
-export default connect(mapStateToProps, { handleCreateRecipe })(AddRecipe);
+export default connect(null, { handleCreateRecipe })(AddRecipe);
