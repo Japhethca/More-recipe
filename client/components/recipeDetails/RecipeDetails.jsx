@@ -79,7 +79,7 @@ class RecipeDetails extends Component {
         <div className="center" >
           <img
             className="responsive-img center"
-            src={image || require('../../../images/recipe-card-placeholder.jpg')}
+            src={image || 'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526912/recipe-card-placeholder_ta9ikp.jpg'}
             alt=""
           />
         </div>

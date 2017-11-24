@@ -15,12 +15,12 @@ import './recipe_card.scss';
 const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   handleDeleteRecipe: PropTypes.func.isRequired,
+  auth: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.object).isRequired,
   favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
   setFavorites: PropTypes.func.isRequired,
   removeFavorite: PropTypes.func.isRequired,
-  showButtons: PropTypes.bool
 };
 
 class Recipe extends Component {
@@ -39,14 +39,14 @@ class Recipe extends Component {
   render() {
     const { recipe, reviews } = this.state;
     const {
-      history, setFavorites, removeFavorite
+      auth, history, setFavorites, removeFavorite
     } = this.props;
     const { favorites } = this.props;
     return (
       <div className="row" id="recipe-card">
         <div className="card col s12">
           <Link to={`/recipe/${recipe.id}`} className="card-image" href>
-            <img src={recipe.image || require('../../../images/recipe-card-placeholder.jpg')} alt={recipe.name} className="responsive-img recipe-image" />
+            <img src={recipe.image || 'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526912/recipe-card-placeholder_ta9ikp.jpg'} alt={recipe.name} className="responsive-img recipe-image" />
             <h5 className="ellipses">{recipe.name}</h5>
           </Link>
           <UserDetail userId={recipe.userId} />
@@ -54,13 +54,7 @@ class Recipe extends Component {
           <hr />
 
           <div className="card-title">
-            <ActionButtons
-              recipe={recipe}
-              reviews={reviews}
-              favorites={favorites}
-              setFavorites={setFavorites}
-              removeFavorite={removeFavorite}
-            />
+            <ActionButtons recipe={recipe} reviews={reviews} favorites={favorites} setFavorites={setFavorites} removeFavorite={removeFavorite} />
           </div>
 
           {this.props.showButtons &&
@@ -79,6 +73,7 @@ class Recipe extends Component {
 Recipe.propTypes = propTypes;
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   reviews: state.reviews,
 });
 
