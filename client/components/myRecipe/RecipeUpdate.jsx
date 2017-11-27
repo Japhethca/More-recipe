@@ -47,12 +47,12 @@ class RecipeUpdate extends Component {
 
   render() {
     const {
-      name, ingredient, description, direction, image
+      id, name, ingredient, description, direction, image
     } = this.state;
     return (
-      <div className={this.props.modal} id={this.props.id}>
-        <div className={`row ${this.props.modalContent}`}>
-          <form onSubmit={this.onSubmit} className="card col s12 m6 offset-m3 l6 offset-l3">
+      <div className={this.props.modal} id={id}>
+        <div className={`${this.props.modalContent}`}>
+          <form onSubmit={this.onSubmit} className="card">
             <div className="update-title">
               <h4> Update Recipe </h4>
             </div>
@@ -95,7 +95,7 @@ class RecipeUpdate extends Component {
             </div>
             <div className="file-field input-field">
               <div className="btn brown upload-btn">
-                <span>Image Upload</span>
+                <span>Upload Image</span>
                 <input type="file" onChange={this.onChange} name="image" accept=".jpg, .jpeg, .png" />
               </div>
               <div className="file-path-wrapper">
@@ -105,6 +105,7 @@ class RecipeUpdate extends Component {
             </div>
             <div>
               <button className="btn-large submit-btn" type="submit"> Update </button>
+              <button className="btn-large right modal-close"> CLose</button>
             </div>
           </form>
         </div>

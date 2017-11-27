@@ -20,28 +20,24 @@ class LoginForm extends Component {
       serverErrors: this.props.auth.errors,
       validationErrors: '',
     };
-
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.isValid = this.isValid.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.errors !== null) {
       this.setState({ serverErrors: nextProps.auth.errors });
     }
   }
-  onChange(event) {
+  onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  onSubmit(event) {
+  onSubmit = (event) => {
     event.preventDefault();
     if (this.isValid()) {
       this.props.handleLoginRequest(this.state);
     }
   }
 
-  isValid() {
+  isValid = () => {
     const { errors, isValid } = signinValidator(this.state);
     if (!isValid) {
       this.setState({ validationErrors: errors });

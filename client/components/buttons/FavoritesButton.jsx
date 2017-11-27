@@ -53,7 +53,7 @@ class FavoritesButton extends Component {
       <div className="action-btns">
         <span onClick={this.onClick} role="button" className={classname({ favorite: this.state.isFavorite, '': !this.state.isFavorite })} >
           <i className={classname('material-icons')}>favorite</i>
-        </span >
+        </span>
       </div>
     );
   }

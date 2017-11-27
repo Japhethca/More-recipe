@@ -18,10 +18,10 @@ const DownvoteButton = (props) => {
 
   return (
     <div className="action-btns">
-      <span onClick={onClick}>
+      <button onClick={onClick}>
         <i className="material-icons">thumb_down</i>&nbsp;
         {props.recipe.downvotes}
-      </span>
+      </button>
     </div>
   );
 };

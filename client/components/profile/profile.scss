@@ -1,4 +1,4 @@
-img{
+img {
   max-height: 400px;
   max-width: 300px;
   align-items: center;
@@ -8,11 +8,19 @@ img{
   margin: 10px;
   padding: 10px;
 
-  button{
-    
-  }
+  
 }
 .profile-name{
   color: #080847;
   text-transform: capitalize;
+}
+.profile-form {
+  .error-text {
+    font-size: small;
+    margin-left: 42px;
+    color: red;
+  }
+  .input-field .prefix ~ input {
+    margin-bottom: 0px;
+  }
 }

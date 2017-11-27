@@ -44,13 +44,14 @@ const UserController = {
       return Users.findAll({
         where: {
           email: req.body.email,
+          username: req.body.username
         },
       })
         .then((users) => {
           // checks if the user is already in the databse
           if (users.length > 0) {
             return res.status(400).json({
-              message: 'User already exists'
+              message: 'User with Email or Username already exists'
             });
           } // creates new user
           if (req.body.password !== req.body.verifyPassword) {

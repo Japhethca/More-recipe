@@ -28,9 +28,9 @@ export function signUpValidator(data) {
   const signinRules = {
     email: 'required|email',
     password: 'required|min:5',
-    firstname: 'required|min:3',
-    lastname: 'required|min:3',
-    username: 'required|min:3',
+    firstname: 'required|min:2',
+    lastname: 'required|min:2',
+    username: 'required|min:2',
     verifyPassword: 'required|min:5|same:password'
   };
   const validate = new Validator(data, signinRules);

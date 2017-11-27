@@ -18,7 +18,6 @@ const Reviews = (props) => {
     <div className="reviews-page" >
       <h4 >Reviews</h4>
       <div>
-        <AddReview recipe={recipe} />
         <div className="row">
           {reviews.map(review => (
             <div key={review.id} className="col s12 m4">
@@ -26,6 +25,7 @@ const Reviews = (props) => {
             </div>
               ))}
         </div>
+        <AddReview recipe={recipe} />
       </div>
     </div>
   );

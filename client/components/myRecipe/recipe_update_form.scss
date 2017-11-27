@@ -1,3 +1,7 @@
+$nav-background-color: rgba(78, 31, 31, 0.877);
+$btn-color: 562624;
+$btn-hover-color: BD8E8C; 
+
  .update-title {
    padding-bottom: 10px;
    text-transform: capitalize;
@@ -6,29 +10,21 @@
    color: 1B421E;
  }
  .submit-btn {
-  background-color: 1B421E;
-  color: #fff;
+  background-color: $btn-color;
   &:hover{
-    background-color: #fff;
-    color: 1B421E;
-    border: 23px solid  1B421E;
+    background-color: $btn-hover-color;
   }
 }
 .upload-btn {
-  background-color: 1B421E;
-  color: #fff;
+  background-color: $btn-color;
   &:hover{
-    background-color: #fff;
-    color: 1B421E;
-    border: 23px solid  1B421E;
+    background-color: $btn-hover-color;
   }
 }
 
  .update-form{
    padding-top: 20px;
  }
- form{
-   button{
-     margin-bottom: 10px;
-   }
+ .modal .modal-content {
+  padding: 0px;
  }

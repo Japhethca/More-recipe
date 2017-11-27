@@ -6,21 +6,21 @@ import handleRecipeUpdate from '../../actions/requestHandlers/handleRecipeUpdate
 
 
 const propTypes = {
-  // history: PropTypes.objectOf(PropTypes.any).isRequired,
   handleRecipeUpdate: PropTypes.func.isRequired,
   recipe: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 class UpdateButton extends Component {
   componentDidMount() {
-    $('.modal').modal();
+    $('.modal').modal({
+      dismissible: false
+    });
   }
 
   render() {
     return (
       <div>
         <button
-          // onClick={this.onClick}
           data-target={this.props.recipe.id}
           className="btn-floating white waves-effect waves-blue modal-trigger"
         >

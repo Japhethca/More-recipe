@@ -29,7 +29,7 @@ class SignUpForm extends Component {
   }
 
 
-  onSubmit(event) {
+  onSubmit = (event) => {
     event.preventDefault();
     if (this.isValid()) {
       this.props.handleSignUpRequest(this.state).then(

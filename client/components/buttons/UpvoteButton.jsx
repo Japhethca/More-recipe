@@ -17,10 +17,10 @@ const UpvoteButton = (props) => {
   };
   return (
     <div className="action-btns">
-      <span onClick={onClick} className="" data-index={props.recipe.id}>
+      <button onClick={onClick} className="" data-index={props.recipe.id}>
         <i className="material-icons">thumb_up</i>&nbsp;
         {props.recipe.upvotes}
-      </span>
+      </button>
     </div>
   );
 };

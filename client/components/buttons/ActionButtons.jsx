@@ -15,26 +15,30 @@ const propTypes = {
 };
 
 
-const ActionButtons = ({
-  recipe, reviews, favorites, setFavorites, removeFavorite
-}) => (
-  <div>
-    <ul className="btn-list">
-      <li>
-        <ReviewButton
-          recipe={recipe}
-          reviews={reviews}
-          favorites={favorites}
-          setFavorites={setFavorites}
-          removeFavorite={removeFavorite}
-        />
-      </li>
-      <li><UpvoteButton recipe={recipe} /></li>
-      <li><DownvoteButton recipe={recipe} /></li>
-      <li><FavoritesButton recipe={recipe} favorites={favorites} /></li>
-    </ul>
-  </div>
-);
+const ActionButtons = (props) => {
+  const {
+    recipe, reviews, favorites, setFavorites, removeFavorite
+  } = props;
+
+  return (
+    <div>
+      <ul className="btn-list">
+        <li>
+          <ReviewButton
+            recipe={recipe}
+            reviews={reviews}
+            favorites={favorites}
+            setFavorites={setFavorites}
+            removeFavorite={removeFavorite}
+          />
+        </li>
+        <li><UpvoteButton recipe={recipe} /></li>
+        <li><DownvoteButton recipe={recipe} /></li>
+        <li><FavoritesButton recipe={recipe} favorites={favorites} /></li>
+      </ul>
+    </div>
+  );
+};
 
 
 ActionButtons.propTypes = propTypes;
