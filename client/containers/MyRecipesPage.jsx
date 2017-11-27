@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import NavigationBar from '../components/navigation/NavigationBar';
 import Footer from '../components/navigation/Footer';
 import AddRecipe from '../components/myRecipe/AddRecipe';
@@ -29,7 +28,9 @@ class MyRecipesPage extends Component {
               <MyRecipes showButtons />
             </div>
             <div className="col s12 m8 offset-m2" id="new_recipe" >
-              <AddRecipe history={this.props.history} addFlashMessage={this.props.addFlashMessage} />
+              <AddRecipe
+                history={this.props.history}
+              />
             </div>
           </div>
 
@@ -42,4 +43,4 @@ class MyRecipesPage extends Component {
 
 MyRecipesPage.propTypes = propTypes;
 
-export default connect(null, { })(MyRecipesPage);
+export default MyRecipesPage;

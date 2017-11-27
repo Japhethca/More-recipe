@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Favorites from '../components/favorites/Favorites';
@@ -11,26 +11,24 @@ const propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-class FavoritesPage extends Component {
-  render() {
-    const { user, favorites, recipes } = this.props;
-    const hasFavorites = favorites.length > 0;
-    return (
-      <div >
-        <NavigationBar />
-        <div className="container">
-          <h3 className="center">Favorite Recipes</h3>
-          {hasFavorites ? <Favorites user={user} favorites={favorites} recipes={recipes} /> : (
-            <div className="center">
-              <h4>Sorry, you have not added any favorite yet!</h4>
-              <p>Click on the <i className="material-icons red-text">favorite</i> button on recipe page to add as favorite</p>
-            </div>
+const FavoritesPage = (props) => {
+  const { user, favorites, recipes } = props;
+  const hasFavorites = favorites.length > 0;
+  return (
+    <div >
+      <NavigationBar />
+      <div className="container">
+        <h3 className="center">Favorite Recipes</h3>
+        {hasFavorites ? <Favorites user={user} favorites={favorites} recipes={recipes} /> : (
+          <div className="center">
+            <h4>Sorry, you have not added any favorite yet!</h4>
+            <p>Click on the <i className="material-icons red-text">favorite</i> button on recipe page to add as favorite</p>
+          </div>
           )}
-        </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 FavoritesPage.propTypes = propTypes;
 

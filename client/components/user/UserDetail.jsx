@@ -25,7 +25,6 @@ class UserDetail extends Component {
     const { user } = this.state;
     return (
       <div className="user-details">
-        {/* <img src={user.image || null } alt=""/> */}
         {user && <p>By <span>{user.username }</span> </p>}
       </div>
     );

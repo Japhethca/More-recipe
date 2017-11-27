@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import LoadingIndicator from '../common/LoadingIndicator';
 import './recipe_update_form.scss';
 
 
@@ -26,21 +27,21 @@ class RecipeUpdate extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
     this.props.handleRecipeUpdate(this.state);
   }
-  onChange(e) {
-    if (e.target.name === 'image') {
-      this.setState({ image: e.target.files[0] });
+  onChange(event) {
+    if (event.target.name === 'image') {
+      this.setState({ image: event.target.files[0] });
       const reader = new FileReader();
       reader.onload = () => {
         const output = document.getElementById('img1');
         output.src = reader.result;
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(event.target.files[0]);
     } else {
-      this.setState({ [e.target.name]: e.target.value });
+      this.setState({ [event.target.name]: event.target.value });
     }
   }
 
@@ -100,6 +101,7 @@ class RecipeUpdate extends Component {
               <div className="file-path-wrapper">
                 <img id="img1" src={image} height={70} className="right" alt=" " />
               </div>
+              <LoadingIndicator />
             </div>
             <div>
               <button className="btn-large submit-btn" type="submit"> Update </button>

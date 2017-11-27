@@ -28,8 +28,6 @@ class RecipeDetails extends Component {
       reviews: [],
       hasErrored: false,
     };
-
-    this.displayList = this.displayList.bind(this);
   }
 
   componentDidMount() {
@@ -43,7 +41,6 @@ class RecipeDetails extends Component {
       });
   }
 
-
   componentWillReceiveProps(nextProps) {
     if (this.props.recipes !== nextProps.recipes) {
       this.props.getRecipe(this.props.match.params.id)
@@ -53,7 +50,7 @@ class RecipeDetails extends Component {
     }
   }
 
-  displayList(items) {
+  displayList = (items) => {
     const listItems = lodash.split(items, ',');
     return listItems;
   }

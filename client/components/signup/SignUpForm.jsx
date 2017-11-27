@@ -23,11 +23,8 @@ class SignUpForm extends Component {
       validationErrors: '',
       hasSignedUp: false,
     };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
-  onChange(event) {
+  onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -48,7 +45,7 @@ class SignUpForm extends Component {
     }
   }
 
-  isValid() {
+  isValid = () => {
     const { errors, isValid } = signUpValidator(this.state);
     if (!isValid) {
       this.setState({ validationErrors: errors });

@@ -26,21 +26,21 @@ class AddRecipe extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   
-  onChange(e) {
-    if (e.target.name === 'image') {
-      this.setState({ image: e.target.files[0] });
+  onChange(event) {
+    if (event.target.name === 'image') {
+      this.setState({ image: event.target.files[0] });
       const reader = new FileReader();
       reader.onload = () => {
         const output = document.getElementById('img1');
         output.src = reader.result;
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(event.target.files[0]);
     } else {
-      this.setState({ [e.target.name]: e.target.value });
+      this.setState({ [event.target.name]: event.target.value });
     }
   }
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
     if (this.isValid()) {
       this.props.handleCreateRecipe(this.state);
     }

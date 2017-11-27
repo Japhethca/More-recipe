@@ -15,7 +15,6 @@ import './recipe_card.scss';
 const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   handleDeleteRecipe: PropTypes.func.isRequired,
-  auth: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.object).isRequired,
   favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -38,10 +37,7 @@ class Recipe extends Component {
   }
   render() {
     const { recipe, reviews } = this.state;
-    const {
-      auth, history, setFavorites, removeFavorite
-    } = this.props;
-    const { favorites } = this.props;
+    const { favorites, history } = this.props;
     return (
       <div className="row" id="recipe-card">
         <div className="card col s12">
@@ -54,7 +50,13 @@ class Recipe extends Component {
           <hr />
 
           <div className="card-title">
-            <ActionButtons recipe={recipe} reviews={reviews} favorites={favorites} setFavorites={setFavorites} removeFavorite={removeFavorite} />
+            <ActionButtons
+              recipe={recipe}
+              reviews={reviews}
+              favorites={favorites}
+              setFavorites={this.props.setFavorites}
+              removeFavorite={this.props.removeFavorite}
+            />
           </div>
 
           {this.props.showButtons &&
@@ -63,7 +65,6 @@ class Recipe extends Component {
               <UpdateButton recipe={recipe} history={history} />
             </div>
           }
-
         </div>
       </div>
     );

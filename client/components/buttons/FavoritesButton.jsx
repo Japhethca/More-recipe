@@ -4,6 +4,7 @@ import classname from 'classnames';
 import { connect } from 'react-redux';
 import { setFavorites, removeFavorite } from '../../actions/requestHandlers/handleUserFavorites';
 
+
 const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   setFavorites: PropTypes.func.isRequired,
@@ -17,17 +18,13 @@ class FavoritesButton extends Component {
     this.state = {
       isFavorite: false
     };
-    this.onClick = this.onClick.bind(this);
-    this.toggleFavorite = this.toggleFavorite.bind(this);
-    this.isInFavorites = this.isInFavorites.bind(this);
   }
   componentDidMount() {
     this.isInFavorites();
   }
 
-
-  onClick(e) {
-    e.preventDefault();
+  onClick = (event) => {
+    event.preventDefault();
     this.toggleFavorite();
     if (!this.state.isFavorite) {
       this.props.setFavorites(this.props.recipe);
@@ -36,7 +33,7 @@ class FavoritesButton extends Component {
     }
   }
 
-  isInFavorites() {
+  isInFavorites = () => {
     const checkFavorite = this.props.favorites.filter(favorite => favorite.id === this.props.recipe.id);
     if (checkFavorite.length > 0) {
       this.setState({ isFavorite: true });
@@ -44,7 +41,7 @@ class FavoritesButton extends Component {
     }
   }
 
-  toggleFavorite() {
+  toggleFavorite = () => {
     if (this.state.isFavorite) {
       this.setState({ isFavorite: false });
     } else {

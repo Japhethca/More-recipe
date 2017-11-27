@@ -20,7 +20,7 @@ class UpdateButton extends Component {
     return (
       <div>
         <button
-          onClick={this.onClick}
+          // onClick={this.onClick}
           data-target={this.props.recipe.id}
           className="btn-floating white waves-effect waves-blue modal-trigger"
         >

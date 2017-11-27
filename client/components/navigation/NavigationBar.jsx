@@ -8,9 +8,9 @@ import './navigationBar.scss';
 
 
 const propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.objectOf(PropTypes.any).isRequired,
   logout: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 class NavigationBar extends Component {

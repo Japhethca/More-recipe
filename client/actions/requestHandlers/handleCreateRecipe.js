@@ -17,7 +17,7 @@ export default function handleCreateRecipe(data) {
     if (typeof (data.image) === 'object') {
       dispatch(isLoading(true));
       upload(data.image).end((err, res) => {
-        if (!err || res.ok) {
+        if (!err) {
           data.image = res.body.url;
           axios.post('/api/recipes', data).then((res) => {
             Materialize.toast('<span class="green">Recipe Successfully Created!</span>', 5000);

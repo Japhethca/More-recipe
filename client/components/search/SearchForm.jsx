@@ -13,16 +13,14 @@ class SearchForm extends Component {
     this.state = {
       query: '',
     };
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
   }
 
-  onChange(e) {
-    this.setState({ query: e.target.value });
+  onChange = (event) => {
+    this.setState({ query: event.target.value });
   }
 
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit = (event) => {
+    event.preventDefault();
     this.props.history.push(`/search/${this.state.query}`);
   }
 

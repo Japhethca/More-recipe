@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import FavoritesButton from './FavoritesButton';
 import DownvoteButton from './DownvoteButton';
@@ -14,31 +14,28 @@ const propTypes = {
   removeFavorite: PropTypes.func.isRequired
 };
 
-class ActionButtons extends Component {
-  render() {
-    const {
-      recipe, reviews, favorites, setFavorites, removeFavorite
-    } = this.props;
-    return (
-      <div>
-        <ul className="btn-list">
-          <li>
-            <ReviewButton
-              recipe={recipe}
-              reviews={reviews}
-              favorites={favorites}
-              setFavorites={setFavorites}
-              removeFavorite={removeFavorite}
-            />
-          </li>
-          <li><UpvoteButton recipe={recipe} /></li>
-          <li><DownvoteButton recipe={recipe} /></li>
-          <li><FavoritesButton recipe={recipe} favorites={favorites} /></li>
-        </ul>
-      </div>
-    );
-  }
-}
+
+const ActionButtons = ({
+  recipe, reviews, favorites, setFavorites, removeFavorite
+}) => (
+  <div>
+    <ul className="btn-list">
+      <li>
+        <ReviewButton
+          recipe={recipe}
+          reviews={reviews}
+          favorites={favorites}
+          setFavorites={setFavorites}
+          removeFavorite={removeFavorite}
+        />
+      </li>
+      <li><UpvoteButton recipe={recipe} /></li>
+      <li><DownvoteButton recipe={recipe} /></li>
+      <li><FavoritesButton recipe={recipe} favorites={favorites} /></li>
+    </ul>
+  </div>
+);
+
 
 ActionButtons.propTypes = propTypes;
 

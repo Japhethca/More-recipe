@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './loading_indicator.scss';
@@ -8,12 +8,11 @@ const propTypes = {
   isLoading: PropTypes.bool.isRequired
 };
 
-class LoadingIndicator extends Component {
-  render() {
-    const { isLoading } = this.props;
-    return (
-      <div className="loader">
-        {isLoading &&
+const LoadingIndicator = (props) => {
+  const { isLoading } = props;
+  return (
+    <div className="loader">
+      {isLoading &&
         <div className="preloader-wrapper big active">
           <div className="spinner-layer spinner-blue-only">
             <div className="circle-clipper left">
@@ -28,10 +27,9 @@ class LoadingIndicator extends Component {
           </div>
         </div>
       }
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 LoadingIndicator.propTypes = propTypes;
 

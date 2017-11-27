@@ -16,11 +16,9 @@ class SearchResultPage extends Component {
     this.state = {
       searchResults: []
     };
-
-    this.handleSearch = this.handleSearch.bind(this);
   }
 
-  handleSearch(keywords) {
+  handleSearch = (keywords) => {
     const results = this.props.recipes.filter((recipe) => {
       const keywordList = keywords.toLowerCase().split(' ');
       const recipeName = recipe.name.toLowerCase();
@@ -34,6 +32,7 @@ class SearchResultPage extends Component {
     });
     return results;
   }
+
   render() {
     const { query } = this.props.match.params;
     const results = this.handleSearch(query);

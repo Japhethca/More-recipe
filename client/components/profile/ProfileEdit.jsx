@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import LoadingIndicator from '../common/LoadingIndicator';
 
 
 const propTypes = {
-  profile: PropTypes.object.isRequired,
+  profile: PropTypes.objectOf(PropTypes.any).isRequired,
   handleEditUserProfile: PropTypes.func.isRequired,
 };
 
@@ -20,9 +21,6 @@ class ProfileEdit extends Component {
       newPassword: null,
       photo: this.props.profile.photo,
     };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -30,21 +28,21 @@ class ProfileEdit extends Component {
       this.setState(Object.assign({}, nextProps.profile));
     }
   }
-  onChange(e) {
-    if (e.target.name === 'photo') {
-      this.setState({ photo: e.target.files[0] });
+  onChange = (event) => {
+    if (event.target.name === 'photo') {
+      this.setState({ photo: event.target.files[0] });
       const reader = new FileReader();
       reader.onload = () => {
         const output = document.getElementById('img1');
         output.src = reader.result;
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(event.target.files[0]);
     } else {
-      this.setState({ [e.target.name]: e.target.value });
+      this.setState({ [event.target.name]: event.target.value });
     }
   }
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit = (event) => {
+    event.preventDefault();
     this.props.handleEditUserProfile(this.state);
   }
   render() {
@@ -102,7 +100,7 @@ class ProfileEdit extends Component {
                     type="text"
                     onChange={this.onChange}
                     name="aboutme"
-                    value={aboutme}
+                    value={aboutme || ' '}
                     className="materialize-textarea"
                   />
                   <label htmlFor="aboutme" className="active" > About Me </label>
@@ -139,12 +137,14 @@ class ProfileEdit extends Component {
                 <div className="file-path-wrapper">
                   <img id="img1" height={70} className="right" src={photo} />
                 </div>
+                <LoadingIndicator />
               </div>
               <div className="row">
                 <div className="input-field col s12 m6 center">
-                  <button 
+                  <button
                     className="btn-large brown waves-effect waves-light col s12 m4"
-                    type="submit">
+                    type="submit"
+                  >
                     Update Profile
                   </button>
                 </div>

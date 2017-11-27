@@ -21,7 +21,6 @@ export function logout() {
   };
 }
 export function handleLoginRequest(userdata) {
-  // handles loging request
   return dispatch => axios.post('/api/users/signin', userdata).then((res) => {
     const token = res.data.Token;
     localStorage.setItem('token', token);

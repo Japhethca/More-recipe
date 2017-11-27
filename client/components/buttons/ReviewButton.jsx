@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './buttons.scss';
 
@@ -7,19 +7,17 @@ const propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-class ReviewButton extends Component {
-  render() {
-    const { recipe } = this.props;
-    const reviews = this.props.reviews.filter(review => recipe.id === review.recipeId);
-    return (
-      <div className="action-btns">
-        <span >
-          <i className="material-icons">rate_review</i><span id="reivews" > {reviews.length || 0 } </span>
-        </span >
-      </div>
-    );
-  }
-}
+const ReviewButton = (props) => {
+  const { recipe } = props;
+  const reviews = props.reviews.filter(review => recipe.id === review.recipeId);
+  return (
+    <div className="action-btns">
+      <span >
+        <i className="material-icons">rate_review</i><span id="reivews" > {reviews.length || 0 } </span>
+      </span >
+    </div>
+  );
+};
 
 ReviewButton.propTypes = propTypes;
 

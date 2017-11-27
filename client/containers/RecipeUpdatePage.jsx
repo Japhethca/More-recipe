@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import NaviigationBar from '../components/navigation/NavigationBar';
@@ -12,22 +12,19 @@ const propTypes = {
   handleRecipeUpdate: PropTypes.func.isRequired
 };
 
-class RecipeUpdatePage extends Component {
-  render() {
-    return (
-      <div>
-        <NaviigationBar />
-        <div className="container">
-          <RecipeUpdate
-            history={this.props.history}
-            handleRecipeUpdate={this.props.handleRecipeUpdate}
-          />
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-}
+const RecipeUpdatePage = props => (
+  <div>
+    <NaviigationBar />
+    <div className="container">
+      <RecipeUpdate
+        history={props.history}
+        handleRecipeUpdate={props.handleRecipeUpdate}
+      />
+    </div>
+    <Footer />
+  </div>
+);
+
 
 RecipeUpdatePage.propTypes = propTypes;
 
