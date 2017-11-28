@@ -71,4 +71,4 @@ GET​ : `/api/recipes?sort=upvotes&order=ascending`
 [More-recipe (API docs)](https://morerecipe.docs.apiary.io/#)
 
 ## Liecense
-This project is licensed under MIT License 
+This project is licensed under MIT License, See LICENCE for more info.
