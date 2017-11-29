@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { ADD_NEW_REVIEW } from '../types';
 
-
+/**
+ * @param {object} review
+ * @returns {object} - action
+ */
 function addNewReview(review) {
   return {
     type: ADD_NEW_REVIEW,

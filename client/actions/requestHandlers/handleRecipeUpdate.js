@@ -3,7 +3,10 @@ import upload from './handleFileUpload';
 import isloading from './isLoading';
 import { UPDATE_RECIPE } from '../types';
 
-
+/**
+ * @param {object} data - recipe object
+ * @returns {object} action
+ */
 function updateRecipe(data) {
   return {
     type: UPDATE_RECIPE,
@@ -11,11 +14,9 @@ function updateRecipe(data) {
   };
 }
 /**
- * action for  updating recipe
  * @author chidex
- * @argument object
- * @function
- * it gets the filds from the form filled before submitting
+ * @argument {object} data
+ * @returns {promise} axios promise
  */
 export default data => (dispatch) => {
   if (typeof (data.image) === 'object') {

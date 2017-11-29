@@ -5,7 +5,11 @@ import {
   UPVOTE_RECIPE,
   DOWNVOTE_RECIPE
 } from '../actions/types';
-
+/**
+ * @param {arrar} array - recipe
+ * @param {object} action
+ * @returns {object} - recipe
+ */
 function updateObjectArray(array, action) {
   return array.map((recipe, index) => {
     if (index !== action.index) {
@@ -14,8 +18,16 @@ function updateObjectArray(array, action) {
     return Object.assign({}, recipe, action.recipe);
   });
 }
+
 let index = 0;
 let item = {};
+
+/**
+ * @export
+ * @param {array} [state=[]]
+ * @param {object} action
+ * @returns {array} new state
+ */
 export default function favorites(state = [], action) {
   switch (action.type) {
     case GET_USER_FAVORITES:

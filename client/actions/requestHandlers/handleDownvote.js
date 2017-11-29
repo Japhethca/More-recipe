@@ -1,9 +1,12 @@
 import axios from 'axios';
-import { DOWNVOTE_RECIPE  } from '../types';
-
+import { DOWNVOTE_RECIPE } from '../types';
+/**
+ * @param {object} recipe
+ * @returns {object} action object
+ */
 function downvote(recipe) {
   return {
-    type: DOWNVOTE_RECIPE ,
+    type: DOWNVOTE_RECIPE,
     recipe
   };
 }

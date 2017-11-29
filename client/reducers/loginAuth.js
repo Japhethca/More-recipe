@@ -8,6 +8,12 @@ const initialState = {
   errors: []
 };
 
+/**
+ * @export
+ * @param {object} [state=false]
+ * @param {object} action
+ * @returns {object} new state
+ */
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_CURRENT_USER:
@@ -16,7 +22,7 @@ export default (state = initialState, action) => {
         user: action.user,
         errors: action.errors
       };
-      
+
     default:
       return state;
   }

@@ -1,7 +1,10 @@
 import axios from 'axios';
 // import getAllRecipes from './getAllRecipes';
 import { UPVOTE_RECIPE } from '../types';
-
+/**
+ * @param {object} recipe
+ * @returns {object} sction
+ */
 function upvote(recipe) {
   return {
     type: UPVOTE_RECIPE,

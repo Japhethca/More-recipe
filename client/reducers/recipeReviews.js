@@ -1,6 +1,11 @@
 import { GET_RECIPE_REVIEW, ADD_NEW_REVIEW, GET_SINGLE_RECIPE_REVIEWS } from '../actions/types';
 
-
+/**
+ * @export
+ * @param {array} [state=[]]
+ * @param {object} action
+ * @returns {array} new state
+ */
 export default function reviews(state = [], action) {
   switch (action.type) {
     case GET_RECIPE_REVIEW:

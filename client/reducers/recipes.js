@@ -1,8 +1,12 @@
 import { GET_ALL_RECIPES, DELETE_USER_RECIPE, ADD_NEW_RECIPE, UPDATE_RECIPE, UPVOTE_RECIPE, DOWNVOTE_RECIPE } from '../actions/types';
 
-
-function updateObjectArray(array, action) {
-  return array.map((recipe, index) => {
+/**
+ * @param {array} list
+ * @param {object} action
+ * @returns {object} update recipe
+ */
+function updateObjectArray(list, action) {
+  return list.map((recipe, index) => {
     if (index !== action.index) {
       return recipe;
     }
@@ -12,6 +16,12 @@ function updateObjectArray(array, action) {
 let index = 0;
 let item = {};
 let recipe;
+/**
+ * @export
+ * @param {array} [state=[]]
+ * @param {object} action
+ * @returns {array} new state
+ */
 export default function recipes(state = [], action) {
   switch (action.type) {
     case GET_ALL_RECIPES:

@@ -1,8 +1,12 @@
 import { DOWNVOTE_RECIPE, UPVOTE_RECIPE, GET_USER_RECIPES, DELETE_USER_RECIPE, ADD_NEW_RECIPE, UPDATE_RECIPE, } from '../actions/types';
 
-
-function updateObjectArray(array, action) {
-  return array.map((recipe, index) => {
+/**
+ * @param {array} list
+ * @param {object} action
+ * @returns {object} update object
+ */
+function updateObjectArray(list, action) {
+  return list.map((recipe, index) => {
     if (index !== action.index) {
       return recipe;
     }
@@ -13,6 +17,13 @@ let index = 0;
 let recipe;
 let item = {};
 
+
+/**
+ * @export
+ * @param {array} state - initial state
+ * @param {object} action
+ * @returns {array} new state
+ */
 export default function userRecipers(state = [], action) {
   switch (action.type) {
     case GET_USER_RECIPES:

@@ -3,7 +3,10 @@ import upload from './handleFileUpload';
 import isLoading from './isLoading';
 import { ADD_NEW_RECIPE } from '../types';
 
-
+/**
+ * @param {object} recipe
+ * @returns {object} action object
+ */
 function addNewRecipe(recipe) {
   return {
     type: ADD_NEW_RECIPE,
@@ -11,7 +14,11 @@ function addNewRecipe(recipe) {
   };
 }
 
-
+/**
+ * @export
+ * @param {object} data - recipe object
+ * @returns {promise} - axios promise
+ */
 export default function handleCreateRecipe(data) {
   return (dispatch) => {
     if (typeof (data.image) === 'object') {

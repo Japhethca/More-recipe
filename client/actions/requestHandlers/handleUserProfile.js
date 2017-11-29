@@ -2,24 +2,38 @@ import axios from 'axios';
 import upload from './handleFileUpload';
 import { EDIT_USER_PROFILE, GET_USER_PROFILE } from '../types';
 import isloading from './isLoading';
- 
+/**
+ * @param {object} profile
+ * @returns {object} redux action
+ */
 function getUserProfile(profile) {
   return {
     type: GET_USER_PROFILE,
     profile
   };
 }
+/**
+ * @export
+ * @returns {promise} axios promise
+ */
 export function handleGetUserProfile() {
   return dispatch => axios.get('/api/users/profile').then(res => dispatch(getUserProfile(res.data)));
 }
-
+/**
+ * @param {object} newProfile - user object
+ * @returns {object} redux action
+ */
 function editUserProfile(newProfile) {
   return {
     type: EDIT_USER_PROFILE,
     newProfile
   };
 }
-
+/**
+ * @export
+ * @param {any} data - user object
+ * @returns {promise} axios or supseragent
+ */
 export function handleEditUserProfile(data) {
   return (dispatch) => {
     if (typeof (data.photo) === 'object') {
