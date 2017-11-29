@@ -7,34 +7,26 @@ More-Recipes​ ​provides​ ​a​ ​platform​ ​for​ ​users​ ​t
 ​Suppose​ ​a​ ​user​ ​comes​ ​up​ ​with​ ​a​ ​recipe,​ ​​ ​he/she​ ​can​ ​post​ ​it​ ​on
 More-Recipes​ ​and​ ​​ ​get​ ​feedback​ ​in​ ​form​ ​of​ ​reviews​ ​and​ ​votes​ ​from​ ​other​ ​users​ ​who​ ​explore​ ​that
 recipe.​ ​Users​ ​can​ ​also​ ​keep​ ​a​ ​list​ ​of​ ​their​ ​favorite​ ​recipes​ ​on​ ​the​ ​application.
-## Requirements
+## Technologies Used 
 The following dependencies needs to be installed to run this app.
 > NodeJs
-
 > Express
-
+> React/Redux
+> Wepack
 > Babel
+> Sequelize 
+> MaterializeCss
 
-## How to Run App
-Clone app from github by running 
+## How to Run/Start App
+- Clone Repository by running `git clone [repository]`
+- After that change directory to the repo with `cd More-recipe`
+- Run `npm install` to dependencies
+- Start App by running `npm start:dev`
+- Then navigate to "http://localhost:50000" to view app in browser
 
-`$ git clone` 
-
-install the latest version of node.js and express
-
-`$ npm install nodejs`
-
-`$ npm install express
-`
-
-optional - for transpilling ES6 to ES5
-
-`$ npm install babel`
-
-The app can be started from the command line by running 
-
-`$ npm start:app`
-
+## Running tests
+App can be tested by running  
+- `$ npm test`
  ***
 ## Rest API Endpoints
 Api route for signing in and registration
@@ -70,16 +62,13 @@ API Route for getting recipe with highest votes
 
 GET​ : `/api/recipes?sort=upvotes&order=ascending`
 
-## Running the tests
-The for this app is written in mocha and chai which can be run by simple typing 
-$ npm run test
-or 
-$ npm run mocha --compilers js:babel-register
-
 
 ###  Site Links
 [More-recipe (Template)](https://japhethca.github.io/More-recipe/)
 
 [More-recipe (Hosted on heroku)](https://more-recipe-cj.herokuapp.com/)
 
-[More-recipe (API docs)](http://docs.anyigorchidieberejapheth.apiary.io)
+[More-recipe (API docs)](https://morerecipe.docs.apiary.io/#)
+
+## Liecense
+This project is licensed under MIT License, See LICENCE for more info.
