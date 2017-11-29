@@ -9,14 +9,13 @@ const { expect } = chai;
 
 let token;
 
-
 describe('REVIEWS', () => {
   before((done) => {
     chai.request(app)
       .post('/api/users/signin')
       .send({
-        email: 'ngozinwali@gmail.com',
-        password: 'ngobest'
+        email: 'kelechi@gmail.com',
+        password: 'kelechi'
       })
       .end((err, res) => {
         token = res.body.Token;
@@ -29,7 +28,7 @@ describe('REVIEWS', () => {
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
+        expect(res.body).to.have.property = 'reviews';
         done();
       });
   });
@@ -41,8 +40,10 @@ describe('REVIEWS', () => {
       .send({ content: 'this is serious' })
       .query({ token })
       .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res).to.be.json;
+        expect(res).to.have.status(201);
+        expect(res.body).to.have.property = 'message';
+        expect(res.body).to.have.property = 'Review';
+        expect(res.body.message).to.be.eql = 'Review Created';
         done();
       });
   });
@@ -53,8 +54,8 @@ describe('REVIEWS', () => {
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(404);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'Recipe with this Id does not exist';
         done();
       });
   });
@@ -65,8 +66,7 @@ describe('REVIEWS', () => {
       .send({})
       .query({ token })
       .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res).to.be.json;
+        expect(res).to.have.status(403);
         expect(res.body).to.have.property('message');
         done();
       });
@@ -78,20 +78,43 @@ describe('REVIEWS', () => {
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'Recipe Reviews';
+        expect(res.body).to.have.property('Reviews');
         done();
       });
   });
-
+  it('should return an error message if recipe has no reviews', (done) => {
+    chai.request(app)
+      .get('/api/recipes/3/reviews')
+      .query({ token })
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'No reviews for this recipe';
+        done();
+      });
+  });
   it('should error on non number in url params', (done) => {
     chai.request(app)
       .get('/api/recipes/esggsf/reviews')
       .query({ token })
       .end((err, res) => {
-        expect(res).to.have.status(403);
-        expect(res).to.be.json;
+        expect(res).to.have.status(400);
         expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'Invalid Url Parameter';
+        done();
+      });
+  });
+  it('should error on non number in url params', (done) => {
+    chai.request(app)
+      .post('/api/recipes/esggsf/reviews')
+      .send({ content: 'this is serious' })
+      .query({ token })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'Invalid Url Parameter';
         done();
       });
   });

@@ -1,5 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
+
 import app from '../server/app';
 
 
@@ -7,7 +8,6 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 let token;
-
 
 describe('Recipes', () => {
   before((done) => {
@@ -28,8 +28,9 @@ describe('Recipes', () => {
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('List');
+        expect(res.body.message).to.be.eql = 'Successful';
         done();
       });
   });
@@ -39,7 +40,7 @@ describe('Recipes', () => {
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
+        expect(res.body).to.have.property = 'recipe';
         done();
       });
   });
@@ -49,28 +50,74 @@ describe('Recipes', () => {
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(404);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'Recipe does not exist!';
         done();
       });
   });
-  // it('should allow users to create new recipe', (done) => {
-  //   chai.request(app)
-  //     .post('/api/recipes')
-  //     .query({ token })
-  //     .send({
-  //       name: 'whateverjknnjn',
-  //       description: 'this is an afr soup',
-  //       ingredient: 'maggjnlkn',
-  //       direction: 'first do then the other',
-  //     })
-  //     .end((err, res) => {
-  //       expect(res).to.have.status(200);
-  //       expect(res).to.be.json;
-  //       expect(res.body).to.have.property('message');
-  //       done();
-  //     });
-  // });
+  it('should catch invalid url input', (done) => {
+    chai.request(app)
+      .get('/api/recipes/ere')
+      .query({ token })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'Invalid Url Parameter';
+        done();
+      });
+  });
+
+  it('should create new recipe', (done) => {
+    chai.request(app)
+      .post('/api/recipes')
+      .query({ token })
+      .send({
+        name: 'this is a new recipe',
+        description: 'this is an afr soup',
+        ingredient: 'magg',
+        direction: 'first do then the other'
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(201);
+        expect(res.body).to.have.property = 'message';
+        expect(res.body).to.have.property = 'updated';
+        expect(res.body.message).to.be.eql = 'Recipe updated Successful';
+        done();
+      });
+  });
+  it('should not create recipe with name that already exist', (done) => {
+    chai.request(app)
+      .post('/api/recipes')
+      .query({ token })
+      .send({
+        name: 'this is a new recipe',
+        description: 'this is an afr soup',
+        ingredient: 'magg',
+        direction: 'first do then the other'
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(409);
+        expect(res.body).to.have.property = 'message';
+        expect(res.body.message).to.be.eql = 'Recipe with this name already exists';
+        done();
+      });
+  });
+  it('should should with any empty fields', (done) => {
+    chai.request(app)
+      .post('/api/recipes')
+      .query({ token })
+      .send({
+        name: '',
+        description: '',
+        ingredient: 'magg',
+        direction: 'first do then the other'
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(403);
+        expect(res.body).to.have.property = 'message';
+        done();
+      });
+  });
   it('should allow users to update existing recipe', (done) => {
     chai.request(app)
       .put('/api/recipes/1')
@@ -82,8 +129,10 @@ describe('Recipes', () => {
         direction: 'first do then the other'
       })
       .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res).to.be.json;
+        expect(res).to.have.status(201);
+        expect(res.body).to.have.property = 'message';
+        expect(res.body).to.have.property = 'updated';
+        expect(res.body.message).to.be.eql = 'Recipe updated Successful';
         done();
       });
   });
@@ -99,7 +148,25 @@ describe('Recipes', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(404);
-        expect(res).to.be.json;
+        expect(res.body).to.have.property = 'message';
+        expect(res.body.message).to.be.eql = 'Recipe does not exist';
+        done();
+      });
+  });
+  it('should not allow users to update with an empty fields', (done) => {
+    chai.request(app)
+      .put('/api/recipes/300')
+      .query({ token })
+      .send({
+        name: '',
+        description: '',
+        ingredient: 'magg',
+        direction: 'first do then the other'
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(403);
+        expect(res.body).to.have.property = 'message';
+        expect(res.body.message).to.be.eql = 'Recipe does not exist';
         done();
       });
   });
@@ -115,18 +182,36 @@ describe('Recipes', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(403);
-        expect(res).to.be.json;
+        expect(res.body).to.have.property = 'message';
+        expect(res.body.message).to.be.eql = 'User is not authorized to update this recipe!';
         done();
       });
   });
-
+  it('should catch invalid url input', (done) => {
+    chai.request(app)
+      .put('/api/recipes/ere')
+      .query({ token })
+      .send({
+        name: 'new recipe name',
+        description: 'this is an afr soup',
+        ingredient: 'magg',
+        direction: 'first do then the other'
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'Invalid Url Parameter';
+        done();
+      });
+  });
   it('should be able to delete recipe user created', (done) => {
     chai.request(app)
       .delete('/api/recipes/1')
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
+        expect(res.body).to.have.property = 'message';
+        expect(res.body.message).to.be.eql = 'Recipe deleted successfully';
         done();
       });
   });
@@ -136,8 +221,8 @@ describe('Recipes', () => {
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(404);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'Recipe does not exist';
         done();
       });
   });
@@ -147,19 +232,20 @@ describe('Recipes', () => {
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(403);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'User is not authorised to delete this recipe';
         done();
       });
   });
 
-  it('should return a message if a user has no recipes', (done) => {
+  it('should catch invalid url input', (done) => {
     chai.request(app)
-      .get('/api/users/recipes')
+      .delete('/api/recipes/ere')
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res).to.be.json;
+        expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'Invalid Url Parameter';
         done();
       });
   });

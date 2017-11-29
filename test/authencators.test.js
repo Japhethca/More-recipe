@@ -7,15 +7,14 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-let token = 'yJhbGciOiNiIsIncCI6IkpXVCJ9.eyJpZCI6MSwidXNlciI6Im';
+const invalidToken = 'yJhbGciOiNiIsIncCI6IkpXVCJ9.eyJpZCI6MSwidXNlciI6Im';
 describe('Authenications', () => {
   it('should not authenticate expired or invalid token', (done) => {
     chai.request(app)
       .get('/api/recipes')
-      .send({ token })
+      .send({ invalidToken })
       .end((err, res) => {
-        expect(res).to.be.json;
-        expect(res).to.have.status(401);
+        expect(res).to.have.status(403);
         expect(res.body.message).to.be.eqls = 'Authentication failed!';
         done();
       });
@@ -25,7 +24,6 @@ describe('Authenications', () => {
     chai.request(app)
       .get('/api/recipes')
       .end((err, res) => {
-        expect(res).to.be.json;
         expect(res).to.have.status(403);
         expect(res.body.message).to.be.eqls = 'failed! No token. Sign in to get one.';
         done();
@@ -36,7 +34,6 @@ describe('Authenications', () => {
     chai.request(app)
       .get('/api/users/signin')
       .end((err, res) => {
-        expect(res).to.be.json;
         expect(res).to.have.status(405);
         expect(res.body.message).to.be.eqls = 'failed! No token. Sign in to get one.';
         done();

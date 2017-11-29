@@ -24,12 +24,12 @@ describe('SIGNUP', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res).to.be.json;
+        expect(res.body).to.have.property = 'message';
         done();
       });
   });
 
-  it('should not signup with missing fields', (done) => {
+  it('should not signup if password and verifyPassword differ', (done) => {
     chai.request(app)
       .post('/api/users/signup')
       .send({
@@ -42,8 +42,29 @@ describe('SIGNUP', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res).to.be.json;
+        expect(res.body).to.have.property = 'message';
         expect(res.body.message).to.be.eqls = 'password did not match';
+        done();
+      });
+  });
+
+  it('should signup user successfully', (done) => {
+    chai.request(app)
+      .post('/api/users/signup')
+      .send({
+        firstname: 'andela',
+        lastname: 'chidiebere',
+        username: 'chidibere',
+        password: '123456',
+        verifyPassword: '123456',
+        email: 'andelachidiebere@gmail.com',
+      })
+      .end((err, res) => {
+        console.log(res.body);
+        expect(res).to.have.status(201);
+        expect(res.body).to.have.property = 'message';
+        expect(res.body).to.have.property = 'UserDetails';
+        expect(res.body.message).to.be.eqls = 'Account Successfully created!';
         done();
       });
   });
@@ -59,7 +80,6 @@ describe('SIGIN', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
         expect(res.body.message).to.be.eqls = 'Login Successful!';
         expect(res.body).to.have.property = 'Token';
         done();
@@ -74,7 +94,6 @@ describe('SIGIN', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res).to.be.json;
         expect(res.body).to.have.property = 'message';
         done();
       });
@@ -89,7 +108,7 @@ describe('SIGIN', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(403);
-        expect(res).to.be.json;
+        expect(res.body).to.have.property = 'message';
         expect(res.body.message).to.be.eqls = 'Password Incorrect';
         done();
       });
@@ -104,7 +123,7 @@ describe('SIGIN', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(404);
-        expect(res).to.be.json;
+        expect(res.body).to.have.property = 'message';
         expect(res.body.message).to.be.eqls = 'User does not exist';
         done();
       });
@@ -130,19 +149,29 @@ describe('USER', () => {
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
         expect(res.body).to.have.property = 'user';
         done();
       });
   });
 
+  it('should throw an error on invalid url params', (done) => {
+    chai.request(app)
+      .get('/api/admin/user/fgf')
+      .query({ token })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.have.property = 'message';
+        expect(res.body.message).to.be.eql = 'Invalid Url Parameter';
+        done();
+      });
+  });
   it('should fail when getting details on non users', (done) => {
     chai.request(app)
       .get('/api/admin/user/33')
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(404);
-        expect(res).to.be.json;
+        expect(res.body).to.have.property = 'message';
         expect(res.body.message).to.be.eqls = 'user does not exist';
         done();
       });
@@ -168,7 +197,6 @@ describe('USER PROFILE', () => {
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
         expect(res.body).to.have.property = 'user';
         done();
       });
@@ -188,9 +216,9 @@ describe('USER PROFILE', () => {
         photo: '',
       })
       .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res).to.be.json;
+        expect(res).to.have.status(201);
         expect(res.body).to.have.property = 'message';
+        expect(res.body.body).to.be.eql = 'Profile Update Successful';
         done();
       });
   });
@@ -211,8 +239,8 @@ describe('USER PROFILE', () => {
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res).to.be.json;
         expect(res.body).to.have.property = 'message';
+        expect(res.body.message).to.be.eql = 'password Must Differ';
         done();
       });
   });

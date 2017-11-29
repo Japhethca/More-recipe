@@ -29,7 +29,6 @@ describe('Recipes', () => {
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
         expect(res.message).to.be.eql = 'Recipe Upvoted';
         done();
@@ -42,7 +41,6 @@ describe('Recipes', () => {
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
         expect(res.message).to.be.eql = 'Recipe Unvoted';
         done();
@@ -54,8 +52,7 @@ describe('Recipes', () => {
       .put('/api/recipes/0/upvotes')
       .send({ token })
       .end((err, res) => {
-        expect(res).to.have.status(403);
-        expect(res).to.be.json;
+        expect(res).to.have.status(404);
         expect(res.body).to.have.property('message');
         expect(res.message).to.be.eql = 'Recipe id does not exist';
         done();
@@ -67,7 +64,6 @@ describe('Recipes', () => {
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(404);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
         done();
       });
@@ -80,7 +76,6 @@ describe('Recipes', () => {
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
         expect(res.message).to.be.eql = 'Recipe Downvoted';
         done();
@@ -93,7 +88,6 @@ describe('Recipes', () => {
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
         expect(res.message).to.be.eql = 'Recipe Unvoted';
         done();
@@ -106,7 +100,6 @@ describe('Recipes', () => {
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
         expect(res.message).to.be.eql = 'Recipe Downvoted';
         done();
@@ -119,42 +112,43 @@ describe('Recipes', () => {
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(403);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
         expect(res.message).to.be.eql = 'Recipe id does not exist';
         done();
       });
   });
+
   it('should not allow users to downvote recipe with an invalid id', (done) => {
     chai.request(app)
       .put('/api/recipes/300/downvotes')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(404);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
         done();
       });
   });
-  it('should catch an unexpected params with 500 error', (done) => {
+
+  it('should catch invalid url parameter', (done) => {
     chai.request(app)
-      .put('/api/recipes/e/downvotes')
+      .put('/api/recipes/edf/downvotes')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'invalid Url Parameter';        
         done();
       });
   });
-  it('should catch an unexpected params with 500 error', (done) => {
+
+  it('should catch invalid url parameter', (done) => {
     chai.request(app)
       .put('/api/recipes/e/upvotes')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(400);
-        expect(res).to.be.json;
         expect(res.body).to.have.property('message');
+        expect(res.body.message).to.be.eql = 'invalid Url Parameter';
         done();
       });
   });
