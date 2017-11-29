@@ -6,6 +6,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import jwt from 'jsonwebtoken';
 import thunk from 'redux-thunk';
 import reduxReset from 'redux-reset';
+
 import Home from './containers/Home';
 import SignUpPage from './containers/SignUpPage';
 import LoginPage from './containers/LoginPage';

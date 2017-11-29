@@ -6,7 +6,6 @@ const LandingPage = () => (
   <div className="landing-image row">
     <NavigationBar bgcolor="transparent" />
     <div className="quote-text col s12 m6 l6">
-      <h2 className="header-logo">More Recipes</h2>
             “You don’t have to cook fancy or complicated masterpieces, just good food from fresh ingredients.” <br />
       <span>– Julia Child</span>
     </div>
