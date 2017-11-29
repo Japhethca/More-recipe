@@ -1,5 +1,9 @@
 
-
+/**
+ * @param {object} sequelize - sequelize instance
+ * @param {object} DataTypes - Datatype instance
+ * @returns {object} - Database Object
+ */
 module.exports = (sequelize, DataTypes) => {
   const Recipes = sequelize.define('Recipes', {
     name: {

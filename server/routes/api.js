@@ -1,4 +1,5 @@
 import express from 'express';
+
 import apiV1 from './v1';
 import auth from '../middlewares/authenticator';
 

@@ -1,6 +1,7 @@
 import validator from 'validatorjs';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+
 import models from '../models';
 import app from '../app';
 
@@ -25,14 +26,9 @@ const signupRules = {
 };
 
 
-/** A controller that accepts user details
- *  and creates a new user in the database
- */
 const UserController = {
 
   /**
-   *
-   *
    * @param {object} req
    * @param {object} res
    * @returns {object} Http response
@@ -66,8 +62,8 @@ const UserController = {
             aboutme: req.body.aboutme,
             email: req.body.email,
           })
-            .then(user => res.status(200).json({
-              message: 'Account Successfully created!', 'User  details': user,
+            .then(user => res.status(201).json({
+              message: 'Account Successfully created!', UserDetails: user,
             }))
             .catch(err => res.status(500).json({ message: 'Server Error', Error: err }));
         });
@@ -76,10 +72,7 @@ const UserController = {
     res.status(400).json({ message: errors });
   },
 
-
   /**
-   *
-   *
    * @param {object} req
    * @param {object} res
    * @returns {object} Http response
@@ -101,24 +94,23 @@ const UserController = {
           const token = jwt.sign({ id: user.id, user: user.email }, app.get('secret_key'), { expiresIn: 84000 });
           res.status(200).json({ message: 'Login Successful!', 'User detail': user, Token: token });
         })
-        .catch(err => res.status(500).json({
+        .catch(() => res.status(500).json({
           message: 'Request could not be Processed',
-          err
         }));
     }
     const errors = Object.values(signinValidator.errors.errors).map(val => val[0]);
     res.status(400).json({ message: errors });
   },
 
-
   /**
-   *
-   *
    * @param {object} req
    * @param {object} res
    * @returns {object} Http response
    */
   user(req, res) {
+    if (isNaN(parseInt(req.params.userId, 10))) {
+      return res.status(400).json({ message: 'Invalid Url Parameter' });
+    }
     return Users.findOne({
       where: {
         id: req.params.userId
@@ -129,19 +121,15 @@ const UserController = {
         res.status(404).json({ message: 'user does not exist' });
       }
       res.status(200).json(user);
-    }).catch(err => res.status(500).json({ Message: 'An arror Occured', Error: err }));
+    }).catch(err => res.status(500).json({ Message: 'Request was not Processed' }));
   },
+
   /**
- *
- *
  * @param {object} req
  * @param {object} res
  * @returns {object} Http response
  */
   userProfile(req, res) {
-    if (!req.decoded.id) {
-      res.status(403).json({ message: 'You are not allowed to view this page' });
-    }
     return Users.findOne({
       where: {
         id: req.decoded.id
@@ -151,16 +139,11 @@ const UserController = {
   },
 
   /**
- *
- *
  * @param {object} req
  * @param {object} res
  * @returns {object} Http response
  */
   updateProfile(req, res) {
-    if (!req.decoded.id) {
-      res.status(403).json({ message: 'Invalid request' });
-    }
     if (req.body.newPassword && req.body.password === req.body.newPassword) {
       res.status(400).json({ message: 'password Must Differ' });
     }
@@ -177,8 +160,8 @@ const UserController = {
         password: newPassword || req.body.password,
         aboutme: req.body.aboutme,
         photo: req.body.photo,
-      }).then(() => res.status(200).json({ message: 'Profile Update Successful', profile: user }));
-    }).catch(err => res.status(500).json({ Error: err }));
+      }).then(() => res.status(201).json({ message: 'Profile Update Successful', profile: user }));
+    }).catch(() => res.status(500).json({ message: 'Request was not Processed' }));
   }
 };
 

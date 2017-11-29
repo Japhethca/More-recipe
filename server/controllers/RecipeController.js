@@ -69,7 +69,7 @@ const RecipeController = {
       return Recipes.findOne({ where: { name: req.body.name } })
         .then((recipe) => {
           if (recipe) {
-            return res.status(400).json({ message: 'Recipe with this name already exists' });
+            return res.status(409).json({ message: 'Recipe with this name already exists' });
           }
         }).then(() => Recipes.create({
           name: req.body.name,
@@ -80,10 +80,10 @@ const RecipeController = {
           image: req.body.image
         }))
         .then((recipe) => {
-          res.status(200).json({ message: 'Recipe successfully created', Details: recipe });
+          res.status(201).json({ message: 'Recipe successfully created', Details: recipe });
         })
         .catch(() => {
-          res.status(400).json({ message: 'Request was not processed' });
+          res.status(500).json({ message: 'Request was not processed' });
         });
     }
     const errors = Object.values(recipeValidator.errors.errors).map(val => val[0]);
@@ -99,6 +99,9 @@ const RecipeController = {
    * @returns {object} HTTP response
    */
   getRecipeById(req, res) {
+    if (isNaN(parseInt(req.params.recipeId, 10))) {
+      return res.status(400).json({ message: 'invalid Url Parameter' });
+    }
     Recipes.findOne({
       where: {
         id: req.params.recipeId,
@@ -121,6 +124,9 @@ const RecipeController = {
    */
   updateRecipe(req, res) {
     const validateValues = new validator(req.body, updateRules);
+    if (isNaN(parseInt(req.params.recipeId, 10))) {
+      return res.status(400).json({ message: 'Invalid Url Parameter' });
+    }
     // all the values are valid
     if (validateValues.passes()) {
       return Recipes.findOne({
@@ -132,7 +138,7 @@ const RecipeController = {
           if (!recipe) {
             res.status(404).json({ message: 'Recipe does not exist' });
           } else if (recipe.userId === req.decoded.id) {
-            recipe.update({
+            return recipe.update({
               name: req.body.name,
               ingredients: req.body.ingredient,
               description: req.body.description,
@@ -140,23 +146,17 @@ const RecipeController = {
               image: req.body.image
             })
               .then(() => {
-                recipe.reload().then(recipe => res.status(200).json({
+                recipe.reload().then(updatedRecipe => res.status(201).json({
                   message: 'Recipe updated Successful',
-                  updated: recipe,
+                  updated: updatedRecipe,
                 }));
-              })
-              .catch((err) => {
-                res.status(500).json({ message: 'Update Unsuccessful!', error: err });
               });
           } else {
             res.status(403).json({ message: 'User is not authorized to update this recipe!' });
           }
         })
-        .catch((err) => {
-          res.status(400).json({
-            message: 'Request cannot be processed',
-            Error: err.name
-          });
+        .catch(() => {
+          res.status(500).json({ message: 'Request cannot be processed' });
         });
     }
     const errors = Object.values(validateValues.errors.errors).map(val => val[0]);
@@ -172,7 +172,9 @@ const RecipeController = {
    */
   deleteRecipe(req, res) {
     const thisRecipeId = req.params.recipeId;
-
+    if (isNaN(parseInt(req.params.recipeId, 10))) {
+      return res.status(400).json({ message: 'Invalid Url Parameter' });
+    }
     if (thisRecipeId < 1) {
       return res.status(404).json({ message: 'Recipe does not exist' });
     }
@@ -207,14 +209,11 @@ const RecipeController = {
     }).then((recipes) => {
       if (recipes.length > 0) {
         Users.findById(req.decoded.id).then((user) => {
-          if (!user) {
-            res.status(404).json({ message: 'User does not exist' });
-          }
           const Username = user.get('username');
           res.status(200).json({ Username, Recipes: recipes });
-        }).catch(error => res.status(500).json({ error }));
+        });
       } else {
-        res.status(400).json({ message: 'User has not created any recipe' });
+        res.status(404).json({ message: 'User has not created any recipe' });
       }
     }).catch(error => res.status(500).json({ error }));
   },

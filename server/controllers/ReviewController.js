@@ -32,7 +32,7 @@ const ReviewController = {
       } else {
         res.status(200).json(reviews);
       }
-    }).catch(error => res.status(500).json(error));
+    }).catch(() => res.status(500).json({ message: 'Request was not precessed' }));
   },
 
   /**
@@ -44,6 +44,9 @@ const ReviewController = {
  */
   recipeReview(req, res) {
     const validReview = new Validator(req.body, createRules);
+    if (isNaN(parseInt(req.params.recipeId, 10))) {
+      return res.status(400).json({ message: 'Invalid Url Parameter' });
+    }
     if (validReview.passes()) {
       return Recipes.findOne({
         where: {
@@ -52,7 +55,7 @@ const ReviewController = {
       })
         .then((recipe) => {
           if (!recipe) {
-            return res.status(404).json({ message: 'Invalid recipe Id' });
+            return res.status(404).json({ message: 'Recipe with this Id does not exist' });
           }
           Reviews.create({
             content: req.body.content,
@@ -60,22 +63,21 @@ const ReviewController = {
             userId: req.decoded.id,
           })
             .then((review) => {
-              res.status(200).json({
+              res.status(201).json({
                 message: 'Review Created',
                 Recipe: recipe,
                 Review: review,
               });
             });
         })
-        .catch((err) => {
-          res.status(400).json({
-            message: 'Request was not processed',
-            Error: err,
+        .catch(() => {
+          res.status(500).json({
+            message: 'Request was not processed'
           });
         });
     }
     const errors = Object.values(validReview.errors.errors).map(val => val[0]);
-    res.status(400).json({ message: errors });
+    res.status(403).json({ message: errors });
   },
 
 
@@ -88,7 +90,7 @@ const ReviewController = {
    */
   getRecipeReview(req, res) {
     if (isNaN(parseInt(req.params.recipeId, 10))) {
-      res.status(403).json({ message: 'Invalid request params' });
+      return res.status(400).json({ message: 'Invalid Url Parameter' });
     }
     return Reviews.findAll({
       where: {
@@ -101,10 +103,9 @@ const ReviewController = {
         }
         res.status(200).json({ message: 'Recipe Reviews', Reviews: reviews });
       })
-      .catch((err) => {
+      .catch(() => {
         res.json(400).json({
-          message: 'Could not process request',
-          Error: err
+          message: 'Server Error',
         });
       });
   }

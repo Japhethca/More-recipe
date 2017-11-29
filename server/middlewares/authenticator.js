@@ -3,6 +3,12 @@ import app from '../app';
 
 
 const auth = {
+  /**
+   * @param {Object} req - HTTP Request
+   * @param {Object} res - HTTP Response
+   * @param {function} next
+   * @returns {none} does not return return a value
+   */
   authenticate(req, res, next) {
     const token = req.body.token || req.query.token || req.headers.token;
 
@@ -22,7 +28,11 @@ const auth = {
   },
 
 
-  // contoller to handle unimplemented methods
+  /**
+   * @param {Object} req - HTTP request
+   * @param {Object} res - HTTP response
+   * @returns {none} - does not return any value
+   */
   notImplemented(req, res) {
     res.status(405).json({ message: 'Method not supported!' });
   },

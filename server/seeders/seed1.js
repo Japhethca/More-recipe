@@ -4,7 +4,6 @@ const saltRound = 10;
 
 module.exports = {
   up: queryInterface => queryInterface.bulkInsert('Users', [{
-    id: 1,
     firstname: 'Ngozi',
     lastname: 'nwali',
     email: 'ngozinwali@gmail.com',
@@ -15,7 +14,6 @@ module.exports = {
     createdAt: new Date(),
     updatedAt: new Date(),
   }, {
-    id: 2,
     firstname: 'kelechi',
     lastname: 'Anyigor',
     email: 'kelechi@gmail.com',
@@ -27,7 +25,6 @@ module.exports = {
     updatedAt: new Date(),
   },
   {
-    id: 3,
     firstname: 'benjamin',
     lastname: 'Anyigor',
     email: 'ben10@gmail.com',

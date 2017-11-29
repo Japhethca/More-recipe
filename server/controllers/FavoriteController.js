@@ -13,6 +13,9 @@ const FavoriteController = {
    * @returns {object} res - http response
    */
   getUserFavorites(req, res) {
+    if (isNaN(parseInt(req.params.usersId, 10))) {
+      return res.status(400).json({ message: 'invalid Url Parameter' });
+    }
     Favorites.findAll({
       where: {
         userId: req.params.usersId
@@ -28,7 +31,7 @@ const FavoriteController = {
       } else {
         res.status(200).json({ Favorites: favorites });
       }
-    }).catch(Errors => res.status(500).json({ Errors }));
+    }).catch(() => res.status(500).json({ message: 'Request was not Processed' }));
   },
 
   /**
@@ -39,8 +42,8 @@ const FavoriteController = {
    * @returns {object} res object
    */
   setFavorites(req, res) {
-    if (req.params.recipeId < 1) {
-      return res.status(404).json({ message: 'No recipe with that id exists' });
+    if (req.params.recipeId < 1 || isNaN(parseInt(req.params.recipeId, 10))) {
+      return res.status(400).json({ message: 'Invalid recipeId in URL' });
     }
 
     return Favorites.findAll({
@@ -50,21 +53,21 @@ const FavoriteController = {
       }
     }).then((recipe) => {
       if (recipe.length > 0) {
-        return res.status(403).json({ message: 'Recipe already in favorites' });
+        return res.status(409).json({ message: 'Recipe already in favorites' });
       }
 
       Favorites.create({
         userId: req.decoded.id,
         recipeId: req.params.recipeId,
       }).then(() => {
-        res.status(200).json({ message: 'Recipe Successfully added to favorites' });
+        res.status(201).json({ message: 'Recipe Successfully added to favorites' });
       });
     })
       .catch((err) => {
         if (err.name === 'SequelizeForeignKeyConstraintError') {
           return res.status(404).json({ message: 'recipe with the provided id does not exist' });
         }
-        res.status(500).json({ message: 'Request was not be Processed', Error: err });
+        res.status(500).json({ message: 'Request was not be Processed' });
       });
   },
   /**
@@ -75,6 +78,9 @@ const FavoriteController = {
  * @returns {object} HTTP response object
  */
   removeRecipeFromFavorites(req, res) {
+    if (isNaN(parseInt(req.params.recipeId, 10))) {
+      return res.status(400).json({ message: 'invalid Url Parameter' });
+    }
     Favorites.findOne({
       where: {
         recipeId: req.params.recipeId
@@ -84,7 +90,7 @@ const FavoriteController = {
         res.status(404).json({ message: 'Recipe with this id is not in favorites' });
       } else {
         recipe.destroy();
-        res.status(200).json({ message: 'recipe successfully removed from favorites' });
+        res.status(200).json({ message: 'Recipe successfully removed from favorites' });
       }
     }).catch(errors => res.status(500).json({ errors }));
   }

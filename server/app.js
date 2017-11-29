@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import path from 'path';
-import fileupload from 'express-fileupload';
+
 import webpackConfig from '../webpack.config.dev';
 import apiRouter from './routes/api';
 
@@ -21,8 +21,6 @@ app.set('secret_key', process.env.SECRET_KEY);
 // for parsing request body content
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// file upload module
-app.use(fileupload());
 
 // static file path
 if (process.env.NODE_ENV !== 'development') {
@@ -39,6 +37,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 // more recipe api routes
 app.use('/api', apiRouter);
+
 
 if (process.env.NODE_ENV !== 'development') {
   // react app node

@@ -2,7 +2,6 @@
 
 module.exports = {
   up: queryInterface => queryInterface.bulkInsert('Recipes', [{
-    id: 1,
     name: 'Egusi Soup Recipe',
     description: 'this is an african soup',
     ingredients: 'maggi',
@@ -14,7 +13,6 @@ module.exports = {
     createdAt: new Date(),
     updatedAt: new Date(),
   }, {
-    id: 2,
     name: 'Puonded yam',
     description: 'pounded yam is great',
     ingredients: 'yam',
@@ -22,6 +20,18 @@ module.exports = {
     image: null,
     upvotes: 0,
     downvotes: 1,
+    userId: 2,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    name: 'sausage yam',
+    description: 'this is an awesome recipe',
+    ingredients: 'sausage',
+    direction: 'i have no idea how to do this',
+    image: null,
+    upvotes: 0,
+    downvotes: 0,
     userId: 2,
     createdAt: new Date(),
     updatedAt: new Date(),

@@ -9,17 +9,17 @@ const { Votes } = models,
 
 // controllers for handling voting in application
 const VotingController = {
-  // controller for handling upvotes
   /**
-   *
-   *
    * @param {object} req
    * @param {object} res
    * @returns {object} Http response
    */
   upVotes(req, res) {
     if (req.params.recipeId < 1) {
-      return res.status(403).json({ message: 'Recipe id does not exist' });
+      return res.status(404).json({ message: 'Recipe id does not exist' });
+    }
+    if (isNaN(parseInt(req.params.recipeId, 10))) {
+      return res.status(400).json({ message: 'invalid Url Parameter' });
     }
     // finds all votes that matches the given user and recipe id
     Votes.findOne({
@@ -80,8 +80,8 @@ const VotingController = {
       }
       // catch object error that occurs
     })
-      .catch((err) => {
-        res.status(400).json({ message: err.name });
+      .catch(() => {
+        res.status(500).json({ message: 'Request was not processed' });
       });
   },
 
@@ -96,6 +96,9 @@ const VotingController = {
   downVote(req, res) {
     if (req.params.recipeId < 1) {
       return res.status(403).json({ message: 'Recipe id does not exist' });
+    }
+    if (isNaN(parseInt(req.params.recipeId, 10))) {
+      return res.status(400).json({ message: 'invalid Url Parameter' });
     }
     Votes.findOne({
       where: {
@@ -152,8 +155,8 @@ const VotingController = {
           });
       }
     })
-      .catch((err) => {
-        res.status(400).json({ message: err.name });
+      .catch(() => {
+        res.status(500).json({ message: 'Request was not Processed' });
       });
   },
 };
