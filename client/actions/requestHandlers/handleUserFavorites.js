@@ -16,11 +16,17 @@ function getUserFavorites(favorites) {
  * @param {object} userId
  * @returns {promise} axios promise
  */
-export function getFavorites(userId) {
-  return dispatch => axios.get(`/api/users/${userId}/recipes`).then((res) => {
-    const favorites = res.data.Favorites.map(favorite => favorite.Recipe);
-    dispatch(getUserFavorites(favorites));
-  }).catch((err) => {});
+export function getFavorites() {
+  return dispatch => axios.get('/api/users/favorites')
+    .then((res) => {
+      const favorites = res.data.favorites.map(favorite => favorite.Recipe);
+      dispatch(getUserFavorites(favorites));
+    })
+    .catch((err) => {
+      if (err.response.data.status === 'failed') {
+        // dispatch(err.response.data.message);
+      }
+    });
 }
 /**
  * @param {object} recipe
@@ -40,7 +46,12 @@ function setUserFavorites(recipe) {
  * @returns {promise} - axios
  */
 export function setFavorites(recipe) {
-  return dispatch => axios.post(`/api/users/${recipe.id}/favorites`).then(res => dispatch(setUserFavorites(recipe)));
+  return dispatch => axios.post(`/api/users/favorites/${recipe.id}`)
+    .then((res) => {
+      if (res.data.status === 'success') {
+        dispatch(setUserFavorites(recipe));
+      }
+    });
 }
 /**
  * @param {number} recipeId
@@ -58,5 +69,10 @@ function removeFromFavorites(recipeId) {
  * @returns {promise} axios promise
  */
 export function removeFavorite(recipeId) {
-  return dispatch => axios.delete(`/api/users/${recipeId}/favorites`).then(res => dispatch(removeFromFavorites(recipeId)));
+  return dispatch => axios.delete(`/api/users/favorites/${recipeId}`)
+    .then((res) => {
+      if (res.data.status === 'success') {
+        dispatch(removeFromFavorites(recipeId));
+      }
+    });
 }

@@ -15,9 +15,6 @@ export function signinValidator(data) {
       errors
     };
   }
-  setTimeout(() => {
-    errors.email = [];
-  }, 5000);
   return {
     isValid,
     errors: validate.errors.errors
@@ -51,7 +48,7 @@ export function signUpValidator(data) {
 export function recipeFormValidator(data) {
   const formRules = {
     name: 'required',
-    ingredient: 'required',
+    ingredients: 'required',
     direction: 'required',
     description: 'required'
   };

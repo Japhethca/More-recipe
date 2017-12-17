@@ -15,7 +15,8 @@ function getUserRecipes(userRecipes) {
  * @returns {promise} axios promise
  */
 export default function () {
-  return dispatch => axios.get('/api/users/recipes').then((res) => {
-    dispatch(getUserRecipes(res.data.Recipes));
-  });
+  return dispatch => axios.get('/api/users/recipes')
+    .then((res) => {
+      dispatch(getUserRecipes(res.data.recipes));
+    });
 }

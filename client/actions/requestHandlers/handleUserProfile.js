@@ -41,22 +41,26 @@ export function handleEditUserProfile(data) {
       upload(data.photo).end((err, res) => {
         if (!err) {
           data.photo = res.body.url;
-          axios.post('/api/users/profile', data).then((res) => {
-            dispatch(editUserProfile(res.data.profile));
-            Materialize.toast('Profile Successfully updated!', 4000);
-            dispatch(isloading(false));
-          }).catch(err => Materialize.toast('Update Unsuccessful!', 4000));
+          axios.put('/api/users/profile', data)
+            .then((res) => {
+              dispatch(editUserProfile(res.data.userData));
+              Materialize.toast('Profile Successfully updated!', 4000);
+              dispatch(isloading(false));
+            })
+            .catch(() => Materialize.toast('Update Unsuccessful!', 4000));
         } else {
           Materialize.toast('Unable to load image', 4000);
         }
       });
     } else {
       dispatch(isloading(true));
-      axios.post('/api/users/profile', data).then((res) => {
-        dispatch(editUserProfile(res.data.profile));
-        Materialize.toast('Profile Successfully updated!', 4000);
-        dispatch(isloading(false));
-      }).catch(err => Materialize.toast('Update Unsuccessful!', 4000));
+      axios.put('/api/users/profile', data)
+        .then((res) => {
+          dispatch(editUserProfile(res.data.userData));
+          Materialize.toast('Profile Successfully updated!', 4000);
+          dispatch(isloading(false));
+        })
+        .catch(() => Materialize.toast('Update Unsuccessful!', 4000));
     }
   };
 }

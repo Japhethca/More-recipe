@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import NavigationBar from '../components/navigation/NavigationBar';
 import Footer from '../components/navigation/Footer';
 import RecipeDetails from '../components/recipeDetails/RecipeDetails';
 
@@ -17,7 +16,6 @@ const propTypes = {
 
 const RecipeDetailsPage = props => (
   <div>
-    <NavigationBar />
     <div className="container">
       <RecipeDetails
         history={props.history}

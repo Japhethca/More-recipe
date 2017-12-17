@@ -1,4 +1,4 @@
-import { GET_ALL_RECIPES, DELETE_USER_RECIPE, ADD_NEW_RECIPE, UPDATE_RECIPE, UPVOTE_RECIPE, DOWNVOTE_RECIPE } from '../actions/types';
+import { GET_ALL_RECIPES, ADD_NEW_REVIEW, DELETE_USER_RECIPE, ADD_NEW_RECIPE, UPDATE_RECIPE, UPVOTE_RECIPE, DOWNVOTE_RECIPE } from '../actions/types';
 
 /**
  * @param {array} list
@@ -13,9 +13,11 @@ function updateObjectArray(list, action) {
     return Object.assign({}, recipe, action.recipe);
   });
 }
+
 let index = 0;
 let item = {};
 let recipe;
+
 /**
  * @export
  * @param {array} [state=[]]
@@ -30,6 +32,11 @@ export default function recipes(state = [], action) {
       ];
 
     case UPDATE_RECIPE:
+      index = state.findIndex(rec => rec.id === action.recipe.id);
+      recipe = { index, recipe: action.recipe };
+      return updateObjectArray(state, recipe);
+
+    case ADD_NEW_REVIEW:
       index = state.findIndex(rec => rec.id === action.recipe.id);
       recipe = { index, recipe: action.recipe };
       return updateObjectArray(state, recipe);

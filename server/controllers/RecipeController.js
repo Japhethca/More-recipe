@@ -165,7 +165,6 @@ export const allRecipes = (req, res) => {
  */
 export const createRecipe = (req, res) => Recipes.findOne({ where: { name: req.body.name } })
   .then((recipe) => {
-    console.log(recipe);
     if (recipe && recipe.userId === req.decoded.id) {
       return res.status(409).json({
         status: 'failed',

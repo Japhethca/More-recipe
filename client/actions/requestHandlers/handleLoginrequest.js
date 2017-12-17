@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import setAuthorizationToken from '../../utils/setAuthorization';
+import { setAuthorizationToken } from '../../utils/setAuthorization';
 import { SET_CURRENT_USER } from '../types';
 
 /**
@@ -34,12 +34,14 @@ export function logout() {
  * @returns {promise} axios response promise
  */
 export function handleLoginRequest(userdata) {
-  return dispatch => axios.post('/api/users/signin', userdata).then((res) => {
-    const token = res.data.Token;
-    localStorage.setItem('token', token);
-    setAuthorizationToken(token);
-    dispatch(setCurrentUser(jwt.decode(token), null));
-  }).catch((error) => {
-    dispatch(setCurrentUser(null, error.response.data.message));
-  });
+  return dispatch => axios.post('/api/users/signin', userdata)
+    .then((res) => {
+      const { token } = res.data;
+      localStorage.setItem('token', token);
+      setAuthorizationToken(token);
+      dispatch(setCurrentUser(jwt.decode(token), null));
+    })
+    .catch((error) => {
+      dispatch(setCurrentUser(null, error.response.data.message));
+    });
 }

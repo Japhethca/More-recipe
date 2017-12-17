@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+
+import slugify from '../common/slugify';
 import DeleteButton from '../buttons/DeleteButton';
 import UpdateButton from '../buttons/UpdateButton';
 import ActionButtons from '../buttons/ActionButtons';
@@ -16,10 +18,7 @@ const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   handleDeleteRecipe: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.object).isRequired,
   favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setFavorites: PropTypes.func.isRequired,
-  removeFavorite: PropTypes.func.isRequired,
 };
 
 class Recipe extends Component {
@@ -27,7 +26,6 @@ class Recipe extends Component {
     super(props);
     this.state = {
       recipe: this.props.recipe,
-      reviews: this.props.reviews
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -36,26 +34,26 @@ class Recipe extends Component {
     }
   }
   render() {
-    const { recipe, reviews } = this.state;
+    const { recipe } = this.state;
     const { favorites, history } = this.props;
     return (
       <div className="row" id="recipe-card">
         <div className="card col s12">
-          <Link to={`/recipe/${recipe.id}`} className="card-image" href>
+          <Link
+            to={`/recipe/${slugify(recipe.name, '-')}-${recipe.id}`}
+            className="card-image"
+            href={`/recipe/${slugify(recipe.name, '-')}-${recipe.id}`}
+          >
             <img src={recipe.image || 'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526912/recipe-card-placeholder_ta9ikp.jpg'} alt={recipe.name} className="responsive-img recipe-image" />
             <h5 className="ellipses">{recipe.name}</h5>
           </Link>
-          <UserDetail userId={recipe.userId} />
-
+          {recipe.User && <UserDetail user={recipe.User || {}} />}
           <hr />
 
           <div className="card-title">
             <ActionButtons
               recipe={recipe}
-              reviews={reviews}
               favorites={favorites}
-              setFavorites={this.props.setFavorites}
-              removeFavorite={this.props.removeFavorite}
             />
           </div>
 
@@ -81,6 +79,4 @@ const mapStateToProps = state => ({
 export default withRouter(connect(mapStateToProps, {
   handleDeleteRecipe,
   getRecipe,
-  setFavorites,
-  removeFavorite
 })(Recipe));
