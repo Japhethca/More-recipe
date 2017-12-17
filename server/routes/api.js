@@ -8,6 +8,6 @@ const apiRouter = express.Router();
 
 apiRouter.use(auth.authenticate);
 apiRouter.use(apiV1);
-apiRouter.use('/v1', apiV1);
+apiRouter.use('/v1', auth.authenticate, apiV1);
 
 export default apiRouter;

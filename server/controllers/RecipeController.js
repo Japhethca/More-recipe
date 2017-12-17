@@ -1,224 +1,369 @@
-import validator from 'validatorjs';
 import models from '../models';
+import { checkQuery } from '../middlewares/validators';
 
-const { Recipes } = models;
-const { Users } = models;
+const { Recipes, Users, Reviews } = models;
 
+/**
+ * @param {object} req
+ * @param {object} res
+ * @param {callback} next -function
+ * @returns {object} HTTP response object
+ */
+export const sortOrOrderRecipes = (req, res, next) => {
+  if (req.query.order && req.query.sort) {
+    const validSort = ['name', 'createdAt', 'upvotes', 'downvotes'];
+    const sortOrder = req.query.order === 'descending'
+      || req.query.order === 'desc' ? 'DESC' : 'ASC';
 
-const createRules = {
-  name: 'required',
-  ingredient: 'required',
-  description: 'required',
-  direction: 'required'
-};
-
-const updateRules = {
-  name: 'required',
-  ingredient: 'required',
-  description: 'required',
-  direction: 'required'
-};
-
-
-const RecipeController = {
-  /**
-   *
-   *
-   * @param {object} req
-   * @param {object} res
-   * @param {callback} next -function
-   * @returns {object} HTTP response object
-   */
-  listUpvotes(req, res, next) {
-    if (req.query.order && req.query.sort) {
-      const validSort = ['ingredients', 'createdAt', 'updatedAt', 'id', 'name', 'direction', 'description'];
-      const order = req.query.order === 'DESC' ? 'DESC' : '';
-      if (validSort.filter(sort => req.query.sort === sort).length > 0) {
-        Recipes.findAll({
-          order: [[req.query.sort, order]]
-        }).then(recipes => res.status(200).json({ message: 'Successful', Recipes: recipes }))
-          .catch(errors => res.status(500).json({ Error: errors }));
-      }
-    }
-    next();
-  },
-
-  // controller for returning all recipe in the application
-  all(req, res) {
-    return Recipes.findAll({
-      order: [['createdAt', 'DESC']]
-    }).then((recipes) => {
-      if (recipes.length > 0) {
-        if (req.query) { return res.status(200).json({ message: 'All recipes:', List: recipes }); }
-      }
-      res.status(404).json({ message: 'No Recipes found' });
-    });
-  },
-
-
-  /**
-   *
-   *
-   * @param {object} req
-   * @param {object} res
-   * @returns {object} HTTP response
-   */
-  createRecipe(req, res) {
-    const recipeValidator = new validator(req.body, createRules);
-    if (recipeValidator.passes()) {
-      return Recipes.findOne({ where: { name: req.body.name } })
-        .then((recipe) => {
-          if (recipe) {
-            return res.status(409).json({ message: 'Recipe with this name already exists' });
+    if (checkQuery(req.query.sort, validSort)) {
+      return Recipes.findAll({
+        order: [[req.query.sort, sortOrder]],
+        include: [
+          {
+            model: Users,
+            attributes: ['username', 'photo']
+          },
+          {
+            model: Reviews,
+            limit: 1,
+            attributes: ['id', 'content', 'createdAt'],
+            include: [
+              {
+                model: Users,
+                attributes: ['username', 'photo']
+              }
+            ]
           }
-        }).then(() => Recipes.create({
-          name: req.body.name,
-          ingredients: req.body.ingredient,
-          direction: req.body.direction,
-          description: req.body.description,
-          userId: req.decoded.id,
-          image: req.body.image
-        }))
-        .then((recipe) => {
-          res.status(201).json({ message: 'Recipe successfully created', Details: recipe });
-        })
-        .catch(() => {
-          res.status(500).json({ message: 'Request was not processed' });
-        });
+        ]
+      }).then(recipes => res.status(200).json({
+        status: 'success',
+        message: 'Successfully filtered Recipes',
+        recipes
+      }))
+        .catch(() => res.status(500).json({
+          status: 'failed',
+          message: 'Server Error'
+        }));
     }
-    const errors = Object.values(recipeValidator.errors.errors).map(val => val[0]);
-    res.status(403).json({ message: errors });
-  },
+    return res.status(400).json({
+      status: 'failed',
+      message: 'Invalid request query'
+    });
+  }
+  next();
+};
 
-
-  /**
-   *
-   *
-   * @param {object} req
-   * @param {object} res
-   * @returns {object} HTTP response
-   */
-  getRecipeById(req, res) {
-    if (isNaN(parseInt(req.params.recipeId, 10))) {
-      return res.status(400).json({ message: 'invalid Url Parameter' });
-    }
-    Recipes.findOne({
-      where: {
-        id: req.params.recipeId,
-      },
-    })
-      .then((recipe) => {
-        if (!recipe) {
-          return res.status(404).json({ message: 'Recipe does not exist!' });
+export const searchRecipe = (req, res, next) => {
+  if (req.query.search) {
+    const limit = req.query.limit || 10;
+    const page = parseInt(req.query.page, 10) || 1;
+    const offset = page !== 1 ? limit * (page - 1) : null;
+    return Recipes.findAll({
+      limit,
+      offset,
+      include: [
+        {
+          model: Users,
+          attributes: ['username', 'photo']
+        },
+        {
+          model: Reviews,
+          attributes: ['id', 'content', 'createdAt'],
+          include: [
+            {
+              model: Users,
+              attributes: ['username', 'photo']
+            }
+          ]
         }
-        res.status(200).json(recipe);
+      ],
+      where: {
+        $or: [
+          {
+            name: { $iLike: `%${req.query.search}%` }
+          },
+          {
+            ingredients: { $iLike: `%${req.query.search}%` }
+          }
+        ]
+      }
+    })
+      .then((recipes) => {
+        if (recipes.length < 1) {
+          res.status(404).json({
+            status: 'failed',
+            message: 'No recipe found'
+          });
+        } else {
+          res.status(200).json({
+            status: 'success',
+            message: 'Search Result(s)',
+            recipes
+          });
+        }
+      })
+      .catch(() =>
+        res.status(500).json({
+          status: 'failed',
+          message: 'Server Error'
+        }));
+  }
+  next();
+};
+
+/**
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} request Response
+ */
+export const allRecipes = (req, res) => {
+  let limit = null;
+  if (parseInt(req.query.limit, 10)) {
+    limit = req.query.limit || null;
+  }
+  const page = parseInt(req.query.page, 10) || 1;
+  const offset = page !== 1 ? limit * (page - 1) : null;
+
+  return Recipes.findAll({
+    include: [
+      {
+        model: Users,
+        attributes: ['username', 'photo']
+      },
+      {
+        model: Reviews,
+        attributes: ['id', 'content', 'createdAt'],
+        include: [
+          {
+            model: Users,
+            attributes: ['username', 'photo']
+          }
+        ],
+      }
+    ],
+    offset,
+    limit,
+    order: [['createdAt', 'DESC']]
+  }).then((recipes) => {
+    if (recipes.length > 0) {
+      if (req.query) {
+        return res.status(200).json({
+          status: 'success',
+          message: 'All recipes:',
+          recipes
+        });
+      }
+    }
+    res.status(404).json({ message: 'No Recipes found' });
+  });
+};
+
+/**
+ * @param {object} req
+ * @param {object} res
+ * @returns {object} HTTP response
+ */
+export const createRecipe = (req, res) => Recipes.findOne({ where: { name: req.body.name } })
+  .then((recipe) => {
+    console.log(recipe);
+    if (recipe && recipe.userId === req.decoded.id) {
+      return res.status(409).json({
+        status: 'failed',
+        message: 'You have already created a recipe with this name before'
       });
+    }
+  }).then(() => Recipes.create({
+    name: req.body.name,
+    ingredients: req.body.ingredients,
+    direction: req.body.direction,
+    description: req.body.description,
+    userId: req.decoded.id,
+    image: req.body.image
+  }))
+  .then((created) => {
+    res.status(201).json({
+      status: 'success',
+      message: 'Recipe successfully created',
+      recipe: created
+    });
+  })
+  .catch(() => {
+    res.status(500).json({
+      status: 'failed',
+      message: 'Server Error'
+    });
+  });
+
+/**
+ * @param {object} req
+ * @param {object} res
+ * @returns {object} HTTP response
+ */
+export const getRecipeById = (req, res) => Recipes.findOne({
+  include: [
+    {
+      model: Users,
+      attributes: ['username', 'photo']
+    },
+    {
+      model: Reviews,
+      attributes: ['id', 'createdAt', 'content'],
+      include: [
+        {
+          model: Users,
+          attributes: ['username', 'photo']
+        }
+      ]
+    }
+  ],
+  where: {
+    id: req.params.recipeId,
   },
+})
+  .then((recipe) => {
+    if (!recipe) {
+      return res.status(404).json({
+        status: 'failed',
+        message: 'Recipe does not exist!'
+      });
+    }
+    res.status(200).json({
+      status: 'success',
+      recipe
+    });
+  });
 
   /**
-   *
-   *
    * @param {object} req
    * @param {object} res
    * @returns {object} HTTP respsonse
    */
-  updateRecipe(req, res) {
-    const validateValues = new validator(req.body, updateRules);
-    if (isNaN(parseInt(req.params.recipeId, 10))) {
-      return res.status(400).json({ message: 'Invalid Url Parameter' });
-    }
-    // all the values are valid
-    if (validateValues.passes()) {
-      return Recipes.findOne({
-        where: {
-          id: req.params.recipeId,
-        },
+export const updateRecipe = (req, res) => Recipes.findOne({
+  where: {
+    id: req.params.recipeId,
+  },
+})
+  .then((recipe) => {
+    if (!recipe) {
+      res.status(404).json({
+        status: 'failed',
+        message: 'Recipe does not exist'
+      });
+    } else if (recipe.userId === req.decoded.id) {
+      return recipe.update({
+        name: req.body.name,
+        ingredients: req.body.ingredients,
+        description: req.body.description,
+        direction: req.body.direction,
+        image: req.body.image
       })
-        .then((recipe) => {
-          if (!recipe) {
-            res.status(404).json({ message: 'Recipe does not exist' });
-          } else if (recipe.userId === req.decoded.id) {
-            return recipe.update({
-              name: req.body.name,
-              ingredients: req.body.ingredient,
-              description: req.body.description,
-              direction: req.body.direction,
-              image: req.body.image
-            })
-              .then(() => {
-                recipe.reload().then(updatedRecipe => res.status(201).json({
-                  message: 'Recipe updated Successful',
-                  updated: updatedRecipe,
-                }));
-              });
-          } else {
-            res.status(403).json({ message: 'User is not authorized to update this recipe!' });
-          }
-        })
-        .catch(() => {
-          res.status(500).json({ message: 'Request cannot be processed' });
+        .then(() => {
+          recipe.reload().then(updatedRecipe => res.status(201).json({
+            status: 'success',
+            message: 'Recipe updated Successful',
+            recipe: updatedRecipe,
+          }));
         });
+    } else {
+      res.status(403).json({
+        status: 'failed',
+        message: 'User is not authorized to update this recipe!'
+      });
     }
-    const errors = Object.values(validateValues.errors.errors).map(val => val[0]);
-    res.status(403).json({ message: errors });
-  },
+  })
+  .catch(() => {
+    res.status(500).json({
+      status: 'failed',
+      message: 'Server Error'
+    });
+  });
 
-  /**
-   *
-   *
-   * @param {object} req
-   * @param {object} res
-   * @returns {object} Http response
-   */
-  deleteRecipe(req, res) {
-    const thisRecipeId = req.params.recipeId;
-    if (isNaN(parseInt(req.params.recipeId, 10))) {
-      return res.status(400).json({ message: 'Invalid Url Parameter' });
-    }
-    if (thisRecipeId < 1) {
-      return res.status(404).json({ message: 'Recipe does not exist' });
-    }
-    return Recipes.findById(thisRecipeId).then((recipe) => {
-      if (!recipe) {
-        res.status(404).json({ message: 'Recipe does not exist' });
-      }
-      if (recipe.userId === req.decoded.id) {
-        recipe.destroy();
-        res.status(200).json({ message: 'Recipe deleted successfully' });
-      } else {
-        res.status(403).json({ message: 'User is not authorised to delete this recipe' });
-      }
-    })
-      .catch(Error => res.status(500).json({ message: 'Server Error', Error }));
-  },
-
-  /**
- *
- *
+/**
  * @param {object} req
  * @param {object} res
  * @returns {object} Http response
  */
-  getUserRecipes(req, res) {
-    return Recipes.findAll({
-      where: {
-        userId: req.decoded.id,
-      },
-      order: [['createdAt', 'DESC']]
-
-    }).then((recipes) => {
-      if (recipes.length > 0) {
-        Users.findById(req.decoded.id).then((user) => {
-          const Username = user.get('username');
-          res.status(200).json({ Username, Recipes: recipes });
-        });
-      } else {
-        res.status(404).json({ message: 'User has not created any recipe' });
-      }
-    }).catch(error => res.status(500).json({ error }));
-  },
-
+export const deleteRecipe = (req, res) => {
+  const thisRecipeId = req.params.recipeId;
+  return Recipes.findById(thisRecipeId).then((recipe) => {
+    if (!recipe) {
+      res.status(404).json({
+        status: 'failed',
+        message: 'Recipe does not exist'
+      });
+    }
+    if (recipe.userId === req.decoded.id) {
+      recipe.destroy();
+      res.status(200).json({
+        status: 'success',
+        message: 'Recipe deleted successfully'
+      });
+    } else {
+      res.status(403).json({
+        status: 'failed',
+        message: 'User is not authorised to delete this recipe'
+      });
+    }
+  })
+    .catch(() => res.status(500).json({
+      status: 'failed',
+      message: 'Server Error'
+    }));
 };
 
+/**
+ * @param {object} req
+ * @param {object} res
+ * @returns {object} Http response
+ */
+export const getUserRecipes = (req, res) => {
+  let limit = null;
+  if (parseInt(req.query.limit, 10)) {
+    limit = req.query.limit || null;
+  }
+  const page = parseInt(req.query.page, 10) || 1;
+  const offset = page !== 1 ? limit * (page - 1) : null;
 
-export default RecipeController;
+  return Recipes.findAll({
+    limit,
+    offset,
+    include: [
+      {
+        model: Reviews,
+        attributes: ['id', 'content', 'createdAt'],
+        include: [
+          {
+            model: Users,
+            attributes: ['username', 'photo']
+          }
+        ]
+      }
+    ],
+    where: {
+      userId: req.decoded.id,
+    },
+    order: [['createdAt', 'DESC']]
+
+  })
+    .then((recipes) => {
+      if (recipes.length > 0) {
+        Users.findById(req.decoded.id).then(() => {
+          res.status(200).json({
+            status: 'success',
+            message: 'Successfully loaded users recipes',
+            recipes
+          });
+        });
+      } else {
+        res.status(404).json({
+          status: 'failed',
+          message: 'User has not created any recipe'
+        });
+      }
+    })
+    .catch(() => res.status(500).json({
+      status: 'failed',
+      message: 'Server Error'
+    }));
+};
+

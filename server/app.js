@@ -1,10 +1,10 @@
 // library and controller initiazation
 import express from 'express';
-import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import path from 'path';
+import logger from 'morgan';
 
 import webpackConfig from '../webpack.config.dev';
 import apiRouter from './routes/api';
@@ -17,16 +17,16 @@ const app = express();
 // secret for json web token
 app.set('secret_key', process.env.SECRET_KEY);
 
-
 // for parsing request body content
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(logger('dev'));
 
 // static file path
 if (process.env.NODE_ENV !== 'development') {
   app.use(express.static((path.join(__dirname, '../public'))));
 }
-
 // dont run weppack dev middleware on production
 if (process.env.NODE_ENV !== 'production') {
   app.use(webpackMiddleware(webpack(webpackConfig), {
@@ -49,8 +49,12 @@ if (process.env.NODE_ENV !== 'development') {
     res.status(200).sendFile(path.join(__dirname, '../index.html'));
   });
 }
+
 app.all('*', (req, res) => {
-  res.status(404).send('404: Not Found');
+  res.status(404).json({
+    status: 'failed',
+    message: 'The requested URL or page  does not exist'
+  });
 });
 
 
