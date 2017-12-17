@@ -8,30 +8,19 @@ import './buttons.scss';
 
 const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.object).isRequired,
-  favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setFavorites: PropTypes.func.isRequired,
-  removeFavorite: PropTypes.func.isRequired
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 
 const ActionButtons = (props) => {
   const {
-    recipe, reviews, favorites, setFavorites, removeFavorite
+    recipe, favorites
   } = props;
 
   return (
     <div>
       <ul className="btn-list">
-        <li>
-          <ReviewButton
-            recipe={recipe}
-            reviews={reviews}
-            favorites={favorites}
-            setFavorites={setFavorites}
-            removeFavorite={removeFavorite}
-          />
-        </li>
+        <li><ReviewButton reviews={recipe.Reviews} /></li>
         <li><UpvoteButton recipe={recipe} /></li>
         <li><DownvoteButton recipe={recipe} /></li>
         <li><FavoritesButton recipe={recipe} favorites={favorites} /></li>

@@ -10,7 +10,7 @@ import './my_recipes_page.scss';
 const propTypes = {
   getMyRecipes: PropTypes.func.isRequired,
   handleDeleteRecipe: PropTypes.func.isRequired,
-  userRecipes: PropTypes.object.isRequired
+  userRecipes: PropTypes.objectOf(PropTypes.shape).isRequired
 };
 
 class MyRecipes extends Component {

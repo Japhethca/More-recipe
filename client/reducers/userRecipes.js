@@ -24,7 +24,7 @@ let item = {};
  * @param {object} action
  * @returns {array} new state
  */
-export default function userRecipers(state = [], action) {
+export default function userRecipes(state = [], action) {
   switch (action.type) {
     case GET_USER_RECIPES:
       state = action.userRecipes;

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import NavigationBar from '../components/navigation/NavigationBar';
 import Footer from '../components/navigation/Footer';
 import AddRecipe from '../components/myRecipe/AddRecipe';
 import MyRecipes from '../components/myRecipe/MyRecipes';
@@ -17,7 +16,6 @@ class MyRecipesPage extends Component {
   render() {
     return (
       <div>
-        <NavigationBar />
         <div className="container row ">
           <div className="my-recipes">
             <ul className="tabs">

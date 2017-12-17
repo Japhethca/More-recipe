@@ -18,3 +18,5 @@ export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
 export const UPVOTE_RECIPE = 'UPVOTE_RECIPE';
 export const DOWNVOTE_RECIPE = 'DOWNVOTE_RECIPE';
 export const IS_LOADING = 'IS_LOADING';
+export const SEARCH_RECIPE = 'SEARCH_RECIPE';
+

@@ -1,7 +1,9 @@
 import model from '../models';
 
 
-const { Favorites, Recipes, Users, Reviews } = model;
+const {
+  Favorites, Recipes, Users, Reviews
+} = model;
 
 /**
  * @param {object} req -http request object

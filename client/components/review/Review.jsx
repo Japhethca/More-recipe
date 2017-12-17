@@ -13,7 +13,7 @@ const Review = (props) => {
   return (
     <div className="my-review z-depth-3">
       <div>
-        <UserDetails userId={review.userId} />
+        <UserDetails user={review.User} />
         <span className="meta-date">{new Date(review.createdAt).toDateString()}</span>
       </div>
       <hr />

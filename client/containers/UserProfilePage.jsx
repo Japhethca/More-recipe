@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import NavigationBar from '../components/navigation/NavigationBar';
 import Footer from '../components/navigation/Footer';
 import UserProfile from '../components/profile/UserProfile';
 import ProfileEdit from '../components/profile/ProfileEdit';
@@ -20,7 +19,6 @@ class UserProfilePage extends Component {
   render() {
     return (
       <div>
-        <NavigationBar />
         <div className="container">
           <ul className="tabs">
             <li className="tab active"><a href="#profile">My Profile</a></li>

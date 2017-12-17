@@ -2,22 +2,26 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import NavigationBar from '../components/navigation/NavigationBar';
 import Recipe from '../components/recipe/Recipe';
 
 const propTypes = {
   favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
   recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired
+  results: PropTypes.arrayOf(PropTypes.object).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 class SearchResultPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchResults: []
+      searchResults: this.props.results
     };
   }
-
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.results !== this.props.results) {
+      this.setState({ searchResults: nextProps.results });
+    }
+  }
   handleSearch = (keywords) => {
     const results = this.props.recipes.filter((recipe) => {
       const keywordList = keywords.toLowerCase().split(' ');
@@ -35,8 +39,7 @@ class SearchResultPage extends Component {
 
   render() {
     const { query } = this.props.match.params;
-    const results = this.handleSearch(query);
-
+    const results = this.state.searchResults;
     const searchResults = results.map(recipe =>
       (
         <li key={recipe.id} className="col s12 m4 l4">
@@ -47,7 +50,6 @@ class SearchResultPage extends Component {
         </li>));
     return (
       <div>
-        <NavigationBar />
         <div className="container">
           <h4> { searchResults.length < 1 ? 'No' : searchResults.length } Search Result(s) for <span> "{query}"</span></h4>
           <ul className="row">
@@ -63,7 +65,8 @@ SearchResultPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   recipes: state.recipes,
-  favorites: state.favorites
+  favorites: state.favorites,
+  results: state.results
 });
 
 

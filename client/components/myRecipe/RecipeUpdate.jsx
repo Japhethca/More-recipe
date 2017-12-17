@@ -16,7 +16,7 @@ class RecipeUpdate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ingredient: this.props.recipe.ingredients,
+      ingredients: this.props.recipe.ingredients,
       name: this.props.recipe.name,
       direction: this.props.recipe.direction,
       description: this.props.recipe.description,
@@ -47,7 +47,7 @@ class RecipeUpdate extends Component {
 
   render() {
     const {
-      id, name, ingredient, description, direction, image
+      id, name, ingredients, description, direction, image
     } = this.state;
     return (
       <div className={this.props.modal} id={id}>
@@ -88,7 +88,7 @@ class RecipeUpdate extends Component {
               <textarea
                 name="ingredient"
                 onChange={this.onChange}
-                value={ingredient}
+                value={ingredients}
                 className="materialize-textarea"
               />
               <label htmlFor="ingredient" className="active" > Ingredient </label>

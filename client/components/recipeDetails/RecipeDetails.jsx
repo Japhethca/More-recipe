@@ -20,7 +20,13 @@ const propTypes = {
 };
 
 class RecipeDetails extends Component {
-  constructor(props, { match }) {
+  /**
+   * Creates an instance of RecipeDetails.
+   * @param {Object} props - props
+   * @param {Object} { match }
+   * @memberof RecipeDetails
+   */
+  constructor(props) {
     super(props);
     this.state = {
       recipe: {},
@@ -28,12 +34,13 @@ class RecipeDetails extends Component {
       reviews: [],
       hasErrored: false,
     };
+    [this.urlID] = this.props.match.params.nameId.split('-').filter(val => !isNaN(parseInt(val, 0)));
   }
 
   componentDidMount() {
-    this.props.getRecipe(this.props.match.params.id)
+    this.props.getRecipe(this.urlID)
       .then((res) => {
-        this.setState({ recipe: res.data });
+        this.setState({ recipe: res.data.recipe });
       }).catch((err) => {
         if (err.response.status === 404) {
           this.setState({ hasErrored: true });
@@ -43,9 +50,9 @@ class RecipeDetails extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.recipes !== nextProps.recipes) {
-      this.props.getRecipe(this.props.match.params.id)
+      this.props.getRecipe(this.urlID)
         .then((res) => {
-          this.setState({ recipe: res.data });
+          this.setState({ recipe: res.data.recipe });
         }).catch(err => this.setState({ hasErrored: true }));
     }
   }
@@ -57,7 +64,7 @@ class RecipeDetails extends Component {
 
   render() {
     const {
-      name, ingredients, description, direction, image, updatedAt, userId
+      name, ingredients, description, direction, image, User
     } = this.state.recipe;
     if (this.state.hasErrored) {
       return (
@@ -85,15 +92,12 @@ class RecipeDetails extends Component {
               {this.state.recipe &&
               <ActionButtons
                 recipe={this.state.recipe}
-                reviews={this.props.reviews}
                 favorites={this.props.favorites}
-                setFavorites={this.props.setFavorites}
-                removeFavorite={this.props.removeFavorite}
               />
              }
             </div>
-            <span>{userId && <UserDetail userId={userId} />} </span>
-      
+            <span>{User && <UserDetail user={User} />} </span>
+
           </div>
           <div className="col s12 m6">
             <div>
@@ -110,8 +114,8 @@ class RecipeDetails extends Component {
             </div>
           </div>
         </div>
-        <hr className="h-line"/>
-        <Reviews recipe={this.state.recipe} reviews={this.props.reviews} />
+        <hr className="h-line" />
+        <Reviews recipe={this.state.recipe} />
       </div>
     );
   }
