@@ -1,4 +1,7 @@
+import _ from 'lodash';
+import bcrypt from 'bcrypt';
 
+const saltRound = 10;
 /**
  * @param {object} sequelize - sequelize instance
  * @param {object} DataTypes - Datatype instance
@@ -8,19 +11,27 @@ module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define('Users', {
     firstname: {
       type: DataTypes.STRING,
-      allowNull: false,
+      set(value) {
+        this.setDataValue('firstname', _.capitalize(value));
+      }
     },
     lastname: {
       type: DataTypes.STRING,
-      allowNull: false,
+      set(value) {
+        this.setDataValue('lastname', _.capitalize(value));
+      }
     },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      set(value) {
+        this.setDataValue('password', bcrypt.hashSync(value, saltRound));
+      }
     },
     aboutme: {
       type: DataTypes.STRING,
@@ -28,7 +39,11 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      isEmail: true
+      isEmail: true,
+      unique: true,
+      set(value) {
+        this.setDataValue('email', value.toLowerCase());
+      }
     },
     photo: {
       type: DataTypes.STRING,

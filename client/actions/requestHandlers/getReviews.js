@@ -10,6 +10,7 @@ function getRecipeReview(reviews) {
     reviews
   };
 }
-export default () => dispatch => axios.get('/api/reviews').then((res) => {
-  dispatch(getRecipeReview(res.data));
-});
+export default () => dispatch => axios.get('/api/recipes/reviews')
+  .then((res) => {
+    dispatch(getRecipeReview(res.data.reviews));
+  });

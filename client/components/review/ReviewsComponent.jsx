@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+
 import Review from './Review';
 import AddReview from './AddReview';
 import './reviewBox.scss';
@@ -8,12 +8,11 @@ import './reviewBox.scss';
 
 const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 const Reviews = (props) => {
   const { recipe } = props;
-  const reviews = props.reviews.filter(review => recipe.id === review.recipeId);
+  const reviews = props.recipe.Reviews || [];
   return (
     <div className="reviews-page" >
       <h4 >Reviews</h4>
@@ -33,8 +32,5 @@ const Reviews = (props) => {
 
 Reviews.propTypes = propTypes;
 
-const mapStateToProps = state => ({
-  reviews: state.reviews
-});
 
-export default connect(mapStateToProps, { })(Reviews);
+export default Reviews;

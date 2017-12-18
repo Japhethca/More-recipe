@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 import { signinValidator } from '../../utils/validators';
+import TextField from '../common/TextField';
 import './login_form.scss';
 
 
@@ -65,18 +66,20 @@ class LoginForm extends Component {
           <form className="" onSubmit={this.onSubmit}>
             <div className="row" >
               <div className="input-field col s12 m12">
-                <i className="material-icons prefix">person</i>
-                <input
-                  type="text"
+                <TextField
+                  iconClassName="material-icons prefix"
+                  iconName="person"
+                  value={this.state.email}
                   onChange={this.onChange}
                   name="email"
                   placeholder="Email Address"
+                  labelClassName="active"
+                  label="Email"
+                  errorClass="error-text"
+                  errorText={validationErrors.email}
                 />
-                <label htmlFor="email" className="active" > Email</label>
-                {validationErrors.email && <span className="error-text"> { validationErrors.email[0] }</span>}
               </div>
             </div>
-
             <div className="row">
               <div className="input-field col s12 m12" >
                 <i className="material-icons prefix">lock</i>
@@ -87,7 +90,7 @@ class LoginForm extends Component {
                   placeholder="Enter Your Password"
                   className="validate"
                 />
-                <label htmlFor="password" className="active "> Password</label>
+                <label htmlFor="password" className="active"> Password</label>
                 {validationErrors.password && <span className="error-text"> { validationErrors.password[0]}</span>}
               </div>
             </div>
@@ -99,7 +102,7 @@ class LoginForm extends Component {
               </div>
             </div>
             <div className="sign-up-link">
-              <span> Have an Account? <Link to="/signup" href=" "> Sign Up Here </Link></span>
+              <span> Have an Account? <Link to="/signup" href="/signup"> Sign Up Here </Link></span>
             </div>
           </form>
         </div>

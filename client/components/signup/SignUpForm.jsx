@@ -34,7 +34,7 @@ class SignUpForm extends Component {
     if (this.isValid()) {
       this.props.handleSignUpRequest(this.state).then(
         (res) => {
-          if (res.data.message) {
+          if (res.data.status === 'success') {
             this.setState({ hasSignedUp: true });
           }
         },

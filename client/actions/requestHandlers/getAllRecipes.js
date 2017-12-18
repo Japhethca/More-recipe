@@ -18,7 +18,8 @@ function getRecipes(recipes) {
  * @returns {Object} - returns an axios promise
  */
 export default function () {
-  return dispatch => axios.get('/api/recipes').then((res) => {
-    dispatch(getRecipes(res.data.List));
-  });
+  return dispatch => axios.get('/api/recipes?limit=6')
+    .then((res) => {
+      dispatch(getRecipes(res.data.recipes));
+    });
 }

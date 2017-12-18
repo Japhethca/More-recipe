@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import handleSearch from '../../actions/requestHandlers/handleSearch';
 import './search.scss';
 
 
 const propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleSearch: PropTypes.func.isRequired,
 };
 
 class SearchForm extends Component {
@@ -21,6 +25,7 @@ class SearchForm extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
+    this.props.handleSearch(this.state.query);
     this.props.history.push(`/search/${this.state.query}`);
   }
 
@@ -51,4 +56,4 @@ class SearchForm extends Component {
 
 SearchForm.propTypes = propTypes;
 
-export default SearchForm;
+export default connect(null, { handleSearch })(SearchForm);

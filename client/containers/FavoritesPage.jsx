@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Favorites from '../components/favorites/Favorites';
-import NavigationBar from '../components/navigation/NavigationBar';
 
 
 const propTypes = {
@@ -16,7 +15,6 @@ const FavoritesPage = (props) => {
   const hasFavorites = favorites.length > 0;
   return (
     <div >
-      <NavigationBar />
       <div className="container">
         <h3 className="center">Favorite Recipes</h3>
         {hasFavorites ? <Favorites user={user} favorites={favorites} recipes={recipes} /> : (

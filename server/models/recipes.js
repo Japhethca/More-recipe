@@ -1,4 +1,4 @@
-
+import _ from 'lodash';
 /**
  * @param {object} sequelize - sequelize instance
  * @param {object} DataTypes - Datatype instance
@@ -9,10 +9,19 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.TEXT,
       allowNull: false,
+      set(value) {
+        this.setDataValue('name', _.capitalize(value));
+      },
+      get() {
+        return _.capitalize(this.getDataValue('name'));
+      }
     },
     description: {
       type: DataTypes.TEXT,
       allowNull: false,
+      get() {
+        return _.capitalize(this.getDataValue('description'));
+      }
     },
     ingredients: {
       type: DataTypes.TEXT,

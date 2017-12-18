@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 import app from '../app';
 
 
@@ -17,24 +18,32 @@ const auth = {
     } else if (token) {
       jwt.verify(token, app.get('secret_key'), (err, decoded) => {
         if (err) {
-          return res.status(401).json({ message: 'Authentication failed!' });
+          return res.status(401).json({
+            status: 'failed',
+            message: 'Authentication failed: expired token'
+          });
         }
         req.decoded = decoded;
         next();
       });
     } else {
-      res.status(403).json({ message: 'failed! No token. Sign in to get one.' });
+      res.status(403).json({
+        status: 'failed',
+        message: 'failed! No token. Sign in to get one.'
+      });
     }
   },
-
 
   /**
    * @param {Object} req - HTTP request
    * @param {Object} res - HTTP response
-   * @returns {none} - does not return any value
+   * @returns {Object} - Response
    */
   notImplemented(req, res) {
-    res.status(405).json({ message: 'Method not supported!' });
+    return res.status(405).json({
+      status: 'failed',
+      message: 'Unsupported Request Method'
+    });
   },
 };
 

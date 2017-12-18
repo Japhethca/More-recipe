@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import LoadingIndicator from '../common/LoadingIndicator';
 import { recipeFormValidator } from '../../utils/validators';
 import handleCreateRecipe from '../../actions/requestHandlers/handleCreateRecipe';
@@ -15,20 +16,16 @@ class AddRecipe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      description: '',
-      ingredient: '',
-      direction: '',
-      image: '',
+      recipeData: {},
       validationErrors: ''
     };
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.recipeValues = {};
   }
-  
-  onChange(event) {
+
+  onChange = (event) => {
     if (event.target.name === 'image') {
-      this.setState({ image: event.target.files[0] });
+      [this.recipeValues[event.target.name]] = event.target.files;
+      this.setState({ recipeData: this.recipeValues });
       const reader = new FileReader();
       reader.onload = () => {
         const output = document.getElementById('img1');
@@ -36,17 +33,20 @@ class AddRecipe extends Component {
       };
       reader.readAsDataURL(event.target.files[0]);
     } else {
-      this.setState({ [event.target.name]: event.target.value });
+      this.recipeValues[event.target.name] = event.target.value;
+      this.setState({ recipeData: this.recipeValues });
     }
   }
-  onSubmit(event) {
+
+  onSubmit = (event) => {
     event.preventDefault();
     if (this.isValid()) {
-      this.props.handleCreateRecipe(this.state);
+      this.props.handleCreateRecipe(this.state.recipeData);
     }
   }
+
   isValid() {
-    const { errors, isValid } = recipeFormValidator(this.state);
+    const { errors, isValid } = recipeFormValidator(this.state.recipeData);
     if (!isValid) {
       this.setState({ validationErrors: errors });
     }
@@ -90,13 +90,13 @@ class AddRecipe extends Component {
             </div>
             <div className="input-field active" >
               <textarea
-                name="ingredient"
+                name="ingredients"
                 onChange={this.onChange}
                 className="materialize-textarea"
                 placeholder="Add list of ingredients  separated by comma (,)"
               />
-              <label htmlFor="ingredient" > Ingredient </label>
-              {validationErrors.ingredient && <span className="error-text"> { validationErrors.ingredient[0] }</span>}
+              <label htmlFor="ingredients" > Ingredient </label>
+              {validationErrors.ingredients && <span className="error-text"> { validationErrors.ingredients[0] }</span>}
             </div>
 
             <div className="file-field input-field">
