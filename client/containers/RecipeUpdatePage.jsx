@@ -19,7 +19,7 @@ const RecipeUpdatePage = props => (
         handleRecipeUpdate={props.handleRecipeUpdate}
       />
     </div>
-    <Footer />
+    {/* <Footer /> */}
   </div>
 );
 

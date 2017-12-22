@@ -15,8 +15,7 @@ const FavoritesPage = (props) => {
   const hasFavorites = favorites.length > 0;
   return (
     <div >
-      <div className="container">
-        <h3 className="center">Favorite Recipes</h3>
+      <div >
         {hasFavorites ? <Favorites user={user} favorites={favorites} recipes={recipes} /> : (
           <div className="center">
             <h4>Sorry, you have not added any favorite yet!</h4>

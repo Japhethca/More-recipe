@@ -1,40 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Footer from '../components/navigation/Footer';
+
+import getRecipe from '../actions/requestHandlers/getRecipe';
 import RecipeDetails from '../components/recipeDetails/RecipeDetails';
 
 
 const propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.object).isRequired,
-  recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
   favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  getRecipe: PropTypes.func.isRequired,
 };
 
+
 const RecipeDetailsPage = props => (
-  <div>
-    <div className="container">
-      <RecipeDetails
-        history={props.history}
-        match={props.match}
-        favorites={props.favorites}
-        reviews={props.reviews}
-        recipes={props.recipes}
-      />
-    </div>
-    <Footer />
+  <div className="container">
+    <RecipeDetails
+      match={props.match}
+      recipe={props.recipe}
+      favorites={props.favorites}
+      getRecipe={props.getRecipe}
+    />
   </div>
 );
+
 RecipeDetailsPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   favorites: state.favorites,
   reviews: state.reviews,
-  recipes: state.recipes,
+  recipe: state.recipe
 });
 
 
-export default withRouter(connect(mapStateToProps, {})(RecipeDetailsPage));
+export default connect(mapStateToProps, { getRecipe })(RecipeDetailsPage);

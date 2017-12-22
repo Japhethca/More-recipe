@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { toastr } from 'react-redux-toastr';
+
+
 import upload from './handleFileUpload';
 import { EDIT_USER_PROFILE, GET_USER_PROFILE } from '../types';
 import isloading from './isLoading';
@@ -42,25 +45,25 @@ export function handleEditUserProfile(data) {
         if (!err) {
           data.photo = res.body.url;
           axios.put('/api/users/profile', data)
-            .then((res) => {
-              dispatch(editUserProfile(res.data.userData));
-              Materialize.toast('Profile Successfully updated!', 4000);
+            .then((response) => {
+              dispatch(editUserProfile(response.data.userData));
+              toastr.success(response.data.message);
               dispatch(isloading(false));
             })
-            .catch(() => Materialize.toast('Update Unsuccessful!', 4000));
+            .catch(error => toastr.error(error.response.data.message));
         } else {
-          Materialize.toast('Unable to load image', 4000);
+          toastr.error('Failed to load image');
         }
       });
     } else {
       dispatch(isloading(true));
       axios.put('/api/users/profile', data)
-        .then((res) => {
-          dispatch(editUserProfile(res.data.userData));
-          Materialize.toast('Profile Successfully updated!', 4000);
+        .then((response) => {
+          dispatch(editUserProfile(response.data.userData));
+          toastr.success(response.data.message);
           dispatch(isloading(false));
         })
-        .catch(() => Materialize.toast('Update Unsuccessful!', 4000));
+        .catch(error => toastr.error(error.response.data.message));
     }
   };
 }

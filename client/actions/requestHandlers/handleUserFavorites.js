@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { GET_USER_FAVORITES, ADD_TO_FAVORITES, REMOVED_FROM_FAVORITES } from '../types';
+import { toastr } from 'react-redux-toastr';
+
+import { GET_USER_FAVORITES, ADD_TO_FAVORITES, REMOVED_FROM_FAVORITES, RECIPES_COUNT } from '../types';
 
 /**
  * @param {array} favorites
@@ -11,6 +13,13 @@ function getUserFavorites(favorites) {
     favorites
   };
 }
+const getRecipeCount = (count, page) => ({
+  type: RECIPES_COUNT,
+  count,
+  page
+});
+
+
 /**
  * @export
  * @param {object} userId
@@ -21,11 +30,7 @@ export function getFavorites() {
     .then((res) => {
       const favorites = res.data.favorites.map(favorite => favorite.Recipe);
       dispatch(getUserFavorites(favorites));
-    })
-    .catch((err) => {
-      if (err.response.data.status === 'failed') {
-        // dispatch(err.response.data.message);
-      }
+      dispatch(getRecipeCount(res.data.count));
     });
 }
 /**
@@ -47,9 +52,10 @@ function setUserFavorites(recipe) {
  */
 export function setFavorites(recipe) {
   return dispatch => axios.post(`/api/users/favorites/${recipe.id}`)
-    .then((res) => {
-      if (res.data.status === 'success') {
+    .then((response) => {
+      if (response.data.status === 'success') {
         dispatch(setUserFavorites(recipe));
+        toastr.success(response.data.message);
       }
     });
 }
@@ -70,9 +76,10 @@ function removeFromFavorites(recipeId) {
  */
 export function removeFavorite(recipeId) {
   return dispatch => axios.delete(`/api/users/favorites/${recipeId}`)
-    .then((res) => {
-      if (res.data.status === 'success') {
+    .then((response) => {
+      if (response.data.status === 'success') {
         dispatch(removeFromFavorites(recipeId));
+        toastr.info(response.data.message);
       }
     });
 }

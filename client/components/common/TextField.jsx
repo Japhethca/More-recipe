@@ -6,7 +6,7 @@ const TextField = props => (
   <div>
     {props.iconClassName && <i className={props.iconClassName}>{props.iconName}</i>}
     <input
-      type="text"
+      type={props.type}
       name={props.name}
       value={props.value}
       onChange={event => props.onChange(event)}
@@ -26,6 +26,7 @@ TextField.defaultProps = {
   label: '',
   errorText: '',
   iconName: '',
+  type: 'text',
   errorclass: 'errorclass',
   placeholder: '',
   labelClass: ''
@@ -38,6 +39,7 @@ TextField.propTypes = {
   className: PropTypes.string,
   iconClassName: PropTypes.string,
   label: PropTypes.string,
+  type: PropTypes.string,
   errorText: PropTypes.string,
   iconName: PropTypes.string,
   errorclass: PropTypes.string,

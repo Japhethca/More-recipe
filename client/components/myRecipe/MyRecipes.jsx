@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import qs from 'qs';
+
 import Recipe from '../recipe/Recipe';
-import handleDeleteRecipe from '../../actions/requestHandlers/handleDeleteRecipe';
-import getMyRecipes from '../../actions/requestHandlers/getMyRecipes';
+import Pagination from '../common/Pagination';
 import './my_recipes_page.scss';
 
 
 const propTypes = {
   getMyRecipes: PropTypes.func.isRequired,
   handleDeleteRecipe: PropTypes.func.isRequired,
-  userRecipes: PropTypes.objectOf(PropTypes.shape).isRequired
+  userRecipes: PropTypes.objectOf(PropTypes.shape).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 class MyRecipes extends Component {
@@ -18,18 +20,22 @@ class MyRecipes extends Component {
     super(props);
     this.state = {
       hasErrored: false,
+      query: this.props.history.location.search,
       myRecipes: this.props.userRecipes || []
     };
   }
 
   componentDidMount() {
-    this.props.getMyRecipes();
+    const { page } = qs.parse(this.state.query, { ignoreQueryPrefix: true });
+    this.props.getMyRecipes(parseInt(page, 10));
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.userRecipes.userRecipes !== this.props.userRecipes.userRecipes) {
       this.setState({ myRecipes: nextProps.userRecipes });
     }
   }
+
   render() {
     const { userRecipes } = this.state.myRecipes;
     if (this.state.hasErrored) {
@@ -54,6 +60,7 @@ class MyRecipes extends Component {
               </li>))
           }
         </ul>
+        <Pagination baseURL="/myrecipes" />
       </div>
     );
   }
@@ -61,9 +68,4 @@ class MyRecipes extends Component {
 
 MyRecipes.propTypes = propTypes;
 
-const mapStateToProps = state => ({
-  userRecipes: state,
-  favorites: state.favorites
-});
-
-export default connect(mapStateToProps, { getMyRecipes, handleDeleteRecipe })(MyRecipes);
+export default MyRecipes;

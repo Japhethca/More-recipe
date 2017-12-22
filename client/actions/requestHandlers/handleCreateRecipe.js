@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { toastr } from 'react-redux-toastr';
+
 import upload from './handleFileUpload';
 import isLoading from './isLoading';
 import { ADD_NEW_RECIPE } from '../types';
@@ -28,12 +30,12 @@ export default function handleCreateRecipe(data) {
           data.image = res.body.url;
           axios.post('/api/recipes', data)
             .then((res) => {
-              Materialize.toast('<span class="green">Recipe Successfully Created!</span>', 5000);
+              toastr.success(res.data.message);
               dispatch(addNewRecipe(res.data.recipe));
               dispatch(isLoading(false));
-            }).catch(() => Materialize.toast('Recipe was not created!', 5000));
+            }).catch(() => toastr.error('Unable to process request at this time'));
         } else {
-          Materialize.toast('Unable to load image', 5000);
+          toastr.error('Failed to download image');
         }
       });
     } else {
@@ -41,8 +43,8 @@ export default function handleCreateRecipe(data) {
       axios.post('/api/recipes', data)
         .then((res) => {
           dispatch(addNewRecipe(res.data.recipe));
-          Materialize.toast('Recipe Successfully Created!', 5000);
-        }).catch(() => Materialize.toast('Recipe was not created!', 5000));
+          toastr.success(res.data.message);
+        }).catch(error => toastr.error(error.response.data.message));
       dispatch(isLoading(false));
     }
   };

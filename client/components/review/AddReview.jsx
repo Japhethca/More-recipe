@@ -22,7 +22,7 @@ class AddReview extends Component {
   onSubmit = (event) => {
     event.preventDefault();
     this.props.handleRecipeReview(this.props.recipe.id, this.state);
-    this.reviewForm.reset();
+    this.setState({ content: '' });
   }
 
   render() {
@@ -32,7 +32,14 @@ class AddReview extends Component {
           <form onSubmit={this.onSubmit} ref={node => this.reviewForm = node}>
             <div className="input-field" >
               <i className="material-icons prefix">mode_edit</i>
-              <textarea type="text" name="content" onChange={this.onChange} id="reviewText" className="materialize-textarea" />
+              <textarea
+                type="text"
+                name="content"
+                onChange={this.onChange}
+                id="reviewText"
+                value={this.state.content}
+                className="materialize-textarea"
+              />
               <label htmlFor="reviewText">Write a Review</label>
             </div>
             <div className="input-field">

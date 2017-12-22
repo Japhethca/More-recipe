@@ -1,9 +1,11 @@
-$nav-background-color: rgba(78, 31, 31, 0.877);
+$nav-background-color: #794023;
+// #AB6F50;
+// rgba(78, 31, 31, 0.877);
 $btn-backround-color: rgba(78, 31, 31, 0.877);
 $btn-color: #fff;
 $btn-hover: 946463;
   .nav-menu {
-    height: 90px;
+    height: 50px;
     background-color: $nav-background-color;
 
     .search-icon {
@@ -22,14 +24,17 @@ $btn-hover: 946463;
         }
       }
     }
-
-    .my-btn {
+    
+    .nav-btn {
       background-color: inherit;
       box-shadow: none;
-      padding-left: 10px;
-      padding-right: 10px;
       color: $btn-color;
+      border: none;
       background-color: $btn-backround-color;
+      margin-left: 10px;
+      width: 100px;
+      text-align: center;
+      border-radius: 15px;
       &:hover{
         background-color: $btn-hover;
       }
@@ -38,7 +43,8 @@ $btn-hover: 946463;
 
 
 nav.nav-extended{
-  height: 90px;
+  height: 70px;
+  padding-left: 10px;
   .button-collapse{
     padding-top: 15px;
   }

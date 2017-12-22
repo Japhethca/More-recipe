@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+import TextField from '../common/TextField';
 import { signUpValidator } from '../../utils/validators';
 import './signup_form.scss';
 
 
 const propTypes = {
   handleSignUpRequest: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  auth: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 class SignUpForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: '',
-      lastname: '',
       username: '',
       email: '',
       password: '',
       verifyPassword: '',
       serverErrors: '',
       validationErrors: '',
-      hasSignedUp: false,
     };
   }
   onChange = (event) => {
@@ -32,16 +33,7 @@ class SignUpForm extends Component {
   onSubmit = (event) => {
     event.preventDefault();
     if (this.isValid()) {
-      this.props.handleSignUpRequest(this.state).then(
-        (res) => {
-          if (res.data.status === 'success') {
-            this.setState({ hasSignedUp: true });
-          }
-        },
-        (error) => {
-          this.setState({ serverErrors: error.response.data.message });
-        }
-      );
+      this.props.handleSignUpRequest(this.state);
     }
   }
 
@@ -55,9 +47,9 @@ class SignUpForm extends Component {
 
   render() {
     const { validationErrors } = this.state;
-    const { hasSignedUp } = this.state;
-    if (hasSignedUp) {
-      return <Redirect to="/signin" />;
+
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/');
     }
     return (
       <div className="row signup-form">
@@ -70,75 +62,55 @@ class SignUpForm extends Component {
           </div>
           <form className="" onSubmit={this.onSubmit}>
             <div className="input-field col s12">
-              <i className="material-icons prefix">account_circle</i>
-              <input
-                type="text"
-                onChange={this.onChange}
-                name="firstname"
-                className="input-field"
-              />
-              <label htmlFor="firstname"> Firstname </label>
-              {validationErrors.firstname && <span className="errorclass">{validationErrors.firstname[0]}</span>}
-            </div>
-
-            <div className="input-field col s12">
-              <i className="material-icons prefix">account_circle</i>
-              <input
-                type="text"
-                onChange={this.onChange}
-                name="lastname"
-                className="input-field"
-              />
-              <label htmlFor="lastname"> Lastname </label>
-              {validationErrors.lastname && <span className="errorclass">{validationErrors.lastname[0]}</span>}
-            </div>
-            <div className="input-field col s12">
-              <i className="material-icons prefix">person_outline</i>
-              <input
-                type="text"
+              <TextField
+                iconClassName="material-icons prefix"
+                iconName="person_outline"
+                value={this.state.username}
                 onChange={this.onChange}
                 name="username"
-                className="input-field"
+                label="Username"
+                errorClass="errorclass"
+                errorText={validationErrors.username}
               />
-              <label htmlFor="username"> Username </label>
-              {validationErrors.username && <span className="errorclass">{validationErrors.username[0]}</span>}
             </div>
             <div className="input-field col s12">
-              <i className="material-icons prefix">mail</i>
-              <input
-                type="email"
+              <TextField
+                iconClassName="material-icons prefix"
+                iconName="mail"
+                value={this.state.email}
                 onChange={this.onChange}
                 name="email"
-                className="input-field"
+                label="Email"
+                errorClass="errorclass"
+                errorText={validationErrors.email}
               />
-              <label htmlFor="email"> Email </label>
-              {validationErrors.email && <span className="errorclass">{validationErrors.email[0]}</span>}
             </div>
-
             <div className="input-field col s12">
-              <i className="material-icons prefix">lock</i>
-              <input
-                type="password"
+              <TextField
+                iconClassName="material-icons prefix"
+                iconName="lock"
+                value={this.state.password}
                 onChange={this.onChange}
                 name="password"
-                className="input-field"
+                type="password"
+                label="Password"
+                errorClass="errorclass"
+                errorText={validationErrors.password}
               />
-              <label htmlFor="password"> Password </label>
-              {validationErrors.password && <span className="errorclass">{validationErrors.password[0]}</span>}
             </div>
             <div className="input-field col s12">
-              <i className="material-icons prefix">lock</i>
-              <input
-                type="password"
+              <TextField
+                iconClassName="material-icons prefix"
+                iconName="lock"
+                value={this.state.verifyPassword}
                 onChange={this.onChange}
                 name="verifyPassword"
-                className="input-field"
+                label="Confirm Password"
+                errorClass="errorclass"
+                type="password"
+                errorText={validationErrors.verifyPassword}
               />
-              <label htmlFor="verifyPassword"> VerifyPassword </label>
-              {validationErrors.verifyPassword && <span className="errorclass">{validationErrors.verifyPassword[0]}</span>}
             </div>
-
-
             <div className="input-field col s12">
               <button className="btn-large sign-up-btn" type="submit">
                 Register

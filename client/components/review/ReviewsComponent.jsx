@@ -13,6 +13,7 @@ const propTypes = {
 const Reviews = (props) => {
   const { recipe } = props;
   const reviews = props.recipe.Reviews || [];
+
   return (
     <div className="reviews-page" >
       <h4 >Reviews</h4>

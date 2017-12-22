@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import LoadingIndicator from '../common/LoadingIndicator';
 import './recipe_update_form.scss';
 
 
@@ -101,7 +100,6 @@ class RecipeUpdate extends Component {
               <div className="file-path-wrapper">
                 <img id="img1" src={image} height={70} className="right" alt=" " />
               </div>
-              <LoadingIndicator />
             </div>
             <div>
               <button className="btn-large submit-btn" type="submit"> Update </button>

@@ -15,7 +15,7 @@ function updateObjectArray(array, action) {
     if (index !== action.index) {
       return recipe;
     }
-    return Object.assign({}, recipe, action.recipe);
+    return { ...recipe, ...action.recipe };
   });
 }
 
