@@ -5,14 +5,13 @@ import { GET_ALL_RECIPES, ADD_NEW_REVIEW, DELETE_USER_RECIPE, ADD_NEW_RECIPE, UP
  * @param {object} action
  * @returns {object} update recipe
  */
-function updateObjectArray(list, action) {
-  return list.map((recipe, index) => {
-    if (index !== action.index) {
-      return recipe;
-    }
-    return Object.assign({}, recipe, action.recipe);
-  });
-}
+const updateObjectArray = (list, action) => list.map((recipe, index) => {
+  if (index !== action.index) {
+    return recipe;
+  }
+  return { ...recipe, ...action.recipe };
+});
+
 
 let index = 0;
 let item = {};
@@ -32,11 +31,6 @@ export default function recipes(state = [], action) {
       ];
 
     case UPDATE_RECIPE:
-      index = state.findIndex(rec => rec.id === action.recipe.id);
-      recipe = { index, recipe: action.recipe };
-      return updateObjectArray(state, recipe);
-      
-    case ADD_NEW_REVIEW:
       index = state.findIndex(rec => rec.id === action.recipe.id);
       recipe = { index, recipe: action.recipe };
       return updateObjectArray(state, recipe);

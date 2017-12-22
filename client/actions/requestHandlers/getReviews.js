@@ -1,16 +1,16 @@
 import axios from 'axios';
-import { GET_RECIPE_REVIEW } from '../types';
+import { GET_SINGLE_RECIPE_REVIEWS } from '../types';
 /**
  * @param {array} reviews
  * @returns {object} action object
  */
-function getRecipeReview(reviews) {
-  return {
-    type: GET_RECIPE_REVIEW,
-    reviews
-  };
-}
-export default () => dispatch => axios.get('/api/recipes/reviews')
+
+const getRecipeReview = reviews => ({
+  type: GET_SINGLE_RECIPE_REVIEWS,
+  reviews
+});
+
+export default id => dispatch => axios.get(`/api/recipes/${id}/reviews`)
   .then((res) => {
     dispatch(getRecipeReview(res.data.reviews));
   });

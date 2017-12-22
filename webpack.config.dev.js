@@ -34,7 +34,7 @@ module.exports = {
         exclude: /node_modules/,
         query: {
           presets: ['es2015', 'react'],
-          plugins: ['transform-class-properties']
+          plugins: ['transform-class-properties', 'transform-object-rest-spread']
         }
       },
       { test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },

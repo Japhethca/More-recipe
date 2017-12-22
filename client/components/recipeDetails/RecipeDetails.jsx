@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import lodash from 'lodash';
-import getRecipe from '../../actions/requestHandlers/getRecipe';
+
 import './recipe_details.scss';
 import Reviews from '../review/ReviewsComponent';
 import ActionButtons from '../buttons/ActionButtons';
 import UserDetail from '../user/UserDetail';
-import { setFavorites, removeFavorite } from '../../actions/requestHandlers/handleUserFavorites';
 
 const propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.object).isRequired,
   favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setFavorites: PropTypes.func.isRequired,
-  removeFavorite: PropTypes.func.isRequired,
   getRecipe: PropTypes.func.isRequired,
-  recipes: PropTypes.arrayOf(PropTypes.object).isRequired
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 class RecipeDetails extends Component {
@@ -29,31 +24,18 @@ class RecipeDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipe: {},
-      favorites: [],
-      reviews: [],
-      hasErrored: false,
+      recipe: this.props.recipe,
     };
-    [this.urlID] = this.props.match.params.nameId.split('-').filter(val => !isNaN(parseInt(val, 0)));
+    [this.id] = this.props.match.params.nameId.split('-').filter(val => lodash.isNaN(parseInt(val, 0)));
   }
 
   componentDidMount() {
-    this.props.getRecipe(this.urlID)
-      .then((res) => {
-        this.setState({ recipe: res.data.recipe });
-      }).catch((err) => {
-        if (err.response.status === 404) {
-          this.setState({ hasErrored: true });
-        }
-      });
+    this.props.getRecipe(this.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.recipes !== nextProps.recipes) {
-      this.props.getRecipe(this.urlID)
-        .then((res) => {
-          this.setState({ recipe: res.data.recipe });
-        }).catch(err => this.setState({ hasErrored: true }));
+    if (this.props.recipe !== nextProps.recipe) {
+      this.setState({ recipe: nextProps.recipe });
     }
   }
 
@@ -64,16 +46,8 @@ class RecipeDetails extends Component {
 
   render() {
     const {
-      name, ingredients, description, direction, image, User
+      name, ingredients, description, direction, image, author
     } = this.state.recipe;
-    if (this.state.hasErrored) {
-      return (
-        <div className="recipe-not-found">
-          <h4>404: RECIPE DOES NOT EXIST</h4>
-          <p>Sorry, It seems like the recipe you are looking for does not exist.</p>
-        </div>
-      );
-    }
     return (
       <div className="recipe-details">
         <div >
@@ -96,7 +70,7 @@ class RecipeDetails extends Component {
               />
              }
             </div>
-            <span>{User && <UserDetail user={User} />} </span>
+            <span>{author && <UserDetail user={author} />} </span>
 
           </div>
           <div className="col s12 m6">
@@ -115,7 +89,9 @@ class RecipeDetails extends Component {
           </div>
         </div>
         <hr className="h-line" />
-        <Reviews recipe={this.state.recipe} />
+        <Reviews
+          recipe={this.state.recipe}
+        />
       </div>
     );
   }
@@ -124,4 +100,4 @@ class RecipeDetails extends Component {
 RecipeDetails.propTypes = propTypes;
 
 
-export default connect(null, { getRecipe, setFavorites, removeFavorite })(RecipeDetails);
+export default RecipeDetails;

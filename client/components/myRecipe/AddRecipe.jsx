@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import LoadingIndicator from '../common/LoadingIndicator';
+
 import { recipeFormValidator } from '../../utils/validators';
 import handleCreateRecipe from '../../actions/requestHandlers/handleCreateRecipe';
 import './add_new_recipe.scss';
@@ -56,10 +56,9 @@ class AddRecipe extends Component {
   render() {
     const { validationErrors } = this.state;
     return (
-      <div>
-        <div className="card">
+      <div className="wrapper row">
+        <div className="card col s12">
           <form onSubmit={this.onSubmit} ref={node => this.addRecipeForm = node}>
-            <h4>New Recipe </h4>
             <div className="input-field" >
               <input
                 name="name"
@@ -70,44 +69,43 @@ class AddRecipe extends Component {
               {validationErrors.name && <span className="error-text"> { validationErrors.name[0] }</span>}
             </div>
             <div className="input-field" >
-              <textarea
+              <input
                 name="description"
                 onChange={this.onChange}
-                className="materialize-textarea"
+                type="text"
               />
               <label htmlFor="description" > Description </label>
               {validationErrors.description && <span className="error-text"> { validationErrors.description[0] }</span>}
             </div>
-            <div className="input-field active" >
-              <textarea
-                name="direction"
-                onChange={this.onChange}
-                className="materialize-textarea"
-                placeholder="Add list of direction separated by comma (,)"
-              />
-              <label htmlFor="direction" > Direction </label>
-              {validationErrors.direction && <span className="error-text"> { validationErrors.direction[0] }</span>}
+            <div className="row">
+              <div className="input-field active col s12 m12 l6" >
+                <textarea
+                  name="direction"
+                  onChange={this.onChange}
+                  className="materialize-textarea"
+                />
+                <label htmlFor="direction" > Direction </label>
+                {validationErrors.direction && <span className="error-text"> { validationErrors.direction[0] }</span>}
+              </div>
+              <div className="input-field active col s12 m12 l6" >
+                <textarea
+                  name="ingredients"
+                  onChange={this.onChange}
+                  className="materialize-textarea"
+                />
+                <label htmlFor="ingredients" > Ingredient </label>
+                {validationErrors.ingredients && <span className="error-text"> { validationErrors.ingredients[0] }</span>}
+              </div>
             </div>
-            <div className="input-field active" >
-              <textarea
-                name="ingredients"
-                onChange={this.onChange}
-                className="materialize-textarea"
-                placeholder="Add list of ingredients  separated by comma (,)"
-              />
-              <label htmlFor="ingredients" > Ingredient </label>
-              {validationErrors.ingredients && <span className="error-text"> { validationErrors.ingredients[0] }</span>}
-            </div>
-
+            <div id="editor" />
             <div className="file-field input-field">
               <div className="btn brown waves-effect">
-                <span>Image Upload</span>
+                <span>Add Image</span>
                 <input type="file" onChange={this.onChange} name="image" accept=".jpg, .jpeg, .png" />
               </div>
               <div className="file-path-wrapper">
                 <img id="img1" height={70} alt="" className="right" />
               </div>
-              <LoadingIndicator />
             </div>
             <div>
               <button className="btn brown waves-effect waves-ripple" type="submit"> Submit </button>

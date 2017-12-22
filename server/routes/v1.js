@@ -4,7 +4,7 @@ import auth from '../middlewares/authenticator';
 import { signupValidator, signinValidator,
   reviewPostValidator, recipeValidator, checkParams } from '../middlewares/validators';
 import * as UserController from '../controllers/userController';
-import RecipeReview from '../controllers/reviewController';
+import { recipeReview, getRecipeReview } from '../controllers/reviewController';
 import * as RecipeController from '../controllers/recipeController';
 import * as FavoriteController from '../controllers/favoriteController';
 import { upVote, downVote } from '../controllers/votingController';
@@ -52,7 +52,8 @@ apiV1.put('/recipes/:recipeId/downvotes', checkParams, downVote)
 
 
 // Enpoints for adding and getting a single review to recipe
-apiV1.post('/recipes/:recipeId/reviews', checkParams, reviewPostValidator, RecipeReview)
+apiV1.post('/recipes/:recipeId/reviews', checkParams, reviewPostValidator, recipeReview)
+  .get('/recipes/:recipeId/reviews', checkParams, getRecipeReview)
   .all('/recipes/:recipeId/reviews', auth.notImplemented);
 
 // Enpoint for getting recipes created by a single user

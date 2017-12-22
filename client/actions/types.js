@@ -19,4 +19,5 @@ export const UPVOTE_RECIPE = 'UPVOTE_RECIPE';
 export const DOWNVOTE_RECIPE = 'DOWNVOTE_RECIPE';
 export const IS_LOADING = 'IS_LOADING';
 export const SEARCH_RECIPE = 'SEARCH_RECIPE';
-
+export const RECIPES_COUNT = 'RECIPES_COUNT';
+export const REVIEWS_COUNT = 'REVIEWS_COUNT';

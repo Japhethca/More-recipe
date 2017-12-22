@@ -1,87 +1,85 @@
 import model from '../models';
 
 
-const {
-  Favorites, Recipes, Users, Reviews
-} = model;
+const { Favorites, Recipes, Users } = model;
 
 /**
- * @param {object} req -http request object
- * @param {object} res -http response object
- * @returns {object} res - http response
+ * @param {object} request -http request object
+ * @param {object} response -http response object
+ * @returns {object} response - http response
  */
-export const getUserFavorites = (req, res) => Favorites.findAll({
-  where: {
-    userId: req.decoded.id
-  },
-  include: [
-    {
-      model: Recipes,
-      include: [
-        {
-          model: Reviews,
-          attributes: ['id', 'content', 'createdAt'],
-          include: [
-            {
-              model: Users,
-              attributes: ['id', 'username', 'photo']
-            }
-          ]
-        }
-      ]
-    }
-  ]
-})
-  .then((favorites) => {
-    if (favorites.length < 1) {
-      res.status(404).json({
-        status: 'failed',
-        message: 'User has no favorites'
-      });
-    } else {
-      res.status(200).json({
-        status: 'success',
-        message: `${req.decoded.user} Favorite recipes`,
-        favorites
-      });
-    }
+export const getUserFavorites = (request, response) => {
+  let limit = null;
+  if (parseInt(request.query.limit, 10)) {
+    limit = request.query.limit || null;
+  }
+  const page = parseInt(request.query.page, 10) || 1;
+  const offset = page !== 1 ? limit * (page - 1) : null;
+
+  Favorites.findAll({
+    limit,
+    offset,
+    where: {
+      userId: request.decoded.id
+    },
+    attributes: { exclude: ['id', 'userId', 'recipeId', 'createdAt', 'updatedAt'] },
+    include: [
+      {
+        model: Recipes,
+      }
+    ]
   })
-  .catch(() => res.status(500).json({
-    status: 'failed',
-    message: 'Request was not Processed'
-  }));
+    .then((favorites) => {
+      if (favorites.length < 1) {
+        response.status(404).json({
+          status: 'failed',
+          message: 'User has no favorites'
+        });
+      } else {
+        response.status(200).json({
+          status: 'success',
+          message: `${request.decoded.user} Favorite recipes`,
+          favorites
+        });
+      }
+    })
+    .catch(() => response.status(500).json({
+      status: 'failed',
+      message: 'Request was not Processed'
+    }));
+};
 
 /**
- * @param {object} req -HTTP request
- * @param {object} res -HTTP response
- * @returns {object} res object
+ * @param {object} request -HTTP request
+ * @param {object} response -HTTP response
+ * @returns {object} response object
  */
-export const addToFavorites = (req, res) => Recipes.findById(req.params.recipeId)
+export const addToFavorites = (request, response) => Recipes.findById(request.params.recipeId)
   .then((recipe) => {
     if (!recipe) {
-      return res.status(404).json({
+      return response.status(404).json({
         status: 'failed',
         message: 'Invalid recipe Id'
       });
     }
     Favorites.findAll({
       where: {
-        recipeId: req.params.recipeId,
-        userId: req.decoded.id
+        recipeId: request.params.recipeId,
+        userId: request.decoded.id
       }
     }).then((favorite) => {
       if (favorite.length > 0) {
-        return res.status(409).json({
+        return response.status(409).json({
           status: 'failed',
           message: 'Recipe already in favorites'
         });
       }
       Favorites.create({
-        userId: req.decoded.id,
-        recipeId: req.params.recipeId,
+        userId: request.decoded.id,
+        recipeId: request.params.recipeId,
       })
         .then(() => {
-          res.status(201).json({
+          response.status(201).json({
             status: 'success',
             message: 'Recipe Successfully added to favorites'
           });
@@ -89,34 +87,34 @@ export const addToFavorites = (req, res) => Recipes.findById(req.params.recipeId
     });
   })
   .catch(() => {
-    res.status(500).json({
+    response.status(500).json({
       status: 'failed',
       message: 'Request was not be Processed'
     });
   });
 
   /**
- * @param {onbject} req -HTTP request
- * @param {onbject} res -HTTP response
+ * @param {onbject} request -HTTP request
+ * @param {onbject} response -HTTP response
  * @returns {object} HTTP response object
  */
-export const removeFromFavorites = (req, res) => Favorites.findOne({
+export const removeFromFavorites = (request, response) => Favorites.findOne({
   where: {
-    recipeId: req.params.recipeId
+    recipeId: request.params.recipeId
   }
 })
   .then((recipe) => {
     if (!recipe) {
-      res.status(404).json({
+      response.status(404).json({
         status: 'failed',
         message: 'Recipe with this id is not in favorites'
       });
     } else {
       recipe.destroy();
-      res.status(200).json({
+      response.status(200).json({
         status: 'success',
         message: 'Recipe successfully removed from favorites'
       });
     }
   })
-  .catch(errors => res.status(500).json({ status: 'failed', errors }));
+  .catch(errors => response.status(500).json({ status: 'failed', errors }));

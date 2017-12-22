@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { toastr } from 'react-redux-toastr';
+
+
 import upload from './handleFileUpload';
 import isloading from './isLoading';
 import { UPDATE_RECIPE } from '../types';
@@ -24,15 +27,16 @@ export default data => (dispatch) => {
     upload(data.image).end((err, res) => {
       if (!err) {
         data.image = res.body.url;
-        Materialize.toast('Recipe Successfully Updated!', 4000);
+
         axios.put(`/api/recipes/${data.id}`, data)
           .then((res) => {
             dispatch(updateRecipe(res.data.recipe));
+            toastr.success(res.data.message);
             dispatch(isloading(false));
           })
-          .catch(err => Materialize.toast('Recipe Update Failed!', 4000));
+          .catch(error => toastr.error(error.response.data.message));
       } else {
-        Materialize.toast('Failed to load image!', 4000);
+        toastr.error('failed to load image');
       }
     });
   } else {
@@ -41,8 +45,9 @@ export default data => (dispatch) => {
       .then((res) => {
         dispatch(updateRecipe(res.data.recipe));
         dispatch(isloading(false));
+        toastr.success(res.data.message);
       })
-      .catch(err => Materialize.toast('Recipe Update Failed!', 4000));
+      .catch(error => toastr.error(error.response.data.message));
   }
 };
 

@@ -53,10 +53,10 @@ module.exports = (sequelize, DataTypes) => {
   Recipes.associate = (models) => {
     Recipes.belongsTo(models.Users, {
       foreignKey: 'userId',
+      as: 'author'
     });
     Recipes.hasMany(models.Reviews, {
       foreignKey: 'recipeId',
-      // as: 'reviews',
     });
     Recipes.hasMany(models.Favorites, {
       foreignKey: 'recipeId',

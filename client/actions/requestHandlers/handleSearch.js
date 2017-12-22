@@ -7,7 +7,6 @@ const searchAction = results => ({
 });
 
 export default query => dispatch => axios.get(`/api/recipes?search=${query}`).then((response) => {
-  console.log(response.data.recipes);
   dispatch(searchAction(response.data.recipes));
 })
   .catch((error) => {

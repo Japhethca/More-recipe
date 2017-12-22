@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import qs from 'qs';
+
+import Pagination from '../common/Pagination';
 import Recipe from './Recipe';
 import './Recipes.scss';
 
@@ -8,7 +10,8 @@ import './Recipes.scss';
 const propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
-  recipes: PropTypes.arrayOf(PropTypes.object).isRequired
+  recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getRecipes: PropTypes.func.isRequired,
 };
 
 class Recipes extends Component {
@@ -16,8 +19,14 @@ class Recipes extends Component {
     super(props);
     this.state = {
       favorites: [],
+      query: this.props.history.location.search,
       hasErrored: false
     };
+  }
+
+  componentDidMount() {
+    const { page } = qs.parse(this.state.query, { ignoreQueryPrefix: true });
+    this.props.getRecipes(parseInt(page, 10));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -25,6 +34,7 @@ class Recipes extends Component {
       this.setState({ favorites: nextProps.favorites });
     }
   }
+
   render() {
     const { recipes } = this.props;
     if (this.state.hasErrored) {
@@ -40,11 +50,12 @@ class Recipes extends Component {
           <h4>Latest Recipes</h4>
           <ul className="row" id="list">
             {recipes.map(val => (
-              <li className="col s12 m6 l4" key={val.id}>
+              <li className="col s12 m4 l3" key={val.id}>
                 {this.state.favorites && <Recipe key={val.id} recipe={val} history={this.props.history} favorites={this.props.favorites} /> }
               </li>))
             }
           </ul>
+          <Pagination baseURL="/" />
         </div>
       </div>
     );
@@ -54,11 +65,5 @@ class Recipes extends Component {
 
 Recipes.propTypes = propTypes;
 
-const mapStateToProps = state => ({
-  recipes: state.recipes,
-  user: state.auth.user,
-  favorites: state.favorites
-});
 
-
-export default connect(mapStateToProps, { })(Recipes);
+export default Recipes;

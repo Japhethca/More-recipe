@@ -21,6 +21,8 @@ class SearchForm extends Component {
 
   onChange = (event) => {
     this.setState({ query: event.target.value });
+    this.props.handleSearch(event.target.value);
+    this.props.history.push(`/search/${event.target.value}`);
   }
 
   onSubmit = (event) => {

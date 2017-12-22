@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import getUserDetail from '../../actions/requestHandlers/getUserDetail';
 import './userDetails.scss';
 
 

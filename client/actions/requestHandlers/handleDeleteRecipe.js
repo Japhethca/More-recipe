@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toastr } from 'react-redux-toastr';
 import { DELETE_USER_RECIPE } from '../types';
 
 
@@ -16,6 +17,7 @@ export default id => dispatch => axios.delete(`/api/recipes/${id}`)
   .then((res) => {
     if (res.data.status === 'success') {
       dispatch(deleteRecipe(id));
+      toastr.info(res.data.message);
     }
-  });
+  }).catch(error => toastr.info(error.response.data.message));
 

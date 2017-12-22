@@ -10,7 +10,7 @@ function updateObjectArray(list, action) {
     if (index !== action.index) {
       return recipe;
     }
-    return Object.assign({}, recipe, action.recipe);
+    return { ...recipe, ...action.recipe };
   });
 }
 let index = 0;

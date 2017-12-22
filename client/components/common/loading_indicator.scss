@@ -1,4 +1,10 @@
 .loader{
-  margin: 10px;
-  padding: 10px;
+  position: fixed;
+  top: 50%;
+  right: 50%;
+  margin: auto;
+  opacity: 1;
+  & body {
+    background-color: gray;
+  }
 }

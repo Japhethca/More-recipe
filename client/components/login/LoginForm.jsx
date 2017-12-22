@@ -8,7 +8,8 @@ import './login_form.scss';
 
 const propTypes = {
   handleLoginRequest: PropTypes.func.isRequired,
-  auth: PropTypes.objectOf(PropTypes.any).isRequired
+  auth: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 
@@ -50,8 +51,7 @@ class LoginForm extends Component {
     const { validationErrors } = this.state;
 
     if (this.props.auth.isAuthenticated) {
-      window.location.reload();
-      return <Redirect to="/" />;
+      this.props.history.push('/');
     }
     return (
       <div className="row login-form">
@@ -72,7 +72,6 @@ class LoginForm extends Component {
                   value={this.state.email}
                   onChange={this.onChange}
                   name="email"
-                  placeholder="Email Address"
                   labelClassName="active"
                   label="Email"
                   errorClass="error-text"
@@ -80,21 +79,22 @@ class LoginForm extends Component {
                 />
               </div>
             </div>
-            <div className="row">
-              <div className="input-field col s12 m12" >
-                <i className="material-icons prefix">lock</i>
-                <input
-                  type="password"
+            <div className="row" >
+              <div className="input-field col s12 m12">
+                <TextField
+                  iconClassName="material-icons prefix"
+                  iconName="lock"
+                  value={this.state.password}
                   onChange={this.onChange}
                   name="password"
-                  placeholder="Enter Your Password"
-                  className="validate"
+                  type="password"
+                  labelClassName="active"
+                  label="Password"
+                  errorClass="error-text"
+                  errorText={validationErrors.password}
                 />
-                <label htmlFor="password" className="active"> Password</label>
-                {validationErrors.password && <span className="error-text"> { validationErrors.password[0]}</span>}
               </div>
             </div>
-
             <div className="row">
               <div className="input-field col s12">
                 <button className="btn-large sign-up-btn" type="submit">Login

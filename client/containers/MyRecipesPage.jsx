@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Footer from '../components/navigation/Footer';
-import AddRecipe from '../components/myRecipe/AddRecipe';
+import { connect } from 'react-redux';
+
 import MyRecipes from '../components/myRecipe/MyRecipes';
+import handleDeleteRecipe from '../actions/requestHandlers/handleDeleteRecipe';
+import getMyRecipes from '../actions/requestHandlers/getMyRecipes';
 import '../components/myRecipe/my_recipes_page.scss';
 
 
 const propTypes = {
-  history: PropTypes.objectOf(PropTypes.any).isRequired
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  getMyRecipes: PropTypes.func.isRequired,
+  handleDeleteRecipe: PropTypes.func.isRequired,
+  userRecipes: PropTypes.objectOf(PropTypes.shape).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  pagination: PropTypes.objectOf(PropTypes.number).isRequired
 };
 class MyRecipesPage extends Component {
   componentDidMount() {
@@ -16,29 +23,31 @@ class MyRecipesPage extends Component {
   render() {
     return (
       <div>
-        <div className="container row ">
+        <div className="row">
           <div className="my-recipes">
-            <ul className="tabs">
-              <li className="tab"> <a href="#my_recipes">My Recipes </a></li>
-              <li className="tab" ><a href="#new_recipe">Add New</a></li>
-            </ul>
             <div id="my_recipes">
-              <MyRecipes showButtons />
-            </div>
-            <div className="col s12 m8 offset-m2" id="new_recipe" >
-              <AddRecipe
+              <MyRecipes
+                showButtons
                 history={this.props.history}
+                getMyRecipes={this.props.getMyRecipes}
+                handleDeleteRecipe={this.props.handleDeleteRecipe}
+                userRecipes={this.props.userRecipes}
+                favorites={this.props.favorites}
+                pagination={this.props.pagination}
               />
             </div>
           </div>
-
         </div>
-        <Footer />
       </div>
     );
   }
 }
 
 MyRecipesPage.propTypes = propTypes;
+const mapStateToProps = state => ({
+  userRecipes: state,
+  favorites: state.favorites,
+  pagination: state.pagination
+});
 
-export default MyRecipesPage;
+export default connect(mapStateToProps, { getMyRecipes, handleDeleteRecipe })(MyRecipesPage);
