@@ -1,23 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import SignUpForm from '../components/signup/SignUpForm';
 import handleSignUpRequest from '../actions/requestHandlers/handleSignUprequest';
 
 
 const propTypes = {
-  handleSignUpRequest: PropTypes.func.isRequired
+  auth: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleSignUpRequest: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
-class SignUpPage extends Component {
-  render() {
-    return (
-      <div>
-        <SignUpForm handleSignUpRequest={this.props.handleSignUpRequest} />
-      </div>
-    );
-  }
-}
+const SignUpPage = props => (
+  <div>
+    <SignUpForm
+      handleSignUpRequest={props.handleSignUpRequest}
+      history={props.history}
+      auth={props.auth}
+    />
+  </div>
+);
+
 SignUpPage.propTypes = propTypes;
 
-export default connect(null, { handleSignUpRequest })(SignUpPage);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(mapStateToProps, { handleSignUpRequest })(SignUpPage);

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import { toastr } from 'react-redux-toastr';
+
 import { setAuthorizationToken } from '../../utils/setAuthorization';
 import { SET_CURRENT_USER } from '../types';
 
@@ -40,8 +42,10 @@ export function handleLoginRequest(userdata) {
       localStorage.setItem('token', token);
       setAuthorizationToken(token);
       dispatch(setCurrentUser(jwt.decode(token), null));
+      toastr.success(res.data.message);
     })
     .catch((error) => {
       dispatch(setCurrentUser(null, error.response.data.message));
+      toastr.error(error.response.data.message);
     });
 }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import TextField from '../common/TextField';
 import LoadingIndicator from '../common/LoadingIndicator';
 import { profileUpdateFormValidator } from '../../utils/validators';
 import './profile.scss';
@@ -63,7 +65,7 @@ class ProfileEdit extends Component {
 
   render() {
     const {
-      validationErrors, username, password, firstname, lastname, aboutme, photo
+      validationErrors, aboutme, photo
     } = this.state;
     return (
       <div>
@@ -75,43 +77,46 @@ class ProfileEdit extends Component {
             <form className="" onSubmit={this.onSubmit}>
               <div className="row">
                 <div className="input-field col s12 m6">
-                  <i className="material-icons prefix">account_circle</i>
-                  <input
-                    type="text"
-                    onChange={this.onChange}
+                  <TextField
                     name="firstname"
-                    value={firstname}
+                    value={this.state.firstname}
                     className="input-field"
+                    onChange={this.onChange}
+                    iconClassName="material-icons prefix"
+                    iconName="account_circle"
+                    label="Firstname"
+                    errorClass="error-text"
+                    errorText={validationErrors.firstname}
                   />
-                  <label htmlFor="firstname" className="active" > Firstname </label>
-                  {validationErrors.firstname && <span className="error-text"> { validationErrors.firstname[0] }</span>}
                 </div>
 
                 <div className="input-field col s12 m6">
-                  <i className="material-icons prefix">account_circle</i>
-                  <input
-                    type="text"
-                    onChange={this.onChange}
+                  <TextField
                     name="lastname"
-                    value={lastname}
+                    value={this.state.lastname}
                     className="input-field"
+                    onChange={this.onChange}
+                    iconClassName="material-icons prefix"
+                    iconName="account_circle"
+                    label="Lastname"
+                    errorClass="error-text"
+                    errorText={validationErrors.lastname}
                   />
-                  <label htmlFor="lastname" className="active"> Lastname </label>
-                  {validationErrors.lastname && <span className="error-text"> { validationErrors.lastname[0] }</span>}
                 </div>
               </div>
               <div className="row" >
                 <div className="input-field col s12 m6">
-                  <i className="material-icons prefix">person_outline</i>
-                  <input
-                    type="text"
-                    onChange={this.onChange}
+                  <TextField
                     name="username"
-                    value={username}
+                    value={this.state.username}
                     className="input-field"
+                    onChange={this.onChange}
+                    iconClassName="material-icons prefix"
+                    iconName="person_outline"
+                    label="Username"
+                    errorClass="error-text"
+                    errorText={validationErrors.username}
                   />
-                  <label htmlFor="username" className="active" > Username </label>
-                  {validationErrors.username && <span className="error-text"> { validationErrors.username[0] }</span>}
                 </div>
                 <div className="input-field col s12 m6">
                   <i className="material-icons prefix">mail</i>
@@ -127,27 +132,32 @@ class ProfileEdit extends Component {
               </div>
               <div className="row">
                 <div className="input-field col s12 m6">
-                  <i className="material-icons prefix">lock</i>
-                  <input
-                    type="password"
-                    onChange={this.onChange}
+                  <TextField
                     name="password"
-                    value={password}
+                    value={this.state.password}
                     className="input-field"
-                    disabled
+                    onChange={this.onChange}
+                    iconClassName="material-icons prefix"
+                    iconName="lock"
+                    label="Password"
+                    type="password"
+                    errorClass="error-text"
+                    errorText={validationErrors.password}
                   />
-                  <label htmlFor="password" className="active" >Old Password </label>
-                  {validationErrors.password && <span className="error-text"> { validationErrors.password[0] }</span>}
                 </div>
                 <div className="input-field col s12 m6">
-                  <i className="material-icons prefix">lock</i>
-                  <input
-                    type="password"
-                    onChange={this.onChange}
+                  <TextField
                     name="newPassword"
+                    value={this.state.newPassword}
                     className="input-field"
+                    onChange={this.onChange}
+                    iconClassName="material-icons prefix"
+                    iconName="lock"
+                    label="New Password"
+                    type="password"
+                    errorClass="error-text"
+                    errorText={validationErrors.newPassword}
                   />
-                  <label htmlFor="newPassword" className="active" > New Password </label>
                 </div>
               </div>
               <div className="file-field input-field">
@@ -156,7 +166,7 @@ class ProfileEdit extends Component {
                   <input type="file" onChange={this.onChange} name="photo" accept=".jpg, .jpeg, .png" />
                 </div>
                 <div className="file-path-wrapper">
-                  <img id="img1" height={70} className="right" src={photo} />
+                  <img id="img1" height={70} className="right" src={photo} alt="" />
                 </div>
                 <LoadingIndicator />
               </div>

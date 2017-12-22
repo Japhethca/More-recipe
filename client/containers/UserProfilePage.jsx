@@ -19,22 +19,22 @@ class UserProfilePage extends Component {
   render() {
     return (
       <div>
-        <div className="container">
-          <ul className="tabs">
+        <div>
+          {/* <ul className="tabs">
             <li className="tab active"><a href="#profile">My Profile</a></li>
             <li className="tab"><a href="#edit_profile">Edit Profile</a></li>
-          </ul>
+          </ul> */}
           <div id="profile">
             <UserProfile profile={this.props.profile} />
           </div>
-          <div id="edit_profile">
+          {/* <div id="edit_profile">
             <ProfileEdit
               profile={this.props.profile}
               handleEditUserProfile={this.props.handleEditUserProfile}
             />
-          </div>
+          </div> */}
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }

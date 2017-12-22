@@ -1,13 +1,17 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-// import dotenv from 'dotenv';
 
-// dotenv.config();
 
 export const isValidToken = (token) => {
-  const userToken = jwt.decode(token);
-  return userToken;
+  const expirationTime = jwt.decode(token).exp;
+  const currentDate = new Date();
+  if (expirationTime < Math.floor(currentDate.getTime() / 1000)) {
+    localStorage.removeItem('token');
+    return false;
+  }
+  return true;
 };
+
 export const setAuthorizationToken = (token) => {
   if (token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;

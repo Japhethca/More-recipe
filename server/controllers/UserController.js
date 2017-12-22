@@ -39,13 +39,21 @@ export const signup = (req, res) => Users.findAll({
       aboutme: req.body.aboutme,
       email: req.body.email,
     })
-      .then(user => res.status(201).json({
-        status: 'success',
-        message: 'Account Successfully created!',
-        userData: {
-          username: user.username
-        }
-      }))
+      .then((user) => {
+        const token = jwt.sign({
+          id: user.id,
+          user: user.username
+        }, app.get('secret_key'), { expiresIn: '1d' });
+
+        res.status(201).json({
+          status: 'success',
+          message: 'Account Successfully created!',
+          token,
+          userData: {
+            username: user.username
+          }
+        });
+      })
       .catch(() => res.status(500).json({
         status: 'failed',
         message: 'Server Error'
@@ -82,6 +90,7 @@ export const signin = (req, res) => Users.findOne({
       id: user.id,
       user: user.username
     }, app.get('secret_key'), { expiresIn: '1d' });
+
     res.status(200).json({
       status: 'success',
       message: 'Login Successful!',
