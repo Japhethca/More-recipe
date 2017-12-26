@@ -8,7 +8,7 @@ const { Recipes, Users, Reviews } = model;
  * @param {object} res
  * @returns {object} Http response
  */
-export const recipeReview = (req, res) => Recipes.findOne({
+export const postReview = (req, res) => Recipes.findOne({
   where: {
     id: req.params.recipeId,
   },

@@ -38,7 +38,7 @@ const validate = (req, res, next, rules) => {
     return next();
   }
   const errors = Object.values(validator.errors.errors).map(val => val[0]);
-  res.status(400).json({
+  return res.status(400).json({
     status: 'failed',
     message: errors
   });
@@ -68,7 +68,7 @@ export const checkParams = (req, res, next) => {
   if (req.params) {
     const param = Object.keys(req.params)[0];
     if (_.isNaN(parseInt(req.params[param], 10))) {
-      res.status(400).json({
+      return res.status(400).json({
         status: 'failure',
         message: 'Invalid URL parameter type, parameter must an Number'
       });

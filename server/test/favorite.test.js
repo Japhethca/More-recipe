@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 
-import app from '../server/app';
+import app from '../app';
 
 
 chai.use(chaiHttp);
@@ -20,35 +20,26 @@ describe('FAVORITES', () => {
         password: 'ngobest'
       })
       .end((err, res) => {
-        token = res.body.Token;
-        done();
-      });
-  });
-  it('should get all users favorite recipes', (done) => {
-    chai.request(app)
-      .get('/api/users/1/recipes')
-      .send({ token })
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.have.property('Favorites');
-        expect(res.body.Favorites).to.be.instanceof = 'array';
-        done();
-      });
-  });
-  it('should throw an error if user has no favorite', (done) => {
-    chai.request(app)
-      .get('/api/users/3/recipes')
-      .send({ token })
-      .end((err, res) => {
-        expect(res).to.have.status(404);
-        expect(res.message).to.be.eqls = 'User has no favorites';
+        ({ token } = res.body);
         done();
       });
   });
 
-  it('should not allow user to remove recipe with invalid recipe Id', (done) => {
+  it('should get all users favorite recipes', (done) => {
     chai.request(app)
-      .delete('/api/users/ere/favorites')
+      .get('/api/users/favorites')
+      .send({ token })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.property('favorites');
+        expect(res.body.favorites).to.be.instanceof(Array);
+        done();
+      });
+  });
+
+  it('should error when removing invalid recipe from favorites', (done) => {
+    chai.request(app)
+      .delete('/api/users/favorites/ere')
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(400);
@@ -58,9 +49,9 @@ describe('FAVORITES', () => {
       });
   });
 
-  it('should allow user to remove recipe from favorites', (done) => {
+  it('should should remove recipe from favorites', (done) => {
     chai.request(app)
-      .delete('/api/users/1/favorites')
+      .delete('/api/users/favorites/1')
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -70,9 +61,9 @@ describe('FAVORITES', () => {
       });
   });
 
-  it('should allow user to remove recipe from favorites if the recipe does not exist', (done) => {
+  it('should error on removing recipe that does not exist', (done) => {
     chai.request(app)
-      .delete('/api/users/1/favorites')
+      .delete('/api/users/favorites/1')
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(404);
@@ -82,9 +73,9 @@ describe('FAVORITES', () => {
       });
   });
 
-  it('should allow users to add recipe to favorites', (done) => {
+  it('should add recipe to favorites', (done) => {
     chai.request(app)
-      .post('/api/users/1/favorites')
+      .post('/api/users/favorites/1')
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(201);
@@ -94,50 +85,56 @@ describe('FAVORITES', () => {
       });
   });
 
-  it('should not allow user to add recipes with invalid id to the favorites', (done) => {
+  it('should fail when adding recipe with invalid id', (done) => {
     chai.request(app)
-      .post('/api/users/0/favorites')
+      .post('/api/users/favorites/899')
       .query({ token })
       .end((err, res) => {
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(404);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.equal = 'No recipe with that id exists';
+        expect(res.body.message).to.equal = 'Recipe Successfully added to favorites';
         done();
       });
   });
 
-  it('should should fail if string is supplied as url', (done) => {
+  it('should fail when adding recipe that is already in favorites', (done) => {
     chai.request(app)
-      .get('/api/users/n/favorites')
-      .query({ token })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body).to.have.property('message');
-        done();
-      });
-  });
-
-  it('should not allow addding recipe that is already in favorites', (done) => {
-    chai.request(app)
-      .post('/api/users/1/favorites')
+      .post('/api/users/favorites/1')
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(409);
+        expect(res.body.status).to.be.eql('failed');
         expect(res.body).to.have.property('message');
         expect(res.body.message).to.equal = 'Recipe already in favorites';
         done();
       });
   });
 
-  it('should be able to catch errors on invalid url params', (done) => {
-    chai.request(app)
-      .post('/api/users/ee/favorites')
-      .query({ token })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.eql = 'Invalid recipeId in URL';
-        done();
-      });
+  describe('favorites', () => {
+    before((done) => {
+      chai.request(app)
+        .post('/api/users/signin')
+        .send({
+          email: 'ben10@gmail.com',
+          password: 'ben10'
+        })
+        .end((err, res) => {
+          ({ token } = res.body);
+          done();
+        });
+    });
+
+    it('should fail when user has no favorites', (done) => {
+      chai.request(app)
+        .get('/api/users/favorites')
+        .query({ token })
+        .end((err, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.eql('failed');
+          expect(res.body).to.have.property('message');
+          expect(res.body.message).to.equal = 'User has no favorites';
+          done();
+        });
+    });
   });
 });
