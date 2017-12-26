@@ -24,18 +24,14 @@ apiV1.get(
   RecipeController.searchRecipe,
   RecipeController.allRecipes
 )
-  .post('/recipes', recipeValidator, RecipeController.createRecipe)
   .all('/recipes', auth.notImplemented);
 
 // Endpoints for getting, updating and deleting a single recipe
-apiV1.put('/recipes/:recipeId', checkParams, recipeValidator, RecipeController.updateRecipe)
-  .delete('/recipes/:recipeId', checkParams, RecipeController.deleteRecipe)
-  .get('/recipes/:recipeId', checkParams, RecipeController.getRecipeById)
-  .all('/recipes/:recipeId', auth.notImplemented);
-
-// Endpoints for Getting all recipe in favorites
-apiV1.get('/users/:usersId/recipes', checkParams, FavoriteController.getUserFavorites)
-  .all('/users/:userId/recipes', auth.notImplemented);
+apiV1.post('/recipe', recipeValidator, RecipeController.createRecipe)
+  .put('/recipe/:recipeId', checkParams, recipeValidator, RecipeController.updateRecipe)
+  .delete('/recipe/:recipeId', checkParams, RecipeController.deleteRecipe)
+  .get('/recipe/:recipeId', checkParams, RecipeController.getRecipeById)
+  .all('/recipe/:recipeId', auth.notImplemented);
 
 // Endpoints for users to get, set and remove favorite recipes
 apiV1.get('/users/favorites', FavoriteController.getUserFavorites)
@@ -45,16 +41,17 @@ apiV1.get('/users/favorites', FavoriteController.getUserFavorites)
 
 
 // Endpoints  for upvoting and down voting recipes
-apiV1.put('/recipes/:recipeId/upvotes', checkParams, upVote)
-  .all('/recipes/:recipeId/upvotes', auth.notImplemented);
-apiV1.put('/recipes/:recipeId/downvotes', checkParams, downVote)
-  .all('/recipes/:recipeId/downvotes', auth.notImplemented);
+apiV1.put('/recipe/:recipeId/upvote', checkParams, upVote)
+  .all('/recipe/:recipeId/upvote', auth.notImplemented);
+apiV1.put('/recipe/:recipeId/downvote', checkParams, downVote)
+  .all('/recipe/:recipeId/downvote', auth.notImplemented);
 
 
 // Enpoints for adding and getting a single review to recipe
-apiV1.post('/recipes/:recipeId/reviews', checkParams, reviewPostValidator, recipeReview)
-  .get('/recipes/:recipeId/reviews', checkParams, getRecipeReview)
-  .all('/recipes/:recipeId/reviews', auth.notImplemented);
+apiV1.post('/recipe/:recipeId/review', checkParams, reviewPostValidator, recipeReview)
+  .all('/recipe/:recipeId/review', auth.notImplemented);
+apiV1.get('/recipe/:recipeId/reviews', checkParams, getRecipeReview)
+  .all('/recipe/:recipeId/reviews', auth.notImplemented);
 
 // Enpoint for getting recipes created by a single user
 apiV1.get('/users/recipes', RecipeController.getUserRecipes)

@@ -14,7 +14,7 @@ function addNewReview(review) {
   };
 }
 
-export default (id, data) => dispatch => axios.post(`/api/recipes/${id}/reviews`, data)
+export default (id, data) => dispatch => axios.post(`/api/recipe/${id}/review`, data)
   .then((res) => {
     toastr.success(res.data.message);
     dispatch(addNewReview(res.data.review));

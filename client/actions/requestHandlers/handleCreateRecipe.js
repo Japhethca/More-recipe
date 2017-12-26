@@ -28,7 +28,7 @@ export default function handleCreateRecipe(data) {
       upload(data.image).end((err, res) => {
         if (!err) {
           data.image = res.body.url;
-          axios.post('/api/recipes', data)
+          axios.post('/api/recipe', data)
             .then((res) => {
               toastr.success(res.data.message);
               dispatch(addNewRecipe(res.data.recipe));
@@ -40,7 +40,7 @@ export default function handleCreateRecipe(data) {
       });
     } else {
       dispatch(isLoading(true));
-      axios.post('/api/recipes', data)
+      axios.post('/api/recipe', data)
         .then((res) => {
           dispatch(addNewRecipe(res.data.recipe));
           toastr.success(res.data.message);

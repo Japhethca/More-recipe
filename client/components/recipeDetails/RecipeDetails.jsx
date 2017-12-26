@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import lodash from 'lodash';
+import _ from 'lodash';
 
 import './recipe_details.scss';
 import Reviews from '../review/ReviewsComponent';
@@ -26,7 +26,7 @@ class RecipeDetails extends Component {
     this.state = {
       recipe: this.props.recipe,
     };
-    [this.id] = this.props.match.params.nameId.split('-').filter(val => lodash.isNaN(parseInt(val, 0)));
+    [this.id] = this.props.match.params.nameId.split('-').filter(val => !_.isNaN(parseInt(val, 0)));
   }
 
   componentDidMount() {
@@ -40,7 +40,7 @@ class RecipeDetails extends Component {
   }
 
   displayList = (items) => {
-    const listItems = lodash.split(items, ',');
+    const listItems = _.split(items, ',');
     return listItems;
   }
 

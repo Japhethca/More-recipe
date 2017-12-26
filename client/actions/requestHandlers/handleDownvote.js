@@ -10,5 +10,5 @@ function downvote(recipe) {
     recipe
   };
 }
-export default id => dispatch => axios.put(`/api/recipes/${id}/downvotes`)
+export default id => dispatch => axios.put(`/api/recipe/${id}/downvote`)
   .then((res) => { dispatch(downvote(res.data.recipe)); });
