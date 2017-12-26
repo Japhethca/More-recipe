@@ -28,7 +28,7 @@ export default data => (dispatch) => {
       if (!err) {
         data.image = res.body.url;
 
-        axios.put(`/api/recipes/${data.id}`, data)
+        axios.put(`/api/recipe/${data.id}`, data)
           .then((res) => {
             dispatch(updateRecipe(res.data.recipe));
             toastr.success(res.data.message);
@@ -41,7 +41,7 @@ export default data => (dispatch) => {
     });
   } else {
     dispatch(isloading(true));
-    axios.put(`/api/recipes/${data.id}`, data)
+    axios.put(`/api/recipe/${data.id}`, data)
       .then((res) => {
         dispatch(updateRecipe(res.data.recipe));
         dispatch(isloading(false));

@@ -13,7 +13,7 @@ function deleteRecipe(id) {
     id
   };
 }
-export default id => dispatch => axios.delete(`/api/recipes/${id}`)
+export default id => dispatch => axios.delete(`/api/recipe/${id}`)
   .then((res) => {
     if (res.data.status === 'success') {
       dispatch(deleteRecipe(id));

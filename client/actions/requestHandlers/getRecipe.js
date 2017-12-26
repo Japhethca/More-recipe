@@ -10,7 +10,7 @@ const recipeAction = recipe => (
 );
 
 export default id => (dispatch) => {
-  axios.get(`/api/recipes/${id}`)
+  axios.get(`/api/recipe/${id}`)
     .then(response => dispatch(recipeAction(response.data.recipe)))
     .catch(error => console.log(error.response.data.message));
 };

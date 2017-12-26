@@ -10,7 +10,7 @@ const getRecipeReview = reviews => ({
   reviews
 });
 
-export default id => dispatch => axios.get(`/api/recipes/${id}/reviews`)
+export default id => dispatch => axios.get(`/api/recipe/${id}/reviews`)
   .then((res) => {
     dispatch(getRecipeReview(res.data.reviews));
   });
