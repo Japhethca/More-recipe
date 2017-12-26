@@ -3,11 +3,11 @@ import express from 'express';
 import auth from '../middlewares/authenticator';
 import { signupValidator, signinValidator,
   reviewPostValidator, recipeValidator, checkParams } from '../middlewares/validators';
-import * as UserController from '../controllers/userController';
-import { postReview, getRecipeReview } from '../controllers/reviewController';
-import * as RecipeController from '../controllers/recipeController';
-import * as FavoriteController from '../controllers/favoriteController';
-import { upVote, downVote } from '../controllers/votingController';
+import * as UserController from '../controllers/UserController';
+import { postReview, getRecipeReview } from '../controllers/ReviewController';
+import * as RecipeController from '../controllers/RecipeController';
+import * as FavoriteController from '../controllers/FavoriteController';
+import { upVote, downVote } from '../controllers/VotingController';
 
 const apiV1 = express.Router();
 

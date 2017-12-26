@@ -16,6 +16,6 @@ ratings:
 exclude_paths:
   - "node_modules/"
   - "Template/*"
-  - "server/test"
+  - "server/test/"
   - "server/seeders"
   - "server/migrations"
