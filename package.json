@@ -67,6 +67,7 @@
     "sha1": "^1.1.1",
     "source-code-pro": "git://github.com/adobe-fonts/source-code-pro.git#release",
     "superagent": "^3.6.3",
+    "swagger-ui-express": "^2.0.13",
     "sweetalert": "^2.0.5",
     "validatorjs": "^3.13.5",
     "webpack": "^3.6.0"

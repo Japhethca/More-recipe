@@ -26,6 +26,14 @@ export const getUserFavorites = (request, response) => {
     include: [
       {
         model: Recipes,
+        include:
+        [
+          {
+            model: Users,
+            as: 'author',
+            attributes: ['username', 'photo']
+          }
+        ]
       }
     ]
   })

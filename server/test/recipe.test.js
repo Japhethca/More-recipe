@@ -292,7 +292,7 @@ describe('Recipes Endpoint', () => {
           direction: 'first do then the other'
         })
         .end((err, res) => {
-          expect(res).to.have.status(403);
+          expect(res).to.have.status(401);
           expect(res.body.status).to.eql = 'failed';
           expect(res.body).to.have.property = 'message';
           expect(res.body.message).to.be.eql = 'User is not authorized to update this recipe!';
