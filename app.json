@@ -1,6 +1,7 @@
 {
   "name": "More-recipe",
   "scripts": {
+    "postinstall": "webpack --config webpack.config.prod.js -p --progress --colors"
   },
   "env": {
     "NPM_CONFIG_PRODUCTION": {

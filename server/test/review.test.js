@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../server/app';
+
+import app from '../app';
 
 
 chai.use(chaiHttp);
@@ -18,25 +19,14 @@ describe('REVIEWS', () => {
         password: 'kelechi'
       })
       .end((err, res) => {
-        token = res.body.Token;
+        ({ token } = res.body);
         done();
       });
   });
-  it('should allow getting all review in the application', (done) => {
-    chai.request(app)
-      .get('/api/reviews')
-      .send({ token })
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.have.property = 'reviews';
-        done();
-      });
-  });
-
 
   it('should allow user to post review on a recipe', (done) => {
     chai.request(app)
-      .post('/api/recipes/2/reviews')
+      .post('/api/recipe/2/review')
       .send({ content: 'this is serious' })
       .query({ token })
       .end((err, res) => {
@@ -47,9 +37,10 @@ describe('REVIEWS', () => {
         done();
       });
   });
+
   it('should now allow user to review an invalid recipe', (done) => {
     chai.request(app)
-      .post('/api/recipes/200/reviews')
+      .post('/api/recipe/200/review')
       .send({ content: 'this is serious' })
       .query({ token })
       .end((err, res) => {
@@ -62,31 +53,32 @@ describe('REVIEWS', () => {
 
   it('should error if inputs are empty', (done) => {
     chai.request(app)
-      .post('/api/recipes/2/reviews')
+      .post('/api/recipe/2/review')
       .send({})
       .query({ token })
       .end((err, res) => {
-        expect(res).to.have.status(403);
+        expect(res).to.have.status(400);
         expect(res.body).to.have.property('message');
         done();
       });
   });
 
-  it('should allow users to be able to see the recipes that he added', (done) => {
+  it('should return reviews for a single recipe', (done) => {
     chai.request(app)
-      .get('/api/recipes/2/reviews')
+      .get('/api/recipe/2/reviews')
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('message');
         expect(res.body.message).to.be.eql = 'Recipe Reviews';
-        expect(res.body).to.have.property('Reviews');
+        expect(res.body).to.have.property('reviews');
         done();
       });
   });
+
   it('should return an error message if recipe has no reviews', (done) => {
     chai.request(app)
-      .get('/api/recipes/3/reviews')
+      .get('/api/recipe/3/reviews')
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(404);
@@ -95,21 +87,10 @@ describe('REVIEWS', () => {
         done();
       });
   });
+
   it('should error on non number in url params', (done) => {
     chai.request(app)
-      .get('/api/recipes/esggsf/reviews')
-      .query({ token })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.eql = 'Invalid Url Parameter';
-        done();
-      });
-  });
-  it('should error on non number in url params', (done) => {
-    chai.request(app)
-      .post('/api/recipes/esggsf/reviews')
-      .send({ content: 'this is serious' })
+      .get('/api/recipe/esggsf/reviews')
       .query({ token })
       .end((err, res) => {
         expect(res).to.have.status(400);

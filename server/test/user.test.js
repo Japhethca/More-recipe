@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../server/app';
+
+import app from '../app';
 
 
 chai.use(chaiHttp);
@@ -15,15 +16,14 @@ describe('SIGNUP', () => {
     chai.request(app)
       .post('/api/users/signup')
       .send({
-        firstname: '',
-        lastname: '',
-        username: 'will',
+        username: '',
         password: 'smith',
         verifyPassword: 'smith',
         email: 'willsmith@gmail.com',
       })
       .end((err, res) => {
         expect(res).to.have.status(400);
+        expect(res.body.status).to.be.eql = 'failed';
         expect(res.body).to.have.property = 'message';
         done();
       });
@@ -33,15 +33,14 @@ describe('SIGNUP', () => {
     chai.request(app)
       .post('/api/users/signup')
       .send({
-        firstname: 'will',
-        lastname: 'smith',
         username: 'will',
         password: 'smith',
         verifyPassword: 'smitl',
         email: 'willsmith@gmail.com',
       })
       .end((err, res) => {
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(409);
+        expect(res.body.status).to.be.eql = 'failed';
         expect(res.body).to.have.property = 'message';
         expect(res.body.message).to.be.eqls = 'password did not match';
         done();
@@ -52,18 +51,16 @@ describe('SIGNUP', () => {
     chai.request(app)
       .post('/api/users/signup')
       .send({
-        firstname: 'andela',
-        lastname: 'chidiebere',
-        username: 'chidibere',
+        username: 'andela2018',
         password: '123456',
         verifyPassword: '123456',
-        email: 'andelachidiebere@gmail.com',
+        email: 'andela@gmail.com',
       })
       .end((err, res) => {
-        console.log(res.body);
         expect(res).to.have.status(201);
+        expect(res.body.status).to.be.eql = 'success';
         expect(res.body).to.have.property = 'message';
-        expect(res.body).to.have.property = 'UserDetails';
+        expect(res.body).to.have.property = 'userData';
         expect(res.body.message).to.be.eqls = 'Account Successfully created!';
         done();
       });
@@ -130,54 +127,6 @@ describe('SIGIN', () => {
   });
 });
 
-describe('USER', () => {
-  before((done) => {
-    chai.request(app)
-      .post('/api/users/signin')
-      .send({
-        email: 'ngozinwali@gmail.com',
-        password: 'ngobest'
-      })
-      .end((err, res) => {
-        token = res.body.Token;
-        done();
-      });
-  });
-  it('should get details of registered users', (done) => {
-    chai.request(app)
-      .get('/api/admin/user/3')
-      .query({ token })
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        expect(res.body).to.have.property = 'user';
-        done();
-      });
-  });
-
-  it('should throw an error on invalid url params', (done) => {
-    chai.request(app)
-      .get('/api/admin/user/fgf')
-      .query({ token })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body).to.have.property = 'message';
-        expect(res.body.message).to.be.eql = 'Invalid Url Parameter';
-        done();
-      });
-  });
-  it('should fail when getting details on non users', (done) => {
-    chai.request(app)
-      .get('/api/admin/user/33')
-      .query({ token })
-      .end((err, res) => {
-        expect(res).to.have.status(404);
-        expect(res.body).to.have.property = 'message';
-        expect(res.body.message).to.be.eqls = 'user does not exist';
-        done();
-      });
-  });
-});
-
 describe('USER PROFILE', () => {
   before((done) => {
     chai.request(app)
@@ -187,10 +136,11 @@ describe('USER PROFILE', () => {
         password: 'ben10'
       })
       .end((err, res) => {
-        token = res.body.Token;
+        ({ token } = res.body);
         done();
       });
   });
+
   it('should get user profile', (done) => {
     chai.request(app)
       .get('/api/users/profile')
@@ -204,14 +154,13 @@ describe('USER PROFILE', () => {
 
   it('should update user profile', (done) => {
     chai.request(app)
-      .post('/api/users/profile')
+      .put('/api/users/profile')
       .query({ token })
       .send({
         firstname: 'benjamin',
         lastname: 'Anyigor',
         email: 'ben10@gmail.com',
         password: 'ben10',
-        username: 'ben10',
         aboutme: 'am cool',
         photo: '',
       })
@@ -225,7 +174,7 @@ describe('USER PROFILE', () => {
 
   it('should not update if new password an old password are the same', (done) => {
     chai.request(app)
-      .post('/api/users/profile')
+      .put('/api/users/profile')
       .query({ token })
       .send({
         firstname: 'benjamin',

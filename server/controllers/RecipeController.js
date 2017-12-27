@@ -274,23 +274,22 @@ export const deleteRecipe = (request, response) => {
   const thisRecipeId = request.params.recipeId;
   return Recipes.findById(thisRecipeId).then((recipe) => {
     if (!recipe) {
-      response.status(404).json({
+      return response.status(404).json({
         status: 'failed',
         message: 'Recipe does not exist'
       });
     }
     if (recipe.userId === request.decoded.id) {
       recipe.destroy();
-      response.status(200).json({
+      return response.status(200).json({
         status: 'success',
         message: 'Recipe deleted successfully'
       });
-    } else {
-      response.status(403).json({
-        status: 'failed',
-        message: 'User is not authorised to delete this recipe'
-      });
     }
+    return response.status(403).json({
+      status: 'failed',
+      message: 'User is not authorised to delete this recipe'
+    });
   })
     .catch(() => response.status(500).json({
       status: 'failed',

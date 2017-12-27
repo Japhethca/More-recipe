@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../server/app';
+
+import app from '../app';
 
 
 chai.use(chaiHttp);
@@ -19,13 +20,14 @@ describe('Recipes', () => {
         password: 'ngobest'
       })
       .end((err, res) => {
-        token = res.body.Token;
+        ({ token } = res.body);
         done();
       });
   });
+
   it('should allow users to vote for a recipe', (done) => {
     chai.request(app)
-      .put('/api/recipes/2/upvotes')
+      .put('/api/recipe/2/upvote')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -34,10 +36,10 @@ describe('Recipes', () => {
         done();
       });
   });
-  
+
   it('should allow users to unvote for a recipe', (done) => {
     chai.request(app)
-      .put('/api/recipes/2/upvotes')
+      .put('/api/recipe/2/upvote')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -49,7 +51,7 @@ describe('Recipes', () => {
 
   it('should not allow users to upvote recipe with an id less than 1', (done) => {
     chai.request(app)
-      .put('/api/recipes/0/upvotes')
+      .put('/api/recipe/0/upvote')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(404);
@@ -58,9 +60,10 @@ describe('Recipes', () => {
         done();
       });
   });
+
   it('should not allow users to upvote recipe with an invalid id', (done) => {
     chai.request(app)
-      .put('/api/recipes/300/downvotes')
+      .put('/api/recipe/300/downvote')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(404);
@@ -72,7 +75,7 @@ describe('Recipes', () => {
 
   it('should allow users to downvote for a recipe', (done) => {
     chai.request(app)
-      .put('/api/recipes/2/downvotes')
+      .put('/api/recipe/2/downvote')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -81,10 +84,10 @@ describe('Recipes', () => {
         done();
       });
   });
-  
+
   it('should allow users to unvote for a downvoted recipe', (done) => {
     chai.request(app)
-      .put('/api/recipes/2/downvotes')
+      .put('/api/recipe/2/downvote')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -96,7 +99,7 @@ describe('Recipes', () => {
 
   it('should allow users to downvote  for an  Unvoted recipe', (done) => {
     chai.request(app)
-      .put('/api/recipes/2/downvotes')
+      .put('/api/recipe/2/downvote')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(200);
@@ -106,21 +109,9 @@ describe('Recipes', () => {
       });
   });
 
-  it('should not allow users to upvote recipe with an id less than 1', (done) => {
-    chai.request(app)
-      .put('/api/recipes/-2/downvotes')
-      .send({ token })
-      .end((err, res) => {
-        expect(res).to.have.status(403);
-        expect(res.body).to.have.property('message');
-        expect(res.message).to.be.eql = 'Recipe id does not exist';
-        done();
-      });
-  });
-
   it('should not allow users to downvote recipe with an invalid id', (done) => {
     chai.request(app)
-      .put('/api/recipes/300/downvotes')
+      .put('/api/recipe/300/downvote')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(404);
@@ -131,19 +122,19 @@ describe('Recipes', () => {
 
   it('should catch invalid url parameter', (done) => {
     chai.request(app)
-      .put('/api/recipes/edf/downvotes')
+      .put('/api/recipe/edf/downvote')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(400);
         expect(res.body).to.have.property('message');
-        expect(res.body.message).to.be.eql = 'invalid Url Parameter';        
+        expect(res.body.message).to.be.eql = 'invalid Url Parameter';
         done();
       });
   });
 
   it('should catch invalid url parameter', (done) => {
     chai.request(app)
-      .put('/api/recipes/e/upvotes')
+      .put('/api/recipe/e/upvote')
       .send({ token })
       .end((err, res) => {
         expect(res).to.have.status(400);

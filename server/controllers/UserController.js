@@ -26,7 +26,7 @@ export const signup = (req, res) => Users.findAll({
       });
     } // creates new user
     if (req.body.password !== req.body.verifyPassword) {
-      return res.status(401).json({
+      return res.status(409).json({
         status: 'failed',
         message: 'password did not match'
       });
@@ -81,7 +81,7 @@ export const signin = (req, res) => Users.findOne({
         message: 'User does not exist'
       });
     } else if (!bcrypt.compareSync(req.body.password, user.password)) {
-      res.status(403).json({
+      return res.status(403).json({
         status: 'failed',
         message: 'Password Incorrect'
       });
@@ -91,7 +91,7 @@ export const signin = (req, res) => Users.findOne({
       user: user.username
     }, app.get('secret_key'), { expiresIn: '1d' });
 
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       message: 'Login Successful!',
       token,
@@ -125,21 +125,20 @@ export const userProfile = (req, res) => Users.findOne({
  */
 export const updateProfile = (req, res) => {
   if (req.body.newPassword && req.body.password === req.body.newPassword) {
-    res.status(400).json({
+    return res.status(400).json({
       status: 'failed',
       message: 'password Must Differ'
     });
   }
-  Users.findOne({
+  return Users.findOne({
     where: {
-      email: req.decoded.user
+      id: req.decoded.id
     }
   }).then((user) => {
     const newPassword = req.body.newPassword ? req.body.newPassword : '';
     user.update({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      username: req.body.username,
       password: newPassword || req.body.password,
       aboutme: req.body.aboutme,
       photo: req.body.photo,
