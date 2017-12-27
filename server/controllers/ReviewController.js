@@ -30,7 +30,7 @@ export const postReview = (req, res) => Recipes.findOne({
           include: [
             {
               model: Users,
-              attributes: ['id', 'username', 'photo']
+              attributes: ['username', 'photo']
             }
           ]
         })
@@ -65,7 +65,7 @@ export const getRecipeReview = (req, res) => {
     where: {
       recipeId: req.params.recipeId,
     },
-    include: [{ model: Users, attributes: ['id', 'username', 'photo'] }]
+    include: [{ model: Users, attributes: ['username', 'photo'] }]
   })
     .then((result) => {
       if ((result.count < 1)) {

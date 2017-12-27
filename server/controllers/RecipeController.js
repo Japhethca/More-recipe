@@ -163,7 +163,15 @@ export const createRecipe = (request, response) => Recipes.findOne({
       userId: request.decoded.id,
       image: request.body.image
     })
-      .then(created => created.reload({ include: [{ model: Users, as: 'author' }] })
+      .then(created => created.reload({
+        include: [
+          {
+            model: Users,
+            as: 'author',
+            attributes: ['username', 'photo']
+          }
+        ]
+      })
         .then((createdRecipe) => {
           response.status(201).json({
             status: 'success',
@@ -244,7 +252,15 @@ export const updateRecipe = (request, response) => Recipes.findOne({
         image: request.body.image
       })
         .then(() => {
-          recipe.reload({ include: [{ model: Users, as: 'author' }] })
+          recipe.reload({
+            include: [
+              {
+                model: Users,
+                as: 'author',
+                attributes: ['username', 'photo']
+              }
+            ]
+          })
             .then(updatedRecipe => response.status(201).json({
               status: 'success',
               message: 'Recipe updated Successful',
@@ -252,7 +268,7 @@ export const updateRecipe = (request, response) => Recipes.findOne({
             }));
         });
     } else {
-      response.status(403).json({
+      response.status(401).json({
         status: 'failed',
         message: 'User is not authorized to update this recipe!'
       });

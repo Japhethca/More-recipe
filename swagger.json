@@ -1,0 +1,1720 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "More Recipe API documentation is provided to help users to find API endpoints and how to properly consume it. To use this API, user must signin/signup to get authentication token which can to added to the header with key `token` during subsequest requests.",
+    "version": "1.0.0",
+    "title": "More Recipe API Docs"
+  },
+  "host": "more-recipe-cj.herokuapp.com",
+  "basePath": "/api",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users/signin": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Logs user in to application",
+        "description": "This endpoint allows logged in users to be able to login/signin to use API. Note - only logged in users with access token are allowed to consume this api. The token is available when user is successfully logged in. ",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "description": "users email",
+            "required": true,
+            "example": "andela@gmail.com"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "type": "string",
+            "description": "users password",
+            "required": true,
+            "example": "andela123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful login",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Login successful"
+                },
+                "token": {
+                  "type": "string",
+                  "example": "sksj48u3oisfih98483hoih984y98hwhf98yr98hrhq98y8yh89y49839h"
+                },
+                "userData": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "andela"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "input validation error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "email is required"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "password is incorrect",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Password Incorrect"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User does not exist"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/signup": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Signs up user",
+        "description": "This endpoint allows to sign up/register using their credentials. \n",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "username",
+            "type": "string",
+            "description": "Users username",
+            "required": true,
+            "example": "andela"
+          },
+          {
+            "in": "formData",
+            "name": "email",
+            "type": "string",
+            "description": "Users email",
+            "required": true,
+            "example": "andela@gmail.com"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "type": "string",
+            "description": "Users password",
+            "required": true,
+            "example": "andela123"
+          },
+          {
+            "in": "formData",
+            "name": "verifyPassword",
+            "type": "string",
+            "description": "confirm password",
+            "required": true,
+            "example": "andela123"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully logged in",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Signup successful"
+                },
+                "token": {
+                  "type": "string",
+                  "example": "kgdljgldjlkgdlkjgldljlkdjklgdlkjgkdkgl34k3j5353nlff"
+                },
+                "userData": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "andela"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "input validation error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "password is required"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipes": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Returns All recipes",
+        "description": "The Recipes endpoint returns a list of all recipes in a json format. The list contains recipe object, which has key value pairs of the recipe name, ingredients and other useful information.\n",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "The number of recipes to return",
+            "type": "number",
+            "example": 6
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "description": "The page to be displayed",
+            "type": "number",
+            "example": 1
+          },
+          {
+            "in": "query",
+            "name": "order",
+            "description": "The order to sort returned recipes",
+            "type": "string",
+            "example": "ascending/descending"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "type": "string",
+            "description": "the field to sort",
+            "example": "name/upvotes/downvotes/createdat"
+          },
+          {
+            "in": "query",
+            "name": "search",
+            "type": "string",
+            "description": "search query",
+            "example": "egusi"
+          },
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of all recipes",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "exmpale": "All recipes"
+                },
+                "count": {
+                  "type": "number"
+                },
+                "recipes": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "egusi soup"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "my favorite soup"
+                      },
+                      "ingredients": {
+                        "type": "string",
+                        "example": "maggi, palm oil, water, salt"
+                      },
+                      "direction": {
+                        "type": "string",
+                        "example": "add maggi, then water, then salt"
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": "http://www.image-url.com"
+                      },
+                      "upvotes": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "downvotes": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "userId": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "017-12-22T13:41:22.351Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "017-12-22T13:41:22.351Z"
+                      },
+                      "author": {
+                        "type": "object",
+                        "properties": {
+                          "username": {
+                            "type": "string",
+                            "example": "andela"
+                          },
+                          "photo": {
+                            "type": "string",
+                            "example": "http://www.image-andela.com/my-image.jpg"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "recipe name conflict",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "No recipe found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe": {
+      "post": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Adds new recipe",
+        "description": "This endpoint allow logged in users to be able to add a new recipe into the application. \n",
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "recipe name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "description",
+            "description": "recipe name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "ingredients",
+            "description": "recipe name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "direction",
+            "description": "recipe name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "New recipe succeessfully created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe successfully created"
+                },
+                "recipe": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "egusi soup"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "my favorite soup"
+                    },
+                    "ingredients": {
+                      "type": "string",
+                      "example": "maggi, palm oil, water, salt"
+                    },
+                    "direction": {
+                      "type": "string",
+                      "example": "add maggi, then water, then salt"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "http://www.image-url.com"
+                    },
+                    "upvotes": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "downvotes": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "userId": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "017-12-22T13:41:22.351Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "017-12-22T13:41:22.351Z"
+                    },
+                    "author": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "example": "andela"
+                        },
+                        "photo": {
+                          "type": "string",
+                          "example": "http://www.image-andela.com/my-image.jpg"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "recipe name conflict",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "You have already created a recipe with this name before"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid input type",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": null,
+                "type": "string",
+                "example": "failed",
+                "message": {
+                  "type": "string",
+                  "example": "name field is required"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/{recipeId}": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Returns a single recipe details",
+        "description": "This endpoint allows logged in users used to get information or details of a single recipe using the id of the recipe.  \n",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "The ID of a recipe.",
+            "required": true,
+            "type": "integer",
+            "format": "double"
+          },
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An object of the requested recipe",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe updated Successful"
+                },
+                "recipe": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "egusi soup"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "my favorite soup"
+                    },
+                    "ingredients": {
+                      "type": "string",
+                      "example": "maggi, palm oil, water, salt"
+                    },
+                    "direction": {
+                      "type": "string",
+                      "example": "add maggi, then water, then salt"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "http://www.image-url.com"
+                    },
+                    "upvotes": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "downvotes": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "userId": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "017-12-22T13:41:22.351Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "017-12-22T13:41:22.351Z"
+                    },
+                    "author": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "example": "andela"
+                        },
+                        "photo": {
+                          "type": "string",
+                          "example": "http://www.image-andela.com/my-image.jpg"
+                        }
+                      }
+                    },
+                    "Reviews": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "type": "number",
+                            "example": 3
+                          },
+                          "content": {
+                            "type": "string",
+                            "example": "nice recipe"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "photo": {
+                                "type": "string",
+                                "example": "http://www.image-andela.com/my-image.jpg"
+                              },
+                              "username": {
+                                "type": "string",
+                                "example": "andela"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe is not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe does not exist!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Updates a recipe",
+        "description": "This endpoint allows user to update recipe that he created. User can only update recipe created by him and not the one created by others.",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "The Id of a recipe",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "formData",
+            "name": "name",
+            "description": "recipe name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "description",
+            "description": "recipe name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "ingredients",
+            "description": "recipe name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "direction",
+            "description": "recipe name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "image",
+            "description": "recipe image",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully updated recipe",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe updated Successful"
+                },
+                "recipe": {
+                  "type": "object"
+                },
+                "properties": {
+                  "id": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "egusi soup"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "my favorite soup"
+                  },
+                  "ingredients": {
+                    "type": "string",
+                    "example": "maggi, palm oil, water, salt"
+                  },
+                  "direction": {
+                    "type": "string",
+                    "example": "add maggi, then water, then salt"
+                  },
+                  "image": {
+                    "type": "string",
+                    "example": "http://www.image-url.com"
+                  },
+                  "upvotes": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "downvotes": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "userId": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "example": "017-12-22T13:41:22.351Z"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "example": "017-12-22T13:41:22.351Z"
+                  },
+                  "author": {
+                    "type": "object",
+                    "properties": {
+                      "username": {
+                        "type": "string",
+                        "example": "andela"
+                      },
+                      "photo": {
+                        "type": "string",
+                        "example": "http://www.image-andela.com/my-image.jpg"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid url/input parameter type",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid url parameter type"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User os not authorised to delete recipe",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User is not authorized to update this recipe!"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe to be updated is not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe does not exist!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Deletes a single recipe",
+        "description": "This endpoint allows logged in users to be able to delete the recipe that they created. Only recipe that the user created can be deleted not the one created by other users.",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "The ID of a recipe",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "recipes was deleted successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe deleted successfully"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not authorised to delete recipe",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User is not authorised to delete this recipe"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "recipes does not exist",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe does not exist"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/{recipeId}/reviews": {
+      "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Returns all reviews for a single recipe",
+        "description": "Allows user to see all the review for a single recipe",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "recipeId",
+            "type": "number",
+            "description": "recipe ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns an array of reviews",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe Reviews"
+                },
+                "count": {
+                  "type": "number",
+                  "example": 2
+                },
+                "reviews": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "content": {
+                        "type": "string",
+                        "example": "nice recipe!"
+                      },
+                      "id": {
+                        "type": "number",
+                        "example": 2
+                      },
+                      "recipeId": {
+                        "type": "number",
+                        "example": 4
+                      },
+                      "userId": {
+                        "type": "number",
+                        "example": 3
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2017-12-24T11:48:10.247Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "2017-12-24T11:48:10.247Z"
+                      },
+                      "User": {
+                        "type": "object",
+                        "properties": {
+                          "username": {
+                            "type": "string",
+                            "example": "andela"
+                          },
+                          "photo": {
+                            "type": "string",
+                            "example": "https://www.example.com/myphoto.jpeg"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No reviews found for recipe",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "No reviews for this recipe"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/{recipeId}/review": {
+      "post": {
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Creates a new recipe review",
+        "description": "allows users to create/post reviews for a recipe",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "recipeId",
+            "type": "number",
+            "description": "recipe ID",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "content",
+            "type": "string",
+            "description": "reviews content",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An object with arrays of reviews",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Review Created"
+                },
+                "review": {
+                  "type": "object",
+                  "properties": {
+                    "content": {
+                      "type": "string",
+                      "example": "nice recipe!"
+                    },
+                    "id": {
+                      "type": "number",
+                      "example": 2
+                    },
+                    "recipeId": {
+                      "type": "number",
+                      "example": 4
+                    },
+                    "userId": {
+                      "type": "number",
+                      "example": 3
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2017-12-24T11:48:10.247Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2017-12-24T11:48:10.247Z"
+                    },
+                    "User": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "example": "andela"
+                        },
+                        "photo": {
+                          "type": "string",
+                          "example": "https://www.example.com/myphoto.jpeg"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe does not exist",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe with this Id does not exist"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/recipes": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Returns all recipes created by a user",
+        "description": "This endpoint allows logged in user to get all the recipes that he/she created. \n",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns an object with arrays of recipes",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Successfully loaded users recipes"
+                },
+                "recipes": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "egusi soup"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "my favorite soup"
+                      },
+                      "ingredients": {
+                        "type": "string",
+                        "example": "maggi, palm oil, water, salt"
+                      },
+                      "direction": {
+                        "type": "string",
+                        "example": "add maggi, then water, then salt"
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": "http://www.image-url.com"
+                      },
+                      "upvotes": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "downvotes": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "userId": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "017-12-22T13:41:22.351Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "017-12-22T13:41:22.351Z"
+                      },
+                      "author": {
+                        "type": "object",
+                        "properties": {
+                          "username": {
+                            "type": "string",
+                            "example": "andela"
+                          },
+                          "photo": {
+                            "type": "string",
+                            "example": "http://www.image-andela.com/my-image.jpg"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User has not created any recipes",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User has not created any recipe"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/favorites": {
+      "get": {
+        "tags": [
+          "Favorites"
+        ],
+        "summary": "Returns all users favorite recipes",
+        "description": "The endpoint can be to get all the recipe that a user added to his favorites.",
+        "parameters": [
+          {
+            "name": "usersId",
+            "in": "path",
+            "description": "The ID of the user",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "an array of users favorites recipes",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Users favorite recipes",
+                  "favorites": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "egusi soup"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "my favorite soup"
+                      },
+                      "ingredients": {
+                        "type": "string",
+                        "example": "maggi, palm oil, water, salt"
+                      },
+                      "direction": {
+                        "type": "string",
+                        "example": "add maggi, then water, then salt"
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": "http://www.image-url.com"
+                      },
+                      "upvotes": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "downvotes": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "userId": {
+                        "type": "number",
+                        "example": 1
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "017-12-22T13:41:22.351Z"
+                      },
+                      "updatedAt": {
+                        "type": "string",
+                        "example": "017-12-22T13:41:22.351Z"
+                      },
+                      "author": {
+                        "type": "object",
+                        "properties": {
+                          "username": {
+                            "type": "string",
+                            "example": "andela"
+                          },
+                          "photo": {
+                            "type": "string",
+                            "example": "http://www.image-andela.com/my-image.jpg"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User has not recipes",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User has no favorites"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/favorites/{recipeId}": {
+      "post": {
+        "tags": [
+          "Favorites"
+        ],
+        "summary": "Adds recipe to users favorites",
+        "description": "This endpoint allows user to add recipe to their favorites.",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "The Id of a recipe",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Recipe added to favorites",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe Successfully added to favorites"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe does not exist",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid recipe Id"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Recipes is already in favorites",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe already in favorites"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Favorites"
+        ],
+        "summary": "Removes recipe from favorites",
+        "description": "Enpoint allows user to remove recipe that is already in his favorites",
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "The Id of a recipe",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Removes recipe from favorites",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe successfully removed from favorites"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipes does not exist",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Recipe with this id is not in favorites"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Returns users profile details",
+        "description": "This returns the profile details of a logged in user.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns user profile",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 2
+                    },
+                    "firstname": {
+                      "type": "string",
+                      "example": "andela"
+                    },
+                    "lastname": {
+                      "type": "string",
+                      "example": "Nigeria"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "andela"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "slksihoihgioehroytoyoihoidhofihoyohoi"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "andela@gmail.com"
+                    },
+                    "photo": {
+                      "type": "string",
+                      "example": "http://www.image.com/my-image.png"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2017-12-25T06:06:21.641Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2017-12-25T06:06:21.641Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user profile",
+        "description": "This endpoint is for updating user profile",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "token",
+            "description": "authentication token",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "formData",
+            "name": "firstname",
+            "description": "users firstname",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "lastname",
+            "description": "users lastname",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "aboutme",
+            "description": "about user",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "password",
+            "description": "users password",
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "name": "photo",
+            "description": "users photo",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return updated user profile",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Profile Update Successful"
+                },
+                "userData": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 2
+                    },
+                    "firstname": {
+                      "type": "string",
+                      "example": "andela"
+                    },
+                    "lastname": {
+                      "type": "string",
+                      "example": "Nigeria"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "andela"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "slksihoihgioehroytoyoihoidhofihoyohoi"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "andela@gmail.com"
+                    },
+                    "photo": {
+                      "type": "string",
+                      "example": "http://www.image.com/my-image.png"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2017-12-25T06:06:21.641Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2017-12-25T06:06:21.641Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "password must differ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "failed"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "password Must Differ"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
