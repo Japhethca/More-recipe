@@ -1,51 +1,140 @@
-$nav-background-color: #794023;
-// #AB6F50;
-// rgba(78, 31, 31, 0.877);
-$btn-backround-color: rgba(78, 31, 31, 0.877);
+$nav-background-color: #ffe400;
+$grey-color: #808080;
+$nav-color: #090804;
+$black-color: #222;
+$btn-backround-color: #eeeeee;
 $btn-color: #fff;
-$btn-hover: 946463;
-  .nav-menu {
-    height: 50px;
-    background-color: $nav-background-color;
+$btn-hover: rgba(255, 255, 0, 0.459);
 
-    .search-icon {
-      cursor: pointer;
-      margin-right: 15px;
-      margin-top: 5px;
-      padding: 4px;
+.nav-menu {
+  background-color: $nav-background-color;
+
+  a {
+    color: $nav-color;
+  }
+
+  .search-icon {
+    cursor: pointer;
+
+    button {
+      background-color: inherit;
+      border: 0;
+      height: 100%;
+      color: $nav-color;
+      padding: 0 14px;
+
+      &:hover {
+        background-color: lighten($nav-background-color, 30);
+      }
     }
+  }
 
-    ul {
-      padding-top: 10px;
+  .nav-wrapper {
+    margin: 0 10px;
+  }
+
+  ul {
+    li {
       a {
-        text-transform: uppercase;
+        height: 100%;
+        text-transform: capitalize;
+
         &:hover {
-          background-color: lighten($nav-background-color, .50);
+          background-color: lighten($nav-background-color, 30);
         }
       }
     }
-    
+  }
+
+  .nav-search {
+    left: 200px;
+    position: absolute;
+    top: 10px;
+  }
+
+  .active-link {
+    background-color: lighten($nav-background-color, 7);
+  }
+
     .nav-btn {
-      background-color: inherit;
-      box-shadow: none;
-      color: $btn-color;
+      color: $black-color;
+      padding: 2px 20px;
+
+      &:hover {
+        background-color: $nav-background-color;
+        color: $nav-color;
+      }
+    }
+
+  .nav-btn-side {
+    color: $black-color;
+    width: 100%;
+
+    &:hover {
+      background-color: $grey-color;
+    }
+  }
+}
+
+.material-icons {
+  display: inline !important;
+}
+
+.dropdown-content {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  padding-top: 0;
+  top: 0 !important;
+
+  li {
+    a {
+      color: initial;
+      font-size: small;
+      line-height: 20px;
+      text-transform: capitalize;
+
+      &:hover {
+        background-color: $black-color;
+        color: $nav-color;
+      }
+    }
+
+    button {
       border: none;
-      background-color: $btn-backround-color;
-      margin-left: 10px;
-      width: 100px;
-      text-align: center;
-      border-radius: 15px;
-      &:hover{
-        background-color: $btn-hover;
+      color: inherit;
+      width: 100%;
+
+      &:hover {
+        background-color: $btn-backround-color;
       }
     }
   }
+}
 
+.medium-search {
+  left: 0;
+  position: absolute;
+  top: 58px;
+  width: 100%;
+}
 
-nav.nav-extended{
-  height: 70px;
-  padding-left: 10px;
-  .button-collapse{
-    padding-top: 15px;
+#more-recipe {
+
+  a {
+    height: 50px;
+    width: 100%;
   }
+
+  button {
+    color: $black-color;
+    width: 100%;
+
+    &:hover {
+      background-color: $btn-backround-color;
+    }
+  }
+}
+
+.nav-extended {
+  height: 70px;
 }

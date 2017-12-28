@@ -390,21 +390,21 @@
           {
             "in": "formData",
             "name": "description",
-            "description": "recipe name",
+            "description": "recipe description",
             "required": true,
             "type": "string"
           },
           {
             "in": "formData",
             "name": "ingredients",
-            "description": "recipe name",
+            "description": "recipe ingredients",
             "required": true,
             "type": "string"
           },
           {
             "in": "formData",
             "name": "direction",
-            "description": "recipe name",
+            "description": "recipe direction",
             "required": true,
             "type": "string"
           },
@@ -702,21 +702,21 @@
           {
             "in": "formData",
             "name": "description",
-            "description": "recipe name",
+            "description": "recipe description",
             "required": true,
             "type": "string"
           },
           {
             "in": "formData",
             "name": "ingredients",
-            "description": "recipe name",
+            "description": "recipe ingredients",
             "required": true,
             "type": "string"
           },
           {
             "in": "formData",
             "name": "direction",
-            "description": "recipe name",
+            "description": "recipe direction",
             "required": true,
             "type": "string"
           },
