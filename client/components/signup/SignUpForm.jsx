@@ -21,12 +21,13 @@ class SignUpForm extends Component {
       email: '',
       password: '',
       verifyPassword: '',
-      serverErrors: '',
+      serverErrors: this.props.auth.errors,
       validationErrors: '',
     };
   }
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
+    this.isValid();
   }
 
 
@@ -57,9 +58,7 @@ class SignUpForm extends Component {
           <div className="auth-text">
             <h4>Sign Up</h4>
           </div>
-          <div className="input-field s12 center">
-            {this.state.serverErrors && <span className="red-text">{this.state.serverErrors}</span>}
-          </div>
+          {this.state.serverErrors && <span className="red-text center">{this.state.serverErrors}</span>}
           <form className="" onSubmit={this.onSubmit}>
             <div className="input-field col s12">
               <TextField
@@ -69,7 +68,7 @@ class SignUpForm extends Component {
                 onChange={this.onChange}
                 name="username"
                 label="Username"
-                errorClass="errorclass"
+                errorClass="error-class"
                 errorText={validationErrors.username}
               />
             </div>
@@ -81,7 +80,7 @@ class SignUpForm extends Component {
                 onChange={this.onChange}
                 name="email"
                 label="Email"
-                errorClass="errorclass"
+                errorClass="error-class"
                 errorText={validationErrors.email}
               />
             </div>
@@ -94,7 +93,7 @@ class SignUpForm extends Component {
                 name="password"
                 type="password"
                 label="Password"
-                errorClass="errorclass"
+                errorClass="error-class"
                 errorText={validationErrors.password}
               />
             </div>
@@ -106,7 +105,7 @@ class SignUpForm extends Component {
                 onChange={this.onChange}
                 name="verifyPassword"
                 label="Confirm Password"
-                errorClass="errorclass"
+                errorClass="error-class"
                 type="password"
                 errorText={validationErrors.verifyPassword}
               />
@@ -116,7 +115,6 @@ class SignUpForm extends Component {
                 Register
               </button>
             </div>
-
             <div className="login-link right">
               <span>Have login details? <Link to="/signin" href >Login Here</Link></span>
             </div>

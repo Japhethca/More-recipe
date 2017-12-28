@@ -14,7 +14,9 @@ const TextField = props => (
       placeholder={props.placeholder}
     />
     <label htmlFor={props.name} className={props.labelClass}> {props.label}</label>
-    {props.errorText && <span className={props.errorclass}>{props.errorText[0]}</span>}
+    {props.errorText.length > 0 ?
+      <span className={props.errorClass}>{props.errorText[0]}</span>
+    : <span />}
   </div>
 );
 
@@ -24,10 +26,10 @@ TextField.defaultProps = {
   className: '',
   iconClassName: '',
   label: '',
-  errorText: '',
+  errorText: [],
   iconName: '',
   type: 'text',
-  errorclass: 'errorclass',
+  errorClass: '',
   placeholder: '',
   labelClass: ''
 };
@@ -40,9 +42,9 @@ TextField.propTypes = {
   iconClassName: PropTypes.string,
   label: PropTypes.string,
   type: PropTypes.string,
-  errorText: PropTypes.string,
+  errorText: PropTypes.arrayOf(PropTypes.string),
   iconName: PropTypes.string,
-  errorclass: PropTypes.string,
+  errorClass: PropTypes.string,
   placeholder: PropTypes.string,
   labelClass: PropTypes.string
 };

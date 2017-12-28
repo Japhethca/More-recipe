@@ -4,7 +4,7 @@ import Validator from 'validatorjs';
 export function signinValidator(data) {
   const signinRules = {
     email: 'required|email',
-    password: 'required|min:5'
+    password: 'required'
   };
   const validate = new Validator(data, signinRules);
   const errors = {};
@@ -24,7 +24,7 @@ export function signinValidator(data) {
 export function signUpValidator(data) {
   const signinRules = {
     email: 'required|email',
-    password: 'required|min:5',
+    password: 'required',
     username: 'required|min:2',
     verifyPassword: 'required|min:5|same:password'
   };

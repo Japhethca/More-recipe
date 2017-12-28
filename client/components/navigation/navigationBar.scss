@@ -19,7 +19,6 @@ $btn-hover: rgba(255, 255, 0, 0.459);
     button {
       background-color: inherit;
       border: 0;
-      height: 100%;
       color: $nav-color;
       padding: 0 14px;
 
@@ -36,7 +35,6 @@ $btn-hover: rgba(255, 255, 0, 0.459);
   ul {
     li {
       a {
-        height: 100%;
         text-transform: capitalize;
 
         &:hover {
