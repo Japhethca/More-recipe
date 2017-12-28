@@ -716,7 +716,7 @@
           {
             "in": "formData",
             "name": "direction",
-            "description": "recipe direction",
+            "description": "recipe name",
             "required": true,
             "type": "string"
           },

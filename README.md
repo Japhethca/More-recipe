@@ -52,7 +52,7 @@ To test app, simply run:
 
 [More-recipe (Hosted on heroku)](https://more-recipe-cj.herokuapp.com/)
 
-[More-recipe (API docs)](https://morerecipe.docs.apiary.io/#)
+[More-recipe (API docs)](https://more-recipe-cj.herokuapp.com/api/docs)
 
 ### License
 This project is licensed under MIT License, see LICENSE for more info.

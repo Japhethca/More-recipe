@@ -1,9 +1,11 @@
-$footer-bg-color: grey;;
+$footer-bg-color: #808080;
 $footer-color: #fff;
+
 .page-footer {
   background-color: $footer-bg-color;
-  margin-top: 30px;
   height: 100px;
+  margin-top: 30px;
+
   .footer-copyright {
     background-color: $footer-bg-color;
     color: $footer-color;
