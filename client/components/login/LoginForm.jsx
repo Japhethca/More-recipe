@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { signinValidator } from '../../utils/validators';
 import TextField from '../common/TextField';
 import './login_form.scss';
@@ -30,6 +30,7 @@ class LoginForm extends Component {
   }
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
+    this.isValid();
   }
 
   onSubmit = (event) => {
@@ -49,57 +50,47 @@ class LoginForm extends Component {
 
   render() {
     const { validationErrors } = this.state;
-
     if (this.props.auth.isAuthenticated) {
       this.props.history.push('/');
     }
     return (
       <div className="row login-form">
-        <div className="card-panel col s12 m6 offset-m3 l4 offset-l4 z-depth-4">
-          <div className="auth-text">
+        <div className="card-panel col s12 m6 offset-m4 l4 offset-l4 z-depth-4">
+          <div className="header-text">
             <h4>Log In</h4>
           </div>
-          <div className="input-field s12 center">
-            {this.state.serverErrors && <span className="red-text align-center" > {this.state.serverErrors} </span> }
-          </div>
-
+          {this.state.serverErrors && <span className="red-text center" > {this.state.serverErrors} </span> }
           <form className="" onSubmit={this.onSubmit}>
-            <div className="row" >
-              <div className="input-field col s12 m12">
-                <TextField
-                  iconClassName="material-icons prefix"
-                  iconName="person"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  name="email"
-                  labelClassName="active"
-                  label="Email"
-                  errorClass="error-text"
-                  errorText={validationErrors.email}
-                />
-              </div>
+            <div className="input-field col s12 m12">
+              <TextField
+                iconClassName="material-icons prefix"
+                iconName="person"
+                value={this.state.email}
+                onChange={this.onChange}
+                name="email"
+                labelClassName="active"
+                label="Email"
+                errorClass="error-class"
+                errorText={validationErrors.email}
+              />
             </div>
-            <div className="row" >
-              <div className="input-field col s12 m12">
-                <TextField
-                  iconClassName="material-icons prefix"
-                  iconName="lock"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  name="password"
-                  type="password"
-                  labelClassName="active"
-                  label="Password"
-                  errorClass="error-text"
-                  errorText={validationErrors.password}
-                />
-              </div>
+            <div className="input-field col s12 m12">
+              <TextField
+                iconClassName="material-icons prefix"
+                iconName="lock"
+                value={this.state.password}
+                onChange={this.onChange}
+                name="password"
+                type="password"
+                labelClassName="active"
+                label="Password"
+                errorClass="error-class"
+                errorText={validationErrors.password}
+              />
             </div>
-            <div className="row">
-              <div className="input-field col s12">
-                <button className="btn-large sign-up-btn" type="submit">Login
-                </button>
-              </div>
+            <div className="input-field col s12">
+              <button className="btn-large login-btn" type="submit">Login
+              </button>
             </div>
             <div className="sign-up-link">
               <span> Have an Account? <Link to="/signup" href="/signup"> Sign Up Here </Link></span>

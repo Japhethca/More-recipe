@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import getRecipes from '../actions/requestHandlers/getAllRecipes';
 import getFavorites from '../actions/requestHandlers/handleUserFavorites';
 import Recipes from '../components/recipe/Recipes';
-
+import '../styles/sass/index.scss';
 
 const propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -16,8 +16,8 @@ const propTypes = {
 };
 
 const Home = props => (
-  <div>
-    <div className="content">
+  <div className="wrapper">
+    <div className="content" id="main">
       <Recipes
         history={props.history}
         recipes={props.recipes}

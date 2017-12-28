@@ -1,19 +1,41 @@
 
-body{
+body {
   background-color: #efefef;
 }
 
-p,div,span,li,a,pre{
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#main {
+  flex: 1 0 auto;
+}
+
+p,
+div,
+span,
+li,
+a,
+pre { 
   
   font-family: 'Roboto', sans-serif;
 }
-h1,h2,h3,h4,h5,h6{
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Domine', serif;
 }
 
-.container{
+.container {
   width: 90%;
 }
+
 .modeified-container {
   @extend .container;
 }

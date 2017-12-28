@@ -1,52 +1,70 @@
-$nav-background-color: rgba(78, 31, 31, 0.877);
-$btn-color: 562624;
-$btn-hover-color: BD8E8C; 
+$header-bg-color: #ffe400;
+$header-text-color: #090804;
+
+$border-color: #222;
+$btn-bg-color: #fff;
+$btn-color: #090804;
+
+$btn-hover-bg-color: #222;
+$btn-hover-color: #ffe400;
+$link-hover-color: #a6dc00;
+$link-color: darken($link-hover-color, 10);
+$error-txt-color: #ff0000;
 
 .login-form {
-  margin-top: 30px;
+  margin-top: 100px;
 
-  .auth-text {
-    background-color: $nav-background-color;
+  .header-text {
+    background-color: $header-bg-color;
     margin: 10px -12px;
     margin-top: -5px;
     padding: 10px;
-    color: white;
+    color: $header-text-color;
   }
 
-  .error-text {
+  .error-class {
     font-size: small;
     margin-left: 42px;
-    color: red;
+    color: $error-txt-color;
   }
+
   form {
     padding-left: 10px;
     padding-right: 10px;
   }
-  .sign-up-btn {
-    background-color: $btn-color;
-    color: #fff;
-    width: 100%;
+
+  .login-btn {
+    background-color: $btn-bg-color;
+    border: 2px $border-color solid;
     border-radius: 15px;
+    color: $btn-color;
+    font-size: 20px;
+    width: 100%;
+
     &:hover{
-      background-color:$btn-hover-color;
-      color: white;
-    }
-    
-  }
-  .sign-up-link {
-    margin-bottom: 5px;
-    float: right;
-    padding-bottom: 15px;
-    & a{
+      background-color: $btn-hover-bg-color;
       color: $btn-hover-color;
     }
-    & a:hover{
-      color: $btn-color;
-      text-decoration: underline;
+  }
+
+  .sign-up-link {
+    float: right;
+    font-size: 20px;
+    margin: 15px auto;
+
+    a {
+      color: $link-color;
+
+      &:hover {
+        color: $link-hover-color;
+        text-decoration: underline;
+      }
     }
   }
+
   .input-field .prefix ~ input {
     margin-bottom: 0px;
+    padding-top: 10px;
   }
 }
 
