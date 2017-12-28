@@ -4,11 +4,10 @@ import './footer.scss';
 const Footer = () => (
   <div>
     <footer className="page-footer">
-      <div className="footer-copyright">
-        <div className="container center">
+      <p className="footer-copyright">
             © 2017 More Recipe
-        </div>
-      </div>
+            Designed By Chidex
+      </p>
     </footer>
   </div>
 );

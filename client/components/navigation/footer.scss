@@ -1,15 +1,17 @@
-@import 'navigationBar';
+$footer-bg-color: #808080;
+$footer-color: #fff;
 
-footer{
-  flex: 0 auto;
-}
-footer.page-footer{
-  background-color: $nav-background-color;
-}
-footer.container{
-  padding-bottom: 5px;
-}
+.page-footer {
+  background-color: $footer-bg-color;
+  height: 100px;
+  margin-top: 30px;
 
-.footer-text {
-  padding-bottom: 10px;
+  .footer-copyright {
+    background-color: $footer-bg-color;
+    color: $footer-color;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    text-align: center;
+  }
 }
