@@ -5,7 +5,7 @@ import ReduxToastr from 'react-redux-toastr';
 import NavigationBar from '../components/navigation/NavigationBar';
 import Footer from '../components/navigation/Footer';
 import Home from './Home';
-import Profile from './profile';
+import Dashboard from './Dashboard';
 import RecipeDetailsPage from './RecipeDetailsPage';
 import Authenticate from '../components/common/Authenticate';
 import SearchResultPage from './SearchResultPage';
@@ -30,7 +30,7 @@ const App = () => (
         <Route path="/" exact component={Authenticate(Home)} />
         <Route path="/recipe/:nameId" exact component={Authenticate(RecipeDetailsPage)} />
         <Route path="/search/:query" exact component={Authenticate(SearchResultPage)} />
-        <Profile />
+        <Dashboard />
       </Switch>
     </div>
     <Footer />

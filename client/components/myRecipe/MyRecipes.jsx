@@ -4,7 +4,6 @@ import qs from 'qs';
 
 import Recipe from '../recipe/Recipe';
 import Pagination from '../common/Pagination';
-import './my_recipes_page.scss';
 
 
 const propTypes = {
@@ -60,7 +59,7 @@ class MyRecipes extends Component {
               </li>))
           }
         </ul>
-        <Pagination baseURL="/myrecipes" />
+        <Pagination baseURL="/my-recipes" />
       </div>
     );
   }

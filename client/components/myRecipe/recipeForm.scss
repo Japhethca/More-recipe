@@ -1,0 +1,62 @@
+$border-color: rgb(17, 110, 110);
+$red-color: red;
+$btn-color: #fff;
+$btn-bg-color: grey;
+$btn-hover-bg-color: darken($btn-bg-color, 5);
+
+.card {
+  margin: 10px;
+  padding: 10px;
+
+  .header {
+    margin-bottom: 30px;
+  }
+  .image-class {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    clear: both;
+    height: 150px;
+    width: 150px;
+  }
+
+  input[type=file] {
+    display: flex;
+    flex-direction: column;
+    border: 3px $border-color solid;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px auto;
+  }
+
+
+  .error-text {
+    font-size: small;
+    color: $red-color;
+  }
+
+  input[type=text]:not(.browser-default) {
+    margin-bottom: 0px;
+  }
+}
+
+.input-btn {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+
+  .submit-btn {
+    border-radius: 10px;
+    color: $btn-color;
+    border: 1px $btn-color solid;    
+    background-color: $btn-bg-color;
+    padding: 10px 60px;
+    margin: 10px 20px;
+    font-size: 20px;
+  
+    &:hover {
+      background-color: $btn-hover-bg-color;
+    }
+    
+  }
+}
