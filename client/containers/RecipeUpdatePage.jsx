@@ -1,29 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import Footer from '../components/navigation/Footer';
-import RecipeUpdate from '../components/myRecipe/RecipeUpdate';
-import handleRecipeUpdate from '../actions/requestHandlers/handleRecipeUpdate';
+import RecipeUpdate from '../components/myRecipe/RecipeForm';
 
 
 const propTypes = {
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleRecipeUpdate: PropTypes.func.isRequired
 };
 
-const RecipeUpdatePage = props => (
-  <div>
-    <div className="container">
-      <RecipeUpdate
-        history={props.history}
-        handleRecipeUpdate={props.handleRecipeUpdate}
-      />
+const RecipeUpdatePage = (props) => {
+  if (!props.location.state) {
+    props.history.push('/my-recipes');
+  }
+  return (
+    <div>
+      <div className="container">
+        <RecipeUpdate
+          title="Update Recipe"
+          type="update"
+          recipe={props.location.state}
+        />
+      </div>
     </div>
-    {/* <Footer /> */}
-  </div>
-);
+  );
+};
 
 
 RecipeUpdatePage.propTypes = propTypes;
 
-export default connect(null, { handleRecipeUpdate })(RecipeUpdatePage);
+export default RecipeUpdatePage;

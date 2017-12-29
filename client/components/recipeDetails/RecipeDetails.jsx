@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import ReactHtmlParser from 'react-html-parser';
 
 import './recipe_details.scss';
 import Reviews from '../review/ReviewsComponent';
@@ -39,11 +40,6 @@ class RecipeDetails extends Component {
     }
   }
 
-  displayList = (items) => {
-    const listItems = _.split(items, ',');
-    return listItems;
-  }
-
   render() {
     const {
       name, ingredients, description, direction, image, author
@@ -74,17 +70,13 @@ class RecipeDetails extends Component {
 
           </div>
           <div className="col s12 m6">
-            <div>
-              <h4 className="heading"> Ingredients </h4>
-              <ol>
-                {this.displayList(ingredients).map(item => (<li key={item}>{item}</li>))}
-              </ol>
+            <div className="recipe-items">
+              <h4> Ingredients </h4>
+              {ReactHtmlParser(ingredients)}
             </div>
-            <div >
-              <h4 className="heading"> Directions </h4>
-              <ol>
-                {this.displayList(direction).map(item => (<li key={item}>{item}</li>))}
-              </ol>
+            <div className="recipe-items">
+              <h4> Directions </h4>
+              {ReactHtmlParser(direction)}
             </div>
           </div>
         </div>

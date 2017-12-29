@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import MyRecipes from '../components/myRecipe/MyRecipes';
 import handleDeleteRecipe from '../actions/requestHandlers/handleDeleteRecipe';
 import getMyRecipes from '../actions/requestHandlers/getMyRecipes';
-import '../components/myRecipe/my_recipes_page.scss';
 
 
 const propTypes = {

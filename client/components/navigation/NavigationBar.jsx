@@ -57,7 +57,7 @@ class NavigationBar extends Component {
   renderSideNavLinks = (id, className) => (
     <ul id={id} className={className} >
       <li><NavLink to="/profile">Profile</NavLink></li>
-      <li><NavLink to="/myrecipes">My Recipes</NavLink></li>
+      <li><NavLink to="/my-recipes">My Recipes</NavLink></li>
       <li ><NavLink to="/favorites">Favorites</NavLink></li>
       <li ><button onClick={this.onClick}>Logout <i className="material-icons">exit_to_app</i></button></li>
     </ul>
@@ -86,7 +86,7 @@ class NavigationBar extends Component {
         </ul>
         <ul className="nav-mobile hide-on-small-only right">
           <li className="nav-search hide-on-med-and-down"><SearchForm history={this.props.history} /></li>
-          <li><NavLink to="/new-recipe" href="/new-recipe" activeClassName="active-link"><i className="material-icons large">add</i></NavLink></li>
+          <li><NavLink to="/create" href="create" activeClassName="active-link"><i className="material-icons large">add</i></NavLink></li>
           <li>
             <NavLink
               className="dropdown-button"

@@ -1,32 +1,49 @@
 .recipe-details {
-  h2,h4 {
+
+  h2,
+  h4 {
     text-transform: capitalize;
   }
-  .description-text {
-    text-align: center;
-  }
-  button{
+
+  button {
     border: none;
-    background-color: transparent
-  }
-  button:focus{
     background-color: transparent;
+
+    &:focus {
+      background-color: transparent;
+    }
   }
-  .heading{
+
+  .heading {
     padding-left: 20px;
   }
-  .h-line{
+
+  .h-line {
     height: 1px;
     margin-bottom: 10px;
     outline: none;
   }
-  .recipe-title{
+
+  .recipe-title {
     padding-top: 30px;
   }
 }
+
 .recipe-not-found {
   text-align: center;
-  &h4{
+
+  h4 {
     text-align: center;
   }  
+}
+
+.recipe-items {
+  ul {
+    margin-left: 40px;
+
+    li {
+      list-style-image: url("../../images/recipe-list_1_.png");
+      text-transform: capitalize;
+    }
+  }
 }
