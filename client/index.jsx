@@ -33,7 +33,7 @@ render(
   (
 
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter forceRefresh>
         <Switch>
           <Route path="/signin" exact component={LoginPage} />
           <Route path="/signup" exact component={SignUpPage} />
