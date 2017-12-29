@@ -80,6 +80,18 @@ class RecipeForm extends Component {
     return isValid;
   }
 
+  renderEditorFor = (inputName, heading, validator) => (
+    <div>
+      <h5>{heading}</h5>
+      { validator && <span className="error-text"> { validator[0] }</span> }
+      <TinyMCE
+        content={this.state[inputName]}
+        config={this.editorConfig}
+        onChange={this.handleEditorChange}
+        name={inputName}
+      />
+    </div>
+  )
   render() {
     const { validationErrors } = this.state;
     return (
@@ -107,29 +119,11 @@ class RecipeForm extends Component {
               <label htmlFor="description" > Description </label>
               {validationErrors.description && <span className="error-text"> { validationErrors.description[0] }</span>}
             </div>
-            <div>
-              <h5>Ingredients</h5>
-              {validationErrors.ingredients && <span className="error-text"> { validationErrors.ingredients[0] }</span>}
-              <TinyMCE
-                content={this.state.ingredients}
-                config={this.editorConfig}
-                onChange={this.handleEditorChange}
-                name="ingredients"
-              />
-            </div>
-            <div>
-              <h5>Directions</h5>
-              {validationErrors.direction && <span className="error-text"> { validationErrors.direction[0] }</span>}
-              <TinyMCE
-                content={this.state.direction}
-                config={this.editorConfig}
-                onChange={this.handleEditorChange}
-                name="direction"
-              />
-            </div>
+            {this.renderEditorFor('ingredients', 'Ingredients', validationErrors.ingredients)}
+            {this.renderEditorFor('direction', 'Directions', validationErrors.direction)}
             <hr />
             <div>
-              <input type="file" onChange={this.onChange} name="image" accept=".jpg, .jpeg, .png" />
+              <input type="file" className="input-file" onChange={this.onChange} name="image" accept=".jpg, .jpeg, .png" />
               <img
                 id="img1"
                 src={this.state.image ||

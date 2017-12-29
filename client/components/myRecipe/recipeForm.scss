@@ -1,7 +1,7 @@
 $border-color: rgb(17, 110, 110);
-$red-color: red;
+$red-color: #ff0000;
 $btn-color: #fff;
-$btn-bg-color: grey;
+$btn-bg-color: #808080;
 $btn-hover-bg-color: darken($btn-bg-color, 5);
 
 .card {
@@ -11,32 +11,33 @@ $btn-hover-bg-color: darken($btn-bg-color, 5);
   .header {
     margin-bottom: 30px;
   }
+
   .image-class {
+    clear: both;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
-    clear: both;
     height: 150px;
+    margin: 0 auto;
     width: 150px;
   }
 
-  input[type=file] {
-    display: flex;
-    flex-direction: column;
+  .input-file {
     border: 3px $border-color solid;
     border-radius: 5px;
-    padding: 5px;
+    display: flex;
+    flex-direction: column;
     margin: 10px auto;
+    padding: 5px;
   }
 
 
   .error-text {
-    font-size: small;
     color: $red-color;
+    font-size: small;
   }
 
   input[type=text]:not(.browser-default) {
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 }
 
@@ -46,17 +47,17 @@ $btn-hover-bg-color: darken($btn-bg-color, 5);
   margin: 0 auto;
 
   .submit-btn {
+    background-color: $btn-bg-color;
+    border: 1px $btn-color solid;
     border-radius: 10px;
     color: $btn-color;
-    border: 1px $btn-color solid;    
-    background-color: $btn-bg-color;
-    padding: 10px 60px;
-    margin: 10px 20px;
     font-size: 20px;
-  
+    margin: 10px 20px;
+    padding: 10px 60px;
+
     &:hover {
       background-color: $btn-hover-bg-color;
     }
-    
   }
 }
+
