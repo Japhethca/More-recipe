@@ -15,7 +15,7 @@ $search-border-color: rgb(128, 128, 128);
     padding: 0 5px;
     font-size: 18px;
 
-    @media only screen 
+    @media only screen
       and (min-device-width: 768px) 
       and (max-device-width: 1366px) 
       and (-webkit-min-device-pixel-ratio: 1) {
@@ -24,7 +24,7 @@ $search-border-color: rgb(128, 128, 128);
         height: 50px;
     }
 
-    @media only screen 
+    @media only screen
       and (min-device-width: 320px) 
       and (max-device-width: 480px)
       and (-webkit-min-device-pixel-ratio: 2) {
@@ -41,14 +41,14 @@ $search-border-color: rgb(128, 128, 128);
       border: 0;
       background-color: $search-active-bg-color;
 
-      @media only screen 
+      @media only screen
       and (min-device-width: 768px) 
       and (max-device-width: 1366px) 
       and (-webkit-min-device-pixel-ratio: 1) {
         width: 100vw;
       }
 
-      @media only screen 
+      @media only screen
       and (min-device-width: 320px) 
       and (max-device-width: 480px)
       and (-webkit-min-device-pixel-ratio: 2) {
@@ -59,8 +59,8 @@ $search-border-color: rgb(128, 128, 128);
   }
 
   input[type=search]:not(.browser-default):focus:not([readonly]) {
-    box-shadow: 0;
     border-bottom: 0;
     -webkit-box-shadow: 0;
+    box-shadow: 0;
   }
 }

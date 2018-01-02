@@ -9,7 +9,6 @@ import {
   isTokenValid, LoginPage, LandingPage, SignupPage,
   setAuthorization } from './authentication';
 import store from './store/configureStore';
-import { getAllRecipes } from './home/actions';
 import App from './app/App';
 
 

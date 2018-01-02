@@ -1,6 +1,7 @@
+$bg-color: rgb(248, 247, 245);
 
 body {
-  background-color: rgb(248, 247, 245);
+  background-color: $bg-color;
 }
 
 .wrapper {

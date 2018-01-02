@@ -1,10 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-// import PreLoader from 'react-loaders';
-// import './loader.scss';
 
-
-const Loader = props => (
+const Loader = () => (
   <div className="loader-class">
     <div className="preloader-wrapper active">
       <div className="spinner-layer spinner-red-only">
