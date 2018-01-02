@@ -1,48 +1,53 @@
+$pagination-bg-color-link: #393030;
+$white-color: #fff;
+$browb-color: rgb(165, 43, 43);
+
 .pag-list {
 
   li {
-    display: inline;
-    padding: 10px;
     border-radius: 3px;
+    display: inline;
     margin: 0 4px;
+    padding: 10px;
   }
 }
 .pagination li a {
-  color: #393030;
+  color: $pagination-bg-color-link;
   display: inline-block;
   font-size: 1.2rem;
-  padding: 0 10px;
   line-height: inherit;
+  padding: 0 10px;
 }
 .link {
   cursor: pointer;
 
   &:focus {
-    border: 0;
     background-color: inherit;
+    border: 0;
     outline: 0;
   }
 }
 
 .page-class {
-  color: #fff;
+  color: $white-color;
 }
 
 .active-page {
-  color: #fff;
-  background-color: brown;
+  background-color: $browb-color;
+  color: $white-color;
+
   &:focus {
     border: 0;
   }
 }
 
 .link + .active-page {
-  color: #fff;
+  color: $white-color;
 }
 
 .next-prev {
 
-  border: 1px brown solid;
+  border: 1px $browb-color solid;
   cursor: pointer;
 
   a:focus {

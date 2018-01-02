@@ -21,8 +21,10 @@ const ProfileView = ({ profile }) => (
       </div>
       <div className="col s12 m6 l8">
         <h3>{profile.username}</h3><div>({profile.email})</div>
-        {profile.firstname ? <div>{profile.firstname} {profile.lastname}</div> : <div>Add real name</div>}
-        {profile.aboutme ? <div>{profile.aboutme}</div> : <div>add about me</div>}
+        {profile.firstname ?
+          <div>{profile.firstname} {profile.lastname}</div> : <div>Add real name</div>}
+        {profile.aboutme ?
+          <div>{profile.aboutme}</div> : <div>add about me</div>}
       </div>
     </div>
   </div>

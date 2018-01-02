@@ -11,12 +11,13 @@ $button-color: rgb(41, 16, 16);
     margin: 5px;
     padding-left: 4px;
   }
-} 
+}
 
 .btn-list {
   padding-left: 20px;
   text-justify: distribute-all-lines;
   text-align: center;
+
     li {
     display: inline-block;
     list-style-type: none;
@@ -29,8 +30,7 @@ $button-color: rgb(41, 16, 16);
       background-color: #fff;
     }
   }
-} 
+}
 .favorite {
   color: red;
-  
 }

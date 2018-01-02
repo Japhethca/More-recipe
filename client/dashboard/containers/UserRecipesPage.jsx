@@ -39,7 +39,9 @@ class UserRecipesPage extends Component {
           recipes={this.state.userRecipes}
           noItemText="No recipes, click 'Add Recipe' to create recipe"
         />
-        { this.state.userRecipes.length > 0 && <Pagination handlePagination={this.handlePagination} />}
+        { this.state.userRecipes.length > 0 &&
+        <Pagination handlePagination={this.handlePagination} />
+        }
       </div>
     );
   }

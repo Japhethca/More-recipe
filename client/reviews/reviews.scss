@@ -29,9 +29,9 @@ $user-text-color: blue;
 
 .review-form {
   margin: 20px 10px;
-  
+
   .review-input {
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 
     textarea {
       border: 1px $textarea-border-color solid;
@@ -65,10 +65,10 @@ $user-text-color: blue;
 
 .single-review {
   background-color: $review-bg-color;
-  color: $review-color;
-  padding: 10px 5px;
   border-radius: 5px;
+  color: $review-color;
   margin: 5px auto;
+  padding: 10px 5px;
 
   .meta-date {
     font-family: 'Ubuntu', sans-serif;

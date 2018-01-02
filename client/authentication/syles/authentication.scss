@@ -10,30 +10,30 @@ $grey-color: grey;
 
 $btn-hover-bg-color: rgb(223, 63, 63);
 $btn-hover-color: #fff;
-$link-hover-color: #a6dc00;
+$link-hover-color: #60A39A;
 $link-color: darken($link-hover-color, 10);
 $error-txt-color: #ff0000;
 
 .auth-form {
-  padding-top: 10vh;
   border-radius: 10px;
+  padding-top: 10vh;
 
   .header-text {
     background-color: $header-bg-color;
-    margin: 10px -12px;
-    margin-top: -5px;
-    padding: 10px;
     color: $header-text-color;
+    margin: 0 -12px;
+    margin-bottom: 15px;
+    padding: 10px;
   }
 
   .error-class {
+    color: $error-txt-color;
     font-size: small;
     margin-left: 42px;
-    color: $error-txt-color;
   }
 
   form {
-    border-radius: 15px;    
+    border-radius: 15px;
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -44,6 +44,7 @@ $error-txt-color: #ff0000;
     border-radius: 15px;
     color: $btn-color;
     font-size: 20px;
+    margin-top: 10px;
     width: 100%;
 
     &:hover{
@@ -54,7 +55,7 @@ $error-txt-color: #ff0000;
 
   .auth-link {
     float: right;
-    font-size: 20px;
+    font-size: 15px;
     margin: 15px auto;
 
     a {
