@@ -46,6 +46,7 @@ const getRecipes = recipes => ({
 /**
  * @export
  * @param {object} page
+ * @param {object} limit
  * @returns {Object} - returns an axios promise
  */
 export const getAllRecipes = (page = 1, limit = 8) => (dispatch) => {

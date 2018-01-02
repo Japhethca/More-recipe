@@ -1,3 +1,7 @@
+$hr-line-color: #333;
+$hr-line-color-2: #ccc;
+$recipe-items-header-color: #a52a2a;
+
 .recipe-details {
   p,
   span,
@@ -5,7 +9,7 @@
   ol,
   ul,
   li {
-    font-family: 'Merriweather Sans', sans-serif;   
+    font-family: 'Merriweather Sans', sans-serif;
   }
 
   h2,
@@ -14,8 +18,8 @@
   }
 
   button {
-    border: none;
     background-color: transparent;
+    border: 0;
 
     &:focus {
       background-color: transparent;
@@ -23,34 +27,34 @@
   }
 
   .description-text {
-    text-align: center;
     font-size: 15px;
+    text-align: center;
   }
 
   hr.hr-header {
+    background: $hr-line-color;
+    background-image: linear-gradient(to right, $hr-line-color-2, $hr-line-color, $hr-line-color-2);
     border: 0;
     height: 1px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
   }
 
   hr.hr-line {
+    background-image: linear-gradient(to right, $hr-line-color-2, $hr-line-color, $hr-line-color-2);
+    background: $hr-line-color;
     border: 0;
     height: 1px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
-}
+  }
 
   .recipe-title {
-    padding-top: 30px;
     font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
+    padding-top: 30px;
 
-    @media only screen 
-      and (min-device-width: 320px) 
-      and (max-device-width: 480px)
-      and (-webkit-min-device-pixel-ratio: 2) {
-        text-align: center;
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 480px)
+    and (-webkit-min-device-pixel-ratio: 2) {
+      text-align: center;
     }
   }
 }
@@ -58,7 +62,7 @@
 
 .recipe-items {
   h4 {
-    color: brown;
+    color: $recipe-items-header-color;
   }
 
   ol {
@@ -66,9 +70,9 @@
   }
 
   ul {
-    margin-left: 40px;
     font-size: 20px;
-    
+    margin-left: 40px;
+
     li {
       list-style-type: square;
       text-transform: capitalize;

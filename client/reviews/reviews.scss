@@ -11,8 +11,8 @@ $btn-bg-color: #fff;
 
 $no-reviews-color: rgb(156, 136, 136);
 $review-bg-color: #fff;
-$review-color: grey;
-$user-text-color: blue;
+$review-color: #808080;
+$user-text-color: #0000ff;
 
 
 .review-list {
@@ -20,41 +20,41 @@ $user-text-color: blue;
     color: $no-reviews-color;
     display: flex;
     flex-direction: column;
-    font-size: 30px;
-    text-align: center;
     font-family: 'Merriweather Sans', sans-serif;
+    font-size: 30px;
     font-style: italic;
+    text-align: center;
   }
 }
 
 .review-form {
   margin: 20px 10px;
-  
+
   .review-input {
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 
     textarea {
-      border: 1px $textarea-border-color solid;
+      background-color: $text-area-bg-color;
       border-radius: 5px;
+      border: 1px $textarea-border-color solid;
+      color: $text-area-text-color;
       height: 50px;
       padding: 5px;
       resize: none;
-      background-color: $text-area-bg-color;
-      color: $text-area-text-color;
 
       &:focus {
-        outline:0;
+        outline: 0;
         height: 70px;
       }
     }
   }
 
   .btn-class {
-    width: 150px;
-    border: 1px $btn-border-color solid;
-    color: $btn-color;
     background-color: $btn-bg-color;
     border-radius: 5px;
+    border: 1px $btn-border-color solid;
+    color: $btn-color;
+    width: 150px;
 
     &:hover {
       font-weight: bolder;
@@ -65,10 +65,10 @@ $user-text-color: blue;
 
 .single-review {
   background-color: $review-bg-color;
-  color: $review-color;
-  padding: 10px 5px;
   border-radius: 5px;
+  color: $review-color;
   margin: 5px auto;
+  padding: 10px 5px;
 
   .meta-date {
     font-family: 'Ubuntu', sans-serif;
@@ -81,7 +81,7 @@ $user-text-color: blue;
   }
 
   .review-content {
-    color: grey;
+    color: $review-color;
   }
 
 

@@ -4,7 +4,7 @@ import ReduxToastr from 'react-redux-toastr';
 
 import NavigationBar from '../common/NavigationBar';
 import Footer from '../common/Footer';
-import Authenticate, { LoginPage, LandingPage, SignupPage } from '../authentication';
+import Authenticate from '../authentication';
 import Home from '../home';
 import Dashboard from '../dashboard';
 import { SingleRecipePage } from '../recipes';

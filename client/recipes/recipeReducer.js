@@ -147,7 +147,7 @@ export default (state = initialState, action) => {
       return { ...state, userRecipes: action.userRecipes };
 
     case REMOVE_FROM_FAVORITES:
-      return { ...state, favorites: state.favorites.filter(recipe => recipe.id !== action.id) };
+      return { ...state, favorites: state.favorites.filter(favorite => favorite.id !== action.id) };
     case NOT_FOUND:
       return {
         ...state, NotFound: action.status
