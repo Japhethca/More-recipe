@@ -1,0 +1,127 @@
+$side-bar-color: rgb(224, 220, 220);
+$side-bar-font: 20px;
+$side-bar-bg-color: rgb(223, 63, 63);
+$side-bar-width: 10%;
+$active-color: #fff;
+
+$profile-cover-bg-color: #E4E6EA;
+
+$error-txt-color: rgb(223, 63, 63);
+
+$update-btn-color: white;
+$update-btn-bg-color: rgb(9, 9, 63);
+$update-btn-hover-color: darken($update-btn-bg-color, 10);
+
+img {
+  max-height: 400px;
+  max-width: 300px;
+  align-items: center;
+}
+
+
+.profile-form {
+
+  .error-text {
+    font-size: small;
+    margin-left: 42px;
+    color: $error-txt-color;
+  }
+
+  .input-field .prefix ~ input {
+    margin-bottom: 0px;
+  }
+}
+
+.profile-cover {
+  background-color: $profile-cover-bg-color;
+  margin-bottom: 2;
+  border-radius: 5px;
+  margin-top: 10px;
+
+  .update-btn {
+    color: $update-btn-color;
+    background-color: $update-btn-bg-color;
+    padding: 10px;
+
+    &:hover {
+      background-color: $update-btn-hover-color
+
+    }
+  }
+  
+  .profile-image {
+    display: flex;
+    flex-direction: column;
+    margin: 0 16px;
+    height: 180px;
+    width: 180px;
+    padding: 10px;
+
+      @media only screen 
+      and (min-device-width: 320px) 
+      and (max-device-width: 480px)
+      and (-webkit-min-device-pixel-ratio: 2) {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+      }  
+  }
+}
+
+.container .row {
+  margin-left: 0rem;
+  margin-right: 0rem;
+}
+
+.sidebar {
+  background-color: $side-bar-bg-color;
+  display: flex;
+  padding-left: 50px;
+  flex-direction: column;
+  font-size: $side-bar-font;
+  margin-top: 10px;
+
+  .side-bar-link {
+    a {
+      color: #E4E6EA;
+
+      &:hover {
+        color: lighten($active-color, .6);
+        font-weight: bolder;
+      }
+    }
+  }
+
+  h5 {
+    margin-top: 30px;
+    color: #fff;
+  }
+
+  .user {
+    text-align: center;
+  }
+
+  .img {
+    border-radius: 20px;
+    margin: 0 auto;
+    padding-top: 10px;
+  }
+
+  ul {
+    li {
+      line-height: 35px;
+      margin-left: 10px;
+      text-align: left;
+    }
+
+    .active {
+      color: $active-color;
+      font-weight: bolder;
+    }
+  }
+}
+
+.content {
+
+
+}

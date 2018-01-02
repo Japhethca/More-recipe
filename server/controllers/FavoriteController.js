@@ -16,7 +16,7 @@ export const getUserFavorites = (request, response) => {
   const page = parseInt(request.query.page, 10) || 1;
   const offset = page !== 1 ? limit * (page - 1) : null;
 
-  Favorites.findAll({
+  Favorites.findAndCountAll({
     limit,
     offset,
     where: {
@@ -37,8 +37,8 @@ export const getUserFavorites = (request, response) => {
       }
     ]
   })
-    .then((favorites) => {
-      if (favorites.length < 1) {
+    .then((result) => {
+      if (result.rows.length < 1) {
         response.status(404).json({
           status: 'failed',
           message: 'User has no favorites'
@@ -47,7 +47,8 @@ export const getUserFavorites = (request, response) => {
         response.status(200).json({
           status: 'success',
           message: `${request.decoded.user} Favorite recipes`,
-          favorites
+          count: result.count,
+          favorites: result.rows
         });
       }
     })

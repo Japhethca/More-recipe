@@ -1,0 +1,51 @@
+.pag-list {
+
+  li {
+    display: inline;
+    padding: 10px;
+    border-radius: 3px;
+    margin: 0 4px;
+  }
+}
+.pagination li a {
+  color: #393030;
+  display: inline-block;
+  font-size: 1.2rem;
+  padding: 0 10px;
+  line-height: inherit;
+}
+.link {
+  cursor: pointer;
+
+  &:focus {
+    border: 0;
+    background-color: inherit;
+    outline: 0;
+  }
+}
+
+.page-class {
+  color: #fff;
+}
+
+.active-page {
+  color: #fff;
+  background-color: brown;
+  &:focus {
+    border: 0;
+  }
+}
+
+.link + .active-page {
+  color: #fff;
+}
+
+.next-prev {
+
+  border: 1px brown solid;
+  cursor: pointer;
+
+  a:focus {
+    outline: 0;
+  }
+}

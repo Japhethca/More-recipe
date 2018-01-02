@@ -1,0 +1,2 @@
+export const EDIT_USER_PROFILE = 'EDIT_USER_PROFILE';
+export const GET_USER_PROFILE = 'GET_USER_PROFILE';
