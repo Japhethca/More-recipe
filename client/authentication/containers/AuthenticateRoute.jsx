@@ -11,12 +11,12 @@ export default (WrappedComponent) => {
   class Authenticate extends Component {
     componentWillMount() {
       if (!this.props.isAuthenticated) {
-        this.props.history.push('/landing');
+        this.props.history.push('/');
       }
     }
     componentWillUpdate() {
       if (!this.props.isAuthenticated) {
-        this.props.history.push('/landing');
+        this.props.history.push('/');
       }
     }
     render() {

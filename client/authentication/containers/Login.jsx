@@ -41,6 +41,8 @@ class Login extends Component {
     const { errors, isValid } = signinValidator(this.state);
     if (!isValid) {
       this.setState({ validationErrors: errors });
+    } else {
+      this.setState({ validationErrors: {} });
     }
     return isValid;
   }
@@ -49,7 +51,7 @@ class Login extends Component {
     const formData = { email: this.state.email, password: this.state.password };
 
     if (this.props.authentication.isAuthenticated) {
-      this.props.history.push('/');
+      this.props.history.push('/recipes');
     }
     return (
       <div>

@@ -85,7 +85,7 @@ const SignupForm = (props) => {
 SignupForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  serverErrors: PropTypes.arrayOf(PropTypes.any).isRequired,
+  serverErrors: PropTypes.string.isRequired,
   validationErrors: PropTypes.objectOf(PropTypes.any).isRequired,
   formData: PropTypes.objectOf(PropTypes.any).isRequired
 };

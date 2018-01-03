@@ -37,6 +37,8 @@ class Signup extends Component {
     const { errors, isValid } = signUpValidator(this.state);
     if (!isValid) {
       this.setState({ validationErrors: errors });
+    } else {
+      this.setState({ validationErrors: {} });
     }
     return isValid;
   }
@@ -50,7 +52,7 @@ class Signup extends Component {
     };
 
     if (this.props.authentication.isAuthenticated) {
-      this.props.history.push('/');
+      this.props.history.push('/recipes');
     }
 
     return (

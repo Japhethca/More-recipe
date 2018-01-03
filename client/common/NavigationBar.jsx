@@ -46,7 +46,7 @@ class NavigationBar extends Component {
 
   onClick = () => {
     this.props.logout();
-    this.props.history.push('/landing');
+    this.props.history.push('/');
   }
 
   toggleSearch = () => {
@@ -117,7 +117,7 @@ class NavigationBar extends Component {
           <div className="nav-wrapper">
             <div className="container-fluid">
               <NavLink
-                to="/"
+                to="/recipes"
                 id="brand-logo"
                 className="brand-logo"
               >

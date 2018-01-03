@@ -20,7 +20,7 @@ class SingleRecipePage extends Component {
 
   componentDidMount() {
     if (this.id === undefined || !this.props.recipe || this.state.notFound) {
-      this.props.history.push('/');
+      this.props.history.push('/recipes');
     }
     this.props.getRecipe(this.id);
   }
@@ -30,7 +30,7 @@ class SingleRecipePage extends Component {
       this.setState({ recipe: nextProps.recipe });
     }
     if (nextProps.notFound === true) {
-      this.props.history.push('/');
+      this.props.history.push('/recipes');
     }
   }
 

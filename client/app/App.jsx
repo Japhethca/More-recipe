@@ -25,7 +25,7 @@ const App = () => (
       />
 
       <Switch>
-        <Route path="/" exact component={Authenticate(Home)} />
+        <Route path="/recipes" exact component={Authenticate(Home)} />
         <Route path="/recipe/:nameId" exact component={Authenticate(SingleRecipePage)} />
         <Route path="/search" exact component={SearchResultPage} />
         <Route component={Authenticate(Dashboard)} />
