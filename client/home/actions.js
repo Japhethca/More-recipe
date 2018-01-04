@@ -3,7 +3,7 @@ import axios from 'axios';
 import { GET_USER_FAVORITES, RECIPES_COUNT, GET_ALL_RECIPES, IS_FETCHING } from '../recipes/actionTypes';
 
 /**
- * @param {array} favorites
+ * @param {array} favorites - array of recipes
  * @returns {object} sction
  */
 const getUserFavorites = favorites => ({
@@ -11,13 +11,22 @@ const getUserFavorites = favorites => ({
   favorites
 });
 
-
-export const getRecipeCount = (totalPages, curPage) => ({
+/**
+ * @param {Number} totalPages
+ * @param {Number} curPage
+ * @returns {Object} - none
+ */
+const getRecipeCount = (totalPages, curPage) => ({
   type: RECIPES_COUNT,
   totalPages,
   curPage
 });
 
+/**
+ *
+ * @param {Boolean} state --http loading state
+ * @return {Object} - action
+ */
 const isFetching = state => ({
   type: IS_FETCHING,
   isFetching: state
@@ -44,6 +53,7 @@ const getRecipes = recipes => ({
 });
 
 /**
+ * handles getting all recipes with page and limit
  * @export
  * @param {object} page
  * @param {object} limit

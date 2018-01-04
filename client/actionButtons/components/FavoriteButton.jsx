@@ -8,6 +8,11 @@ const propTypes = {
   onFavoriteClick: PropTypes.func.isRequired,
 };
 
+/**
+ * @description displays Favorites button icon
+ * @param {object} props - React props
+ * @returns {ReactElement} markup
+ */
 const FavoritesButton = props => (
   <div className="action-btns">
     <button

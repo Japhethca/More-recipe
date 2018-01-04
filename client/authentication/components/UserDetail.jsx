@@ -7,6 +7,11 @@ const propTypes = {
   user: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
+/**
+ * @description displays user details
+ * @param {object} props - React props
+ * @returns {ReactElement} markup
+ */
 const UserDetail = props => (
   <div className="user-details">
     {props.user && <p>By <span>{props.user.username}</span> </p>}

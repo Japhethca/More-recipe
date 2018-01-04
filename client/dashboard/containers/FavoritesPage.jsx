@@ -6,8 +6,16 @@ import { Recipes } from '../../recipes';
 import { handleGetFavorites } from '../actions';
 import Pagination from '../../common/Pagination';
 
-
+/**
+ * @class FavoritesPage
+ * @extends {Component}
+ */
 class FavoritesPage extends Component {
+/**
+ * Creates an instance of FavoritesPage.
+ * @param {object} props
+ * @memberof FavoritesPage
+ */
   constructor(props) {
     super(props);
     this.state = {
@@ -15,20 +23,41 @@ class FavoritesPage extends Component {
     };
   }
 
+  /**
+ * @memberof FavoritesPage
+ * @returns {undefined}
+ */
   componentDidMount() {
     this.props.handleGetFavorites();
   }
 
+  /**
+   *
+   *
+   * @param {object} nextProps
+   * @memberof FavoritesPage
+   * @returns {undefined}
+   */
   componentWillReceiveProps(nextProps) {
     if (nextProps.favorites !== this.props.favorites) {
       this.setState({ favorites: nextProps.favorites });
     }
   }
 
+  /**
+   *
+   * @param {object} page
+   * @memberof FavoritesPage
+   * @returns {undefined}
+   */
   handlePagination = (page) => {
     this.props.handleGetFavorites(page.selected + 1);
   }
 
+  /**
+ * @description displays dashboard
+ * @returns {ReactElement} markup
+ */
   render() {
     return (
       <div>

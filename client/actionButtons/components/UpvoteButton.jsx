@@ -9,6 +9,11 @@ const propTypes = {
   upvote: PropTypes.func.isRequired,
 };
 
+/**
+ * @description displays upvote button
+ * @param {object} props - React props
+ * @returns {ReactElement} markup
+ */
 const UpvoteButton = ({ upvote, upvotes }) => (
   <div className="action-btns">
     <button onClick={upvote} className="">

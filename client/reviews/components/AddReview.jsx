@@ -8,6 +8,10 @@ const propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
+/**
+ * @description displays review form
+ * @returns {ReactElement} markup
+ */
 const AddReview = ({ content, onChange, onSubmit }) => (
   <form onSubmit={onSubmit} className="review-form">
     <div className="review-input" >

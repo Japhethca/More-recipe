@@ -64,6 +64,12 @@ export const checkQuery = (query, validQuery) => {
   return false;
 };
 
+/**
+ * @param {Object} req - request query
+ * @param {Object} res - request query
+ * @param {function} next - request query
+ * @returns {Boolean} - true or false
+ */
 export const checkParams = (req, res, next) => {
   if (req.params) {
     const param = Object.keys(req.params)[0];

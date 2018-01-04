@@ -7,8 +7,18 @@ import { handleAuthRequest } from '../actions';
 import { signinValidator } from '../../utilities/validators';
 import LoginForm from '../components/LoginForm';
 
-
+/**
+ *
+ *
+ * @class Login
+ * @extends {Component}
+ */
 class Login extends Component {
+  /**
+   * Creates an instance of Login.
+   * @param {object} props - react props
+   * @memberof Login
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -19,17 +29,36 @@ class Login extends Component {
     };
   }
 
+  /**
+   *
+   *
+   * @param {object} nextProps
+   * @memberof Login
+   * @returns {undefined}
+   */
   componentWillReceiveProps(nextProps) {
     if (nextProps.authentication.errors !== null) {
       this.setState({ serverErrors: nextProps.authentication.errors });
     }
   }
 
+  /**
+   *
+   * @param {SyntheticEvent} event - onchange event
+   * @memberof Login
+   * @returns {undefined}
+   */
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
     this.isValid();
   }
 
+  /**
+   *
+   * @param {SyntheticEvent} event - onsubmit event
+   * @memberof Login
+   * @returns {undefined}
+   */
   onSubmit = (event) => {
     event.preventDefault();
     if (this.isValid()) {
@@ -37,6 +66,12 @@ class Login extends Component {
     }
   }
 
+  /**
+   *
+   * checks if form values are valid
+   * @memberof Login
+   * @returns {Boolean} - return true/false
+   */
   isValid = () => {
     const { errors, isValid } = signinValidator(this.state);
     if (!isValid) {
@@ -45,12 +80,19 @@ class Login extends Component {
     return isValid;
   }
 
+  /**
+   *
+   *
+   * @memberof Login
+   * @returns {ReactElement} markup
+   */
   render() {
     const formData = { email: this.state.email, password: this.state.password };
 
     if (this.props.authentication.isAuthenticated) {
       this.props.history.push('/');
     }
+
     return (
       <div>
         <LoginForm

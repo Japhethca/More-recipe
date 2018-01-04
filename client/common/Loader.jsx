@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * @description displays loader indicate
+ * @returns {ReactElement} markup
+ */
 const Loader = () => (
   <div className="loader-class">
     <div className="preloader-wrapper active">

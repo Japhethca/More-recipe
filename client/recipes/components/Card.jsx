@@ -20,18 +20,31 @@ const propTypes = {
   showRemoveFavorite: PropTypes.bool
 };
 
+/**
+ * @description displays a card of recipe
+ * @param {Object} props
+ * @returns {ReactElement} html markup
+ */
 const Card = (props) => {
   const {
     recipe, showActionBtns, showModifyButtons, onDeleteClick,
     onUpdateClick, showRemoveFavorite, onRemoveFavoriteClick
   } = props;
 
+  /**
+   * renders delete button
+   * @returns {DomElement} - html markup
+   */
   const renderDelete = () => (
     <button onClick={onDeleteClick} className="btn-floating white waves-effect waves-red right">
       <i className="material-icons red-text ">delete</i>
     </button>
   );
 
+  /**
+   * renders update button
+   * @returns {DomElement} - markup
+   */
   const renderUpdate = () => (
     <button
       className="btn-floating white waves-effect waves-blue modal-trigger"
@@ -40,7 +53,9 @@ const Card = (props) => {
       <i className="material-icons blue-text">edit</i>
     </button>
   );
+
   const nameUrl = slugify(recipe.name, '-');
+
   return (
     <div className="row " id="recipe-card">
       <div className="card col s12">

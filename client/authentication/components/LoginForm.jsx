@@ -6,6 +6,11 @@ import TextField from '../../common/TextField';
 import '../syles/authentication.scss';
 
 
+/**
+ * @description displays downvote button
+ * @param {object} props - React props
+ * @returns {ReactElement} markup
+ */
 const LoginForm = (props) => {
   const {
     validationErrors, serverErrors, onChange, onSubmit, formData

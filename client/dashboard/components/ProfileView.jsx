@@ -8,6 +8,10 @@ const propTypes = {
   profile: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
+/**
+ * @description displays profile data
+ * @returns {ReactElement} markup
+ */
 const ProfileView = ({ profile }) => (
   <div>
     <div className="profile-cover row">

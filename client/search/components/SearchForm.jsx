@@ -14,7 +14,17 @@ const propTypes = {
 
 };
 
+
+/**
+ * @class SearchForm
+ * @extends {Component}
+ */
 class SearchForm extends Component {
+  /**
+   * Creates an instance of SearchForm.
+   * @param {object} props
+   * @memberof SearchForm
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -22,16 +32,30 @@ class SearchForm extends Component {
     };
   }
 
+  /**
+   * @memberof SearchForm
+   * @param {SyntheticElement} event
+   * @return {undefined}
+   */
   onChange = (event) => {
     this.setState({ query: event.target.value });
   }
 
+  /**
+   *handles form submition change
+  * @memberof SearchForm
+  * @param {SyntheticEvent} event
+  * @returns {undefined}
+  */
   onSubmit = (event) => {
     event.preventDefault();
     this.props.handleSearch(this.state.query);
     this.props.history.push(`/search?query=${this.state.query}`);
   }
 
+  /**
+   * @return {ReactElement} markup
+   */
   render() {
     return (
       <div className="search-input">

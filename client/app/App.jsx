@@ -11,6 +11,10 @@ import { SingleRecipePage } from '../recipes';
 import SearchResultPage from '../search/containers/SearchResultPage';
 import '../styles/sass/index.scss';
 
+/**
+ *
+ * @return {ReactElement} markup
+ */
 const App = () => (
   <div className="wrapper">
     <NavigationBar />

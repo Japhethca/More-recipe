@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * button component
+ * @param {object} props - React props
+ * @returns {ReactElement} markup
+ */
 const Button = props => (
   <div>
     <button

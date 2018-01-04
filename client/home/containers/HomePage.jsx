@@ -14,7 +14,16 @@ const propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
+/**
+ * @class Home
+ * @extends {Component}
+ */
 class Home extends Component {
+  /**
+   * Creates an instance of Home.
+   * @param {object} props
+   * @memberof Home
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -22,20 +31,40 @@ class Home extends Component {
     };
   }
 
+  /**
+   * @memberof Home
+   * @returns {undefined}
+   */
   componentDidMount = () => {
     this.props.getAllRecipes();
     this.props.getFavorites();
   }
 
+  /**
+   * @memberof Home
+   * @param {Object} nextProps
+   * @returns {undefined}
+   */
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.recipes !== this.props.recipes) {
       this.setState({ recipes: nextProps.recipes });
     }
   }
 
+  /**
+   * handles pagination page clicks
+   * @memberof Home
+   * @param {Number} page
+   * @returns {undefined}
+   */
   handlePagination = (page) => {
     this.props.getAllRecipes(page.selected + 1);
   }
+
+  /**
+   * @description displays homepage recipes
+   * @returns {ReactElement} markup
+   */
   render() {
     return (
       <div className="container home-page">

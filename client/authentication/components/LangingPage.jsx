@@ -5,6 +5,11 @@ import NavigationBar from '../../common/NavigationBar';
 import Footer from '../../common/Footer';
 import '../syles/landing.scss';
 
+
+/**
+ * @description displays landing page
+ * @returns {ReactElement} markup
+ */
 const LandingPage = () => (
   <div className="landing-image">
     <NavigationBar bgColor="#e4e2dc94" />

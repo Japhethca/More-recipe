@@ -7,8 +7,8 @@ const { Recipes, Users, Reviews } = models;
 
 
 /**
- * @param {object} request
- * @param {object} response
+ * @param {object} request - Express http request
+ * @param {object} response - Express http response
  * @param {callback} next -function
  * @returns {object} HTTP response object
  */
@@ -47,6 +47,12 @@ export const sortOrOrderRecipes = (request, response, next) => {
   next();
 };
 
+/**
+ * @param {object} request - Express http request
+ * @param {object} response - Express http response
+ * @param {callback} next -function
+ * @returns {object} HTTP response object
+ */
 export const searchRecipe = (request, response, next) => {
   if (request.query.search) {
     const limit = request.query.limit || 10;
@@ -99,9 +105,9 @@ export const searchRecipe = (request, response, next) => {
 };
 
 /**
- * @param {Object} request
- * @param {Object} response
- * @returns {Object} request Response
+ * @param {Object} request -Express http request
+ * @param {Object} response Express http response
+ * @returns {Object} - Http response
  */
 export const allRecipes = (request, response) => {
   let limit = null;
@@ -138,8 +144,8 @@ export const allRecipes = (request, response) => {
 };
 
 /**
- * @param {object} request
- * @param {object} response
+ * @param {object} request -Express http request
+ * @param {object} response Express http response
  * @returns {object} HTTP response
  */
 export const createRecipe = (request, response) => Recipes.findOne({
@@ -188,8 +194,8 @@ export const createRecipe = (request, response) => Recipes.findOne({
   });
 
 /**
- * @param {object} request
- * @param {object} response
+ * @param {object} request Express http request
+ * @param {object} response Express http response
  * @returns {object} HTTP response
  */
 export const getRecipeById = (request, response) => Recipes.findOne({
@@ -228,8 +234,8 @@ export const getRecipeById = (request, response) => Recipes.findOne({
   });
 
   /**
-   * @param {object} request
-   * @param {object} response
+   * @param {object} request - Express http request
+   * @param {object} response - Express http response
    * @returns {object} HTTP respsonse
    */
 export const updateRecipe = (request, response) => Recipes.findOne({
@@ -282,8 +288,8 @@ export const updateRecipe = (request, response) => Recipes.findOne({
   });
 
 /**
- * @param {object} request
- * @param {object} response
+ * @param {object} request - Express http request
+ * @param {object} response - Express http response
  * @returns {object} Http response
  */
 export const deleteRecipe = (request, response) => {
@@ -314,8 +320,8 @@ export const deleteRecipe = (request, response) => {
 };
 
 /**
- * @param {object} request
- * @param {object} response
+ * @param {object} request - Express http request
+ * @param {object} response - Express http response
  * @returns {object} Http response
  */
 export const getUserRecipes = (request, response) => {

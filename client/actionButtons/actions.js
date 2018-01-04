@@ -10,7 +10,7 @@ import {
 
 
 /**
- * @param {object} recipe
+ * @param {object} recipe - recipe object
  * @returns {object} action
  */
 const setUserFavorites = recipe => ({
@@ -20,7 +20,7 @@ const setUserFavorites = recipe => ({
 
 /**
  * @export
- * @param {object} recipe
+ * @param {object} recipe - recipe object
  * @returns {promise} - axios
  */
 export const addToFavorites = recipe => dispatch => axios.post(`/api/users/favorites/${recipe.id}`)
@@ -32,7 +32,7 @@ export const addToFavorites = recipe => dispatch => axios.post(`/api/users/favor
   });
 
 /**
- * @param {number} id
+ * @param {number} id - recipe id
  * @returns {object} acion
  */
 const removeFromFavorites = id => ({
@@ -42,7 +42,7 @@ const removeFromFavorites = id => ({
 
 /**
  * @export
- * @param {number} recipeId
+ * @param {number} recipeId - recipe id
  * @returns {promise} axios promise
  */
 export const removeFavorite = recipeId => dispatch => axios.delete(`/api/users/favorites/${recipeId}`)
@@ -54,6 +54,7 @@ export const removeFavorite = recipeId => dispatch => axios.delete(`/api/users/f
   });
 
 /**
+ * @returns downvote action creator
  * @param {object} recipe
  * @returns {object} action object
  */
@@ -66,13 +67,13 @@ export const handleDownvote = id => dispatch => axios.put(`/api/recipe/${id}/dow
   .then((res) => { dispatch(downvote(res.data.recipe)); });
 
   /**
- * @param {object} recipe
- * @returns {object} sction
+  *@description upvote action creator
+ * @param {object} recipe - recipe object
+ * @returns {object} action
  */
 const upvote = recipe => ({
   type: UPVOTE_RECIPE,
   recipe
 });
-
 export const handleUpvote = id => dispatch => axios.put(`/api/recipe/${id}/upvote`)
   .then(res => dispatch(upvote(res.data.recipe)));

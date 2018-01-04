@@ -6,7 +6,16 @@ import { recipeFormValidator } from '../../utilities/validators';
 import { handleCreateRecipe, handleUpdateRecipe } from '../actions';
 import RecipeForm from '../components/RecipeForm';
 
+/**
+ * @class CreateUpdateRecipe
+ * @extends {Component}
+ */
 class CreateUpdateRecipe extends Component {
+/**
+ * Creates an instance of CreateUpdateRecipe.
+ * @param {object} props
+ * @memberof CreateUpdateRecipe
+ */
   constructor(props) {
     super(props);
     this.state = {
@@ -21,6 +30,12 @@ class CreateUpdateRecipe extends Component {
     };
   }
 
+  /**
+   * handle input change event
+   * @memberof CreateUpdateRecipe
+   * @param {SyntheticEvent} event
+   * @returns {undefined}
+   */
   onChange = (event) => {
     if (event.target.name === 'image') {
       this.setState({ image: event.target.files[0] });
@@ -36,6 +51,12 @@ class CreateUpdateRecipe extends Component {
     this.isValid();
   }
 
+  /**
+   * handle recipe update/create form submit
+   * @memberof CreateUpdateRecipe
+   * @param {SyntheticEvent} event
+   * @returns {undefined}
+   */
   onSubmit = (event) => {
     event.preventDefault();
     const postData = {
@@ -53,7 +74,12 @@ class CreateUpdateRecipe extends Component {
     }
   }
 
-
+  /**
+   * handles Tiny MCE editor change
+   * @memberof CreateUpdateRecipe
+   * @param {SyntheticEvent} event
+   * @returns {undefined}
+   */
   handleEditorChange = (event) => {
     if (event.target.targetElm.name === 'direction') {
       this.setState({ direction: event.target.getContent() });
@@ -63,6 +89,9 @@ class CreateUpdateRecipe extends Component {
     this.isValid();
   }
 
+  /**
+   * @returns {Boolean} true/false
+   */
   isValid() {
     const { errors, isValid } = recipeFormValidator(this.state);
     if (!isValid) {
@@ -71,6 +100,9 @@ class CreateUpdateRecipe extends Component {
     return isValid;
   }
 
+  /**
+   * @returns {ReactElement} - html markup
+   */
   render() {
     const recipeData = {
       name: this.state.name,

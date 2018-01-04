@@ -15,6 +15,11 @@ const propTypes = {
   clearForm: PropTypes.bool.isRequired
 };
 
+/**
+ * @description displays form for creating or updating recipe
+ * @param {Object} props
+ * @returns {ReactElement} html markup
+ */
 const RecipeForm = (props) => {
   const editorConfig = {
     menubar: false,
@@ -25,6 +30,13 @@ const RecipeForm = (props) => {
 
   const clearForm = node => (props.clearForm ? node.clear() : null);
 
+  /**
+   * renders Tiny mce editor
+   * @param {string} inputName
+   * @param {string} heading
+   * @param {string} validator
+   * @return {DomElement} - html markup
+   */
   const renderEditorFor = (inputName, heading, validator) => (
     <div>
       <h5>{heading}</h5>
@@ -38,6 +50,14 @@ const RecipeForm = (props) => {
     </div>
   );
 
+
+  /**
+   *  renders a text field
+   * @param {string} name
+   * @param {string} label
+   * @param {string} validator
+   * @return {DomElement} - html markup
+   */
   const renderInputFieldFor = (name, label, validator) => (
     <div>
       <input

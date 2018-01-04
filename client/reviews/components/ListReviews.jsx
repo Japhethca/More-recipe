@@ -9,6 +9,10 @@ const propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.any).isRequired
 };
 
+/**
+ * @description displays list of reviews
+ * @returns {ReactElement} markup
+ */
 const ListReviews = ({ reviews }) => (
   <div className="review-list">
     <h4 >Reviews</h4>

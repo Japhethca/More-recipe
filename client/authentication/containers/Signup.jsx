@@ -6,8 +6,18 @@ import { connect } from 'react-redux';
 import { handleAuthRequest } from '../actions';
 import { signUpValidator } from '../../utilities/validators';
 import SignupForm from '../components/SignupForm';
-
+/**
+ *
+ *
+ * @class Signup
+ * @extends {Component}
+ */
 class Signup extends Component {
+  /**
+   * Creates an instance of Signup.
+   * @param {object} props
+   * @memberof Signup
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -20,12 +30,23 @@ class Signup extends Component {
     };
   }
 
+  /**
+   * handle form input change
+   * @param {SyntheticEvent} event
+   * @memberof Signup
+   * @returns {undefined} - have not return value
+   */
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
     this.isValid();
   }
 
-
+  /**
+   *  handles signup form submit
+   * @memberof Signup
+   * @param {SyntheticEvent} event
+   * @return {undefined} - have no return value
+   */
   onSubmit = (event) => {
     event.preventDefault();
     if (this.isValid()) {
@@ -33,6 +54,12 @@ class Signup extends Component {
     }
   }
 
+  /**
+   *
+   * checks if input is valid
+   * @memberof Signup
+   * @returns {Boolean} - true/false
+   */
   isValid = () => {
     const { errors, isValid } = signUpValidator(this.state);
     if (!isValid) {
@@ -41,6 +68,12 @@ class Signup extends Component {
     return isValid;
   }
 
+  /**
+ *
+ *
+ * @returns {ReactElement} markup
+ * @memberof Authenticate
+ */
   render() {
     const formData = {
       email: this.state.email,

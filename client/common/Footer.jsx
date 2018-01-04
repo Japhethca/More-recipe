@@ -1,6 +1,11 @@
 import React from 'react';
 import './footer.scss';
 
+/**
+ * @description displays footer
+ * @param {object} props - React props
+ * @returns {ReactElement} markup
+ */
 const Footer = () => (
   <div>
     <footer className="page-footer">

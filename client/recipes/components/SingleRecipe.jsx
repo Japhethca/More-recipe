@@ -10,6 +10,11 @@ const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
+/**
+ * @description displays a single recipe page
+ * @param {Object} props
+ * @returns {ReactElement} html markup
+ */
 const SingleRecipe = ({ recipe }) => {
   const {
     name, ingredients, description, direction, image, author

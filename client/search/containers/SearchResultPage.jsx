@@ -13,7 +13,16 @@ const propTypes = {
   handleSearch: PropTypes.func.isRequired,
 };
 
+/**
+ * @class SearchResultPage
+ * @extends {Component}
+ */
 class SearchResultPage extends Component {
+  /**
+   * Creates an instance of SearchResultPage.
+   * @param {Object} props
+   * @memberof SearchResultPage
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -21,12 +30,21 @@ class SearchResultPage extends Component {
       searchResults: this.props.results
     };
   }
+
+  /**
+   * @memberof SearchResultPage
+   * @returns {undefined}
+   */
   componentDidMount() {
     const { query } = qs.parse(this.state.query, { ignoreQueryPrefix: true });
     this.props.handleSearch(query);
   }
 
-
+  /**
+   * @param {object} nextProps
+   * @memberof SearchResultPage
+   * @returns {undefined}
+   */
   componentWillReceiveProps(nextProps) {
     if (nextProps.history.location.search !== this.props.history.location.search) {
       this.props.handleSearch(nextProps.history.location.search);
@@ -37,6 +55,9 @@ class SearchResultPage extends Component {
     }
   }
 
+  /**
+   * @returns {ReactElement} - markup
+   */
   render() {
     const { query } = qs.parse(this.props.history.location.search, { ignoreQueryPrefix: true });
     const results = this.state.searchResults;

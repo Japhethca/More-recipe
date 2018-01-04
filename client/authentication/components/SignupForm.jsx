@@ -5,7 +5,11 @@ import { Link } from 'react-router-dom';
 import TextField from '../../common/TextField';
 import '../syles/authentication.scss';
 
-
+/**
+ * @description displays signup form
+ * @param {object} props - React props
+ * @returns {ReactElement} markup
+ */
 const SignupForm = (props) => {
   const {
     serverErrors, onChange, onSubmit, validationErrors, formData

@@ -26,6 +26,11 @@ const profileRules = {
   username: 'required'
 };
 
+/**
+ *
+ * @param {object} rules
+ * @return {object} - object of boolean and object of errors
+ */
 const validator = rules => (data) => {
   const validate = new Validator(data, rules);
   const errors = {};

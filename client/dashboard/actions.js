@@ -5,6 +5,8 @@ import { getRecipeCount } from '../home/actions';
 import upload from '../utilities/fileUpload';
 import { EDIT_USER_PROFILE, GET_USER_PROFILE, } from './actionTypes';
 import { GET_USER_RECIPES, GET_USER_FAVORITES } from '../recipes/actionTypes';
+
+
 /**
  * @param {object} profile
  * @returns {object} redux action
@@ -33,7 +35,7 @@ const editProfileAction = newProfile => ({
 
 /**
  * @export
- * @param {any} data - user object
+ * @param {Object} data - user object
  * @returns {promise} axios or supseragent
  */
 export const handleEditUserProfile = data => (dispatch) => {
@@ -75,6 +77,7 @@ function userRecipesAction(userRecipes) {
 /**
  * @export
  * @argument {Number} page
+ * @argument {Number} limit
  * @returns {promise} axios promise
  */
 export const handleGetUserRecipes = (page, limit = 4) => dispatch => axios.get(`/api/users/recipes?limit=${limit}&page=${page}`)
@@ -98,7 +101,8 @@ function getFavoritesAction(favorites) {
 
 /**
  * @export
- * @param {object} userId
+ * @param {Number} page
+ * @param {Number} limit
  * @returns {promise} axios promise
  */
 export const handleGetFavorites = (page, limit = 4) => dispatch => axios.get(`/api/users/favorites?limit=${limit}&page=${page}`)

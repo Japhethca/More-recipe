@@ -8,8 +8,8 @@ const { Users } = models;
 
 
 /**
-   * @param {object} req
-   * @param {object} res
+   * @param {object} req - Express http request
+   * @param {object} res - Express http response
    * @returns {object} Http response
    */
 export const signup = (req, res) => Users.findAll({
@@ -61,8 +61,8 @@ export const signup = (req, res) => Users.findAll({
   });
 
   /**
-   * @param {object} req
-   * @param {object} res
+   * @param {object} req - Express http request
+   * @param {object} res - Express http response
    * @returns {object} Http response
    */
 export const signin = (req, res) => Users.findOne({
@@ -119,8 +119,8 @@ export const userProfile = (req, res) => Users.findOne({
   .catch(err => res.status(500).json(err));
 
 /**
- * @param {object} req
- * @param {object} res
+ * @param {object} req - Express http request
+ * @param {object} res - Express http response
  * @returns {object} Http response
  */
 export const updateProfile = (req, res) => {

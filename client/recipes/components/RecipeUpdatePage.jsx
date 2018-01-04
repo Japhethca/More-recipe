@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 
 import UpdateRecipe from '../containers/CreateUpdateRecipe';
 
-
+/**
+ * @description renders recipe update page
+ * @param {Object} props
+ * @returns {ReactElement} html markup
+ */
 const RecipeUdatePage = ({ location, history }) => {
   if (!location.state) history.push('/my-recipes');
   return (

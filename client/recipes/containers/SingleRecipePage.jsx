@@ -6,8 +6,18 @@ import _ from 'lodash';
 import SingleRecipe from '../components/SingleRecipe';
 import { getRecipe } from '../actions';
 
-
+/**
+ *
+ *
+ * @class SingleRecipePage
+ * @extends {Component}
+ */
 class SingleRecipePage extends Component {
+  /**
+   * Creates an instance of SingleRecipePage.
+   * @param {any} props
+   * @memberof SingleRecipePage
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -18,6 +28,10 @@ class SingleRecipePage extends Component {
     [this.id] = this.props.match.params.nameId.split('-').filter(val => !_.isNaN(parseInt(val, 10)));
   }
 
+  /**
+   * @memberof SingleRecipePage
+   * @returns {undefined}
+   */
   componentDidMount() {
     if (this.id === undefined || !this.props.recipe || this.state.notFound) {
       this.props.history.push('/');
@@ -25,6 +39,11 @@ class SingleRecipePage extends Component {
     this.props.getRecipe(this.id);
   }
 
+  /**
+   * @param {any} nextProps
+   * @memberof SingleRecipePage
+   * @returns {undefined}
+   */
   componentWillReceiveProps(nextProps) {
     if (this.props.recipe !== nextProps.recipe) {
       this.setState({ recipe: nextProps.recipe });
@@ -34,7 +53,9 @@ class SingleRecipePage extends Component {
     }
   }
 
-
+  /**
+   * @returns {reactElement} markup
+   */
   render() {
     return (
       <div>

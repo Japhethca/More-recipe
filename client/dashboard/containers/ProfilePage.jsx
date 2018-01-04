@@ -7,8 +7,16 @@ import { handleEditUserProfile } from '../actions';
 import ProfileView from '../components/ProfileView';
 import ProfileModal from '../components/ProfileModal';
 
-
+/**
+ * @class ProfilePage
+ * @extends {Component}
+ */
 class ProfilePage extends Component {
+/**
+ * Creates an instance of ProfilePage.
+ * @param {Object} props
+ * @memberof ProfilePage
+ */
   constructor(props) {
     super(props);
     this.state = {
@@ -19,15 +27,32 @@ class ProfilePage extends Component {
       profile: this.props.profile
     };
   }
+  /**
+   *
+   * @memberof ProfilePage
+   * @returns {none} - none
+   */
   componentDidMount() {
     $('.modal').modal();
   }
+
+  /**
+   * @param {object} nextProps
+   * @memberof ProfilePage
+   * @returns {undefined}
+   */
   componentWillReceiveProps(nextProps) {
     if (this.props.profile !== nextProps.profile) {
       this.setState({ ...nextProps.profile, profile: nextProps.profile });
     }
   }
 
+  /**
+   * handles input change
+   * @memberof ProfilePage
+   * @param {SyntheticEvent} event
+   * @returns {undefined}
+   */
   onChange = (event) => {
     if (event.target.name === 'photo') {
       this.setState({ photo: event.target.files[0] });
@@ -41,19 +66,28 @@ class ProfilePage extends Component {
       this.setState({ [event.target.name]: event.target.value });
     }
   }
-
+  /**
+   *
+   * @param {SyntheticEvent} event
+   * @memberof ProfilePage
+   * @returns {undefined}
+   */
   onSubmit = (event) => {
     event.preventDefault();
     this.props.handleEditUserProfile(this.state);
   }
 
+  /**
+   * @description displays dashboard
+   * @returns {ReactElement} markup
+   */
   render() {
-    // const updateData = {
-    //   photo: this.state.photo,
-    //   aboutme: this.state.aboutme,
-    //   firstname: this.state.firstname,
-    //   lastname: this.state.lastname
-    // };
+  // const updateData = {
+  //   photo: this.state.photo,
+  //   aboutme: this.state.aboutme,
+  //   firstname: this.state.firstname,
+  //   lastname: this.state.lastname
+  // };
     return (
       <div>
         <ProfileView profile={this.state.profile} />

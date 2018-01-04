@@ -10,6 +10,10 @@ export default {
     recipes: [],
     userRecipes: [],
     favorites: [],
+    pagination: {
+      currentPage: 0,
+      totalPages: 0
+    },
     recipe: {
       name: '',
       description: '',

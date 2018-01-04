@@ -4,8 +4,8 @@ const { Recipes, Users, Reviews } = model;
 
 
 /**
- * @param {object} req
- * @param {object} res
+ * @param {object} req - Express http request
+ * @param {object} res - Express http response
  * @returns {object} Http response
  */
 export const postReview = (req, res) => Recipes.findOne({
@@ -50,8 +50,8 @@ export const postReview = (req, res) => Recipes.findOne({
 
 
 /**
- * @param {object} req
- * @param {object} res
+ * @param {object} req - Express http request
+ * @param {object} res - Express http response
  * @returns {object} Http response
  */
 export const getRecipeReview = (req, res) => {

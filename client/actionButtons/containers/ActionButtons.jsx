@@ -22,27 +22,48 @@ const propTypes = {
   removeFavorite: PropTypes.func.isRequired
 };
 
-
+/**
+ * @class ActionButtons
+ * @extends {Component}
+ */
 class ActionButtons extends Component {
+  /**
+   * Creates an instance of ActionButtons.
+   * @param {object} props - React props
+   * @memberof ActionButtons
+   */
   constructor(props) {
     super(props);
     this.state = {
       favorites: this.props.favorites
     };
   }
-
+  /**
+   * @description react life cycle function
+   * @memberof ActionButtons
+   * @return {undefined}
+   */
   componentDidMount = () => {
     this.isInFavorites();
   }
 
-
+  /**
+   * @param {object} nextProps - react life cycle function
+   * @memberof ActionButtons
+   *  @return {undefined}
+   */
   componentWillReceiveProps(nextProps) {
     if (nextProps.favorites !== this.props.favorites) {
       this.setState({ favorites: nextProps.favorites });
     }
   }
 
-
+  /**
+   * handles favorite click event
+   * @param {SytheticEvent} event - onclick event
+   * @memberof ActionButtons
+   * @returns {undefined}
+   */
   onFavoriteClick = (event) => {
     event.preventDefault();
     this.toggleFavorite();
@@ -53,6 +74,10 @@ class ActionButtons extends Component {
     }
   }
 
+  /**
+   * @memberof ActionButtons
+   * @returns {boolean} return true/false
+   */
   isInFavorites = () => {
     const checkFavorite = this.state.favorites.filter(favorite => favorite.id === this.props.recipe.id);
     if (checkFavorite.length > 0) {
@@ -61,6 +86,11 @@ class ActionButtons extends Component {
     return false;
   }
 
+  /**
+   * @description handles toggling of favorite state
+   * @returns {undefined}
+   * @memberof ActionButtons
+   */
   toggleFavorite = () => {
     if (this.state.isFavorite) {
       this.setState({ isFavorite: false });
@@ -69,16 +99,33 @@ class ActionButtons extends Component {
     }
   }
 
+  /**
+   * @description handles click event for upvoting recipe
+   * @param {SynthenticEvent} event - onClick event
+   * @returns {undefined}
+   * @memberof ActionButtons
+   */
   downvote = (event) => {
     event.preventDefault();
     this.props.handleDownvote(this.props.recipe.id);
   };
-
+  /**
+   * @description handles click event for upvoting recipe
+   * @param {SynthenticEvent} event - onClick event
+   * @returns {undefined}
+   * @memberof ActionButtons
+   */
   upvote = (event) => {
     event.preventDefault();
     this.props.handleUpvote(this.props.recipe.id);
   };
 
+  /**
+ *
+ *
+ * @returns {ReactElement} markup
+ * @memberof ActionButtons
+ */
   render() {
     const { recipe } = this.props;
     return (

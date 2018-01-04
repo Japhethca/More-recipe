@@ -13,6 +13,10 @@ const propTypes = {
   // validationErrors: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
+/**
+ * @description displays proile update modal
+ * @returns {ReactElement} markup
+ */
 const ProfileModal = ({ profile, onChange, onSubmit }) =>
   // const {
   //   validationErrors, aboutme, photo

@@ -6,8 +6,8 @@ const { Votes, Recipes } = models;
 // controllers for handling voting in application
 
 /**
-   * @param {object} req
-   * @param {object} res
+   * @param {object} req - Express http request
+   * @param {object} res - Express http response
    * @returns {object} Http response
    */
 export const upVote = (req, res) => Votes.findOne({
@@ -101,8 +101,8 @@ export const upVote = (req, res) => Votes.findOne({
 
 
 /**
-   * @param {object} req
-   * @param {object} res
+   * @param {object} req - Express http request
+   * @param {object} res - Express http response
    * @returns {object} Http response
    */
 export const downVote = (req, res) => Votes.findOne({

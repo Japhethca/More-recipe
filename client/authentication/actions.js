@@ -7,6 +7,7 @@ import { setAuthorizationToken } from './helpers/setAuthorization';
 import { SET_CURRENT_USER } from './actionTypes';
 
 /**
+ * creates action for setting current user
  * @export
  * @param {object} user
  * @param {any} errors
@@ -19,8 +20,9 @@ export const setCurrentUser = (user, errors) => ({
 });
 
 /**
+ * logs user out of application
  * @export
- * @returns {object} - dispatch
+ * @returns {function} - dispatch
  */
 export const handleLogout = () => (dispatch) => {
   localStorage.clear();

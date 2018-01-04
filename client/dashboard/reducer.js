@@ -11,7 +11,7 @@ export default (state = {}, action) => {
     case GET_USER_PROFILE:
       return { ...action.profile };
     case EDIT_USER_PROFILE:
-      return Object.assign({}, state, action.newProfile);
+      return { ...state, ...action.newProfile };
     default:
       return state;
   }

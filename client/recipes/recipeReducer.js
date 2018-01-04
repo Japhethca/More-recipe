@@ -49,6 +49,12 @@ const initialState = {
 let index = 0;
 let recipe = {};
 
+/**
+ * updates an object in state without mutation
+ * @param {Array} array state array
+ * @param {Object} action redux action
+ * @returns {Object} udpated object of item
+ */
 const updateObjectArray = (array, action) => array.map((recipe, index) => {
   if (index !== action.index) {
     return recipe;
@@ -56,6 +62,11 @@ const updateObjectArray = (array, action) => array.map((recipe, index) => {
   return { ...recipe, ...action.recipe };
 });
 
+/**
+ * @param {Object}  state - initial state
+ * @param {Object} action - redux action
+ * @returns {Object} - current state
+ */
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_SINGLE_RECIPE:

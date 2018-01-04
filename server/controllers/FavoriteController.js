@@ -4,9 +4,9 @@ import model from '../models';
 const { Favorites, Recipes, Users } = model;
 
 /**
- * @param {object} request -http request object
- * @param {object} response -http response object
- * @returns {object} response - http response
+ * @param {object} request -Express request object
+ * @param {object} response -Express response object
+ * @returns {object} response - Express response
  */
 export const getUserFavorites = (request, response) => {
   let limit = null;
@@ -103,8 +103,8 @@ export const addToFavorites = (request, response) => Recipes.findById(request.pa
   });
 
   /**
- * @param {onbject} request -HTTP request
- * @param {onbject} response -HTTP response
+ * @param {onbject} request -Express HTTP request
+ * @param {onbject} response -Express HTTP response
  * @returns {object} HTTP response object
  */
 export const removeFromFavorites = (request, response) => Favorites.findOne({
