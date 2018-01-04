@@ -69,8 +69,8 @@ export const checkParams = (req, res, next) => {
     const param = Object.keys(req.params)[0];
     if (_.isNaN(parseInt(req.params[param], 10))) {
       return res.status(400).json({
-        status: 'failure',
-        message: 'Invalid URL parameter type, parameter must an Number'
+        status: 'failed',
+        message: 'Invalid URL parameter type, parameter must be a number'
       });
     }
   }

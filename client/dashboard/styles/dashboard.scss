@@ -13,18 +13,18 @@ $update-btn-bg-color: rgb(9, 9, 63);
 $update-btn-hover-color: darken($update-btn-bg-color, 10);
 
 img {
+  align-items: center;
   max-height: 400px;
   max-width: 300px;
-  align-items: center;
 }
 
 
 .profile-form {
 
   .error-text {
+    color: $error-txt-color;
     font-size: small;
     margin-left: 42px;
-    color: $error-txt-color;
   }
 
   .input-field .prefix ~ input {
@@ -35,12 +35,11 @@ img {
 .profile-cover {
   background-color: $profile-cover-bg-color;
   margin-bottom: 2;
-  border-radius: 5px;
   margin-top: 10px;
 
   .update-btn {
-    color: $update-btn-color;
     background-color: $update-btn-bg-color;
+    color: $update-btn-color;
     padding: 10px;
 
     &:hover {
@@ -48,14 +47,14 @@ img {
 
     }
   }
-  
+
   .profile-image {
     display: flex;
     flex-direction: column;
-    margin: 0 16px;
     height: 180px;
-    width: 180px;
+    margin: 0 16px;
     padding: 10px;
+    width: 180px;
 
       @media only screen 
       and (min-device-width: 320px) 
@@ -64,7 +63,7 @@ img {
         display: flex;
         flex-direction: column;
         margin: 0 auto;
-      }  
+      }
   }
 }
 
@@ -76,10 +75,10 @@ img {
 .sidebar {
   background-color: $side-bar-bg-color;
   display: flex;
-  padding-left: 50px;
   flex-direction: column;
   font-size: $side-bar-font;
   margin-top: 10px;
+  padding-left: 50px;
 
   .side-bar-link {
     a {
@@ -119,9 +118,4 @@ img {
       font-weight: bolder;
     }
   }
-}
-
-.content {
-
-
 }

@@ -37,7 +37,7 @@ class UserRecipesPage extends Component {
           showModifyButtons
           className="col s12 m6 l4"
           recipes={this.state.userRecipes}
-          noItemText="No recipes, click 'Add Recipe' to create recipe"
+          noItemText="No recipes! Create a recipe"
         />
         { this.state.userRecipes.length > 0 &&
         <Pagination handlePagination={this.handlePagination} />

@@ -28,7 +28,7 @@ export const signup = (req, res) => Users.findAll({
     if (req.body.password !== req.body.verifyPassword) {
       return res.status(409).json({
         status: 'failed',
-        message: 'password did not match'
+        message: 'Password did not match'
       });
     }
     return Users.create({

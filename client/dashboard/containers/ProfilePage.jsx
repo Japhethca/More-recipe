@@ -16,7 +16,6 @@ class ProfilePage extends Component {
       lastname: this.props.profile.lastname,
       aboutme: this.props.profile.aboutme,
       photo: this.props.profile.photo,
-      validationErrors: {},
       profile: this.props.profile
     };
   }
@@ -45,27 +44,16 @@ class ProfilePage extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    if (this.isValid()) {
-      this.props.handleEditUserProfile(this.state);
-    }
+    this.props.handleEditUserProfile(this.state);
   }
-
-  isValid = () => {
-    const { errors, isValid } = profileUpdateFormValidator(this.state);
-    if (!isValid) {
-      this.setState({ validationErrors: errors });
-    }
-    return isValid;
-  }
-
 
   render() {
-    const updateData = {
-      photo: this.state.photo,
-      aboutme: this.state.aboutme,
-      firstname: this.state.firstname,
-      lastname: this.state.lastname
-    };
+    // const updateData = {
+    //   photo: this.state.photo,
+    //   aboutme: this.state.aboutme,
+    //   firstname: this.state.firstname,
+    //   lastname: this.state.lastname
+    // };
     return (
       <div>
         <ProfileView profile={this.state.profile} />

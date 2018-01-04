@@ -47,7 +47,7 @@ export const handleAuthRequest = (userdata, requestType) => {
       toastr.success(res.data.message);
     })
     .catch((error) => {
-      dispatch(setCurrentUser(null, error.response.data.message));
       toastr.error(error.response.data.message);
+      dispatch(setCurrentUser(null, error.response.data.message));
     });
 };

@@ -2,19 +2,18 @@ import { combineReducers } from 'redux';
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
 import { authReducer } from '../authentication';
-import recipeReducer from '../recipes/recipeReducer';
-import loader from './loader';
 import { profileReducer } from '../dashboard';
+import loader from './loader';
+import recipeReducer from '../recipes/recipeReducer';
 import results from '../search/reducer';
 
-
 const rootReducers = combineReducers({
-  recipeReducer,
+  auth: authReducer,
   loader,
   profile: profileReducer,
+  recipeReducer,
   results,
   toastr: toastrReducer,
-  auth: authReducer,
 });
 
 export default rootReducers;

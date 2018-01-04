@@ -12,11 +12,6 @@ $btn-hover-bg-color: darken($btn-bg-color, 5);
     margin-bottom: 30px;
   }
 
-  .recipe-input {
-    .text-field {
-      
-    }
-  }
   .image-class {
     clear: both;
     display: flex;
@@ -53,8 +48,8 @@ $btn-hover-bg-color: darken($btn-bg-color, 5);
 
   .submit-btn {
     background-color: $btn-bg-color;
-    border: 1px $btn-color solid;
     border-radius: 10px;
+    border: 1px $btn-color solid;
     color: $btn-color;
     font-size: 20px;
     margin: 10px 20px;

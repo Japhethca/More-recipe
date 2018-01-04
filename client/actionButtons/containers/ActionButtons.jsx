@@ -27,7 +27,6 @@ class ActionButtons extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isFavorite: false,
       favorites: this.props.favorites
     };
   }
@@ -57,7 +56,6 @@ class ActionButtons extends Component {
   isInFavorites = () => {
     const checkFavorite = this.state.favorites.filter(favorite => favorite.id === this.props.recipe.id);
     if (checkFavorite.length > 0) {
-      // this.setState({ isFavorite: true });
       return true;
     }
     return false;
@@ -90,7 +88,6 @@ class ActionButtons extends Component {
           <li><UpvoteButton upvotes={recipe.upvotes} upvote={this.upvote} /></li>
           <li><DownvoteButton downvotes={recipe.downvotes} downvote={this.downvote} /></li>
           <li><FavoritesButton
-            isFavorite={this.state.isFavorite}
             isInFavorites={this.isInFavorites}
             onFavoriteClick={this.onFavoriteClick}
           />

@@ -4,6 +4,9 @@ body {
   background-color: $bg-color;
 }
 
+a {
+  color: #222;
+}
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -19,8 +22,7 @@ div,
 span,
 li,
 a,
-pre { 
-  
+pre {
   font-family: 'Roboto', sans-serif;
 }
 

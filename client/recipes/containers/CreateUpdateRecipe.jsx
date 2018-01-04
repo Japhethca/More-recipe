@@ -81,15 +81,17 @@ class CreateUpdateRecipe extends Component {
     };
 
     return (
-      <RecipeForm
-        validationErrors={this.state.validationErrors}
-        recipe={recipeData}
-        onSubmit={this.onSubmit}
-        onChange={this.onChange}
-        handleEditorChange={this.handleEditorChange}
-        title={this.props.title}
-        clearForm={this.state.clearForm}
-      />
+      <div>
+        <RecipeForm
+          validationErrors={this.state.validationErrors}
+          recipe={recipeData}
+          onSubmit={this.onSubmit}
+          onChange={this.onChange}
+          handleEditorChange={this.handleEditorChange}
+          title={this.props.title}
+          clearForm={this.state.clearForm}
+        />
+      </div>
     );
   }
 }

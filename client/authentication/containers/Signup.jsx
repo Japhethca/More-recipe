@@ -61,7 +61,7 @@ class Signup extends Component {
           onChange={this.onChange}
           onSubmit={this.onSubmit}
           formData={formData}
-          serverErrors={this.state.serverErrors}
+          serverErrors={this.props.authentication.errors}
           validationErrors={this.state.validationErrors}
         />
       </div>

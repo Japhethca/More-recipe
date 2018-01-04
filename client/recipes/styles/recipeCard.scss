@@ -2,31 +2,30 @@ $btn-bg-color: #fff;
 $card-linkl-color: rgb(148, 36, 36);
 
 #recipe-card {
-  margin: 0 auto;
   height: 400px;
-  
+  margin: 0 auto;
+
   img {
      height: 250px;
      width: fit-content;
   }
 
-  
   .card {
     padding: 0;
   }
 
   .ellipses {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     margin: 20px 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   a {
     color: $card-linkl-color;
 
     &:hover {
-     text-decoration: underline; 
+     text-decoration: underline;
     }
   }
 
@@ -38,7 +37,7 @@ $card-linkl-color: rgb(148, 36, 36);
   }
 
   button {
-    border: none; 
+    border: none;
 
     :focus{
       background-color: $btn-bg-color;

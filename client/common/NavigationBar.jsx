@@ -57,6 +57,7 @@ class NavigationBar extends Component {
 
   renderSideNavLinks = (id, className) => (
     <ul id={id} className={className} >
+      <li><NavLink to="/create">Create Recipe</NavLink></li>
       <li><NavLink to="/profile">Profile</NavLink></li>
       <li><NavLink to="/my-recipes">My Recipes</NavLink></li>
       <li ><NavLink to="/favorites">Favorites</NavLink></li>

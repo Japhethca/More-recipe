@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import qs from 'qs';
+
 
 import { Recipes } from '../../recipes';
 import { getFavorites, getAllRecipes } from '../actions';
@@ -14,7 +14,7 @@ const propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
-class Home extends Component {
+class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,11 +55,11 @@ class Home extends Component {
   }
 }
 
-Home.propTypes = propTypes;
+HomePage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   recipes: state.recipeReducer.recipes
 });
 
-export default connect(mapStateToProps, { getAllRecipes, getFavorites })(Home);
+export default connect(mapStateToProps, { getAllRecipes, getFavorites })(HomePage);
 
