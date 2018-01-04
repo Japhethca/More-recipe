@@ -1,0 +1,56 @@
+$pagination-bg-color-link: #393030;
+$white-color: #fff;
+$browb-color: rgb(165, 43, 43);
+
+.pag-list {
+
+  li {
+    border-radius: 3px;
+    display: inline;
+    margin: 0 4px;
+    padding: 10px;
+  }
+}
+.pagination li a {
+  color: $pagination-bg-color-link;
+  display: inline-block;
+  font-size: 1.2rem;
+  line-height: inherit;
+  padding: 0 10px;
+}
+.link {
+  cursor: pointer;
+
+  &:focus {
+    background-color: inherit;
+    border: 0;
+    outline: 0;
+  }
+}
+
+.page-class {
+  color: $white-color;
+}
+
+.active-page {
+  background-color: $browb-color;
+  color: $white-color;
+
+  &:focus {
+    border: 0;
+  }
+}
+
+.link + .active-page {
+  color: $white-color;
+}
+
+.next-prev {
+
+  border: 1px $browb-color solid;
+  cursor: pointer;
+
+  a:focus {
+    outline: 0;
+  }
+}

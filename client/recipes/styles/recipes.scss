@@ -1,0 +1,12 @@
+$grey-color: rgb(128, 128, 128);
+
+.recipe-list {
+  .no-recipes {
+    color: $grey-color;
+    display: flex;
+    flex-direction: column;
+    font-size: 40px;
+    margin-top: 40px;
+    text-align: center;
+  }
+}

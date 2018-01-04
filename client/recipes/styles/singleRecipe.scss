@@ -1,0 +1,81 @@
+$hr-line-color: #333;
+$hr-line-color-2: #ccc;
+$recipe-items-header-color: #a52a2a;
+
+.recipe-details {
+  p,
+  span,
+  div,
+  ol,
+  ul,
+  li {
+    font-family: 'Merriweather Sans', sans-serif;
+  }
+
+  h2,
+  h4 {
+    text-transform: capitalize;
+  }
+
+  button {
+    background-color: transparent;
+    border: 0;
+
+    &:focus {
+      background-color: transparent;
+    }
+  }
+
+  .description-text {
+    font-size: 15px;
+    text-align: center;
+  }
+
+  hr.hr-header {
+    background: $hr-line-color;
+    background-image: linear-gradient(to right, $hr-line-color-2, $hr-line-color, $hr-line-color-2);
+    border: 0;
+    height: 1px;
+  }
+
+  hr.hr-line {
+    background-image: linear-gradient(to right, $hr-line-color-2, $hr-line-color, $hr-line-color-2);
+    background: $hr-line-color;
+    border: 0;
+    height: 1px;
+  }
+
+  .recipe-title {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: bold;
+    padding-top: 30px;
+
+    @media only screen
+    and (min-device-width: 320px)
+    and (max-device-width: 480px)
+    and (-webkit-min-device-pixel-ratio: 2) {
+      text-align: center;
+    }
+  }
+}
+
+
+.recipe-items {
+  h4 {
+    color: $recipe-items-header-color;
+  }
+
+  ol {
+    font-size: 20px;
+  }
+
+  ul {
+    font-size: 20px;
+    margin-left: 40px;
+
+    li {
+      list-style-type: square;
+      text-transform: capitalize;
+    }
+  }
+}

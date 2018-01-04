@@ -1,28 +1,20 @@
 import { combineReducers } from 'redux';
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
-import auth from './loginAuth';
-import recipes from './recipes';
-import userRecipes from './userRecipes';
-import profile from './profile';
-import favorites from './favorites';
-import isLoading from './loading';
-import results from './searchResult';
-import recipe from './recipe';
-import pagination from './pagination';
+import { authReducer } from '../authentication';
+import recipeReducer from '../recipes/recipeReducer';
+import loader from './loader';
+import { profileReducer } from '../dashboard';
+import results from '../search/reducer';
 
 
 const rootReducers = combineReducers({
-  userRecipes,
-  profile,
-  recipes,
-  favorites,
-  auth,
-  isLoading,
+  recipeReducer,
+  loader,
+  profile: profileReducer,
   results,
-  recipe,
-  pagination,
-  toastr: toastrReducer
+  toastr: toastrReducer,
+  auth: authReducer,
 });
 
 export default rootReducers;

@@ -1,0 +1,88 @@
+$header-bg-color: rgb(223, 63, 63);
+$header-text-color: #fff;
+
+$border-color: rgb(223, 63, 63);
+$btn-bg-color: #fff;
+$btn-color: #090804;
+$black-color: #222;
+$grey-color: grey;
+
+
+$btn-hover-bg-color: rgb(223, 63, 63);
+$btn-hover-color: #fff;
+$link-hover-color: #60A39A;
+$link-color: darken($link-hover-color, 10);
+$error-txt-color: #ff0000;
+
+.auth-form {
+  border-radius: 10px;
+  padding-top: 10vh;
+
+  .header-text {
+    background-color: $header-bg-color;
+    color: $header-text-color;
+    margin: 0 -12px;
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+
+  .error-class {
+    color: $error-txt-color;
+    font-size: small;
+    margin-left: 42px;
+  }
+
+  form {
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .auth-btn {
+    background-color: $btn-bg-color;
+    border: 1px $border-color solid;
+    border-radius: 15px;
+    color: $btn-color;
+    font-size: 20px;
+    margin-top: 10px;
+    width: 100%;
+
+    &:hover{
+      background-color: $btn-hover-bg-color;
+      color: $btn-hover-color;
+    }
+  }
+
+  .auth-link {
+    float: right;
+    font-size: 15px;
+    margin: 15px auto;
+
+    a {
+      color: $link-color;
+
+      &:hover {
+        color: $link-hover-color;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .input-field .prefix ~ input {
+    margin-bottom: 0px;
+    padding-top: 10px;
+  }
+}
+
+.user-details {
+  display: inline;
+
+  p {
+    color: $grey-color;
+    font-style: italic;
+
+    span {
+      color: $black-color;
+    }
+  }
+}

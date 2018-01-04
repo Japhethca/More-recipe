@@ -1,0 +1,92 @@
+
+$brown-color: rgb(165, 42, 42);
+
+$textarea-border-color: rgb(134, 62, 62);
+$text-area-text-color: $brown-color;
+$text-area-bg-color: #fff;
+
+$btn-border-color: $textarea-border-color;
+$btn-color: $btn-border-color;
+$btn-bg-color: #fff;
+
+$no-reviews-color: rgb(156, 136, 136);
+$review-bg-color: #fff;
+$review-color: #808080;
+$user-text-color: #0000ff;
+
+
+.review-list {
+  .no-reviews {
+    color: $no-reviews-color;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 30px;
+    font-style: italic;
+    text-align: center;
+  }
+}
+
+.review-form {
+  margin: 20px 10px;
+
+  .review-input {
+    margin-bottom: 10px;
+
+    textarea {
+      background-color: $text-area-bg-color;
+      border-radius: 5px;
+      border: 1px $textarea-border-color solid;
+      color: $text-area-text-color;
+      height: 50px;
+      padding: 5px;
+      resize: none;
+
+      &:focus {
+        outline: 0;
+        height: 70px;
+      }
+    }
+  }
+
+  .btn-class {
+    background-color: $btn-bg-color;
+    border-radius: 5px;
+    border: 1px $btn-border-color solid;
+    color: $btn-color;
+    width: 150px;
+
+    &:hover {
+      font-weight: bolder;
+    }
+  }
+}
+
+
+.single-review {
+  background-color: $review-bg-color;
+  border-radius: 5px;
+  color: $review-color;
+  margin: 5px auto;
+  padding: 10px 5px;
+
+  .meta-date {
+    font-family: 'Ubuntu', sans-serif;
+  }
+
+  .user {
+    color: $user-text-color;
+    margin-right: 10px;
+    text-transform: capitalize;
+  }
+
+  .review-content {
+    color: $review-color;
+  }
+
+
+}
+
+.reviews-page {
+  margin-top: 50px;
+}
