@@ -37,7 +37,7 @@ class FavoritesPage extends Component {
           showActionBtns={false}
           showRemoveFavorite
           className="col s12 m6 l4"
-          noItemText="You Have No favorite Recipe!"
+          noItemText="You do not have favorite recipes!"
         />
         { this.state.favorites.length > 0 && <Pagination handlePagination={this.handlePagination} />}
       </div>

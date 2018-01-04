@@ -7,9 +7,9 @@ const signinRules = {
 
 const signupRules = {
   email: 'required|email',
-  password: 'required',
+  password: 'required|min:5',
   username: 'required|min:2',
-  verifyPassword: 'required|min:5|same:password'
+  verifyPassword: 'required|min:5'
 };
 
 const recipeFormRules = {

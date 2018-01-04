@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import UpdateRecipe from '../containers/CreateUpdateRecipe';
 
 
-const RecipeUdatePage = ({ location, history }) => {
+const RecipeUpdatePage = ({ location, history }) => {
   if (!location.state) history.push('/my-recipes');
   return (
     <UpdateRecipe
@@ -15,9 +15,9 @@ const RecipeUdatePage = ({ location, history }) => {
   );
 };
 
-RecipeUdatePage.propTypes = {
+RecipeUpdatePage.propTypes = {
   location: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
-export default RecipeUdatePage;
+export default RecipeUpdatePage;

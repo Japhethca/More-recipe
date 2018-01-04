@@ -33,7 +33,6 @@ class CreateUpdateRecipe extends Component {
     } else {
       this.setState({ [event.target.name]: event.target.value });
     }
-    this.isValid();
   }
 
   onSubmit = (event) => {
@@ -60,13 +59,14 @@ class CreateUpdateRecipe extends Component {
     } else {
       this.setState({ ingredients: event.target.getContent() });
     }
-    this.isValid();
   }
 
   isValid() {
     const { errors, isValid } = recipeFormValidator(this.state);
     if (!isValid) {
       this.setState({ validationErrors: errors });
+    } else {
+      this.setState({ validationErrors: {} });
     }
     return isValid;
   }
@@ -81,15 +81,17 @@ class CreateUpdateRecipe extends Component {
     };
 
     return (
-      <RecipeForm
-        validationErrors={this.state.validationErrors}
-        recipe={recipeData}
-        onSubmit={this.onSubmit}
-        onChange={this.onChange}
-        handleEditorChange={this.handleEditorChange}
-        title={this.props.title}
-        clearForm={this.state.clearForm}
-      />
+      <div>
+        <RecipeForm
+          validationErrors={this.state.validationErrors}
+          recipe={recipeData}
+          onSubmit={this.onSubmit}
+          onChange={this.onChange}
+          handleEditorChange={this.handleEditorChange}
+          title={this.props.title}
+          clearForm={this.state.clearForm}
+        />
+      </div>
     );
   }
 }
