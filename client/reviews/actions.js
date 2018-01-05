@@ -15,6 +15,7 @@ function addNewReview(review) {
 }
 
 /**
+ * @description handles api call for adding reviews
  * @param {Number} id - recipe id
  * @param {Object} data - form content data
  * @returns {Promise} - returns a promise object

@@ -2,77 +2,163 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import TextField from '../../common/TextField';
+import { handleEditUserProfile } from '../actions';
+
 import '../styles/dashboard.scss';
 
 
 const propTypes = {
   profile: PropTypes.objectOf(PropTypes.any).isRequired,
-  onChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired
-  // validationErrors: PropTypes.objectOf(PropTypes.any).isRequired
+  handleEditUserProfile: PropTypes.func.isRequired
 };
 
 /**
- * @description displays proile update modal
- * @returns {ReactElement} markup
+ * @class ProfileModal
+ * @extends {Component}
  */
-const ProfileModal = ({ profile, onChange, onSubmit }) =>
-  // const {
-  //   validationErrors, aboutme, photo
-  // } = this.state;
+class ProfileModal extends Component {
+  /**
+   * Creates an instance of ProfilePage.
+   * @param {Object} props
+   * @memberof ProfileModal
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      firstname: this.props.profile.firstname || '',
+      lastname: this.props.profile.lastname || '',
+      aboutme: this.props.profile.aboutme || '',
+      photo: this.props.profile.photo || '',
+    };
+  }
+  /**
+   *
+   * @memberof ProfilePage
+   * @returns {none} - none
+   */
+  componentDidMount() {
+    $('.modal').modal({ dismissible: false });
+  }
+  /**
+   * @description check if profile props is available
+   * @param {object} nextProps
+   * @returns {undefined}
+   */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.profile !== this.props.profile) {
+      this.setState({
+        photo: nextProps.profile.photo,
+        firstname: nextProps.profile.firstname,
+        lastname: nextProps.profile.lastname,
+        aboutme: nextProps.profile.aboutme
+      });
+    }
+  }
+  /**
+   * @description handles input change
+   * @memberof ProfilePage
+   * @param {SyntheticEvent} event
+   * @returns {undefined}
+   */
+  onChange = (event) => {
+    if (event.target.name === 'photo') {
+      this.setState({ photo: event.target.files[0] });
+      const reader = new FileReader();
+      reader.onload = () => {
+        const output = document.getElementById('img1');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    } else {
+      this.setState({ [event.target.name]: event.target.value });
+    }
+  }
 
+  /**
+   *
+   * @param {SyntheticEvent} event
+   * @memberof ProfilePage
+   * @returns {undefined}
+   */
+  onSubmit = (event) => {
+    event.preventDefault();
+    this.props.handleEditUserProfile(this.state);
+  }
 
-  (
-    <div className="modal" id="update-modal">
-      <div className="row">
-        <div className="col s12 m4 offset-m4 l4 offset-l4">
-          <div className="input-field s12">
-            <h4>EDIT YOUR PROFILE</h4>
-          </div>
-          <form className="" onSubmit={onSubmit}>
+  /**
+   * @description handles hiding of modal when clicked
+   * @param {SyntheticEvent} event
+   * @return {undefined}
+   */
+  onFinishClick = (event) => {
+    event.preventDefault();
+    $('.modal').modal('close');
+  }
 
-            <TextField
-              name="firstname"
-              value={profile.firstname || ''}
-              className="input-field"
-              onChange={onChange}
-              label="Firstname"
-              type="text"
-            />
-
-
-            <TextField
-              name="lastname"
-              value={profile.lastname || ''}
-              className="input-field"
-              onChange={onChange}
-              label="Lastname"
-              type="text"
-            />
-
-            <TextField
-              name="aboutme"
-              value={profile.aboutme || ''}
-              className="input-field"
-              onChange={onChange}
-              label="About Me"
-              type="text"
-            />
-            <button
-              className="btn-large brown waves-effect waves-light col s12 m4"
-              type="submit"
-            >
-                    Update Profile
-            </button>
-
-          </form>
-        </div>
-      </div>
+  /**
+   * @description renders input field
+   * @param {string} name
+   * @param {string} label
+   * @param {string} value
+   * @returns {DomElement} - returns html
+   */
+  renderInputFor = (name, label, value) => (
+    <div className="input-field col s12">
+      <input
+        type="text"
+        name={name || ''}
+        onChange={this.onChange}
+        value={value}
+      />
+      <label htmlFor={name}>{label}</label>
     </div>
   );
+
+  /**
+   * @description renders profile edit modal
+   * @returns {ReactELement} html
+   */
+  render() {
+    return (
+      <div className="modal" id="update-modal">
+        <div className="row">
+          <div className="col s12 m12">
+            <div>
+              <h4>Edit Profile</h4>
+            </div>
+            <div className="image-upload">
+              <img
+                id="img1"
+                src={this.state.photo ||
+                  'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526934/avatar_sq5zgy.png'}
+                alt=""
+              />
+              <div className="upload-btn-wrapper">
+                <button className="btn">Upload an Image</button>
+                <input type="file" onChange={this.onChange} name="photo" accept=".jpg, .jpeg, .png" />
+              </div>
+            </div>
+            <form className="">
+              {this.renderInputFor('firstname', 'Firstname', this.state.firstname)}
+              {this.renderInputFor('lastname', 'Lastname', this.state.lastname)}
+              {this.renderInputFor('aboutme', 'About Me', this.state.aboutme)}
+              <button
+                className="btn blue"
+                type="submit"
+                onClick={this.onSubmit}
+              >
+                    Update Profile
+              </button>
+              <button className="btn grey right" type="finish" onClick={this.onFinishClick}>Finish</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 
 ProfileModal.propTypes = propTypes;
 
 
-export default connect(null, {})(ProfileModal);
+export default connect(null, { handleEditUserProfile })(ProfileModal);

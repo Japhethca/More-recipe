@@ -32,7 +32,7 @@ const Card = (props) => {
   } = props;
 
   /**
-   * renders delete button
+   * @description renders delete button
    * @returns {DomElement} - html markup
    */
   const renderDelete = () => (
@@ -42,7 +42,7 @@ const Card = (props) => {
   );
 
   /**
-   * renders update button
+   * @description renders update button
    * @returns {DomElement} - markup
    */
   const renderUpdate = () => (
@@ -54,15 +54,15 @@ const Card = (props) => {
     </button>
   );
 
-  const nameUrl = slugify(recipe.name, '-');
+  const nameSlug = slugify(recipe.name, '-');
 
   return (
     <div className="row " id="recipe-card">
       <div className="card col s12">
         <Link
-          to={`/recipe/${nameUrl}-${recipe.id}`}
+          to={`/recipe/${nameSlug}-${recipe.id}`}
           className="card-image"
-          href={`/recipe/${nameUrl}-${recipe.id}`}
+          href={`/recipe/${nameSlug}-${recipe.id}`}
         >
           <img
             src={recipe.image

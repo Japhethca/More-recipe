@@ -64,6 +64,8 @@ class Signup extends Component {
     const { errors, isValid } = signUpValidator(this.state);
     if (!isValid) {
       this.setState({ validationErrors: errors });
+    } else {
+      this.setState({ validationErrors: {} });
     }
     return isValid;
   }
@@ -83,7 +85,7 @@ class Signup extends Component {
     };
 
     if (this.props.authentication.isAuthenticated) {
-      this.props.history.push('/');
+      this.props.history.push('/recipes');
     }
 
     return (
@@ -92,7 +94,7 @@ class Signup extends Component {
           onChange={this.onChange}
           onSubmit={this.onSubmit}
           formData={formData}
-          serverErrors={this.state.serverErrors}
+          serverErrors={this.props.authentication.errors}
           validationErrors={this.state.validationErrors}
         />
       </div>

@@ -8,6 +8,7 @@ import { GET_USER_RECIPES, GET_USER_FAVORITES } from '../recipes/actionTypes';
 
 
 /**
+ * @description creates a user profile action
  * @param {object} profile
  * @returns {object} redux action
  */
@@ -17,6 +18,7 @@ const getUserProfile = profile => ({
 });
 
 /**
+ * @description handle submiting user profile
  * @export
  * @returns {promise} axios promise
  */
@@ -25,6 +27,7 @@ export const handleGetUserProfile = () => dispatch => axios.get('/api/users/prof
 
 
 /**
+ * @description edit user profile action creators
  * @param {object} newProfile - user object
  * @returns {object} redux action
  */
@@ -34,6 +37,7 @@ const editProfileAction = newProfile => ({
 });
 
 /**
+ * @description make an apit for to get users profile
  * @export
  * @param {Object} data - user object
  * @returns {promise} axios or supseragent
@@ -64,6 +68,7 @@ export const handleEditUserProfile = data => (dispatch) => {
 };
 
 /**
+ * @description creates user recipes action
  * @param {array} userRecipes
  * @returns {Object} action
  */
@@ -80,7 +85,7 @@ function userRecipesAction(userRecipes) {
  * @argument {Number} limit
  * @returns {promise} axios promise
  */
-export const handleGetUserRecipes = (page, limit = 4) => dispatch => axios.get(`/api/users/recipes?limit=${limit}&page=${page}`)
+export const handleGetUserRecipes = (page = 1, limit = 4) => dispatch => axios.get(`/api/users/recipes?limit=${limit}&page=${page}`)
   .then((res) => {
     const numPages = Math.ceil(res.data.count / limit);
     dispatch(getRecipeCount(numPages, page));
@@ -89,6 +94,7 @@ export const handleGetUserRecipes = (page, limit = 4) => dispatch => axios.get(`
 
 
 /**
+ * @description creates an action for getting all favorite recipes
  * @param {array} favorites
  * @returns {object} sction
  */
@@ -100,12 +106,13 @@ function getFavoritesAction(favorites) {
 }
 
 /**
+ * @description an action for getting users favorite recipes
  * @export
  * @param {Number} page
  * @param {Number} limit
  * @returns {promise} axios promise
  */
-export const handleGetFavorites = (page, limit = 4) => dispatch => axios.get(`/api/users/favorites?limit=${limit}&page=${page}`)
+export const handleGetFavorites = (page = 1, limit = 4) => dispatch => axios.get(`/api/users/favorites?limit=${limit}&page=${page}`)
   .then((res) => {
     const favorites = res.data.favorites.map(favorite => favorite.Recipe);
     const numPages = Math.ceil(res.data.count / limit);

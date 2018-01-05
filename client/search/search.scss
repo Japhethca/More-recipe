@@ -8,7 +8,7 @@ $search-border-color: rgb(128, 128, 128);
 .search-input {
   input[type=search]:not(.browser-default) {
     background-color: $search-bg-color;
-    border-radius: 5px;
+    border-radius: 2px;
     border: 2px $search-border-color solid;
     color: $search-txt-color;
     font-size: 18px;
@@ -59,8 +59,8 @@ $search-border-color: rgb(128, 128, 128);
   }
 
   input[type=search]:not(.browser-default):focus:not([readonly]) {
-    -webkit-box-shadow: 0;
     border-bottom: 0;
+    -webkit-box-shadow: 0;
     box-shadow: 0;
   }
 }

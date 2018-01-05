@@ -18,8 +18,8 @@ $recipe-items-header-color: #a52a2a;
   }
 
   button {
-    border: none;
     background-color: transparent;
+    border: 0;
 
     &:focus {
       background-color: transparent;
@@ -27,8 +27,8 @@ $recipe-items-header-color: #a52a2a;
   }
 
   .description-text {
-    text-align: center;
     font-size: 15px;
+    text-align: center;
   }
 
   hr.hr-header {
@@ -39,11 +39,11 @@ $recipe-items-header-color: #a52a2a;
   }
 
   hr.hr-line {
+    background-image: linear-gradient(to right, $hr-line-color-2, $hr-line-color, $hr-line-color-2);
+    background: $hr-line-color;
     border: 0;
     height: 1px;
-    background: $hr-line-color;
-    background-image: linear-gradient(to right, $hr-line-color-2, $hr-line-color, $hr-line-color-2);
-}
+  }
 
   .recipe-title {
     font-family: 'Ubuntu', sans-serif;

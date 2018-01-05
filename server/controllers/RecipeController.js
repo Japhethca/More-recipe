@@ -7,6 +7,7 @@ const { Recipes, Users, Reviews } = models;
 
 
 /**
+ * @description sorts and orders recipe
  * @param {object} request - Express http request
  * @param {object} response - Express http response
  * @param {callback} next -function
@@ -48,6 +49,7 @@ export const sortOrOrderRecipes = (request, response, next) => {
 };
 
 /**
+ * @description handles searching for recipe
  * @param {object} request - Express http request
  * @param {object} response - Express http response
  * @param {callback} next -function
@@ -105,6 +107,7 @@ export const searchRecipe = (request, response, next) => {
 };
 
 /**
+ * @description gets all recipe
  * @param {Object} request -Express http request
  * @param {Object} response Express http response
  * @returns {Object} - Http response
@@ -144,6 +147,7 @@ export const allRecipes = (request, response) => {
 };
 
 /**
+ * @description creates new recipe
  * @param {object} request -Express http request
  * @param {object} response Express http response
  * @returns {object} HTTP response
@@ -194,6 +198,7 @@ export const createRecipe = (request, response) => Recipes.findOne({
   });
 
 /**
+ * @description gets a single recipe details
  * @param {object} request Express http request
  * @param {object} response Express http response
  * @returns {object} HTTP response
@@ -234,6 +239,7 @@ export const getRecipeById = (request, response) => Recipes.findOne({
   });
 
   /**
+   * @description updates single recipe
    * @param {object} request - Express http request
    * @param {object} response - Express http response
    * @returns {object} HTTP respsonse
@@ -288,6 +294,7 @@ export const updateRecipe = (request, response) => Recipes.findOne({
   });
 
 /**
+ * @description deletes single recipe from the database
  * @param {object} request - Express http request
  * @param {object} response - Express http response
  * @returns {object} Http response
@@ -320,6 +327,7 @@ export const deleteRecipe = (request, response) => {
 };
 
 /**
+ * @description gets all recipes created by a single user
  * @param {object} request - Express http request
  * @param {object} response - Express http response
  * @returns {object} Http response

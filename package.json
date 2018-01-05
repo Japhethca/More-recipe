@@ -1,14 +1,9 @@
 {
-  "name": "more-recipe",
+  "name": "more-recipes",
   "version": "1.0.0",
   "description": "More-Recipes​ ​provides​ ​a​ ​platform​ ​for​ ​users​ ​to​ ​share​ ​the​ ​awesome​ ​and​ ​exciting​ ​​ ​recipe​ ​ideas​ ​they have​ ​invented​ ​or​ ​learnt. ​Suppose​ ​a​ ​user​ ​comes​ ​up​ ​with​ ​a​ ​recipe,​ ​​ ​he/she​ ​can​ ​post​ ​it​ ​on More-Recipes​ ​and​ ​​ ​get​ ​feedback​ ​in​ ​form​ ​of​ ​reviews​ ​and​ ​votes​ ​from​ ​other​ ​users​ ​who​ ​explore​ ​that recipe.​ ​Users​ ​can​ ​also​ ​keep​ ​a​ ​list​ ​of​ ​their​ ​favorite​ ​recipes​ ​on​ ​the​ ​application. [More-recipe](https://japhethca.github.io/More-recipe/)",
   "main": "index.js",
-  "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ]
-  },
+
   "scripts": {
     "heroku-postbuild": "webpack --config webpack.config.prod.js -p --progress --colors",
     "start": "NODE_ENV=production babel-node -- server/app.js",
@@ -26,8 +21,12 @@
     "type": "git",
     "url": "git+https://github.com/JaphethCA/More-recipe.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Anyigor Chidiebere Japheth",
+  "license": "MIT",
+  "keywords": [
+    "Recipes",
+    "Food"
+  ],
   "bugs": {
     "url": "https://github.com/JaphethCA/More-recipe/issues"
   },

@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
   });
+
   Votes.associate = (models) => {
     Votes.belongsTo(models.Recipes, {
       foreignKey: 'recipeId',

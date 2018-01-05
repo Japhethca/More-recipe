@@ -65,7 +65,7 @@ class NavigationBar extends Component {
    */
   onClick = () => {
     this.props.logout();
-    this.props.history.push('/landing');
+    this.props.history.push('/');
   }
 
   /**
@@ -89,6 +89,7 @@ class NavigationBar extends Component {
    */
   renderSideNavLinks = (id, className) => (
     <ul id={id} className={className} >
+      <li><NavLink to="/create">Create Recipe</NavLink></li>
       <li><NavLink to="/profile">Profile</NavLink></li>
       <li><NavLink to="/my-recipes">My Recipes</NavLink></li>
       <li ><NavLink to="/favorites">Favorites</NavLink></li>
@@ -111,9 +112,9 @@ class NavigationBar extends Component {
   );
 
   /**
- * @description displays navigation bar
- * @returns {ReactElement} markup
- */
+   * @description displays navigation bar
+   * @returns {ReactElement} markup
+   */
   render() {
     const { isAuthenticated } = this.props.user;
 
@@ -160,7 +161,7 @@ class NavigationBar extends Component {
           <div className="nav-wrapper">
             <div className="container-fluid">
               <NavLink
-                to="/"
+                to="/recipes"
                 id="brand-logo"
                 className="brand-logo"
               >

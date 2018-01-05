@@ -26,6 +26,9 @@ $error-txt-color: #ff0000;
     padding: 10px;
   }
 
+  .server-error-text {
+    color: error-txt-color;
+  }
   .error-class {
     color: $error-txt-color;
     font-size: small;
@@ -72,6 +75,12 @@ $error-txt-color: #ff0000;
     margin-bottom: 0px;
     padding-top: 10px;
   }
+}
+
+.server-error-text {
+  color: $error-txt-color;
+  text-align: center;
+  margin: 15 5px;
 }
 
 .user-details {

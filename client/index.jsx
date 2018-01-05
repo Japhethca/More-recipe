@@ -9,7 +9,7 @@ import {
   isTokenValid, LoginPage, LandingPage, SignupPage,
   setAuthorization } from './authentication';
 import store from './store/configureStore';
-import App from './app/App';
+import App from './App';
 
 
 if (localStorage.token && isTokenValid(localStorage.token)) {
@@ -24,7 +24,7 @@ render(
         <Switch >
           <Route path="/signin" exact component={LoginPage} />
           <Route path="/signup" exact component={SignupPage} />
-          <Route path="/landing" exact component={LandingPage} />
+          <Route path="/" exact component={LandingPage} />
           <Route component={App} />
         </Switch>
       </BrowserRouter>

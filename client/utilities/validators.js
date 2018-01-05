@@ -7,9 +7,9 @@ const signinRules = {
 
 const signupRules = {
   email: 'required|email',
-  password: 'required',
+  password: 'required|min:5',
   username: 'required|min:2',
-  verifyPassword: 'required|min:5|same:password'
+  verifyPassword: 'required|min:5'
 };
 
 const recipeFormRules = {
@@ -27,14 +27,15 @@ const profileRules = {
 };
 
 /**
- *
+ * @description handles input validation
  * @param {object} rules
- * @return {object} - object of boolean and object of errors
+ * @return {Function} - object of boolean and object of errors
  */
 const validator = rules => (data) => {
   const validate = new Validator(data, rules);
   const errors = {};
   const isValid = false;
+
   if (validate.passes()) {
     return {
       isValid: true,

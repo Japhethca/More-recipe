@@ -19,6 +19,7 @@ import '../styles/dashboard.scss';
  */
 class Dashboard extends Component {
   /**
+   * @description makes an API call for user Profile on component mount
    * @memberof Dashboard
    * @returns {undefined}
    */
@@ -27,6 +28,7 @@ class Dashboard extends Component {
   }
 
   /**
+   * @description logs user out of application onclick
    * @memberof Dashboard
    * @returns {undefined}
    */

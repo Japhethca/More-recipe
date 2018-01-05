@@ -4,6 +4,7 @@ import model from '../models';
 const { Favorites, Recipes, Users } = model;
 
 /**
+ * @description get users favorite recipes
  * @param {object} request -Express request object
  * @param {object} response -Express response object
  * @returns {object} response - Express response
@@ -59,6 +60,7 @@ export const getUserFavorites = (request, response) => {
 };
 
 /**
+ * @description controller for adding recipe to favorites
  * @param {object} request -HTTP request
  * @param {object} response -HTTP response
  * @returns {object} response object
@@ -102,7 +104,8 @@ export const addToFavorites = (request, response) => Recipes.findById(request.pa
     });
   });
 
-  /**
+/**
+ * @description controller for removing recipe from favorites
  * @param {onbject} request -Express HTTP request
  * @param {onbject} response -Express HTTP response
  * @returns {object} HTTP response object

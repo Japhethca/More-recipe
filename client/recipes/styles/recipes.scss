@@ -10,3 +10,9 @@ $grey-color: rgb(128, 128, 128);
     text-align: center;
   }
 }
+
+.list-item {
+  ul {
+    list-style-type: none;
+  }
+}

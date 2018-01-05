@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * @description displays loader indicate
+ * @description displays loading indicator
  * @returns {ReactElement} markup
  */
 const Loader = () => (

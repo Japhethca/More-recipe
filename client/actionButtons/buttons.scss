@@ -6,6 +6,7 @@ $button-color: rgb(41, 16, 16);
   color: rgb(77, 75, 75);
   font-size: 15px;
   cursor: pointer;
+
     span {
     display: inline-block;
     margin: 5px;
@@ -24,10 +25,12 @@ $button-color: rgb(41, 16, 16);
     padding-left: 3px;
     padding-right: 3px;
   }
-  button{
-    background-color: #fff;
+
+  button {
+    background-color: transparent;
+
     &:hover {
-      background-color: #fff;
+      background-color: transparent;
     }
   }
 }

@@ -52,7 +52,7 @@ const RecipeForm = (props) => {
 
 
   /**
-   *  renders a text field
+   * @description renders a text field
    * @param {string} name
    * @param {string} label
    * @param {string} validator
@@ -85,9 +85,12 @@ const RecipeForm = (props) => {
 
           <hr />
           <div>
-            <input type="file" className="input-file" onChange={props.onChange} name="image" accept=".jpg, .jpeg, .png" />
+            <div className="image-btn-wrapper">
+              <span className="btn">Upload an Image</span>
+              <input type="file" onChange={props.onChange} name="image" accept=".jpg, .jpeg, .png" />
+            </div>
             <img
-              id="img1"
+              id="img2"
               src={props.recipe.image ||
                   'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526912/recipe-card-placeholder_ta9ikp.jpg'}
               alt="Recipe"

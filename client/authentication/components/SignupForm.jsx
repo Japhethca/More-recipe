@@ -20,7 +20,7 @@ const SignupForm = (props) => {
         <div className="header-text">
           <h4>Sign Up</h4>
         </div>
-        {serverErrors && <span className="red-text center">{serverErrors}</span>}
+        {serverErrors && <span className="server-error-text" style={{ textAlign: 'center' }}>{serverErrors}</span>}
         <form className="" onSubmit={onSubmit}>
           <div className="input-field col s12">
             <TextField
@@ -89,7 +89,7 @@ const SignupForm = (props) => {
 SignupForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  serverErrors: PropTypes.arrayOf(PropTypes.any).isRequired,
+  serverErrors: PropTypes.string.isRequired,
   validationErrors: PropTypes.objectOf(PropTypes.any).isRequired,
   formData: PropTypes.objectOf(PropTypes.any).isRequired
 };

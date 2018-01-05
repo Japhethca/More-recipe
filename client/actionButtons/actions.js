@@ -10,6 +10,7 @@ import {
 
 
 /**
+ * @description creates an add to favorites action
  * @param {object} recipe - recipe object
  * @returns {object} action
  */
@@ -19,6 +20,7 @@ const setUserFavorites = recipe => ({
 });
 
 /**
+ * @description action for adding recipe to favorites
  * @export
  * @param {object} recipe - recipe object
  * @returns {promise} - axios
@@ -32,6 +34,7 @@ export const addToFavorites = recipe => dispatch => axios.post(`/api/users/favor
   });
 
 /**
+ * @description creates an action for removing recipe from favorites
  * @param {number} id - recipe id
  * @returns {object} acion
  */
@@ -41,6 +44,7 @@ const removeFromFavorites = id => ({
 });
 
 /**
+ * @description removes recipe from list of favorites
  * @export
  * @param {number} recipeId - recipe id
  * @returns {promise} axios promise
@@ -54,7 +58,7 @@ export const removeFavorite = recipeId => dispatch => axios.delete(`/api/users/f
   });
 
 /**
- * @returns downvote action creator
+ * @description downvote action creator
  * @param {object} recipe
  * @returns {object} action object
  */
@@ -63,11 +67,19 @@ const downvote = recipe => ({
   recipe
 });
 
+/**
+ * @description action for downvoting recipe
+ * @param {Number} id
+ * @returns {Promise} axios promise
+ */
 export const handleDownvote = id => dispatch => axios.put(`/api/recipe/${id}/downvote`)
-  .then((res) => { dispatch(downvote(res.data.recipe)); });
+  .then((res) => {
+    toastr.info(res.data.message);
+    dispatch(downvote(res.data.recipe));
+  });
 
   /**
-  *@description upvote action creator
+  *@description create an upvote action
  * @param {object} recipe - recipe object
  * @returns {object} action
  */
@@ -75,5 +87,14 @@ const upvote = recipe => ({
   type: UPVOTE_RECIPE,
   recipe
 });
+
+/**
+ * @description handles downvoting recipe
+ * @param {Number} id
+ * @returns {Promise} axios promise
+ */
 export const handleUpvote = id => dispatch => axios.put(`/api/recipe/${id}/upvote`)
-  .then(res => dispatch(upvote(res.data.recipe)));
+  .then((res) => {
+    toastr.info(res.data.message);
+    dispatch(upvote(res.data.recipe));
+  });

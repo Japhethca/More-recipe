@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import qs from 'qs';
 
 import { Recipes } from '../../recipes';
-import { getFavorites, getAllRecipes } from '../actions';
+import { getAllRecipes } from '../actions';
+import { handleGetFavorites } from '../../dashboard/actions';
 import Pagination from '../../common/Pagination';
 import '../style.scss';
 
 const propTypes = {
   getAllRecipes: PropTypes.func.isRequired,
-  getFavorites: PropTypes.func.isRequired,
+  handleGetFavorites: PropTypes.func.isRequired,
   recipes: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 /**
- * @class Home
+ * @description HomePage
+ * @class HomePage
  * @extends {Component}
  */
-class Home extends Component {
+class HomePage extends Component {
   /**
-   * Creates an instance of Home.
+   * @description Creates an instance of Home.
    * @param {object} props
    * @memberof Home
    */
@@ -32,15 +33,17 @@ class Home extends Component {
   }
 
   /**
+   * @description makes an api call on component mount
    * @memberof Home
    * @returns {undefined}
    */
   componentDidMount = () => {
+    this.props.handleGetFavorites();
     this.props.getAllRecipes();
-    this.props.getFavorites();
   }
 
   /**
+   * @description sets state when a new props is received
    * @memberof Home
    * @param {Object} nextProps
    * @returns {undefined}
@@ -52,7 +55,7 @@ class Home extends Component {
   }
 
   /**
-   * handles pagination page clicks
+   * @description handles pagination page clicks
    * @memberof Home
    * @param {Number} page
    * @returns {undefined}
@@ -84,11 +87,11 @@ class Home extends Component {
   }
 }
 
-Home.propTypes = propTypes;
+HomePage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   recipes: state.recipeReducer.recipes
 });
 
-export default connect(mapStateToProps, { getAllRecipes, getFavorites })(Home);
+export default connect(mapStateToProps, { getAllRecipes, handleGetFavorites })(HomePage);
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * button component
+ * @description button component
  * @param {object} props - React props
  * @returns {ReactElement} markup
  */

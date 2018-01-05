@@ -45,7 +45,7 @@ class FavoritesPage extends Component {
   }
 
   /**
-   *
+   *@description handles pagination page click
    * @param {object} page
    * @memberof FavoritesPage
    * @returns {undefined}
@@ -55,7 +55,7 @@ class FavoritesPage extends Component {
   }
 
   /**
- * @description displays dashboard
+ * @description rendesr users favorite recipes
  * @returns {ReactElement} markup
  */
   render() {
@@ -66,7 +66,7 @@ class FavoritesPage extends Component {
           showActionBtns={false}
           showRemoveFavorite
           className="col s12 m6 l4"
-          noItemText="You Have No favorite Recipe!"
+          noItemText="You do not have favorite recipes!"
         />
         { this.state.favorites.length > 0 && <Pagination handlePagination={this.handlePagination} />}
       </div>

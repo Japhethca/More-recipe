@@ -2,6 +2,7 @@ import _ from 'lodash';
 import bcrypt from 'bcrypt';
 
 const saltRound = 10;
+
 /**
  * @param {object} sequelize - sequelize instance
  * @param {object} DataTypes - Datatype instance
@@ -50,6 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
   });
+
   Users.associate = (models) => {
     Users.hasMany(models.Recipes, {
       foreignKey: 'userId',

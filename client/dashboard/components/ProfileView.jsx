@@ -9,26 +9,26 @@ const propTypes = {
 };
 
 /**
- * @description displays profile data
+ * @description displays profile data details
  * @returns {ReactElement} markup
  */
 const ProfileView = ({ profile }) => (
-  <div>
-    <div className="profile-cover row">
+  <div className="profile-cover">
+    <div className="row">
       <div className="col s12 m6 l4">
         <img
           src={profile.photo || 'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526934/avatar_sq5zgy.png'}
           alt=""
           className="profile-image"
         />
-        <a className="modal-trigger update-btn" href="#update-modal">Update Profile</a>
       </div>
-      <div className="col s12 m6 l8">
-        <h3>{profile.username}</h3><div>({profile.email})</div>
+      <div className="col s12 m6 l8 details">
+        <h5>{profile.username}</h5><div>({profile.email})</div>
         {profile.firstname ?
           <div>{profile.firstname} {profile.lastname}</div> : <div>Add real name</div>}
         {profile.aboutme ?
           <div>{profile.aboutme}</div> : <div>add about me</div>}
+        <a className="modal-trigger btn blue" href="#update-modal">Update Profile</a>
       </div>
     </div>
   </div>

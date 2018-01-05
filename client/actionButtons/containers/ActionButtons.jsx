@@ -23,12 +23,13 @@ const propTypes = {
 };
 
 /**
+ * @description container for holding buttons
  * @class ActionButtons
  * @extends {Component}
  */
 class ActionButtons extends Component {
   /**
-   * Creates an instance of ActionButtons.
+   * @description Creates an instance of ActionButtons.
    * @param {object} props - React props
    * @memberof ActionButtons
    */
@@ -109,6 +110,7 @@ class ActionButtons extends Component {
     event.preventDefault();
     this.props.handleDownvote(this.props.recipe.id);
   };
+
   /**
    * @description handles click event for upvoting recipe
    * @param {SynthenticEvent} event - onClick event
@@ -121,11 +123,10 @@ class ActionButtons extends Component {
   };
 
   /**
- *
- *
- * @returns {ReactElement} markup
- * @memberof ActionButtons
- */
+   * @description renders buttons
+  * @returns {ReactElement} markup
+  * @memberof ActionButtons
+  */
   render() {
     const { recipe } = this.props;
     return (

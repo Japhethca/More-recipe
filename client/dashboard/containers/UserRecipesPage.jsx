@@ -7,6 +7,7 @@ import { handleGetUserRecipes } from '../actions';
 import Pagination from '../../common/Pagination';
 
 /**
+ * @description User recipes page component
  * @class UserRecipesPage
  * @extends {Component}
  */
@@ -24,7 +25,7 @@ class UserRecipesPage extends Component {
   }
 
   /**
-   * component life cycle method
+   * @description makes an API call for user recipes on component mount
    * @memberof UserRecipesPage
    * @returns {none} - none
    */
@@ -34,7 +35,7 @@ class UserRecipesPage extends Component {
 
   /**
    *
-   *
+   * @description changes recipes state on recieve props
    * @param {object} nextProps
    * @memberof UserRecipesPage
    * @return {none} - none
@@ -46,6 +47,7 @@ class UserRecipesPage extends Component {
   }
 
   /**
+   * @description handles pagination
    * @memberof UserRecipesPage
    * @param {object} page
    * @returns {none} -none
@@ -55,7 +57,7 @@ class UserRecipesPage extends Component {
   }
 
   /**
-   * @description displays dashboard
+   * @description renders user recipes
    * @returns {ReactElement} markup
    */
   render() {
@@ -66,7 +68,7 @@ class UserRecipesPage extends Component {
           showModifyButtons
           className="col s12 m6 l4"
           recipes={this.state.userRecipes}
-          noItemText="No recipes, click 'Add Recipe' to create recipe"
+          noItemText="No recipes! Create a recipe"
         />
         { this.state.userRecipes.length > 0 &&
         <Pagination handlePagination={this.handlePagination} />

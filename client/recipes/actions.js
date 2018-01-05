@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
-
 import upload from '../utilities/fileUpload';
 import { UPDATE_RECIPE,
   ADD_NEW_RECIPE,
@@ -9,11 +8,10 @@ import { UPDATE_RECIPE,
   DELETE_USER_RECIPE,
   REMOVE_FROM_FAVORITES,
   ADD_TO_FAVORITES,
-  DOWNVOTE_RECIPE,
-  NOT_FOUND,
-  UPVOTE_RECIPE } from './actionTypes';
+  NOT_FOUND } from './actionTypes';
 
 /**
+ * @description creates update recipe action
  * @param {object} recipe - recipe object
  * @returns {object} action
  */
@@ -22,11 +20,18 @@ const updateRecipe = recipe => ({
   recipe
 });
 
+/**
+ * @description create not found action
+ * @param {object} status - recipe object
+ * @returns {object} action
+ */
 export const notFoundAction = status => ({
   type: NOT_FOUND,
   status
 });
+
 /**
+ * @description creates add recipe action
  * @param {object} recipe
  * @returns {object} action object
  */
@@ -36,7 +41,7 @@ const createRecipe = recipe => ({
 });
 
 /**
- * @author chidex
+ * @description handles api request
  * @argument {object} method
  * @argument {function} actionCreator
  * @returns {promise} axios promise
@@ -73,7 +78,11 @@ const handleRequest = (method, actionCreator) => data => (dispatch) => {
 export const handleCreateRecipe = handleRequest('post', createRecipe);
 export const handleUpdateRecipe = handleRequest('put', updateRecipe);
 
-
+/**
+ * @description creates get single recipe action
+ * @param {object} recipe
+ * @returns {object} actions
+ */
 const fetchRecipe = recipe => (
   {
     type: GET_SINGLE_RECIPE,
@@ -95,6 +104,7 @@ export const getRecipe = id => (dispatch) => {
 };
 
 /**
+ * @description delete recipe action creator
  * @param {number} id
  * @returns {object} action object
  */
@@ -105,6 +115,11 @@ function deleteRecipe(id) {
   };
 }
 
+/**
+ * @description handles deleting recipe
+ * @param {Number} id
+ * @returns {Promise} axios promise
+ */
 export const handleDeleteRecipe = id => dispatch => axios.delete(`/api/recipe/${id}`)
   .then((res) => {
     if (res.data.status === 'success') {
@@ -113,7 +128,7 @@ export const handleDeleteRecipe = id => dispatch => axios.delete(`/api/recipe/${
     }
   }).catch(error => toastr.info(error.response.data.message));
 
-  /**
+/**
  * @param {number} id
  * @returns {object} acion
  */
@@ -123,6 +138,7 @@ const removeFavoriteAction = id => ({
 });
 
 /**
+ * @description makes api call for removing recipes from favorites
  * @export
  * @param {number} recipeId
  * @returns {promise} axios promise
@@ -136,15 +152,17 @@ export const handleRemoveFavorite = recipeId => dispatch => axios.delete(`/api/u
   }).catch();
 
 /**
+ * @description creates add to favorites action
  * @param {object} recipe
  * @returns {object} action
  */
-const setUserFavorites = recipe => ({
+const addToFavoriteAction = recipe => ({
   type: ADD_TO_FAVORITES,
   recipe
 });
 
 /**
+ * @description handles add recipe to favorites
  * @export
  * @param {object} recipe
  * @returns {promise} - axios
@@ -152,7 +170,7 @@ const setUserFavorites = recipe => ({
 export const addToFavorites = recipe => dispatch => axios.post(`/api/users/favorites/${recipe.id}`)
   .then((response) => {
     if (response.data.status === 'success') {
-      dispatch(setUserFavorites(recipe));
+      dispatch(addToFavoriteAction(recipe));
       toastr.success(response.data.message);
     }
   }).catch();
@@ -167,6 +185,7 @@ const removeFromFavorites = id => ({
 });
 
 /**
+ * @description handles removing recipe from favorites
  * @export
  * @param {number} recipeId
  * @returns {promise} axios promise
@@ -179,26 +198,3 @@ export const removeFavorite = recipeId => dispatch => axios.delete(`/api/users/f
     }
   }).catch();
 
-/**
- * @param {object} recipe
- * @returns {object} action object
- */
-const downvote = recipe => ({
-  type: DOWNVOTE_RECIPE,
-  recipe
-});
-
-export const handleDownvote = id => dispatch => axios.put(`/api/recipe/${id}/downvote`)
-  .then((res) => { dispatch(downvote(res.data.recipe)); }).catch();
-
-  /**
- * @param {object} recipe
- * @returns {object} sction
- */
-const upvote = recipe => ({
-  type: UPVOTE_RECIPE,
-  recipe
-});
-
-export const handleUpvote = id => dispatch => axios.put(`/api/recipe/${id}/upvote`)
-  .then(res => dispatch(upvote(res.data.recipe))).catch();

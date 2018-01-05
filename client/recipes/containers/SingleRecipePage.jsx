@@ -7,14 +7,13 @@ import SingleRecipe from '../components/SingleRecipe';
 import { getRecipe } from '../actions';
 
 /**
- *
- *
+ * @description SingleRecipe page
  * @class SingleRecipePage
  * @extends {Component}
  */
 class SingleRecipePage extends Component {
   /**
-   * Creates an instance of SingleRecipePage.
+   * @description Creates an instance of SingleRecipePage.
    * @param {any} props
    * @memberof SingleRecipePage
    */
@@ -34,9 +33,10 @@ class SingleRecipePage extends Component {
    */
   componentDidMount() {
     if (this.id === undefined || !this.props.recipe || this.state.notFound) {
-      this.props.history.push('/');
+      this.props.history.push('/recipes');
+    } else {
+      this.props.getRecipe(this.id);
     }
-    this.props.getRecipe(this.id);
   }
 
   /**
@@ -49,11 +49,12 @@ class SingleRecipePage extends Component {
       this.setState({ recipe: nextProps.recipe });
     }
     if (nextProps.notFound === true) {
-      this.props.history.push('/');
+      this.props.history.push('/recipes');
     }
   }
 
   /**
+   * @description renders single recipe page
    * @returns {reactElement} markup
    */
   render() {

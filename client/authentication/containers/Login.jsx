@@ -8,8 +8,6 @@ import { signinValidator } from '../../utilities/validators';
 import LoginForm from '../components/LoginForm';
 
 /**
- *
- *
  * @class Login
  * @extends {Component}
  */
@@ -30,8 +28,6 @@ class Login extends Component {
   }
 
   /**
-   *
-   *
    * @param {object} nextProps
    * @memberof Login
    * @returns {undefined}
@@ -43,7 +39,7 @@ class Login extends Component {
   }
 
   /**
-   *
+   * handles input change events
    * @param {SyntheticEvent} event - onchange event
    * @memberof Login
    * @returns {undefined}
@@ -54,7 +50,7 @@ class Login extends Component {
   }
 
   /**
-   *
+   * handles form submission
    * @param {SyntheticEvent} event - onsubmit event
    * @memberof Login
    * @returns {undefined}
@@ -76,6 +72,8 @@ class Login extends Component {
     const { errors, isValid } = signinValidator(this.state);
     if (!isValid) {
       this.setState({ validationErrors: errors });
+    } else {
+      this.setState({ validationErrors: {} });
     }
     return isValid;
   }
@@ -90,7 +88,7 @@ class Login extends Component {
     const formData = { email: this.state.email, password: this.state.password };
 
     if (this.props.authentication.isAuthenticated) {
-      this.props.history.push('/');
+      this.props.history.push('/recipes');
     }
 
     return (

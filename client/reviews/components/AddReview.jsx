@@ -26,7 +26,7 @@ const AddReview = ({ content, onChange, onSubmit }) => (
       />
     </div>
     <div >
-      <button type="submit" className="btn-class" >Post Review</button>
+      <button type="submit" className="btn-class" disabled={!content} >Post Review</button>
     </div>
   </form>
 );

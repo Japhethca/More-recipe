@@ -7,6 +7,7 @@ export default {
     errors: ''
   },
   recipeReducer: {
+    NotFound: false,
     recipes: [],
     userRecipes: [],
     favorites: [],

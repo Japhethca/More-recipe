@@ -2,7 +2,7 @@ import React from 'react';
 import './footer.scss';
 
 /**
- * @description displays footer
+ * @description displays app footer
  * @param {object} props - React props
  * @returns {ReactElement} markup
  */

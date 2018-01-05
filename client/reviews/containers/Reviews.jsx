@@ -19,7 +19,7 @@ const propTypes = {
  */
 class Reviews extends Component {
   /**
-   * Creates an instance of Reviews.
+   * @description Creates an instance of Reviews.
    * @param {any} props
    * @memberof Reviews
    */
@@ -31,6 +31,7 @@ class Reviews extends Component {
   }
 
   /**
+   * @description handle input change
    * @memberof Reviews
    * @param {SyntheticEvent} event
    * @returns {undefined}
@@ -40,7 +41,7 @@ class Reviews extends Component {
   }
 
   /**
-   * handle review submit
+   * @description handle review submit
    * @memberof Reviews
    * @param {SyntheticEvent} event - event
    * @returns {undefined}
@@ -52,6 +53,7 @@ class Reviews extends Component {
   }
 
   /**
+   * @description renders reviews
    * @return {reactElement} markup
    */
   render() {

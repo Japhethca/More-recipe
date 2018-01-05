@@ -8,14 +8,12 @@ import Card from '../components/Card';
 import { handleDeleteRecipe, handleRemoveFavorite } from '../actions';
 
 /**
- *
- *
  * @class RecipeCard
  * @extends {Component}
  */
 class RecipeCard extends Component {
   /**
-   * Creates an instance of RecipeCard.
+   * @description Creates an instance of RecipeCard.
    * @param {object} props
    * @memberof RecipeCard
    */
@@ -38,7 +36,7 @@ class RecipeCard extends Component {
   }
 
   /**
-   * handles removing recipe from favorites
+   * @description handles removing recipe from favorites
    * @memberof RecipeCard
    * @returns {undefined}
    */
@@ -54,7 +52,7 @@ class RecipeCard extends Component {
   }
 
   /**
-   *handles deleting of recipe
+  * @description handles deleting of recipe
   * @memberof RecipeCard
   * @returns {undefined}
   */
@@ -70,7 +68,7 @@ class RecipeCard extends Component {
   }
 
 /**
- * click event for handling recipe update
+ * @description click event for handling recipe update
  * @memberof RecipeCard
  * @returns {undefined}
  */
@@ -79,6 +77,7 @@ handleUpdateClick = () => {
 }
 
 /**
+ * @description renders recipe card
  * @returns {reactElement} - html markup
  */
 render() {

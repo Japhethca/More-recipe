@@ -7,19 +7,15 @@ import qs from 'qs';
 import { Recipes } from '../../recipes';
 import handleSearch from '../actions';
 
-const propTypes = {
-  results: PropTypes.arrayOf(PropTypes.object).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleSearch: PropTypes.func.isRequired,
-};
 
 /**
+ * @description Search result page
  * @class SearchResultPage
  * @extends {Component}
  */
 class SearchResultPage extends Component {
   /**
-   * Creates an instance of SearchResultPage.
+   * @description Creates an instance of SearchResultPage.
    * @param {Object} props
    * @memberof SearchResultPage
    */
@@ -32,6 +28,7 @@ class SearchResultPage extends Component {
   }
 
   /**
+   * @description makes an api search when component mounts
    * @memberof SearchResultPage
    * @returns {undefined}
    */
@@ -41,6 +38,7 @@ class SearchResultPage extends Component {
   }
 
   /**
+   * @description checks if location and results are available in props
    * @param {object} nextProps
    * @memberof SearchResultPage
    * @returns {undefined}
@@ -56,6 +54,7 @@ class SearchResultPage extends Component {
   }
 
   /**
+   * @description renders page for listing search results
    * @returns {ReactElement} - markup
    */
   render() {
@@ -74,7 +73,11 @@ class SearchResultPage extends Component {
   }
 }
 
-SearchResultPage.propTypes = propTypes;
+SearchResultPage.propTypes = {
+  results: PropTypes.arrayOf(PropTypes.object).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleSearch: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
   results: state.results

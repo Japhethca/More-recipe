@@ -7,7 +7,6 @@ import { setAuthorizationToken } from './helpers/setAuthorization';
 import { SET_CURRENT_USER } from './actionTypes';
 
 /**
- * creates action for setting current user
  * @export
  * @param {object} user
  * @param {any} errors
@@ -20,9 +19,8 @@ export const setCurrentUser = (user, errors) => ({
 });
 
 /**
- * logs user out of application
  * @export
- * @returns {function} - dispatch
+ * @returns {object} - dispatch
  */
 export const handleLogout = () => (dispatch) => {
   localStorage.clear();
@@ -49,7 +47,7 @@ export const handleAuthRequest = (userdata, requestType) => {
       toastr.success(res.data.message);
     })
     .catch((error) => {
-      dispatch(setCurrentUser(null, error.response.data.message));
       toastr.error(error.response.data.message);
+      dispatch(setCurrentUser(null, error.response.data.message));
     });
 };

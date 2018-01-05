@@ -8,12 +8,13 @@ import './pagination.scss';
 
 
 /**
+ * @description Pagination
  * @class Pagination
  * @extends {Component}
  */
 class Pagination extends Component {
   /**
-   * Creates an instance of Pagination.
+   * @description Creates an instance of Pagination.
    * @param {object} props
    * @memberof Pagination
    */
@@ -25,6 +26,7 @@ class Pagination extends Component {
   }
 
   /**
+   * @description checks if pagination state is available
    * @param {object} nextProps
    * @memberof Pagination
    * @returns {undefined}

@@ -12,7 +12,7 @@ import RecipeForm from '../components/RecipeForm';
  */
 class CreateUpdateRecipe extends Component {
 /**
- * Creates an instance of CreateUpdateRecipe.
+ * @description Creates an instance of CreateUpdateRecipe.
  * @param {object} props
  * @memberof CreateUpdateRecipe
  */
@@ -31,7 +31,7 @@ class CreateUpdateRecipe extends Component {
   }
 
   /**
-   * handle input change event
+   * @description handle input change event
    * @memberof CreateUpdateRecipe
    * @param {SyntheticEvent} event
    * @returns {undefined}
@@ -41,18 +41,17 @@ class CreateUpdateRecipe extends Component {
       this.setState({ image: event.target.files[0] });
       const reader = new FileReader();
       reader.onload = () => {
-        const output = document.getElementById('img1');
+        const output = document.getElementById('img2');
         output.src = reader.result;
       };
       reader.readAsDataURL(event.target.files[0]);
     } else {
       this.setState({ [event.target.name]: event.target.value });
     }
-    this.isValid();
   }
 
   /**
-   * handle recipe update/create form submit
+   * @description handle recipe update/create form submit
    * @memberof CreateUpdateRecipe
    * @param {SyntheticEvent} event
    * @returns {undefined}
@@ -75,7 +74,7 @@ class CreateUpdateRecipe extends Component {
   }
 
   /**
-   * handles Tiny MCE editor change
+   * @description handles Tiny MCE editor change
    * @memberof CreateUpdateRecipe
    * @param {SyntheticEvent} event
    * @returns {undefined}
@@ -86,7 +85,6 @@ class CreateUpdateRecipe extends Component {
     } else {
       this.setState({ ingredients: event.target.getContent() });
     }
-    this.isValid();
   }
 
   /**
@@ -96,6 +94,8 @@ class CreateUpdateRecipe extends Component {
     const { errors, isValid } = recipeFormValidator(this.state);
     if (!isValid) {
       this.setState({ validationErrors: errors });
+    } else {
+      this.setState({ validationErrors: {} });
     }
     return isValid;
   }
@@ -113,15 +113,17 @@ class CreateUpdateRecipe extends Component {
     };
 
     return (
-      <RecipeForm
-        validationErrors={this.state.validationErrors}
-        recipe={recipeData}
-        onSubmit={this.onSubmit}
-        onChange={this.onChange}
-        handleEditorChange={this.handleEditorChange}
-        title={this.props.title}
-        clearForm={this.state.clearForm}
-      />
+      <div>
+        <RecipeForm
+          validationErrors={this.state.validationErrors}
+          recipe={recipeData}
+          onSubmit={this.onSubmit}
+          onChange={this.onChange}
+          handleEditorChange={this.handleEditorChange}
+          title={this.props.title}
+          clearForm={this.state.clearForm}
+        />
+      </div>
     );
   }
 }

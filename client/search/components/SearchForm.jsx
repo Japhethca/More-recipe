@@ -16,12 +16,13 @@ const propTypes = {
 
 
 /**
+ * @description navigation bar search input form
  * @class SearchForm
  * @extends {Component}
  */
 class SearchForm extends Component {
   /**
-   * Creates an instance of SearchForm.
+   * @description Creates an instance of SearchForm.
    * @param {object} props
    * @memberof SearchForm
    */
@@ -33,6 +34,7 @@ class SearchForm extends Component {
   }
 
   /**
+   * @description handles changes when user types
    * @memberof SearchForm
    * @param {SyntheticElement} event
    * @return {undefined}
@@ -42,7 +44,7 @@ class SearchForm extends Component {
   }
 
   /**
-   *handles form submition change
+  * @description handles submiting search change
   * @memberof SearchForm
   * @param {SyntheticEvent} event
   * @returns {undefined}
@@ -54,14 +56,13 @@ class SearchForm extends Component {
   }
 
   /**
+   * @description renders search input
    * @return {ReactElement} markup
    */
   render() {
     return (
       <div className="search-input">
-        <form
-          onSubmit={this.onSubmit}
-        >
+        <form onSubmit={this.onSubmit} >
           <div>
             <input
               id="search"
