@@ -1,40 +1,33 @@
 import axios from 'axios';
 
-import { GET_USER_FAVORITES, RECIPES_COUNT, GET_ALL_RECIPES, IS_FETCHING } from '../recipes/actionTypes';
+import { RECIPES_COUNT, GET_ALL_RECIPES, IS_FETCHING } from '../recipes/actionTypes';
+
 
 /**
- * @param {array} favorites
- * @returns {object} sction
+ * @description action creator for getting recipe count
+ * @param {Number} totalPages
+ * @param {Number} curPage
+ * @returns {Object} - none
  */
-const getUserFavorites = favorites => ({
-  type: GET_USER_FAVORITES,
-  favorites
-});
-
-
 export const getRecipeCount = (totalPages, curPage) => ({
   type: RECIPES_COUNT,
   totalPages,
   curPage
 });
 
+/**
+ * @description creates isfetching action
+ * @param {Boolean} state --http loading state
+ * @return {Object} - action
+ */
 const isFetching = state => ({
   type: IS_FETCHING,
   isFetching: state
 });
 
-/**
- * @export
- * @param {object} userId
- * @returns {promise} axios promise
- */
-export const getFavorites = () => dispatch => axios.get('/api/users/favorites')
-  .then((res) => {
-    const favorites = res.data.favorites.map(favorite => favorite.Recipe);
-    dispatch(getUserFavorites(favorites));
-  }).catch(error => error);
 
 /**
+ * @description get all recipes action creators
  * @param {array} recipes
  * @returns {object} of action type
  */
@@ -44,6 +37,7 @@ const getRecipes = recipes => ({
 });
 
 /**
+ * @description handles getting all recipes with page and limit
  * @export
  * @param {object} page
  * @param {object} limit

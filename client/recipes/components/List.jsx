@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import '../styles/recipes.scss';
 
+
+/**
+ * @param {Object}  recipes, title }
+ * @returns {ReactElement} html markup
+ */
 const List = ({ recipes, title }) => {
   const renderItem = recipe => (
     <li className="list-item">

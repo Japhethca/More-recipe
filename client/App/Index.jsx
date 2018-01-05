@@ -11,6 +11,10 @@ import { SingleRecipePage } from '../recipes';
 import SearchResultPage from '../search/containers/SearchResultPage';
 import '../styles/sass/index.scss';
 
+/**
+ *
+ * @return {ReactElement} markup
+ */
 const App = () => (
   <div className="wrapper">
     <NavigationBar />
@@ -25,8 +29,8 @@ const App = () => (
       />
 
       <Switch>
-        <Route path="/recipes" exact component={Authenticate(Home)} />
         <Route path="/recipe/:nameId" exact component={Authenticate(SingleRecipePage)} />
+        <Route path="/recipes" exact component={Authenticate(Home)} />
         <Route path="/search" exact component={SearchResultPage} />
         <Route component={Authenticate(Dashboard)} />
       </Switch>

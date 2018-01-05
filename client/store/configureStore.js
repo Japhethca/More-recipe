@@ -1,12 +1,14 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reduxReset from 'redux-reset';
-import rootReducers from '../reducers';
-// import initialState from '../reducers/initialState';
 
+import rootReducer from '../reducers';
+import initialState from './initialState';
 
+// creates redux store
 const store = createStore(
-  rootReducers,
+  rootReducer,
+  initialState,
   compose(
     applyMiddleware(thunk),
     reduxReset(),

@@ -26,10 +26,16 @@ const profileRules = {
   username: 'required'
 };
 
+/**
+ * @description handles input validation
+ * @param {object} rules
+ * @return {Function} - object of boolean and object of errors
+ */
 const validator = rules => (data) => {
   const validate = new Validator(data, rules);
   const errors = {};
   const isValid = false;
+
   if (validate.passes()) {
     return {
       isValid: true,

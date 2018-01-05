@@ -5,6 +5,7 @@ import app from '../app';
 
 const auth = {
   /**
+   * @description handles user authentiaction
    * @param {Object} req - HTTP Request
    * @param {Object} res - HTTP Response
    * @param {function} next
@@ -35,6 +36,7 @@ const auth = {
   },
 
   /**
+   * @description handle non inplemented request methods
    * @param {Object} req - HTTP request
    * @param {Object} res - HTTP response
    * @returns {Object} - Response

@@ -26,11 +26,12 @@ const recipeFormRules = {
 };
 
 /**
+ * @description handles user input validation
  * @param {Object} req
  * @param {Object} res
  * @param {function} next
  * @param {Object} rules - validation rules
- * @returns {function} - function or Respose object
+ * @returns {function} - function
  */
 const validate = (req, res, next, rules) => {
   const validator = new Validator(req.body, rules);
@@ -50,6 +51,7 @@ export const reviewPostValidator = (req, res, next) => validate(req, res, next, 
 export const recipeValidator = (req, res, next) => validate(req, res, next, recipeFormRules);
 
 /**
+ * @description checks for valid request query
  * @param {String} query - request query
  * @param {Array} validQuery - a list of valid queries
  * @returns {Boolean} - true or false
@@ -64,6 +66,13 @@ export const checkQuery = (query, validQuery) => {
   return false;
 };
 
+/**
+ * @description checks for valid request parameters
+ * @param {Object} req - request query
+ * @param {Object} res - request query
+ * @param {function} next - request query
+ * @returns {Boolean} - true or false
+ */
 export const checkParams = (req, res, next) => {
   if (req.params) {
     const param = Object.keys(req.params)[0];

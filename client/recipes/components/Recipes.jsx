@@ -4,6 +4,11 @@ import RecipeCard from '../containers/RecipeCard';
 
 import '../styles/recipes.scss';
 
+/**
+ * @description displays a list of recipes in cards
+ * @param {Object} props
+ * @returns {ReactElement} html markup
+ */
 const Recipes = ({
   recipes, showActionBtns, showModifyButtons, showRemoveFavorite, className, noItemText
 }) => (

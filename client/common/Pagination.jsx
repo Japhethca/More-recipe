@@ -6,7 +6,18 @@ import { connect } from 'react-redux';
 import { getAllRecipes } from '../home/actions';
 import './pagination.scss';
 
+
+/**
+ * @description Pagination
+ * @class Pagination
+ * @extends {Component}
+ */
 class Pagination extends Component {
+  /**
+   * @description Creates an instance of Pagination.
+   * @param {object} props
+   * @memberof Pagination
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -14,13 +25,22 @@ class Pagination extends Component {
     };
   }
 
-
+  /**
+   * @description checks if pagination state is available
+   * @param {object} nextProps
+   * @memberof Pagination
+   * @returns {undefined}
+   */
   componentWillReceiveProps(nextProps) {
     if (nextProps.pagination !== this.props.pagination) {
       this.setState({ totalPages: nextProps.pagination.totalPages });
     }
   }
 
+  /**
+   * @description displays pagination
+   * @returns {ReactElement} markup
+   */
   render() {
     return (
       <div>

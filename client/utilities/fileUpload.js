@@ -3,8 +3,7 @@ import sha1 from 'sha1';
 
 
 /**
- *
- *
+ *@description handles submiting image on cloudinary
  * @param {object} data - image object
  * @returns {function} uploadRequest -function
  */

@@ -6,6 +6,11 @@ import TextField from '../../common/TextField';
 import '../syles/authentication.scss';
 
 
+/**
+ * @description displays downvote button
+ * @param {object} props - React props
+ * @returns {ReactElement} markup
+ */
 const LoginForm = (props) => {
   const {
     validationErrors, serverErrors, onChange, onSubmit, formData
@@ -50,7 +55,7 @@ const LoginForm = (props) => {
             </button>
           </div>
           <div className="auth-link">
-            <span> Don't have an Account? <Link to="/signup" href="/signup"> Sign Up Here </Link></span>
+            <span> Don&quote;t have an Account? <Link to="/signup" href="/signup"> Sign Up Here </Link></span>
           </div>
         </form>
       </div>

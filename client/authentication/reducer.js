@@ -12,7 +12,7 @@ const initialState = {
 
 /**
  * @export
- * @param {object} [state=false]
+ * @param {object} [state=initiaState]
  * @param {object} action
  * @returns {object} new state
  */

@@ -7,13 +7,18 @@ import qs from 'qs';
 import { Recipes } from '../../recipes';
 import handleSearch from '../actions';
 
-const propTypes = {
-  results: PropTypes.arrayOf(PropTypes.object).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleSearch: PropTypes.func.isRequired,
-};
 
+/**
+ * @description Search result page
+ * @class SearchResultPage
+ * @extends {Component}
+ */
 class SearchResultPage extends Component {
+  /**
+   * @description Creates an instance of SearchResultPage.
+   * @param {Object} props
+   * @memberof SearchResultPage
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -21,12 +26,23 @@ class SearchResultPage extends Component {
       searchResults: this.props.results
     };
   }
+
+  /**
+   * @description makes an api search when component mounts
+   * @memberof SearchResultPage
+   * @returns {undefined}
+   */
   componentDidMount() {
     const { query } = qs.parse(this.state.query, { ignoreQueryPrefix: true });
     this.props.handleSearch(query);
   }
 
-
+  /**
+   * @description checks if location and results are available in props
+   * @param {object} nextProps
+   * @memberof SearchResultPage
+   * @returns {undefined}
+   */
   componentWillReceiveProps(nextProps) {
     if (nextProps.history.location.search !== this.props.history.location.search) {
       this.props.handleSearch(nextProps.history.location.search);
@@ -37,6 +53,10 @@ class SearchResultPage extends Component {
     }
   }
 
+  /**
+   * @description renders page for listing search results
+   * @returns {ReactElement} - markup
+   */
   render() {
     const { query } = qs.parse(this.props.history.location.search, { ignoreQueryPrefix: true });
     const results = this.state.searchResults;
@@ -53,7 +73,11 @@ class SearchResultPage extends Component {
   }
 }
 
-SearchResultPage.propTypes = propTypes;
+SearchResultPage.propTypes = {
+  results: PropTypes.arrayOf(PropTypes.object).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleSearch: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
   results: state.results

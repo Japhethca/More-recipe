@@ -15,6 +15,11 @@ const propTypes = {
   clearForm: PropTypes.bool.isRequired
 };
 
+/**
+ * @description displays form for creating or updating recipe
+ * @param {Object} props
+ * @returns {ReactElement} html markup
+ */
 const RecipeForm = (props) => {
   const editorConfig = {
     menubar: false,
@@ -25,6 +30,13 @@ const RecipeForm = (props) => {
 
   const clearForm = node => (props.clearForm ? node.clear() : null);
 
+  /**
+   * renders Tiny mce editor
+   * @param {string} inputName
+   * @param {string} heading
+   * @param {string} validator
+   * @return {DomElement} - html markup
+   */
   const renderEditorFor = (inputName, heading, validator) => (
     <div>
       <h5>{heading}</h5>
@@ -38,6 +50,14 @@ const RecipeForm = (props) => {
     </div>
   );
 
+
+  /**
+   * @description renders a text field
+   * @param {string} name
+   * @param {string} label
+   * @param {string} validator
+   * @return {DomElement} - html markup
+   */
   const renderInputFieldFor = (name, label, validator) => (
     <div>
       <input
@@ -65,9 +85,12 @@ const RecipeForm = (props) => {
 
           <hr />
           <div>
-            <input type="file" className="input-file" onChange={props.onChange} name="image" accept=".jpg, .jpeg, .png" />
+            <div className="image-btn-wrapper">
+              <span className="btn">Upload an Image</span>
+              <input type="file" onChange={props.onChange} name="image" accept=".jpg, .jpeg, .png" />
+            </div>
             <img
-              id="img1"
+              id="img2"
               src={props.recipe.image ||
                   'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526912/recipe-card-placeholder_ta9ikp.jpg'}
               alt="Recipe"

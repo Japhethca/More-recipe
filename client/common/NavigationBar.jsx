@@ -15,7 +15,16 @@ const propTypes = {
   bgColor: PropTypes.string,
 };
 
+/**
+ * @class NavigationBar
+ * @extends {Component}
+ */
 class NavigationBar extends Component {
+  /**
+   * Creates an instance of NavigationBar.
+   * @param {object} props
+   * @memberof NavigationBar
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +32,10 @@ class NavigationBar extends Component {
     };
   }
 
+  /**
+   * react component life cycle funtion
+   * @returns {undefined}
+   */
   componentDidMount() {
     $('.button-collapse').sideNav({
       menuWidth: 250,
@@ -44,17 +57,36 @@ class NavigationBar extends Component {
     });
   }
 
+  /**
+   * handle onclick event
+   * @memberof NavigationBar
+   * @returns {undefined}
+   *
+   */
   onClick = () => {
     this.props.logout();
     this.props.history.push('/');
   }
 
+  /**
+   *
+   * toggle search input on mobile devices
+   * @memberof NavigationBar
+   * @returns {undefined} - none
+   */
   toggleSearch = () => {
     const toggle = document.getElementById('toggle');
     toggle.innerHTML = !this.state.isSearching ? 'close' : 'search';
     this.setState({ isSearching: !this.state.isSearching });
   }
 
+  /**
+   * renders side navigation links
+   * @memberof NavigationBar
+   * @param {number} id
+   * @param {string} className
+   * @returns {DomElement} - return html
+   */
   renderSideNavLinks = (id, className) => (
     <ul id={id} className={className} >
       <li><NavLink to="/create">Create Recipe</NavLink></li>
@@ -64,7 +96,14 @@ class NavigationBar extends Component {
       <li ><button onClick={this.onClick}>Logout <i className="material-icons">exit_to_app</i></button></li>
     </ul>
   );
-
+  /**
+   * renders guest user links
+   * @param {string} wrapperId
+   * @param {string} wrapperClass
+   * @param {string} linkClass
+   * @returns {DomElement} - html
+   * @memberof NavigationBar
+   */
   renderGuestNav = (wrapperId, wrapperClass, linkClass) => (
     <ul className={wrapperClass} id={wrapperId}>
       <li ><NavLink to="/signin" className={linkClass}>Log In </NavLink></li>
@@ -72,6 +111,10 @@ class NavigationBar extends Component {
     </ul>
   );
 
+  /**
+   * @description displays navigation bar
+   * @returns {ReactElement} markup
+   */
   render() {
     const { isAuthenticated } = this.props.user;
 

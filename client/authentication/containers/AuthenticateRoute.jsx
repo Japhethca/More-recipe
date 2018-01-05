@@ -7,18 +7,45 @@ const propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
-export default (WrappedComponent) => {
+/**
+ * @export
+ * @param {ReactCoomponent} WrappedComponent
+ * @returns {ReactComponent} React
+ */
+export default function AuthenticateRoute(WrappedComponent) {
+  /**
+   * @description react route component to authenticate
+   * @class Authenticate
+   * @extends {Component}
+   */
   class Authenticate extends Component {
+    /**
+     * @description react component life cyle function
+     * @returns {undefined}
+     */
     componentWillMount() {
       if (!this.props.isAuthenticated) {
         this.props.history.push('/');
       }
     }
+
+    /**
+     *
+     * @description checks if a user is authenticated when the page is refreshed
+     * @memberof Authenticate
+     * @returns {undefined}
+     */
     componentWillUpdate() {
       if (!this.props.isAuthenticated) {
         this.props.history.push('/');
       }
     }
+
+    /**
+     * @description renders authenticated components
+     * @returns {ReactElement} markup
+     * @memberof Authenticate
+     */
     render() {
       return <WrappedComponent {...this.props} />;
     }
@@ -31,4 +58,4 @@ export default (WrappedComponent) => {
   });
 
   return connect(mapStateToProps, { })(Authenticate);
-};
+}

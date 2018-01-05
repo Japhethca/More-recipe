@@ -26,11 +26,11 @@ $button-color: rgb(41, 16, 16);
     padding-right: 3px;
   }
 
-  button{
-    background-color: #fff;
+  button {
+    background-color: transparent;
 
     &:hover {
-      background-color: #fff;
+      background-color: transparent;
     }
   }
 }

@@ -13,7 +13,16 @@ const propTypes = {
   handleRecipeReview: PropTypes.func.isRequired
 };
 
+/**
+ * @class Reviews
+ * @extends {Component}
+ */
 class Reviews extends Component {
+  /**
+   * @description Creates an instance of Reviews.
+   * @param {any} props
+   * @memberof Reviews
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -21,16 +30,32 @@ class Reviews extends Component {
     };
   }
 
+  /**
+   * @description handle input change
+   * @memberof Reviews
+   * @param {SyntheticEvent} event
+   * @returns {undefined}
+   */
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  /**
+   * @description handle review submit
+   * @memberof Reviews
+   * @param {SyntheticEvent} event - event
+   * @returns {undefined}
+   */
   onSubmit = (event) => {
     event.preventDefault();
     this.props.handleRecipeReview(this.props.recipe.id, this.state);
     this.setState({ content: '' });
   }
 
+  /**
+   * @description renders reviews
+   * @return {reactElement} markup
+   */
   render() {
     return (
       <div className="reviews-page" >

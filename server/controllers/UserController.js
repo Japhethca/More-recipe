@@ -8,10 +8,11 @@ const { Users } = models;
 
 
 /**
-   * @param {object} req
-   * @param {object} res
-   * @returns {object} Http response
-   */
+ * @description signs up user
+ * @param {object} req - Express http request
+ * @param {object} res - Express http response
+ * @returns {object} Http response
+ */
 export const signup = (req, res) => Users.findAll({
   where: {
     $or: [{ email: req.body.email }, { username: req.body.username }]
@@ -60,11 +61,12 @@ export const signup = (req, res) => Users.findAll({
       }));
   });
 
-  /**
-   * @param {object} req
-   * @param {object} res
-   * @returns {object} Http response
-   */
+/**
+ * @description signs / logs users into application
+ * @param {object} req - Express http request
+ * @param {object} res - Express http response
+ * @returns {object} Http response
+ */
 export const signin = (req, res) => Users.findOne({
   where: {
     $or: {
@@ -106,7 +108,8 @@ export const signin = (req, res) => Users.findOne({
     message: 'Server Error',
   }));
 
-  /**
+/**
+ * @description gets single user profile details
  * @param {object} req
  * @param {object} res
  * @returns {object} Http response
@@ -119,37 +122,28 @@ export const userProfile = (req, res) => Users.findOne({
   .catch(err => res.status(500).json(err));
 
 /**
- * @param {object} req
- * @param {object} res
+ * @description updates user profile
+ * @param {object} req - Express http request
+ * @param {object} res - Express http response
  * @returns {object} Http response
  */
-export const updateProfile = (req, res) => {
-  if (req.body.newPassword && req.body.password === req.body.newPassword) {
-    return res.status(400).json({
-      status: 'failed',
-      message: 'password Must Differ'
-    });
+export const updateProfile = (req, res) => Users.findOne({
+  where: {
+    id: req.decoded.id
   }
-  return Users.findOne({
-    where: {
-      id: req.decoded.id
-    }
-  }).then((user) => {
-    const newPassword = req.body.newPassword ? req.body.newPassword : '';
-    user.update({
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      password: newPassword || req.body.password,
-      aboutme: req.body.aboutme,
-      photo: req.body.photo,
-    }).then(() => res.status(201).json({
-      status: 'success',
-      message: 'Profile Update Successful',
-      userData: user
-    }));
-  }).catch(() => res.status(500).json({
-    status: 'failed',
-    message: 'Server Error'
+}).then((user) => {
+  user.update({
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    aboutme: req.body.aboutme,
+    photo: req.body.photo,
+  }).then(() => res.status(201).json({
+    status: 'success',
+    message: 'Profile Update Successful',
+    userData: user
   }));
-};
+}).catch(() => res.status(500).json({
+  status: 'failed',
+  message: 'Server Error'
+}));
 

@@ -11,17 +11,36 @@ import FavoritesPage from './FavoritesPage';
 import { CreateRecipe, UpdateRecipe } from '../../recipes';
 import { handleLogout } from '../../authentication/actions';
 import '../styles/dashboard.scss';
-
+/**
+ *
+ *
+ * @class Dashboard
+ * @extends {Component}
+ */
 class Dashboard extends Component {
+  /**
+   * @description makes an API call for user Profile on component mount
+   * @memberof Dashboard
+   * @returns {undefined}
+   */
   componentDidMount() {
     this.props.handleGetUserProfile();
   }
 
+  /**
+   * @description logs user out of application onclick
+   * @memberof Dashboard
+   * @returns {undefined}
+   */
   onClick = () => {
     this.props.handleLogout();
     this.props.history.push('/landing');
   }
 
+  /**
+ * @description displays dashboard
+ * @returns {ReactElement} markup
+ */
   render() {
     return (
       <div className="container">

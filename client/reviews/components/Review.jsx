@@ -8,6 +8,10 @@ const propTypes = {
   review: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
+/**
+ * @description displays single review
+ * @returns {ReactElement} markup
+ */
 const Review = ({ review }) => (
   <div className="single-review z-depth-2">
     <span className="user">{review.User.username}</span>

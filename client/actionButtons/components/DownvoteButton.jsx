@@ -8,6 +8,11 @@ const propTypes = {
   downvote: PropTypes.func.isRequired,
 };
 
+/**
+ * @description displays downvote button
+ * @param {object} props - React props
+ * @returns {ReactElement} markup
+ */
 const DownvoteButton = ({ downvote, downvotes }) => (
   <div className="action-btns">
     <button onClick={downvote}>

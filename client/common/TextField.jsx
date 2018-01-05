@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
+/**
+ * @description displays input field
+ * @param {object} props
+ * @returns {ReactElement} markup
+ */
 const TextField = props => (
   <div>
     {props.iconClassName && <i className={props.iconClassName}>{props.iconName}</i>}

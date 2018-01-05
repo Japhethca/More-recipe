@@ -46,16 +46,31 @@ const initialState = {
   },
 };
 
-let index = 0;
-let recipe = {};
+// let index = 0;
 
-const updateObjectArray = (array, action) => array.map((recipe, index) => {
-  if (index !== action.index) {
-    return recipe;
-  }
-  return { ...recipe, ...action.recipe };
-});
+/**
+ * updates an object in state without mutation
+ * @param {Array} array state array
+ * @param {Object} newItem redux action
+ * @returns {Object} udpated object of item
+ */
+const updateItemInArray = (array, newItem) => {
+  const arrayIndex = array.findIndex(itm => itm.id === newItem.id);
 
+  const updatedItems = array.map((item, index) => {
+    if (index !== arrayIndex) {
+      return item;
+    }
+    return { ...item, ...newItem };
+  });
+  return updatedItems;
+};
+
+/**
+ * @param {Object}  state - initial state
+ * @param {Object} action - redux action
+ * @returns {Object} - current state
+ */
 export default (state = initialState, action) => {
   switch (action.type) {
     case GET_SINGLE_RECIPE:
@@ -80,7 +95,8 @@ export default (state = initialState, action) => {
           ...state.recipe,
           upvotes: action.recipe.upvotes,
           downvotes: action.recipe.downvotes
-        }
+        },
+        recipes: updateItemInArray(state.recipes, action.recipe)
       };
 
     case DOWNVOTE_RECIPE:
@@ -90,7 +106,8 @@ export default (state = initialState, action) => {
           ...state.recipe,
           downvotes: action.recipe.downvotes,
           upvotes: action.recipe.upvotes,
-        }
+        },
+        recipes: updateItemInArray(state.recipes, action.recipe)
       };
 
     case GET_ALL_RECIPES:
@@ -102,13 +119,11 @@ export default (state = initialState, action) => {
       };
 
     case UPDATE_RECIPE:
-      index = state.recipes.findIndex(rec => rec.id === action.recipe.id);
-      recipe = { index, recipe: action.recipe };
       return {
         ...state,
-        recipes: updateObjectArray(state.recipes, recipe),
-        userRecipes: updateObjectArray(state.userRecipes, recipe),
-        favorites: updateObjectArray(state.favorites, recipe)
+        recipes: updateItemInArray(state.recipes, action.recipe),
+        userRecipes: updateItemInArray(state.userRecipes, action.recipe),
+        favorites: updateItemInArray(state.favorites, action.recipe)
       };
 
     case DELETE_USER_RECIPE:

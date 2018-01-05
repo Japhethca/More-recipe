@@ -171,27 +171,5 @@ describe('USER PROFILE', () => {
         done();
       });
   });
-
-  it('should not update if new password an old password are the same', (done) => {
-    chai.request(app)
-      .put('/api/users/profile')
-      .query({ token })
-      .send({
-        firstname: 'benjamin',
-        lastname: 'Anyigor',
-        email: 'ben10@gmail.com',
-        password: 'ben10',
-        newPassword: 'ben10',
-        username: 'ben10',
-        aboutme: 'am cool',
-        photo: '',
-      })
-      .end((err, res) => {
-        expect(res).to.have.status(400);
-        expect(res.body).to.have.property = 'message';
-        expect(res.body.message).to.be.eql = 'password Must Differ';
-        done();
-      });
-  });
 });
 

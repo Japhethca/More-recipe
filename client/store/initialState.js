@@ -7,9 +7,14 @@ export default {
     errors: ''
   },
   recipeReducer: {
+    NotFound: false,
     recipes: [],
     userRecipes: [],
     favorites: [],
+    pagination: {
+      currentPage: 0,
+      totalPages: 0
+    },
     recipe: {
       name: '',
       description: '',

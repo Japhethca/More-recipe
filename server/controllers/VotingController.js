@@ -1,15 +1,14 @@
 import models from '../models';
 
-
+// models instance
 const { Votes, Recipes } = models;
 
-// controllers for handling voting in application
-
 /**
-   * @param {object} req
-   * @param {object} res
-   * @returns {object} Http response
-   */
+ * @description handles upvoting single recipe
+ * @param {object} req - Express http request
+ * @param {object} res - Express http response
+ * @returns {object} Http response
+ */
 export const upVote = (req, res) => Votes.findOne({
   where: {
     userId: req.decoded.id,
@@ -37,7 +36,7 @@ export const upVote = (req, res) => Votes.findOne({
                 recipe.reload().then(() => {
                   res.status(200).json({
                     status: 'success',
-                    message: 'Upvote Sucessful',
+                    message: 'Recipe unvoted',
                     recipe
                   });
                 });
@@ -101,10 +100,11 @@ export const upVote = (req, res) => Votes.findOne({
 
 
 /**
-   * @param {object} req
-   * @param {object} res
-   * @returns {object} Http response
-   */
+ * @description handles downvoting a single recipe
+ * @param {object} req - Express http request
+ * @param {object} res - Express http response
+ * @returns {object} Http response
+ */
 export const downVote = (req, res) => Votes.findOne({
   where: {
     userId: req.decoded.id,

@@ -6,8 +6,17 @@ import { Recipes } from '../../recipes';
 import { handleGetUserRecipes } from '../actions';
 import Pagination from '../../common/Pagination';
 
-
+/**
+ * @description User recipes page component
+ * @class UserRecipesPage
+ * @extends {Component}
+ */
 class UserRecipesPage extends Component {
+  /**
+   * Creates an instance of UserRecipesPage.
+   * @param {any} props
+   * @memberof UserRecipesPage
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -15,20 +24,42 @@ class UserRecipesPage extends Component {
     };
   }
 
+  /**
+   * @description makes an API call for user recipes on component mount
+   * @memberof UserRecipesPage
+   * @returns {none} - none
+   */
   componentDidMount() {
     this.props.handleGetUserRecipes();
   }
 
+  /**
+   *
+   * @description changes recipes state on recieve props
+   * @param {object} nextProps
+   * @memberof UserRecipesPage
+   * @return {none} - none
+   */
   componentWillReceiveProps(nextProps) {
     if (nextProps.userRecipes !== this.props.userRecipes) {
       this.setState({ userRecipes: nextProps.userRecipes });
     }
   }
 
+  /**
+   * @description handles pagination
+   * @memberof UserRecipesPage
+   * @param {object} page
+   * @returns {none} -none
+   */
   handlePagination = (page) => {
     this.props.handleGetUserRecipes(page.selected + 1);
   }
 
+  /**
+   * @description renders user recipes
+   * @returns {ReactElement} markup
+   */
   render() {
     return (
       <div>

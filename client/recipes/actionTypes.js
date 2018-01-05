@@ -13,4 +13,3 @@ export const UPVOTE_RECIPE = 'UPVOTE_RECIPE';
 export const RECIPES_COUNT = 'RECIPES_COUNT';
 export const IS_FETCHING = 'IS_FETCHING';
 export const NOT_FOUND = 'NOT_FOUND';
-

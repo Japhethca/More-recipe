@@ -7,8 +7,16 @@ import swal from 'sweetalert';
 import Card from '../components/Card';
 import { handleDeleteRecipe, handleRemoveFavorite } from '../actions';
 
-
+/**
+ * @class RecipeCard
+ * @extends {Component}
+ */
 class RecipeCard extends Component {
+  /**
+   * @description Creates an instance of RecipeCard.
+   * @param {object} props
+   * @memberof RecipeCard
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -16,13 +24,22 @@ class RecipeCard extends Component {
     };
   }
 
+  /**
+   * @param {object} nextProps
+   * @memberof RecipeCard
+   * @return {undefined}
+   */
   componentWillReceiveProps(nextProps) {
     if (this.props.recipe !== nextProps.recipe) {
       this.setState({ recipe: nextProps.recipe });
     }
   }
 
-
+  /**
+   * @description handles removing recipe from favorites
+   * @memberof RecipeCard
+   * @returns {undefined}
+   */
   onRemoveFavoriteClick = () => {
     swal('Are you sure you want to remove this recipe from your Favorites?', {
       dangerMode: true,
@@ -34,6 +51,11 @@ class RecipeCard extends Component {
     });
   }
 
+  /**
+  * @description handles deleting of recipe
+  * @memberof RecipeCard
+  * @returns {undefined}
+  */
   handleDeleteClick = () => {
     swal('Are you sure you want to delete this recipe?', {
       dangerMode: true,
@@ -45,23 +67,32 @@ class RecipeCard extends Component {
     });
   }
 
-  handleUpdateClick = () => {
-    this.props.history.push(`/update/${this.state.recipe.id}`, this.state.recipe);
-  }
+/**
+ * @description click event for handling recipe update
+ * @memberof RecipeCard
+ * @returns {undefined}
+ */
+handleUpdateClick = () => {
+  this.props.history.push(`/update/${this.state.recipe.id}`, this.state.recipe);
+}
 
-  render() {
-    return (
-      <Card
-        showModifyButtons={this.props.showModifyButtons}
-        showRemoveFavorite={this.props.showRemoveFavorite}
-        onRemoveFavoriteClick={this.onRemoveFavoriteClick}
-        showActionBtns={this.props.showActionBtns}
-        onDeleteClick={this.handleDeleteClick}
-        onUpdateClick={this.handleUpdateClick}
-        recipe={this.state.recipe}
-      />
-    );
-  }
+/**
+ * @description renders recipe card
+ * @returns {reactElement} - html markup
+ */
+render() {
+  return (
+    <Card
+      showModifyButtons={this.props.showModifyButtons}
+      showRemoveFavorite={this.props.showRemoveFavorite}
+      onRemoveFavoriteClick={this.onRemoveFavoriteClick}
+      showActionBtns={this.props.showActionBtns}
+      onDeleteClick={this.handleDeleteClick}
+      onUpdateClick={this.handleUpdateClick}
+      recipe={this.state.recipe}
+    />
+  );
+}
 }
 
 RecipeCard.propTypes = {
@@ -86,5 +117,11 @@ const mapStateToProps = state => ({
 });
 
 
-export default withRouter(connect(mapStateToProps, { handleDeleteRecipe, handleRemoveFavorite })(RecipeCard));
+export default withRouter(connect(
+  mapStateToProps,
+  {
+    handleDeleteRecipe,
+    handleRemoveFavorite
+  }
+)(RecipeCard));
 
