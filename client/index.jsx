@@ -9,7 +9,7 @@ import {
   isTokenValid, LoginPage, LandingPage, SignupPage,
   setAuthorization } from './authentication';
 import store from './store/configureStore';
-import App from './App';
+import App from './app/App';
 
 
 if (localStorage.token && isTokenValid(localStorage.token)) {
