@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import qs from 'qs';
 
 import { Recipes } from '../../recipes';
 import { handleGetFavorites } from '../actions';
+import Loader from '../../common/Loader';
 import Pagination from '../../common/Pagination';
 
 /**
@@ -19,7 +21,8 @@ class FavoritesPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorites: this.props.favorites
+      favorites: this.props.favorites.payload,
+      page: this.props.history.location.search
     };
   }
 
@@ -28,7 +31,8 @@ class FavoritesPage extends Component {
  * @returns {undefined}
  */
   componentDidMount() {
-    this.props.handleGetFavorites();
+    const { page } = qs.parse(this.state.page, { ignoreQueryPrefix: true });
+    this.props.handleGetFavorites(page);
   }
 
   /**
@@ -40,7 +44,10 @@ class FavoritesPage extends Component {
    */
   componentWillReceiveProps(nextProps) {
     if (nextProps.favorites !== this.props.favorites) {
-      this.setState({ favorites: nextProps.favorites });
+      this.setState({ favorites: nextProps.favorites.payload });
+    }
+    if (nextProps.history.location.search !== this.props.history.location.search) {
+      this.setState({ page: nextProps.history.location.search });
     }
   }
 
@@ -51,6 +58,7 @@ class FavoritesPage extends Component {
    * @returns {undefined}
    */
   handlePagination = (page) => {
+    this.props.history.push(`/favorites?page=${page.selected + 1}`);
     this.props.handleGetFavorites(page.selected + 1);
   }
 
@@ -59,28 +67,43 @@ class FavoritesPage extends Component {
  * @returns {ReactElement} markup
  */
   render() {
+    const { isFetching } = this.props.favorites;
+
     return (
       <div>
-        <Recipes
-          recipes={this.state.favorites}
-          showActionBtns={false}
-          showRemoveFavorite
-          className="col s12 m6 l4"
-          noItemText="You do not have favorite recipes!"
-        />
-        { this.state.favorites.length > 0 && <Pagination handlePagination={this.handlePagination} />}
+        {
+          isFetching ? <Loader isFetching />
+          :
+          <div>
+            <Recipes
+              recipes={this.state.favorites}
+              showActionBtns={false}
+              showRemoveFavorite
+              className="col s12 m6 l4"
+              noItemText="You do not have favorite recipes!"
+            />
+            { this.state.favorites.length > 0 &&
+              <Pagination
+                handlePagination={this.handlePagination}
+                totalPages={this.props.favorites.totalPages || 0}
+                currentPage={this.props.favorites.currentPage - 1 || 0}
+              />
+            }
+          </div>
+        }
       </div>
     );
   }
 }
 
 FavoritesPage.propTypes = {
-  favorites: PropTypes.arrayOf(PropTypes.any).isRequired,
-  handleGetFavorites: PropTypes.func.isRequired
+  favorites: PropTypes.objectOf(PropTypes.shape).isRequired,
+  handleGetFavorites: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.shape).isRequired,
 };
 
 const mapStateToProps = state => ({
-  favorites: state.recipeReducer.favorites
+  favorites: state.recipeReducer.favorites,
 });
 
 export default connect(mapStateToProps, { handleGetFavorites })(FavoritesPage);

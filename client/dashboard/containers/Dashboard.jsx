@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink, Route } from 'react-router-dom';
 
-import { handleGetUserProfile } from '../actions';
 import ProfilePage from './ProfilePage';
 import Authenticate from '../../authentication';
 import UserRecipesPage from './UserRecipesPage';
@@ -18,15 +17,6 @@ import '../styles/dashboard.scss';
  * @extends {Component}
  */
 class Dashboard extends Component {
-  /**
-   * @description makes an API call for user Profile on component mount
-   * @memberof Dashboard
-   * @returns {undefined}
-   */
-  componentDidMount() {
-    this.props.handleGetUserProfile();
-  }
-
   /**
    * @description logs user out of application onclick
    * @memberof Dashboard
@@ -56,11 +46,10 @@ class Dashboard extends Component {
             </ul>
           </div>
           <div className="col s12 m9 l9 content">
+            <Route path="/create" exact component={Authenticate(CreateRecipe)} />
             <Route path="/favorites" exact component={Authenticate(FavoritesPage)} />
             <Route path="/my-recipes" exact component={Authenticate(UserRecipesPage)} />
-            <Route path="/create" exact component={Authenticate(CreateRecipe)} />
             <Route path="/update/:id" exact component={Authenticate(UpdateRecipe)} />
-            {/* <Route component={NotFound} /> */}
           </div>
         </div>
       </div>
@@ -69,14 +58,12 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  handleGetUserProfile: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 
 const mapDispatchToProps = {
-  handleGetUserProfile,
   handleLogout
 };
 

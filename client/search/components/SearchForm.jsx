@@ -29,7 +29,7 @@ class SearchForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: qs.parse(this.props.history.location.search, { ignoreQueryPrefix: true }).query || '',
+      query: qs.parse(this.props.history.location.search, { ignoreQueryPrefix: true }).query || ''
     };
   }
 
@@ -51,8 +51,8 @@ class SearchForm extends Component {
   */
   onSubmit = (event) => {
     event.preventDefault();
-    this.props.handleSearch(this.state.query);
     this.props.history.push(`/search?query=${this.state.query}`);
+    this.props.handleSearch(this.state.query);
   }
 
   /**

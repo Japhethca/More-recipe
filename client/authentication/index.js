@@ -4,7 +4,7 @@ import { setAuthorizationToken, isValidToken } from './helpers/setAuthorization'
 import reducer from './reducer';
 import { setCurrentUser, handleLogout } from './actions';
 import AuthenticateRoute from './containers/AuthenticateRoute';
-import Landing from './components/LangingPage';
+import Landing from './containers/LangingPage';
 
 export const LoginPage = Login;
 export const SignupPage = SignUp;

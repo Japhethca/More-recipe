@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
+import { isFetching } from '../home/actions';
 import upload from '../utilities/fileUpload';
 import { UPDATE_RECIPE,
   ADD_NEW_RECIPE,
@@ -53,19 +54,22 @@ const handleRequest = (method, actionCreator) => data => (dispatch) => {
     .then((res) => {
       dispatch(actionCreator(res.data.recipe));
       toastr.success(res.data.message);
+      dispatch(isFetching(false, true));
     })
     .catch((error) => {
       if (error.response.data) {
+        dispatch(isFetching(false));
         toastr.error(error.response.data.message);
       }
     });
-
+  dispatch(isFetching(true));
   if (typeof (data.image) === 'object') {
     return upload(data.image).end((err, res) => {
       if (!err) {
         data.image = res.body.url;
         makeRequest();
       } else {
+        dispatch(isFetching(false));
         toastr.error('failed to load image');
       }
     });
@@ -91,13 +95,16 @@ const fetchRecipe = recipe => (
 );
 
 export const getRecipe = id => (dispatch) => {
+  dispatch(isFetching(true));
   dispatch(notFoundAction(false));
   axios.get(`/api/recipe/${id}`)
     .then((response) => {
       dispatch(fetchRecipe(response.data.recipe));
+      dispatch(isFetching(false));
     })
     .catch((error) => {
       if (error.response.status === 404) {
+        dispatch(isFetching(false));
         dispatch(notFoundAction(true));
       }
     });

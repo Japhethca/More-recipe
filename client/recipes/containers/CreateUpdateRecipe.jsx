@@ -122,6 +122,7 @@ class CreateUpdateRecipe extends Component {
           handleEditorChange={this.handleEditorChange}
           title={this.props.title}
           clearForm={this.state.clearForm}
+          isFetching={this.props.loader.isFetching}
         />
       </div>
     );
@@ -133,7 +134,8 @@ CreateUpdateRecipe.propTypes = {
   handleUpdateRecipe: PropTypes.func.isRequired,
   recipe: PropTypes.objectOf(PropTypes.any),
   title: PropTypes.string,
-  type: PropTypes.string
+  type: PropTypes.string,
+  loader: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 CreateUpdateRecipe.defaultProps = {
@@ -142,5 +144,16 @@ CreateUpdateRecipe.defaultProps = {
   recipe: {},
 };
 
-export default connect(null, { handleCreateRecipe, handleUpdateRecipe })(CreateUpdateRecipe);
+const mapStateToProps = state => ({
+  loader: state.loader
+});
+
+
+export default connect(
+  mapStateToProps,
+  {
+    handleCreateRecipe,
+    handleUpdateRecipe
+  }
+)(CreateUpdateRecipe);
 

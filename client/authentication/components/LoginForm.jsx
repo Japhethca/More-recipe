@@ -51,11 +51,11 @@ const LoginForm = (props) => {
             />
           </div>
           <div className="input-field col s12">
-            <button className="btn-large auth-btn" type="submit">Login
+            <button className="btn-large auth-btn" type="submit"> {props.isFetching ? 'Loging In...' : 'Login' }
             </button>
           </div>
           <div className="auth-link">
-            <span> Don&quote;t have an Account? <Link to="/signup" href="/signup"> Sign Up Here </Link></span>
+            <span> Don&#39;t have an Account? <Link to="/signup" href="/signup"> Sign Up Here </Link></span>
           </div>
         </form>
       </div>
@@ -69,7 +69,8 @@ LoginForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   serverErrors: PropTypes.string.isRequired,
   validationErrors: PropTypes.objectOf(PropTypes.any).isRequired,
-  formData: PropTypes.objectOf(PropTypes.any).isRequired
+  formData: PropTypes.objectOf(PropTypes.any).isRequired,
+  isFetching: PropTypes.bool.isRequired
 };
 
 

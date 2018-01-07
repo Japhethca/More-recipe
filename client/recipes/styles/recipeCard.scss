@@ -1,5 +1,6 @@
 $btn-bg-color: #fff;
 $card-linkl-color: rgb(148, 36, 36);
+$meta-data-color: #808080;
 
 #recipe-card {
   height: 400px;
@@ -19,6 +20,7 @@ $card-linkl-color: rgb(148, 36, 36);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-family: 'Ubuntu', sans-serif;
   }
 
   a {
@@ -31,6 +33,8 @@ $card-linkl-color: rgb(148, 36, 36);
 
   .recipe-author {
     padding: 5px;
+    color: $meta-data-color;
+    font-family: 'Ubuntu', sans-serif;
     span {
       color: $card-linkl-color
     }

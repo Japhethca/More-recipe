@@ -74,7 +74,7 @@ const SignupForm = (props) => {
           </div>
           <div className="input-field col s12">
             <button className="btn-large auth-btn" type="submit">
-                Register
+              {props.isFetching ? 'Registering...' : 'Register'}
             </button>
           </div>
           <div className="auth-link right">
@@ -91,7 +91,8 @@ SignupForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   serverErrors: PropTypes.string.isRequired,
   validationErrors: PropTypes.objectOf(PropTypes.any).isRequired,
-  formData: PropTypes.objectOf(PropTypes.any).isRequired
+  formData: PropTypes.objectOf(PropTypes.any).isRequired,
+  isFetching: PropTypes.bool.isRequired
 };
 
 export default SignupForm;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
@@ -25,7 +26,6 @@ class Signup extends Component {
       email: '',
       password: '',
       verifyPassword: '',
-      serverErrors: this.props.authentication.errors,
       validationErrors: {},
     };
   }
@@ -84,19 +84,20 @@ class Signup extends Component {
       verifyPassword: this.state.verifyPassword
     };
 
-    if (this.props.authentication.isAuthenticated) {
-      this.props.history.push('/recipes');
-    }
-
     return (
       <div>
-        <SignupForm
-          onChange={this.onChange}
-          onSubmit={this.onSubmit}
-          formData={formData}
-          serverErrors={this.props.authentication.errors}
-          validationErrors={this.state.validationErrors}
-        />
+        {
+          this.props.authentication.isAuthenticated ? <Redirect to="recipes" />
+          :
+          <SignupForm
+            onChange={this.onChange}
+            onSubmit={this.onSubmit}
+            formData={formData}
+            isFetching={this.props.loader.isFetching}
+            serverErrors={this.props.authentication.errors || ''}
+            validationErrors={this.state.validationErrors}
+          />
+        }
       </div>
     );
   }
@@ -104,11 +105,12 @@ class Signup extends Component {
 
 Signup.propTypes = {
   handleAuthRequest: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
   authentication: PropTypes.objectOf(PropTypes.any).isRequired,
+  loader: PropTypes.objectOf(PropTypes.bool).isRequired
 };
 const mapStateToProps = state => ({
-  authentication: state.auth
+  authentication: state.auth,
+  loader: state.loader
 });
 
 

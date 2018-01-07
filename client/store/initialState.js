@@ -1,6 +1,14 @@
 export default {
-  profile: {},
-  results: [],
+  profile: {
+    payload: {},
+    isFetching: false
+  },
+  results: {
+    payload: [],
+    totalPages: 0,
+    currentPage: 0,
+    isFetching: false
+  },
   auth: {
     isAuthenticated: false,
     user: {},
@@ -8,12 +16,23 @@ export default {
   },
   recipeReducer: {
     NotFound: false,
-    recipes: [],
-    userRecipes: [],
-    favorites: [],
-    pagination: {
+    recipes: {
+      payload: [],
+      totalPages: 0,
       currentPage: 0,
-      totalPages: 0
+      isFetching: false
+    },
+    userRecipes: {
+      payload: [],
+      totalPages: 0,
+      currentPage: 0,
+      isFetching: false
+    },
+    favorites: {
+      payload: [],
+      totalPages: 0,
+      currentPage: 0,
+      isFetching: false
     },
     recipe: {
       name: '',

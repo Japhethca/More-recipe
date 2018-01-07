@@ -1,30 +1,29 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { GridLoader } from 'react-spinners';
+
+import './loader.scss';
 
 /**
  * @description displays loading indicator
+ * @param {Object} props
  * @returns {ReactElement} markup
  */
-const Loader = () => (
-  <div className="loader-class">
-    <div className="preloader-wrapper active">
-      <div className="spinner-layer spinner-red-only">
-        <div className="circle-clipper left">
-          <div className="circle" />
-        </div>
-        <div className="gap-patch">
-          <div className="circle" />
-        </div>
-        <div className="circle-clipper right">
-          <div className="circle" />
-        </div>
-      </div>
-    </div>
+const Loader = props => (
+  <div className="sweet-loading">
+    <GridLoader
+      color="rgb(223, 63, 63)"
+      loading={props.isFetching}
+    />
   </div>
 );
 
 Loader.propTypes = {
-
+  isFetching: PropTypes.bool
 };
 
+Loader.defaultProps = {
+  isFetching: false
+};
 
 export default Loader;

@@ -12,7 +12,8 @@ const propTypes = {
   onChange: PropTypes.func.isRequired,
   handleEditorChange: PropTypes.func.isRequired,
   title: PropTypes.string,
-  clearForm: PropTypes.bool.isRequired
+  clearForm: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired
 };
 
 /**
@@ -35,16 +36,17 @@ const RecipeForm = (props) => {
    * @param {string} inputName
    * @param {string} heading
    * @param {string} validator
+   * @param {string} onChange
    * @return {DomElement} - html markup
    */
-  const renderEditorFor = (inputName, heading, validator) => (
+  const renderEditorFor = (inputName, heading, validator, onChange) => (
     <div>
       <h5>{heading}</h5>
       { validator && <span className="error-text"> { validator[0] }</span> }
       <TinyMCE
         content={props.recipe[inputName]}
         config={editorConfig}
-        onChange={props.handleEditorChange}
+        onChange={onChange}
         name={inputName}
       />
     </div>
@@ -80,8 +82,8 @@ const RecipeForm = (props) => {
 
           {renderInputFieldFor('name', 'Enter Recipe Name', validationErrors.name)}
           {renderInputFieldFor('description', 'Enter Description', validationErrors.description)}
-          {renderEditorFor('ingredients', 'Add Ingredients', validationErrors.ingredients)}
-          {renderEditorFor('direction', 'How To Prepare', validationErrors.direction)}
+          {renderEditorFor('ingredients', 'Add Ingredients', validationErrors.ingredients, props.handleEditorChange)}
+          {renderEditorFor('direction', 'How To Prepare', validationErrors.direction, props.handleEditorChange)}
 
           <hr />
           <div>
@@ -98,7 +100,7 @@ const RecipeForm = (props) => {
             />
           </div>
           <div className="input-btn">
-            <button className="submit-btn waves-effect waves-ripple" type="submit"> Submit </button>
+            <button className="submit-btn waves-effect waves-ripple" type="submit"> { props.isFetching ? 'Submiting...' : 'Submit' }</button>
           </div>
         </form>
       </div>

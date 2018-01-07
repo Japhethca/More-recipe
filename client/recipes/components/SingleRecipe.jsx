@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
+import moment from 'moment';
 
 import Reviews from '../../reviews';
 import ActionButtons from '../../actionButtons';
@@ -41,7 +42,7 @@ const SingleRecipe = ({ recipe }) => {
               />
              }
           </div>
-          <span className="recipe-author">Recipe by <span>{author.username}</span> </span>
+          <span className="recipe-author">Recipe by <span>{author.username}</span> - {moment(recipe.createdAt).fromNow()}</span>
 
         </div>
         <div className="col s12 m6">
