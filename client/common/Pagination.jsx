@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import ReactPaginate from 'react-paginate';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
-import { getAllRecipes } from '../home/actions';
 import './pagination.scss';
 
 
@@ -21,7 +19,8 @@ class Pagination extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalPages: props.pagination.totalPages
+      totalPages: this.props.totalPages,
+      currentPage: this.props.currentPage
     };
   }
 
@@ -32,10 +31,14 @@ class Pagination extends Component {
    * @returns {undefined}
    */
   componentWillReceiveProps(nextProps) {
-    if (nextProps.pagination !== this.props.pagination) {
-      this.setState({ totalPages: nextProps.pagination.totalPages });
+    if (nextProps.totalPages !== this.props.totalPages) {
+      this.setState({ totalPages: nextProps.totalPages });
+    }
+    if (nextProps.currentPage !== this.props.currentPage) {
+      this.setState({ currentPage: nextProps.currentPage });
     }
   }
+
 
   /**
    * @description displays pagination
@@ -50,6 +53,7 @@ class Pagination extends Component {
             pageCount={this.state.totalPages}
             pageRangeDisplayed={4}
             marginPagesDisplayed={1}
+            forcePage={this.state.currentPage}
             onPageChange={this.props.handlePagination}
             containerClassName="pag-list"
             pageClassName="page-class"
@@ -65,11 +69,10 @@ class Pagination extends Component {
 }
 
 Pagination.propTypes = {
-  pagination: PropTypes.objectOf(PropTypes.number).isRequired,
+  totalPages: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
   handlePagination: PropTypes.func.isRequired
 };
-const mapStateToProps = state => ({
-  pagination: state.recipeReducer.pagination
-});
 
-export default connect(mapStateToProps, { getAllRecipes })(Pagination);
+
+export default Pagination;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 
 import { handleAuthRequest } from '../actions';
@@ -87,19 +88,20 @@ class Login extends Component {
   render() {
     const formData = { email: this.state.email, password: this.state.password };
 
-    if (this.props.authentication.isAuthenticated) {
-      this.props.history.push('/recipes');
-    }
-
     return (
       <div>
-        <LoginForm
-          onChange={this.onChange}
-          onSubmit={this.onSubmit}
-          formData={formData}
-          serverErrors={this.state.serverErrors}
-          validationErrors={this.state.validationErrors}
-        />
+        {
+          this.props.authentication.isAuthenticated ? <Redirect to="/recipes" />
+        :
+          <LoginForm
+            onChange={this.onChange}
+            onSubmit={this.onSubmit}
+            formData={formData}
+            isFetching={this.props.loader.isFetching}
+            serverErrors={this.state.serverErrors}
+            validationErrors={this.state.validationErrors}
+          />
+        }
       </div>
     );
   }
@@ -108,11 +110,12 @@ class Login extends Component {
 Login.propTypes = {
   authentication: PropTypes.objectOf(PropTypes.any).isRequired,
   handleAuthRequest: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired
+  loader: PropTypes.objectOf(PropTypes.bool).isRequired
 };
 
 const mapStateToProps = state => ({
-  authentication: state.auth
+  authentication: state.auth,
+  loader: state.loader
 });
 
 

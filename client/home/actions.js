@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { RECIPES_COUNT, GET_ALL_RECIPES, IS_FETCHING } from '../recipes/actionTypes';
+import { ALL_RECIPES_COUNT, GET_ALL_RECIPES, IS_FETCHING } from '../recipes/actionTypes';
 
 
 /**
@@ -9,8 +9,8 @@ import { RECIPES_COUNT, GET_ALL_RECIPES, IS_FETCHING } from '../recipes/actionTy
  * @param {Number} curPage
  * @returns {Object} - none
  */
-export const getRecipeCount = (totalPages, curPage) => ({
-  type: RECIPES_COUNT,
+export const getAllRecipeCount = (totalPages, curPage) => ({
+  type: ALL_RECIPES_COUNT,
   totalPages,
   curPage
 });
@@ -18,22 +18,32 @@ export const getRecipeCount = (totalPages, curPage) => ({
 /**
  * @description creates isfetching action
  * @param {Boolean} state --http loading state
+ * @param {Boolean} status --http loading status
+ * @param {String} dataType -- type of data being fetched
  * @return {Object} - action
  */
-const isFetching = state => ({
+export const isFetching = (state, status = false, dataType = 'recipes') => ({
   type: IS_FETCHING,
-  isFetching: state
+  isFetching: state,
+  completed: status,
+  dataType
 });
 
 
 /**
  * @description get all recipes action creators
- * @param {array} recipes
+ * @param {array} payload
+ * @param {Number} currentPage
+ * @param {Number} totalPages
+ * @param {Boolean} isFetchingRecipes
  * @returns {object} of action type
  */
-const getRecipes = recipes => ({
+const getRecipes = (payload, currentPage, totalPages, isFetchingRecipes = false) => ({
   type: GET_ALL_RECIPES,
-  recipes
+  payload,
+  currentPage,
+  totalPages,
+  isFetching: isFetchingRecipes
 });
 
 /**
@@ -43,16 +53,13 @@ const getRecipes = recipes => ({
  * @param {object} limit
  * @returns {Object} - returns an axios promise
  */
-export const getAllRecipes = (page = 1, limit = 8) => (dispatch) => {
+export const getAllRecipes = (page = 1, limit = 12) => (dispatch) => {
+  dispatch(getRecipes([], 0, 0, true));
   axios.get(`/api/recipes?limit=${limit}&page=${page}`)
     .then((res) => {
-      dispatch(isFetching(true));
-      dispatch(getRecipes(res.data.recipes));
       const numPages = Math.ceil(res.data.count / limit);
-      dispatch(getRecipeCount(numPages, page));
-      dispatch(getRecipeCount(numPages, page));
-      dispatch(isFetching(false));
+      dispatch(getRecipes(res.data.recipes, page, numPages));
     }).catch(() => {
-      dispatch(isFetching(false));
+      dispatch(getRecipes([], 0, 0));
     });
 };

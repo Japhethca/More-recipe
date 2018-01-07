@@ -1,7 +1,7 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { toastr } from 'react-redux-toastr';
-
+import { isFetching } from '../home/actions';
 
 import { setAuthorizationToken } from './helpers/setAuthorization';
 import { SET_CURRENT_USER } from './actionTypes';
@@ -38,16 +38,21 @@ export const handleLogout = () => (dispatch) => {
 export const handleAuthRequest = (userdata, requestType) => {
   const url = requestType === 'login' ? '/api/users/signin' : '/api/users/signup';
 
-  return dispatch => axios.post(url, userdata)
-    .then((res) => {
-      const { token } = res.data;
-      localStorage.setItem('token', token);
-      setAuthorizationToken(token);
-      dispatch(setCurrentUser(jwt.decode(token), null));
-      toastr.success(res.data.message);
-    })
-    .catch((error) => {
-      toastr.error(error.response.data.message);
-      dispatch(setCurrentUser(null, error.response.data.message));
-    });
+  return (dispatch) => {
+    dispatch(isFetching(true));
+    axios.post(url, userdata)
+      .then((res) => {
+        const { token } = res.data;
+        localStorage.setItem('token', token);
+        setAuthorizationToken(token);
+        dispatch(setCurrentUser(jwt.decode(token), null));
+        toastr.success(res.data.message);
+        dispatch(isFetching(false));
+      })
+      .catch((error) => {
+        dispatch(isFetching(false));
+        toastr.error(error.response.data.message);
+        dispatch(setCurrentUser(null, error.response.data.message));
+      });
+  };
 };

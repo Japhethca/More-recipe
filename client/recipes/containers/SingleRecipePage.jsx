@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 import SingleRecipe from '../components/SingleRecipe';
 import { getRecipe } from '../actions';
+import Loader from '../../common/Loader';
 
 /**
  * @description SingleRecipe page
@@ -61,7 +62,7 @@ class SingleRecipePage extends Component {
     return (
       <div>
         {
-          this.props.recipe &&
+          this.props.loader.isFetching ? <Loader isFetching /> :
           <SingleRecipe
             recipe={this.state.recipe}
           />
@@ -75,8 +76,9 @@ SingleRecipePage.propTypes = {
   getRecipe: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
-  recipe: PropTypes.objectOf(PropTypes.object).isRequired,
-  notFound: PropTypes.bool
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  notFound: PropTypes.bool,
+  loader: PropTypes.objectOf(PropTypes.bool).isRequired
 };
 
 SingleRecipePage.defaultProps = {
@@ -85,7 +87,8 @@ SingleRecipePage.defaultProps = {
 
 const mapStateToProps = state => ({
   recipe: state.recipeReducer.recipe,
-  notFound: state.recipeReducer.NotFound
+  notFound: state.recipeReducer.NotFound,
+  loader: state.loader
 });
 
 export default connect(mapStateToProps, { getRecipe })(SingleRecipePage);

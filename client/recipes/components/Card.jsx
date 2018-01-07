@@ -1,7 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 import slugify from '../../utilities/slugify';
@@ -72,7 +72,7 @@ const Card = (props) => {
           />
           <h5 className="ellipses">{recipe.name}</h5>
         </Link>
-        <span className="recipe-author">Recipe by <span>{recipe.author.username}</span></span>
+        <span className="recipe-author">Recipe by <span>{recipe.author.username}</span> - {moment(recipe.createdAt).fromNow()}</span>
         {
         showActionBtns &&
         <div className="card-action">

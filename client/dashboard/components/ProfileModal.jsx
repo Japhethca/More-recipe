@@ -9,7 +9,8 @@ import '../styles/dashboard.scss';
 
 const propTypes = {
   profile: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleEditUserProfile: PropTypes.func.isRequired
+  handleEditUserProfile: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired
 };
 
 /**
@@ -106,9 +107,9 @@ class ProfileModal extends Component {
     <div className="input-field col s12">
       <input
         type="text"
-        name={name || ''}
+        name={name}
         onChange={this.onChange}
-        value={value}
+        value={value || ''}
       />
       <label htmlFor={name}>{label}</label>
     </div>
@@ -147,7 +148,7 @@ class ProfileModal extends Component {
                 type="submit"
                 onClick={this.onSubmit}
               >
-                    Update Profile
+                {this.props.isFetching ? 'updating...' : 'Update Profile' }
               </button>
               <button className="btn grey right" type="finish" onClick={this.onFinishClick}>Finish</button>
             </form>

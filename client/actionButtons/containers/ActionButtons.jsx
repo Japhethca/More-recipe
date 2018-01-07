@@ -80,7 +80,8 @@ class ActionButtons extends Component {
    * @returns {boolean} return true/false
    */
   isInFavorites = () => {
-    const checkFavorite = this.state.favorites.filter(favorite => favorite.id === this.props.recipe.id);
+    const checkFavorite = this.state.favorites
+      .filter(favorite => favorite.id === this.props.recipe.id);
     if (checkFavorite.length > 0) {
       return true;
     }
@@ -147,7 +148,7 @@ class ActionButtons extends Component {
 }
 
 const mapStateToProps = state => ({
-  favorites: state.recipeReducer.favorites
+  favorites: state.recipeReducer.favorites.payload
 });
 
 

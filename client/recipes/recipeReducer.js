@@ -12,18 +12,28 @@ import {
   UPDATE_RECIPE,
   UPVOTE_RECIPE,
   NOT_FOUND,
-  RECIPES_COUNT
 } from './actionTypes';
 
 
 const initialState = {
   NotFound: false,
-  recipes: [],
-  userRecipes: [],
-  favorites: [],
-  pagination: {
+  recipes: {
+    payload: [],
+    totalPages: 0,
     currentPage: 0,
-    totalPages: 0
+    isFetching: false
+  },
+  userRecipes: {
+    payload: [],
+    totalPages: 0,
+    currentPage: 0,
+    isFetching: false
+  },
+  favorites: {
+    payload: [],
+    totalPages: 0,
+    currentPage: 0,
+    isFetching: false
   },
   recipe: {
     name: '',
@@ -96,7 +106,7 @@ export default (state = initialState, action) => {
           upvotes: action.recipe.upvotes,
           downvotes: action.recipe.downvotes
         },
-        recipes: updateItemInArray(state.recipes, action.recipe)
+        recipes: { payload: updateItemInArray(state.recipes.payload, action.recipe) }
       };
 
     case DOWNVOTE_RECIPE:
@@ -107,74 +117,108 @@ export default (state = initialState, action) => {
           downvotes: action.recipe.downvotes,
           upvotes: action.recipe.upvotes,
         },
-        recipes: updateItemInArray(state.recipes, action.recipe)
+        recipes: { payload: updateItemInArray(state.recipes.payload, action.recipe) }
       };
 
     case GET_ALL_RECIPES:
       return {
         ...state,
-        recipes: [
-          ...action.recipes
-        ]
+        recipes: {
+          currentPage: action.currentPage,
+          totalPages: action.totalPages,
+          payload: [...action.payload],
+          isFetching: action.isFetching
+        }
       };
 
     case UPDATE_RECIPE:
       return {
         ...state,
-        recipes: updateItemInArray(state.recipes, action.recipe),
-        userRecipes: updateItemInArray(state.userRecipes, action.recipe),
-        favorites: updateItemInArray(state.favorites, action.recipe)
+        recipes: {
+          ...state.recipes,
+          payload: updateItemInArray(state.recipes.payload, action.recipe)
+        },
+        userRecipes: {
+          ...state.userRecipes,
+          payload: updateItemInArray(state.userRecipes.payload, action.recipe)
+        },
+        favorites: {
+          ...state.favorites,
+          payload: updateItemInArray(state.favorites.payload, action.recipe)
+        }
       };
 
     case DELETE_USER_RECIPE:
       return {
         ...state,
-        recipes: state.recipes.filter(recipe => recipe.id !== action.id),
-        userRecipes: state.userRecipes.filter(recipe => recipe.id !== action.id),
-        favorites: state.favorites.filter(recipe => recipe.id !== action.id)
+        recipes: {
+          ...state.recipes,
+          payload: state.recipes.payload.filter(recipe => recipe.id !== action.id)
+        },
+        userRecipes: {
+          ...state.userRecipes,
+          payload: state.userRecipes.payload.filter(recipe => recipe.id !== action.id)
+        },
+        favorites: {
+          ...state.favorites,
+          payload: state.favorites.payload.filter(recipe => recipe.id !== action.id)
+        }
       };
 
     case ADD_NEW_RECIPE:
       return {
         ...state,
-        recipes: [action.recipe, ...state.recipes],
-        userRecipes: [action.recipe, ...state.userRecipes]
+        recipes: { payload: [action.recipe, ...state.recipes.payload] },
+        userRecipes: { payload: [action.recipe, ...state.userRecipes.payload] }
       };
 
     case GET_USER_FAVORITES:
       return {
         ...state,
-        favorites: [
-          ...action.favorites
-        ]
+        favorites: {
+          currentPage: action.currentPage,
+          totalPages: action.totalPages,
+          payload: [...action.payload],
+          isFetching: action.isFetching
+        }
       };
 
     case ADD_TO_FAVORITES:
       return {
         ...state,
-        favorites: [
-          action.recipe,
-          ...state.favorites
-        ]
+        favorites: {
+          payload: [
+            action.recipe,
+            ...state.favorites.payload
+          ]
+        }
       };
 
     case GET_USER_RECIPES:
-      return { ...state, userRecipes: action.userRecipes };
+      return {
+        ...state,
+        userRecipes: {
+          currentPage: action.currentPage,
+          totalPages: action.totalPages,
+          payload: [...action.payload],
+          isFetching: action.isFetching
+        }
+      };
 
     case REMOVE_FROM_FAVORITES:
-      return { ...state, favorites: state.favorites.filter(favorite => favorite.id !== action.id) };
+      return {
+        ...state,
+        favorites: {
+          ...state.favorites,
+          payload: state.favorites.payload.filter(favorite => favorite.id !== action.id)
+        }
+      };
+
     case NOT_FOUND:
       return {
         ...state, NotFound: action.status
       };
-    case RECIPES_COUNT:
-      return {
-        ...state,
-        pagination: {
-          currentPage: action.curPage,
-          totalPages: action.totalPages
-        }
-      };
+
     default:
       return state;
   }

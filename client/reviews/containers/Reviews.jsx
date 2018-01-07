@@ -5,12 +5,14 @@ import { connect } from 'react-redux';
 import ListReviews from '../components/ListReviews';
 import AddReview from '../components/AddReview';
 import handleRecipeReview from '../actions';
+import Loader from '../../common/Loader';
 import '../reviews.scss';
 
 
 const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleRecipeReview: PropTypes.func.isRequired
+  handleRecipeReview: PropTypes.func.isRequired,
+  loader: PropTypes.objectOf(PropTypes.bool).isRequired
 };
 
 /**
@@ -59,7 +61,9 @@ class Reviews extends Component {
   render() {
     return (
       <div className="reviews-page" >
+        { this.props.loader.isFetching ? <Loader isFetching /> :
         <ListReviews reviews={this.props.recipe.Reviews} />
+        }
         <AddReview
           onChange={this.onChange}
           onSubmit={this.onSubmit}
@@ -72,5 +76,9 @@ class Reviews extends Component {
 
 Reviews.propTypes = propTypes;
 
+const mapStateToProps = state => ({
+  loader: state.loader
+});
 
-export default connect(null, { handleRecipeReview })(Reviews);
+
+export default connect(mapStateToProps, { handleRecipeReview })(Reviews);

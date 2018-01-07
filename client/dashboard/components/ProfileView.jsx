@@ -25,9 +25,11 @@ const ProfileView = ({ profile }) => (
       <div className="col s12 m6 l8 details">
         <h5>{profile.username}</h5><div>({profile.email})</div>
         {profile.firstname ?
-          <div>{profile.firstname} {profile.lastname}</div> : <div>Add real name</div>}
+          <div>{profile.firstname} {profile.lastname}</div>
+          :
+          <div>Update Profile to show real name</div>}
         {profile.aboutme ?
-          <div>{profile.aboutme}</div> : <div>add about me</div>}
+          <div>{profile.aboutme}</div> : <div>Update Profile to about about me</div>}
         <a className="modal-trigger btn blue" href="#update-modal">Update Profile</a>
       </div>
     </div>

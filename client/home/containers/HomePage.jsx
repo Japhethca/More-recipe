@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import qs from 'qs';
 
 import { Recipes } from '../../recipes';
 import { getAllRecipes } from '../actions';
 import { handleGetFavorites } from '../../dashboard/actions';
 import Pagination from '../../common/Pagination';
+import Loader from '../../common/Loader';
 import '../style.scss';
 
 const propTypes = {
   getAllRecipes: PropTypes.func.isRequired,
   handleGetFavorites: PropTypes.func.isRequired,
-  recipes: PropTypes.arrayOf(PropTypes.any).isRequired,
+  recipes: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+
 };
 
 /**
@@ -28,7 +32,8 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: this.props.recipes,
+      recipes: this.props.recipes.payload,
+      page: this.props.history.location.search
     };
   }
 
@@ -38,8 +43,10 @@ class HomePage extends Component {
    * @returns {undefined}
    */
   componentDidMount = () => {
+    const { page } = qs.parse(this.state.page, { ignoreQueryPrefix: true });
+
     this.props.handleGetFavorites();
-    this.props.getAllRecipes();
+    this.props.getAllRecipes(page);
   }
 
   /**
@@ -50,7 +57,10 @@ class HomePage extends Component {
    */
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.recipes !== this.props.recipes) {
-      this.setState({ recipes: nextProps.recipes });
+      this.setState({ recipes: nextProps.recipes.payload });
+    }
+    if (this.props.history.location.search !== nextProps.history.location.search) {
+      this.setState({ page: nextProps.history.location.search });
     }
   }
 
@@ -61,6 +71,7 @@ class HomePage extends Component {
    * @returns {undefined}
    */
   handlePagination = (page) => {
+    this.props.history.push(`/recipes?page=${page.selected + 1}`);
     this.props.getAllRecipes(page.selected + 1);
   }
 
@@ -69,19 +80,30 @@ class HomePage extends Component {
    * @returns {ReactElement} markup
    */
   render() {
+    const { isFetching } = this.props.recipes;
     return (
       <div className="container home-page">
-        <div>
-          <h3>Latest Recipes</h3>
-          <Recipes
-            recipes={this.state.recipes}
-            className="col s12 m6 l3"
-            showActionBtns
-          />
-          <div className="pagination">
-            {this.state.recipes.length > 0 && <Pagination handlePagination={this.handlePagination} />}
+        {
+          isFetching ? <Loader isFetching />
+          :
+          <div>
+            <h3>Latest Recipes</h3>
+            <Recipes
+              recipes={this.state.recipes}
+              className="col s12 m6 l3"
+              showActionBtns
+            />
+            <div className="pagination">
+              {this.state.recipes.length > 0 &&
+              <Pagination
+                handlePagination={this.handlePagination}
+                totalPages={this.props.recipes.totalPages || 0}
+                currentPage={this.props.recipes.currentPage - 1 || 0}
+              />
+              }
+            </div>
           </div>
-        </div>
+        }
       </div>
     );
   }
@@ -90,8 +112,11 @@ class HomePage extends Component {
 HomePage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
-  recipes: state.recipeReducer.recipes
+  recipes: state.recipeReducer.recipes,
 });
 
-export default connect(mapStateToProps, { getAllRecipes, handleGetFavorites })(HomePage);
+export default connect(mapStateToProps, {
+  getAllRecipes,
+  handleGetFavorites
+})(HomePage);
 

@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import qs from 'qs';
 
+import Loader from '../../common/Loader';
 import { Recipes } from '../../recipes';
 import handleSearch from '../actions';
 
@@ -23,7 +24,8 @@ class SearchResultPage extends Component {
     super(props);
     this.state = {
       query: this.props.history.location.search,
-      searchResults: this.props.results
+      searchResults: this.props.results || [],
+
     };
   }
 
@@ -53,34 +55,39 @@ class SearchResultPage extends Component {
     }
   }
 
+
   /**
    * @description renders page for listing search results
    * @returns {ReactElement} - markup
    */
   render() {
     const { query } = qs.parse(this.props.history.location.search, { ignoreQueryPrefix: true });
-    const results = this.state.searchResults;
+    const results = this.state.searchResults.payload;
     return (
       <div className="container">
-        <div >
-          <h4> { this.state.searchResults.length < 1
-            ? 'No' : this.state.searchResults.length } Search Result(s) for <span> &quot;{query}&quot;</span>
-          </h4>
-          <Recipes recipes={results} noItemText="  " />
-        </div>
+        {
+          this.props.results.isFetching ? <Loader isFetching /> :
+
+          <div >
+            <h4> { results.length < 1
+            ? 'No' : results.length } Search Result(s) for <span> &quot;{query}&quot;</span>
+            </h4>
+            <Recipes recipes={results} noItemText="  " />
+          </div>
+        }
       </div>
     );
   }
 }
 
 SearchResultPage.propTypes = {
-  results: PropTypes.arrayOf(PropTypes.object).isRequired,
+  results: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   handleSearch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  results: state.results
+  results: state.results,
 });
 
 

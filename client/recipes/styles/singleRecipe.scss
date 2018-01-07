@@ -1,6 +1,8 @@
 $hr-line-color: #333;
 $hr-line-color-2: #ccc;
 $recipe-items-header-color: #a52a2a;
+$author-color: #a52a2a;
+$meta-color: #808080;
 
 .recipe-details {
   p,
@@ -55,6 +57,13 @@ $recipe-items-header-color: #a52a2a;
     and (max-device-width: 480px)
     and (-webkit-min-device-pixel-ratio: 2) {
       text-align: center;
+    }
+  }
+  .recipe-author {
+    color: $meta-color;
+
+    span {
+      color: $author-color;
     }
   }
 }

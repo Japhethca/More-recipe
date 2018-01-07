@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import '../reviews.scss';
 
@@ -15,7 +16,7 @@ const propTypes = {
 const Review = ({ review }) => (
   <div className="single-review z-depth-2">
     <span className="user">{review.User.username}</span>
-    <span className="meta-date">{new Date(review.createdAt).toDateString()}</span>
+    <span className="meta-date">{moment(review.createdAt).fromNow()}</span>
     <hr />
     <p className="review-content">
       {review.content}
