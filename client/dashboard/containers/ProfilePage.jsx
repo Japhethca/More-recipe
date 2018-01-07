@@ -30,7 +30,9 @@ class ProfilePage extends Component {
    * @returns {undefined}
    */
   componentDidMount() {
-    this.props.handleGetUserProfile();
+    if (!this.props.profile.payload.username) {
+      this.props.handleGetUserProfile();
+    }
   }
 
   /**
