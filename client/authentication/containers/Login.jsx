@@ -14,7 +14,7 @@ import LoginForm from '../components/LoginForm';
  */
 class Login extends Component {
   /**
-   * Creates an instance of Login.
+   * @description Creates an instance of Login.
    * @param {object} props - react props
    * @memberof Login
    */
@@ -23,7 +23,7 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      serverErrors: this.props.authentication.errors,
+      serverErrors: this.props.authentication.errors || '',
       validationErrors: {},
     };
   }
@@ -40,7 +40,7 @@ class Login extends Component {
   }
 
   /**
-   * handles input change events
+   * @description handles input change events
    * @param {SyntheticEvent} event - onchange event
    * @memberof Login
    * @returns {undefined}
@@ -51,7 +51,7 @@ class Login extends Component {
   }
 
   /**
-   * handles form submission
+   * @description handles form submission
    * @param {SyntheticEvent} event - onsubmit event
    * @memberof Login
    * @returns {undefined}
@@ -65,7 +65,7 @@ class Login extends Component {
 
   /**
    *
-   * checks if form values are valid
+   * @description checks if form values are valid
    * @memberof Login
    * @returns {Boolean} - return true/false
    */
@@ -81,7 +81,7 @@ class Login extends Component {
 
   /**
    *
-   *
+   *@description renders loagin page
    * @memberof Login
    * @returns {ReactElement} markup
    */

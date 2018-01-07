@@ -1,20 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
-/**
- * checks if token if valid
- * @param {string} token
- * @returns {Boolean} - true/false
- */
-export const isValidToken = (token) => {
-  const expirationTime = jwt.decode(token).exp;
-  const currentDate = new Date();
-  if (expirationTime < Math.floor(currentDate.getTime() / 1000)) {
-    localStorage.removeItem('token');
-    return false;
-  }
-  return true;
-};
 
 /**
  * sets token in request headers
@@ -28,4 +14,19 @@ export const setAuthorizationToken = (token) => {
   } else {
     delete axios.defaults.headers.common.Authorization;
   }
+};
+
+/**
+ * checks if token if valid
+ * @param {string} token
+ * @returns {Boolean} - true/false
+ */
+export const isValidToken = (token) => {
+  const expirationTime = jwt.decode(token) === null ? true : jwt.decode(token).exp;
+  const currentDate = new Date();
+  if (expirationTime === true || expirationTime < Math.floor(currentDate.getTime() / 1000)) {
+    localStorage.removeItem('token');
+    return false;
+  }
+  return true;
 };

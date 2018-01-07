@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+
+import { isValidToken } from '../helpers/setAuthorization';
+import { setCurrentUser } from '../actions';
 
 const propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  setCurrentUser: PropTypes.func.isRequired
 };
+
 
 /**
  * @export
@@ -20,26 +26,44 @@ export default function AuthenticateRoute(WrappedComponent) {
    */
   class Authenticate extends Component {
     /**
-     * @description react component life cyle function
+     * Creates an instance of Authenticate.
+     * @param {any} props
+     * @memberof Authenticate
+     */
+    constructor(props) {
+      super(props);
+      this.state = {
+        isAuthenticated: this.props.isAuthenticated
+      };
+    }
+
+    /**
+     *
+     * @description change authorization if token is invalid
+     * @memberof Authenticate
      * @returns {undefined}
      */
-    componentWillMount() {
-      if (!this.props.isAuthenticated) {
-        this.props.history.push('/');
+    componentDidMount() {
+      if (localStorage.token) {
+        if (!isValidToken(localStorage.token)) {
+          this.props.setCurrentUser({});
+        }
       }
     }
 
     /**
      *
-     * @description checks if a user is authenticated when the page is refreshed
+     * @description checks if authentication has changed
+     * @param {any} nextProps
      * @memberof Authenticate
      * @returns {undefined}
      */
-    componentWillUpdate() {
-      if (!this.props.isAuthenticated) {
-        this.props.history.push('/');
+    componentWillReceiveProps(nextProps) {
+      if (this.props.isAuthenticated !== nextProps.isAuthenticated) {
+        this.setState({ isAuthenticated: nextProps.isAuthenticated });
       }
     }
+
 
     /**
      * @description renders authenticated components
@@ -47,7 +71,16 @@ export default function AuthenticateRoute(WrappedComponent) {
      * @memberof Authenticate
      */
     render() {
-      return <WrappedComponent {...this.props} />;
+      return (
+        <div>
+          {
+            this.state.isAuthenticated ?
+              <WrappedComponent {...this.props} />
+          :
+              <Redirect to="/" />
+          }
+        </div>
+      );
     }
   }
 
@@ -57,5 +90,5 @@ export default function AuthenticateRoute(WrappedComponent) {
     isAuthenticated: state.auth.isAuthenticated
   });
 
-  return connect(mapStateToProps, { })(Authenticate);
+  return connect(mapStateToProps, { setCurrentUser })(Authenticate);
 }

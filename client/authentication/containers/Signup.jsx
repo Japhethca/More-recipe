@@ -7,15 +7,15 @@ import { connect } from 'react-redux';
 import { handleAuthRequest } from '../actions';
 import { signUpValidator } from '../../utilities/validators';
 import SignupForm from '../components/SignupForm';
+
+
 /**
- *
- *
  * @class Signup
  * @extends {Component}
  */
 class Signup extends Component {
   /**
-   * Creates an instance of Signup.
+   * @description Creates an instance of Signup.
    * @param {object} props
    * @memberof Signup
    */
@@ -31,7 +31,7 @@ class Signup extends Component {
   }
 
   /**
-   * handle form input change
+   * @description handle form input change
    * @param {SyntheticEvent} event
    * @memberof Signup
    * @returns {undefined} - have not return value
@@ -42,7 +42,7 @@ class Signup extends Component {
   }
 
   /**
-   *  handles signup form submit
+   * @description handles signup form submit
    * @memberof Signup
    * @param {SyntheticEvent} event
    * @return {undefined} - have no return value
@@ -71,11 +71,10 @@ class Signup extends Component {
   }
 
   /**
- *
- *
- * @returns {ReactElement} markup
- * @memberof Authenticate
- */
+   * @description render signup page
+   * @returns {ReactElement} markup
+   * @memberof Authenticate
+   */
   render() {
     const formData = {
       email: this.state.email,
