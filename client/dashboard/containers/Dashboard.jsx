@@ -34,7 +34,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="container">
-        <ProfilePage />
+        <ProfilePage profile={this.props.profile} />
         <div className="row">
           <div className="col s12 m3 l3 sidebar hide-on-small-only">
             <h5>Your Recipe Box</h5>
@@ -59,12 +59,17 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   handleLogout: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  profile: PropTypes.objectOf(PropTypes.any).isRequired
 };
+
+const mapStateToProps = state => ({
+  profile: state.profile
+});
 
 
 const mapDispatchToProps = {
   handleLogout
 };
 
-export default connect(null, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
