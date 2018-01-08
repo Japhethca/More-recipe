@@ -1,6 +1,9 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 
 module.exports = {
@@ -42,7 +45,6 @@ module.exports = {
         loader: ExtractTextPlugin.extract('css-loader!sass-loader')
 
       },
-      // { test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
       {
         test: /\.(png|jpg)$/,
         loader: 'url-loader?limit=25000'
@@ -59,7 +61,10 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production')
+        NODE_ENV: JSON.stringify('production'),
+        CLOUDINARY_NAME: JSON.stringify(process.env.CLOUDINARY_NAME),
+        CLOUDINARY_PRESETS: JSON.stringify(process.env.CLOUDINARY_PRESETS),
+        CLOUDINARY_API_KEYS: JSON.stringify(process.env.CLOUDINARY_API_KEYS),
       }
     }),
     new webpack.optimize.UglifyJsPlugin({

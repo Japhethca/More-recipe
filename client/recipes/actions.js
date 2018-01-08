@@ -1,15 +1,27 @@
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
-import { isFetching } from '../home/actions';
 import upload from '../utilities/fileUpload';
-import { UPDATE_RECIPE,
-  ADD_NEW_RECIPE,
-  GET_SINGLE_RECIPE,
-  DELETE_USER_RECIPE,
-  REMOVE_FROM_FAVORITES,
-  ADD_TO_FAVORITES,
-  NOT_FOUND } from './actionTypes';
+import { UPDATE_RECIPE, ADD_NEW_RECIPE,
+  FETCH_SINGLE_RECIPE_FAILED,
+  FETCH_SINGLE_RECIPE_START,
+  FETCH_SINGLE_RECIPE_SUCCESS,
+  DELETE_USER_RECIPE, ADD_TO_FAVORITES,
+  REMOVE_FROM_FAVORITES, IS_FETCHING } from './actionTypes';
+
+  /**
+ * @description creates isfetching action
+ * @param {Boolean} state --http loading state
+ * @param {Boolean} status --http loading status
+ * @param {String} dataType -- type of data being fetched
+ * @return {Object} - action
+ */
+export const isFetching = (state, status = false, dataType = 'recipes') => ({
+  type: IS_FETCHING,
+  isFetching: state,
+  completed: status,
+  dataType
+});
 
 /**
  * @description creates update recipe action
@@ -21,15 +33,6 @@ const updateRecipe = recipe => ({
   recipe
 });
 
-/**
- * @description create not found action
- * @param {object} status - recipe object
- * @returns {object} action
- */
-export const notFoundAction = status => ({
-  type: NOT_FOUND,
-  status
-});
 
 /**
  * @description creates add recipe action
@@ -83,29 +86,46 @@ export const handleCreateRecipe = handleRequest('post', createRecipe);
 export const handleUpdateRecipe = handleRequest('put', updateRecipe);
 
 /**
- * @description creates get single recipe action
+ * @description dispatched when recipe has been fetched
  * @param {object} recipe
  * @returns {object} actions
  */
-const fetchRecipe = recipe => (
+const fetchSingleRecipe = recipe => (
   {
-    type: GET_SINGLE_RECIPE,
+    type: FETCH_SINGLE_RECIPE_SUCCESS,
     recipe
   }
 );
 
+/**
+ * @description dispatched when starting to fetch single recipes
+ * @returns {object} actions
+ */
+const fetchSingleRecipeStart = () => (
+  {
+    type: FETCH_SINGLE_RECIPE_START
+  }
+);
+
+/**
+ * @description dispatched when fetching recipe failed
+ * @returns {object} actions
+ */
+const fetchSingleRecipeFailed = () => (
+  {
+    type: FETCH_SINGLE_RECIPE_FAILED
+  }
+);
+
 export const getRecipe = id => (dispatch) => {
-  dispatch(isFetching(true));
-  dispatch(notFoundAction(false));
+  dispatch(fetchSingleRecipeStart());
   axios.get(`/api/recipe/${id}`)
     .then((response) => {
-      dispatch(fetchRecipe(response.data.recipe));
-      dispatch(isFetching(false));
+      dispatch(fetchSingleRecipe(response.data.recipe));
     })
     .catch((error) => {
       if (error.response.status === 404) {
-        dispatch(isFetching(false));
-        dispatch(notFoundAction(true));
+        dispatch(fetchSingleRecipeFailed());
       }
     });
 };

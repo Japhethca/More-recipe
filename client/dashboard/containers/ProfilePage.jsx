@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import ProfileView from '../components/ProfileView';
 import ProfileModal from '../components/ProfileModal';
-import Loader from '../../common/Loader';
 import { handleGetUserProfile } from '../actions';
 
 /**
@@ -54,19 +53,16 @@ class ProfilePage extends Component {
   render() {
     return (
       <div>
-        {
-      this.props.profile.isFetching
-    ?
-      <Loader isFetching /> : <ProfileView profile={this.props.profile.payload} />
-    }
+        <ProfileView profile={this.state.profile} />
         <ProfileModal
-          profile={this.props.profile.payload}
+          profile={this.state.profile.payload}
           isFetching={this.state.profile.isFetching}
         />
       </div>
     );
   }
 }
+
 ProfilePage.propTypes = {
   profile: PropTypes.objectOf(PropTypes.any).isRequired,
   handleGetUserProfile: PropTypes.func.isRequired

@@ -1,6 +1,9 @@
 
 const webpack = require('webpack');
 const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 
 module.exports = {
@@ -48,10 +51,18 @@ module.exports = {
 
   node: {
     net: 'empty',
-    dns: 'empty'
+    dns: 'empty',
+    fs: 'empty'
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        CLOUDINARY_NAME: JSON.stringify(process.env.CLOUDINARY_NAME),
+        CLOUDINARY_PRESETS: JSON.stringify(process.env.CLOUDINARY_PRESETS),
+        CLOUDINARY_API_KEYS: JSON.stringify(process.env.CLOUDINARY_API_KEYS),
+      }
+    }),
     new webpack.NoEmitOnErrorsPlugin(),
   ]
 };
