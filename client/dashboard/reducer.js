@@ -1,8 +1,9 @@
-import { EDIT_USER_PROFILE, GET_USER_PROFILE } from './actionTypes';
+import * as types from './actionTypes';
 
 const initialState = {
   payload: {},
-  isFetching: false
+  isFetching: false,
+  method: 'GET'
 };
 
 /**
@@ -13,18 +14,45 @@ const initialState = {
  */
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_USER_PROFILE:
+    case types.GET_USER_PROFILE_START:
+      return {
+        ...state,
+        method: 'GET',
+        isFetching: true
+      };
+
+    case types.GET_USER_PROFILE:
       return {
         ...state,
         payload: { ...action.profile },
-        isFetching: action.isFetching
+        isFetching: false
       };
 
-    case EDIT_USER_PROFILE:
+    case types.GET_USER_PROFILE_FAILED:
+      return {
+        ...state,
+        isFetching: false
+      };
+
+    case types.EDIT_USER_PROFILE_START:
+      return {
+        ...state,
+        method: 'PUT',
+        isFetching: true
+      };
+
+    case types.EDIT_USER_PROFILE:
       return {
         ...state,
         payload: { ...action.newProfile },
-        isFetching: action.isFetching
+        isFetching: false
+      };
+
+    case types.EDIT_USER_PROFILE_FAILED:
+      return {
+        ...state,
+        payload: { ...action.newProfile },
+        isFetching: false
       };
 
     default:

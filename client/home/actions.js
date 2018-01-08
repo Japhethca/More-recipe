@@ -1,34 +1,35 @@
 import axios from 'axios';
 
-import { ALL_RECIPES_COUNT, GET_ALL_RECIPES, IS_FETCHING } from '../recipes/actionTypes';
+import {
+  FETCH_LATEST_RECIPES_SUCCESS,
+  FETCH_LATEST_RECIPES_FAILED,
+  FETCH_LATEST_RECIPES_START,
+} from '../recipes/actionTypes';
 
 
 /**
- * @description action creator for getting recipe count
+ * @description dispatched on request success
+ * @param {array} payload
+ * @param {Number} currentPage
  * @param {Number} totalPages
- * @param {Number} curPage
- * @returns {Object} - none
+ * @param {Boolean} isFetchingRecipes
+ * @returns {object} of action type
  */
-export const getAllRecipeCount = (totalPages, curPage) => ({
-  type: ALL_RECIPES_COUNT,
+const latestRecipesSuccess = (payload, currentPage, totalPages, isFetchingRecipes = false) => ({
+  type: FETCH_LATEST_RECIPES_SUCCESS,
+  payload,
+  currentPage,
   totalPages,
-  curPage
+  isFetching: isFetchingRecipes
 });
 
 /**
- * @description creates isfetching action
- * @param {Boolean} state --http loading state
- * @param {Boolean} status --http loading status
- * @param {String} dataType -- type of data being fetched
- * @return {Object} - action
+ * @description dispatched on request failure
+ * @returns {object} of action type
  */
-export const isFetching = (state, status = false, dataType = 'recipes') => ({
-  type: IS_FETCHING,
-  isFetching: state,
-  completed: status,
-  dataType
+const latestRecipesFailed = () => ({
+  type: FETCH_LATEST_RECIPES_FAILED,
 });
-
 
 /**
  * @description get all recipes action creators
@@ -38,12 +39,8 @@ export const isFetching = (state, status = false, dataType = 'recipes') => ({
  * @param {Boolean} isFetchingRecipes
  * @returns {object} of action type
  */
-const getRecipes = (payload, currentPage, totalPages, isFetchingRecipes = false) => ({
-  type: GET_ALL_RECIPES,
-  payload,
-  currentPage,
-  totalPages,
-  isFetching: isFetchingRecipes
+const latestRecipesStart = () => ({
+  type: FETCH_LATEST_RECIPES_START
 });
 
 /**
@@ -54,12 +51,12 @@ const getRecipes = (payload, currentPage, totalPages, isFetchingRecipes = false)
  * @returns {Object} - returns an axios promise
  */
 export const getAllRecipes = (page = 1, limit = 12) => (dispatch) => {
-  dispatch(getRecipes([], 0, 0, true));
-  axios.get(`/api/recipes?limit=${limit}&page=${page}`)
-    .then((res) => {
-      const numPages = Math.ceil(res.data.count / limit);
-      dispatch(getRecipes(res.data.recipes, page, numPages));
+  dispatch(latestRecipesStart());
+  return axios.get(`/api/recipes?limit=${limit}&page=${page}`)
+    .then((response) => {
+      const numPages = Math.ceil(response.data.count / limit);
+      dispatch(latestRecipesSuccess(response.data.recipes, page, numPages));
     }).catch(() => {
-      dispatch(getRecipes([], 0, 0));
+      dispatch(latestRecipesFailed());
     });
 };

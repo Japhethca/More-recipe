@@ -10,7 +10,7 @@ import '../styles/dashboard.scss';
 const propTypes = {
   profile: PropTypes.objectOf(PropTypes.any).isRequired,
   handleEditUserProfile: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired
+  isFetching: PropTypes.bool.isRequired,
 };
 
 /**

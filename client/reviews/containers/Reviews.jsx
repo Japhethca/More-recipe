@@ -61,9 +61,7 @@ class Reviews extends Component {
   render() {
     return (
       <div className="reviews-page" >
-        { this.props.loader.isFetching ? <Loader isFetching /> :
         <ListReviews reviews={this.props.recipe.Reviews} />
-        }
         <AddReview
           onChange={this.onChange}
           onSubmit={this.onSubmit}

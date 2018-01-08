@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
 import SingleRecipe from '../components/SingleRecipe';
@@ -22,7 +23,6 @@ class SingleRecipePage extends Component {
     super(props);
     this.state = {
       recipe: this.props.recipe,
-      notFound: false
     };
 
     [this.id] = this.props.match.params.nameId.split('-').filter(val => !_.isNaN(parseInt(val, 10)));
@@ -33,7 +33,7 @@ class SingleRecipePage extends Component {
    * @returns {undefined}
    */
   componentDidMount() {
-    if (this.id === undefined || !this.props.recipe || this.state.notFound) {
+    if (this.id === undefined || !this.props.recipe) {
       this.props.history.push('/recipes');
     } else {
       this.props.getRecipe(this.id);
@@ -49,9 +49,6 @@ class SingleRecipePage extends Component {
     if (this.props.recipe !== nextProps.recipe) {
       this.setState({ recipe: nextProps.recipe });
     }
-    if (nextProps.notFound === true) {
-      this.props.history.push('/recipes');
-    }
   }
 
   /**
@@ -59,12 +56,15 @@ class SingleRecipePage extends Component {
    * @returns {reactElement} markup
    */
   render() {
+    if (this.state.recipe.notFound) {
+      return <Redirect to="/recipes" />;
+    }
     return (
       <div>
         {
-          this.props.loader.isFetching ? <Loader isFetching /> :
+          this.state.recipe.isFetching ? <Loader isFetching /> :
           <SingleRecipe
-            recipe={this.state.recipe}
+            recipe={this.state.recipe.payload}
           />
         }
       </div>
@@ -77,18 +77,11 @@ SingleRecipePage.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
-  notFound: PropTypes.bool,
-  loader: PropTypes.objectOf(PropTypes.bool).isRequired
 };
 
-SingleRecipePage.defaultProps = {
-  notFound: false
-};
 
 const mapStateToProps = state => ({
   recipe: state.recipeReducer.recipe,
-  notFound: state.recipeReducer.NotFound,
-  loader: state.loader
 });
 
 export default connect(mapStateToProps, { getRecipe })(SingleRecipePage);

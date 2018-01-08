@@ -13,7 +13,7 @@
     "test:db:seed": "NODE_ENV=test sequelize db:seed:all",
     "start:test:db": "npm run test:db:migrate && npm run test:db:seed",
     "test-b": "NODE_ENV=test && nyc --reporter=html mocha --compilers js:babel-core/register --timeout 20000",
-    "test:client": "jest",
+    "test:client": "jest --coverage",
     "coveralls": "nyc report --reporter=text-lcov  | coveralls"
   },
   "repository": {
@@ -30,6 +30,17 @@
     "url": "https://github.com/JaphethCA/More-recipe/issues"
   },
   "homepage": "https://github.com/JaphethCA/More-recipe#readme",
+  "jest": {
+    "verbose": true,
+    "roots": [
+      "./client"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json"
+    ]
+  },
   "dependencies": {
     "axios": "^0.16.2",
     "babel-cli": "^6.26.0",
@@ -76,6 +87,7 @@
   },
   "devDependencies": {
     "ajv": "^5.3.0",
+    "axios-mock-adapter": "^1.10.0",
     "babel-connect": "^6.0.2",
     "babel-eslint": "^8.0.1",
     "babel-jest": "^21.2.0",
@@ -90,6 +102,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
+    "expect": "^22.0.3",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
     "jest": "^21.2.1",
@@ -98,6 +111,7 @@
     "node-sass": "^4.5.3",
     "nyc": "^11.2.1",
     "react-test-renderer": "^16.0.0",
+    "redux-mock-store": "^1.4.0",
     "regenerator-runtime": "^0.11.0",
     "sass-loader": "^6.0.6",
     "sequelize-cli": "^3.0.0",

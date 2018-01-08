@@ -35,23 +35,27 @@ export default {
       isFetching: false
     },
     recipe: {
-      name: '',
-      description: '',
-      id: 0,
-      ingredients: '',
-      direction: '',
-      image: null,
-      upvotes: 0,
-      views: 0,
-      downvotes: 0,
-      userId: 0,
-      createdAt: '',
-      updatedAt: '',
-      Reviews: [],
-      author: {
-        username: '',
-        photo: null
+      notFound: false,
+      isFetching: false,
+      payload: {
+        name: '',
+        description: '',
+        id: 0,
+        ingredients: '',
+        direction: '',
+        image: null,
+        upvotes: 0,
+        views: 0,
+        downvotes: 0,
+        userId: 0,
+        createdAt: '',
+        updatedAt: '',
+        Reviews: [],
+        author: {
+          username: '',
+          photo: null
+        },
       },
-    },
+    }
   }
 };
