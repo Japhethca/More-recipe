@@ -20,8 +20,7 @@ $search-border-color: rgb(128, 128, 128);
     and (max-device-width: 1366px)
     and (-webkit-min-device-pixel-ratio: 1) {
       height: 50px;
-      margin-top: 12.5px;
-      width: 100vw;
+      width: 98vw;
     }
 
     @media only screen
@@ -30,9 +29,8 @@ $search-border-color: rgb(128, 128, 128);
     and (-webkit-min-device-pixel-ratio: 2) {
       border-radius: 0;
       height: 50px;
-      margin-top: 6px;
-      position: relative;
-      width: 100vw;
+      margin-bottom: 0;
+      width: 96.5vw;
     }
 
     &:focus {
@@ -45,14 +43,14 @@ $search-border-color: rgb(128, 128, 128);
       and (min-device-width: 768px)
       and (max-device-width: 1366px)
       and (-webkit-min-device-pixel-ratio: 1) {
-        width: 100vw;
+        width: 98.5vw;
       }
 
       @media only screen
       and (min-device-width: 320px)
       and (max-device-width: 480px)
       and (-webkit-min-device-pixel-ratio: 2) {
-        width: 100vw;
+        width: 96.5vw;
       }
 
     }

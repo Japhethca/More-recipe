@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import swal from 'sweetalert';
 
 import Card from '../components/Card';
-import { handleDeleteRecipe, handleRemoveFavorite } from '../actions';
+import { handleDeleteRecipe, handleRemoveFromFavorites } from '../actions';
 
 /**
  * @class RecipeCard
@@ -46,7 +46,7 @@ class RecipeCard extends Component {
       buttons: ['No', 'Yes'],
     }).then((value) => {
       if (value) {
-        this.props.handleRemoveFavorite(this.state.recipe.id);
+        this.props.handleRemoveFromFavorites(this.state.recipe.id);
       }
     });
   }
@@ -99,7 +99,7 @@ RecipeCard.propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   handleDeleteRecipe: PropTypes.func.isRequired,
-  handleRemoveFavorite: PropTypes.func.isRequired,
+  handleRemoveFromFavorites: PropTypes.func.isRequired,
   showModifyButtons: PropTypes.bool,
   showActionBtns: PropTypes.bool,
   showRemoveFavorite: PropTypes.bool,
@@ -121,7 +121,7 @@ export default withRouter(connect(
   mapStateToProps,
   {
     handleDeleteRecipe,
-    handleRemoveFavorite
+    handleRemoveFromFavorites
   }
 )(RecipeCard));
 

@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
 import SingleRecipe from '../components/SingleRecipe';
-import { getRecipe } from '../actions';
+import { getSingleRecipe } from '../actions';
 import Loader from '../../common/Loader';
 
 /**
@@ -36,7 +36,7 @@ class SingleRecipePage extends Component {
     if (this.id === undefined || !this.props.recipe) {
       this.props.history.push('/recipes');
     } else {
-      this.props.getRecipe(this.id);
+      this.props.getSingleRecipe(this.id);
     }
   }
 
@@ -73,7 +73,7 @@ class SingleRecipePage extends Component {
 }
 
 SingleRecipePage.propTypes = {
-  getRecipe: PropTypes.func.isRequired,
+  getSingleRecipe: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -84,4 +84,4 @@ const mapStateToProps = state => ({
   recipe: state.recipeReducer.recipe,
 });
 
-export default connect(mapStateToProps, { getRecipe })(SingleRecipePage);
+export default connect(mapStateToProps, { getSingleRecipe })(SingleRecipePage);

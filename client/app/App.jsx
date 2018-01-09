@@ -4,11 +4,11 @@ import ReduxToastr from 'react-redux-toastr';
 
 import NavigationBar from '../common/NavigationBar';
 import Footer from '../common/Footer';
-import Authenticate from '../authentication';
-import Home from '../home';
-import Dashboard from '../dashboard';
-import { SingleRecipePage } from '../recipes';
-import SearchResultPage from '../search/containers/SearchResultPage';
+import AuthenticateRoute from '../authentication';
+import HomePage from '../HomePage';
+import Dashboard from '../Dashboard';
+import SingleRecipePage from '../Recipes/containers/SingleRecipePage';
+import SearchPage from '../SearchPage';
 import '../styles/sass/index.scss';
 
 /**
@@ -29,10 +29,10 @@ const App = () => (
       />
 
       <Switch>
-        <Route path="/recipe/:nameId" exact component={Authenticate(SingleRecipePage)} />
-        <Route path="/recipes" exact component={Authenticate(Home)} />
-        <Route path="/search" exact component={SearchResultPage} />
-        <Route component={Authenticate(Dashboard)} />
+        <Route path="/recipe/:nameId" exact component={AuthenticateRoute(SingleRecipePage)} />
+        <Route path="/recipes" exact component={AuthenticateRoute(HomePage)} />
+        <Route path="/search" exact component={AuthenticateRoute(SearchPage)} />
+        <Route component={AuthenticateRoute(Dashboard)} />
       </Switch>
     </div>
     <Footer />

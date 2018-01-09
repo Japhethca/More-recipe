@@ -1,7 +1,7 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { toastr } from 'react-redux-toastr';
-import { isFetching } from '../recipes/actions';
+import { isFetching } from '../Recipes/actions';
 
 import { setAuthorizationToken } from './helpers/setAuthorization';
 import { SET_CURRENT_USER } from './actionTypes';

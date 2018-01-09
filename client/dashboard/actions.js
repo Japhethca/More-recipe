@@ -6,7 +6,7 @@ import upload from '../utilities/fileUpload';
 import { EDIT_USER_PROFILE, EDIT_USER_PROFILE_FAILED,
   EDIT_USER_PROFILE_START, GET_USER_PROFILE,
   GET_USER_PROFILE_FAILED, GET_USER_PROFILE_START } from './actionTypes';
-import * as types from '../recipes/actionTypes';
+import * as types from '../Recipes/actionTypes';
 
 
 /**

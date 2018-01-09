@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
-import { ADD_NEW_REVIEW } from '../recipes/actionTypes';
+import { ADD_NEW_REVIEW } from '../Recipes/actionTypes';
 
 /**
  * @param {object} review

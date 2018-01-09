@@ -1,4 +1,4 @@
-import { IS_FETCHING } from '../recipes/actionTypes';
+import { IS_FETCHING } from '../Recipes/actionTypes';
 
 
 const initialState = {

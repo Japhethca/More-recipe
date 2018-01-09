@@ -5,9 +5,9 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 import slugify from '../../utilities/slugify';
-import ActionButtons from '../../actionButtons';
+import ActionButtons from '../../ActionButtons';
 
-import '../styles/recipeCard.scss';
+import '../styles/recipeCardStyles.scss';
 
 
 const propTypes = {

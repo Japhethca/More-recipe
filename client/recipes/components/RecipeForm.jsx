@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TinyMCE from 'react-tinymce';
 
-import '../styles/recipeForm.scss';
+import '../styles/recipeFormStyles.scss';
 
 
 const propTypes = {

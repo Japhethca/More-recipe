@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RecipeCard from '../containers/RecipeCard';
 
-import '../styles/recipes.scss';
+import '../styles/recipesStyles.scss';
 
 /**
  * @description displays a list of recipes in cards

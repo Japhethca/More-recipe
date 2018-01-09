@@ -4,7 +4,7 @@ import {
   FETCH_LATEST_RECIPES_SUCCESS,
   FETCH_LATEST_RECIPES_FAILED,
   FETCH_LATEST_RECIPES_START,
-} from '../recipes/actionTypes';
+} from '../Recipes/actionTypes';
 
 
 /**

@@ -68,7 +68,6 @@ const initialState = {
   }
 };
 
-// let index = 0;
 
 /**
  * updates an object in state without mutation
@@ -96,10 +95,15 @@ const updateItemInArray = (array, newItem) => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case FETCH_SINGLE_RECIPE_START:
-      return { ...state, recipe: { payload: {}, isFetching: true } };
+      return { ...state, recipe: { ...state.recipe, payload: {}, isFetching: true } };
 
     case FETCH_SINGLE_RECIPE_FAILED:
-      return { ...state, recipe: { payload: {}, isFetching: false, notFound: true } };
+      return {
+        ...state,
+        recipe: {
+          ...state.recipe, payload: {}, isFetching: false, notFound: true
+        }
+      };
 
     case FETCH_SINGLE_RECIPE_SUCCESS:
       return { ...state, recipe: { payload: { ...state.recipe.payload, ...action.recipe }, isFetching: false, notFound: false } };
@@ -123,26 +127,28 @@ export default (state = initialState, action) => {
       return {
         ...state,
         recipe: {
+          ...state.recipe,
           payload: {
             ...state.recipe.payload,
             upvotes: action.recipe.upvotes,
             downvotes: action.recipe.downvotes
           }
         },
-        recipes: { payload: updateItemInArray(state.recipes.payload, action.recipe) }
+        recipes: { ...state.recipes, payload: updateItemInArray(state.recipes.payload, action.recipe) }
       };
 
     case DOWNVOTE_RECIPE:
       return {
         ...state,
         recipe: {
+          ...state.recipe,
           payload: {
             ...state.recipe.payload,
             downvotes: action.recipe.downvotes,
             upvotes: action.recipe.upvotes,
           }
         },
-        recipes: { payload: updateItemInArray(state.recipes.payload, action.recipe) }
+        recipes: { ...state.recipes, payload: updateItemInArray(state.recipes.payload, action.recipe) }
       };
 
     case FETCH_LATEST_RECIPES_START:
@@ -214,8 +220,8 @@ export default (state = initialState, action) => {
     case ADD_NEW_RECIPE:
       return {
         ...state,
-        recipes: { payload: [action.recipe, ...state.recipes.payload] },
-        userRecipes: { payload: [action.recipe, ...state.userRecipes.payload] }
+        recipes: { ...state.recipes, payload: [action.recipe, ...state.recipes.payload] },
+        userRecipes: { ...state.userRecipes, payload: [action.recipe, ...state.userRecipes.payload] }
       };
 
     case FETCH_USER_RECIPES_START:

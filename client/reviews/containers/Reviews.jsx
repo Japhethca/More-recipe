@@ -5,14 +5,12 @@ import { connect } from 'react-redux';
 import ListReviews from '../components/ListReviews';
 import AddReview from '../components/AddReview';
 import handleRecipeReview from '../actions';
-import Loader from '../../common/Loader';
 import '../reviews.scss';
 
 
 const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   handleRecipeReview: PropTypes.func.isRequired,
-  loader: PropTypes.objectOf(PropTypes.bool).isRequired
 };
 
 /**
@@ -74,9 +72,5 @@ class Reviews extends Component {
 
 Reviews.propTypes = propTypes;
 
-const mapStateToProps = state => ({
-  loader: state.loader
-});
 
-
-export default connect(mapStateToProps, { handleRecipeReview })(Reviews);
+export default connect(null, { handleRecipeReview })(Reviews);

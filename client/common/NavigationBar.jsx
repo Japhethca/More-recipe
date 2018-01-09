@@ -3,7 +3,7 @@ import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import SearchForm from '../search/components/SearchForm';
+import SearchForm from '../SearchPage/components/SearchForm';
 import { handleLogout as logout } from '../authentication/actions';
 import './navigationBar.scss';
 
@@ -51,7 +51,7 @@ class NavigationBar extends Component {
       constrainWidth: false,
       hover: false,
       gutter: 1,
-      belowOrigin: true,
+      belowOrigin: false,
       alignment: 'left',
       stopPropagation: true
     });

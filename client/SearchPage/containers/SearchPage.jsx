@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import qs from 'qs';
 
 import Loader from '../../common/Loader';
-import { Recipes } from '../../recipes';
+import Recipes from '../../Recipes';
 import handleSearch from '../actions';
 
 

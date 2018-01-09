@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 import moment from 'moment';
 
-import Reviews from '../../reviews';
-import ActionButtons from '../../actionButtons';
-import '../styles/singleRecipe.scss';
+import Reviews from '../../Reviews';
+import ActionButtons from '../../ActionButtons';
+import '../styles/singleRecipeStyles.scss';
 
 const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,

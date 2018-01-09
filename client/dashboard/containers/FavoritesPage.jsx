@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import qs from 'qs';
 
-import { Recipes } from '../../recipes';
+import Recipes from '../../Recipes';
 import { handleGetFavorites } from '../actions';
 import Loader from '../../common/Loader';
 import Pagination from '../../common/Pagination';

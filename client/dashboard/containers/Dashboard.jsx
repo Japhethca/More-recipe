@@ -7,7 +7,8 @@ import ProfilePage from './ProfilePage';
 import Authenticate from '../../authentication';
 import UserRecipesPage from './UserRecipesPage';
 import FavoritesPage from './FavoritesPage';
-import { CreateRecipe, UpdateRecipe } from '../../recipes';
+import UpdateRecipe from '../../Recipes/components/RecipeUpdatePage';
+import CreateRecipe from '../../Recipes/containers/CreateUpdateRecipe';
 import { handleLogout } from '../../authentication/actions';
 import '../styles/dashboard.scss';
 /**

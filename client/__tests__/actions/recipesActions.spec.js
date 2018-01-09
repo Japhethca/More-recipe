@@ -1,7 +1,10 @@
 import expect from 'expect';
 import mockStore, { mock } from '../__mock__/configMockStore';
-import * as types from '../../recipes/actionTypes';
+import * as types from '../../Recipes/actionTypes';
 import { getAllRecipes } from '../../home/actions';
+import { getRecipe, addToFavorites,
+  removeFavorite, handleUpdateRecipe,
+  handleCreateRecipe, handleDeleteRecipe, handleRemoveFavorite } from '../../Recipes/actions';
 
 
 describe('RECIPES actions', () => {

@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
-  addToFavorites,
-  removeFavorite,
   handleDownvote,
   handleUpvote } from '../actions';
+import { handleRemoveFromFavorites, handleAddToFavorites } from '../../Recipes/actions';
 import FavoritesButton from '../components/FavoriteButton';
 import DownvoteButton from '../components/DownvoteButton';
 import ReviewButton from '../components/ReviewsButton';
@@ -18,8 +17,8 @@ const propTypes = {
   favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleUpvote: PropTypes.func.isRequired,
   handleDownvote: PropTypes.func.isRequired,
-  addToFavorites: PropTypes.func.isRequired,
-  removeFavorite: PropTypes.func.isRequired
+  handleAddToFavorites: PropTypes.func.isRequired,
+  handleRemoveFromFavorites: PropTypes.func.isRequired
 };
 
 /**
@@ -69,9 +68,9 @@ class ActionButtons extends Component {
     event.preventDefault();
     this.toggleFavorite();
     if (!this.isInFavorites()) {
-      this.props.addToFavorites(this.props.recipe);
+      this.props.handleAddToFavorites(this.props.recipe);
     } else {
-      this.props.removeFavorite(this.props.recipe.id);
+      this.props.handleRemoveFromFavorites(this.props.recipe.id);
     }
   }
 
@@ -156,8 +155,8 @@ ActionButtons.propTypes = propTypes;
 
 
 export default connect(mapStateToProps, {
-  addToFavorites,
-  removeFavorite,
+  handleAddToFavorites,
+  handleRemoveFromFavorites,
   handleDownvote,
   handleUpvote
 })(ActionButtons);
