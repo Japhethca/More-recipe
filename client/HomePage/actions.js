@@ -4,7 +4,7 @@ import {
   FETCH_LATEST_RECIPES_SUCCESS,
   FETCH_LATEST_RECIPES_FAILED,
   FETCH_LATEST_RECIPES_START,
-} from '../recipes/actionTypes';
+} from '../Recipes/actionTypes';
 
 
 /**
@@ -50,7 +50,7 @@ const latestRecipesStart = () => ({
  * @param {object} limit
  * @returns {Object} - returns an axios promise
  */
-export const getAllRecipes = (page = 1, limit = 12) => (dispatch) => {
+const getAllRecipes = (page = 1, limit = 12) => (dispatch) => {
   dispatch(latestRecipesStart());
   return axios.get(`/api/recipes?limit=${limit}&page=${page}`)
     .then((response) => {
@@ -60,3 +60,5 @@ export const getAllRecipes = (page = 1, limit = 12) => (dispatch) => {
       dispatch(latestRecipesFailed());
     });
 };
+
+export default getAllRecipes;

@@ -22,7 +22,7 @@ checks:
       threshold: 12
 ratings:
   paths:
-  - "server/**/*.js"
+  - "**.js"
 exclude_paths:
   - "node_modules/"
   - "Template/*"

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import qs from 'qs';
 
-import { Recipes } from '../../recipes';
-import { getAllRecipes } from '../actions';
-import { handleGetFavorites } from '../../dashboard/actions';
+import Recipes from '../../Recipes';
+import getAllRecipes from '../actions';
+import { handleGetFavorites } from '../../Dashboard/actions';
 import Pagination from '../../common/Pagination';
 import Loader from '../../common/Loader';
 import '../style.scss';

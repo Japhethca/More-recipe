@@ -4,7 +4,7 @@ const { Recipes, Users, Reviews } = model;
 
 
 /**
- * @description post / adds  a review
+ * @description controller for posting / adding  a review
  * @param {object} req - Express http request
  * @param {object} res - Express http response
  * @returns {object} Http response
@@ -51,7 +51,7 @@ export const postReview = (req, res) => Recipes.findOne({
 
 
 /**
- * @description gets all reviews for a single recipe
+ * @description returns all reviews for a single recipe
  * @param {object} req - Express http request
  * @param {object} res - Express http response
  * @returns {object} Http response
