@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 const saltRound = 10;
 
 /**
+ * schema for users model
  * @param {object} sequelize - sequelize instance
  * @param {object} DataTypes - Datatype instance
  * @returns {object} - Database Object

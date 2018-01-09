@@ -1,5 +1,6 @@
 
 /**
+ * @description schema for favorites model
  * @param {object} sequelize - sequelize instance
  * @param {object} DataTypes - Datatype instance
  * @returns {object} - Database Object

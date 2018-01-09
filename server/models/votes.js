@@ -1,5 +1,6 @@
 
 /**
+ * schema for votes model
  * @param {object} sequelize - sequelize instance
  * @param {object} DataTypes - Datatype instance
  * @returns {object} - Database Object

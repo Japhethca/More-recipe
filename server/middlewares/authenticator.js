@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import app from '../app';
 
 
-const auth = {
+const Authenticator = {
   /**
    * @description handles user authentiaction
    * @param {Object} req - HTTP Request
@@ -14,14 +14,15 @@ const auth = {
   authenticate(req, res, next) {
     const token = req.body.token || req.query.token || req.headers.token;
 
-    if (req.url === '/users/signin' || req.url === '/users/signup') {
+    if (req.url === '/users/signin' || req.url === '/users/signup'
+      || req.url === '/v1/users/signin' || req.url === '/v1/users/signup') {
       next();
     } else if (token) {
       jwt.verify(token, app.get('secret_key'), (err, decoded) => {
         if (err) {
           return res.status(401).json({
             status: 'failed',
-            message: 'Authentication failed: expired token'
+            message: 'Authentication failed: expired/invalid token'
           });
         }
         req.decoded = decoded;
@@ -49,4 +50,4 @@ const auth = {
   },
 };
 
-export default auth;
+export default Authenticator;

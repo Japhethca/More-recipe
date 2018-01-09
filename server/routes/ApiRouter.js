@@ -1,8 +1,8 @@
 import express from 'express';
 import swaggerUI from 'swagger-ui-express';
 
-import apiV1 from './v1';
-import auth from '../middlewares/authenticator';
+import ApiV1 from './ApiV1';
+import Authenticator from '../middlewares/Authenticator';
 
 const swaggerDocs = require('../../swagger.json');
 
@@ -13,11 +13,11 @@ const options = {
 };
 
 
-const apiRouter = express.Router();
+const ApiRouter = express.Router();
 
-apiRouter.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs, options));
-apiRouter.use(auth.authenticate);
-apiRouter.use(apiV1);
-apiRouter.use('/v1', auth.authenticate, apiV1);
+ApiRouter.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs, options));
+ApiRouter.use(Authenticator.authenticate);
+ApiRouter.use(ApiV1);
+ApiRouter.use('/v1', Authenticator.authenticate, ApiV1);
 
-export default apiRouter;
+export default ApiRouter;

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 /**
+ * @description schema for reviews model
  * @param {object} sequelize - sequelize instance
  * @param {object} DataTypes - Datatype instance
  * @returns {object} - Database Object
