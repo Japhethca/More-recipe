@@ -1,6 +1,6 @@
 import _ from 'lodash';
 /**
- * @schema for recipes model
+ * @description schema for recipes model
  * @param {object} sequelize - sequelize instance
  * @param {object} DataTypes - Datatype instance
  * @returns {object} - Database Object
