@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "More Recipe API documentation is provided to help users to find API endpoints and how to properly consume it. To use this API, user must signin/signup to get authentication token which can to added to the header with key `token` during subsequest requests.",
+    "description": "This Documentation is provided to help users to find API endpoints and how to properly consume it. To consume the API, users must signin/signup to get authentication token which can to added to the header with key `token` during subsequent API calls. The API can be consumed using any programming language as it returns JSON for all API calls.  To see the details of an endpoint which includes examples, required parameters, description, sample response, etc, simply click on the endpoints below. **Note:** Most of the endpoints requires authentication to be able to use them, so remember to include the token that was generated during _signin_ or _signup_ in the headers. ",
     "version": "1.0.0",
     "title": "More Recipe API Docs"
   },
   "host": "more-recipe-cj.herokuapp.com",
-  "basePath": "/api",
+  "basePath": "/api/v1",
   "schemes": [
     "https"
   ],
@@ -167,7 +167,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Successfully logged in",
+            "description": "Successfully login",
             "schema": {
               "type": "object",
               "properties": {
@@ -271,7 +271,7 @@
         ],
         "responses": {
           "200": {
-            "description": "An array of all recipes",
+            "description": "Returns An array of all recipes",
             "schema": {
               "type": "object",
               "properties": {
@@ -418,7 +418,7 @@
         ],
         "responses": {
           "201": {
-            "description": "New recipe succeessfully created",
+            "description": "Returns succeessfully created recipe",
             "schema": {
               "type": "object",
               "properties": {
@@ -495,6 +495,21 @@
               }
             }
           },
+          "400": {
+            "description": "Return Invalid input Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": null,
+                "type": "string",
+                "example": "failed",
+                "message": {
+                  "type": "string",
+                  "example": "name field is required"
+                }
+              }
+            }
+          },
           "409": {
             "description": "recipe name conflict",
             "schema": {
@@ -507,21 +522,6 @@
                 "message": {
                   "type": "string",
                   "example": "You have already created a recipe with this name before"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "invalid input type",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": null,
-                "type": "string",
-                "example": "failed",
-                "message": {
-                  "type": "string",
-                  "example": "name field is required"
                 }
               }
             }
@@ -555,7 +555,7 @@
         ],
         "responses": {
           "200": {
-            "description": "An object of the requested recipe",
+            "description": "Returns a single recipe with requested ID",
             "schema": {
               "type": "object",
               "properties": {
@@ -682,7 +682,7 @@
         "tags": [
           "Recipes"
         ],
-        "summary": "Updates a recipe",
+        "summary": "Updates a Single recipe",
         "description": "This endpoint allows user to update recipe that he created. User can only update recipe created by him and not the one created by others.",
         "parameters": [
           {
@@ -737,7 +737,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Successfully updated recipe",
+            "description": "Returns Successfully updated recipe",
             "schema": {
               "type": "object",
               "properties": {
@@ -1275,15 +1275,8 @@
           "Favorites"
         ],
         "summary": "Returns all users favorite recipes",
-        "description": "The endpoint can be to get all the recipe that a user added to his favorites.",
+        "description": "The endpoint can be used to get all the recipe that a user added to his favorites.",
         "parameters": [
-          {
-            "name": "usersId",
-            "in": "path",
-            "description": "The ID of the user",
-            "required": true,
-            "type": "integer"
-          },
           {
             "in": "header",
             "name": "token",
@@ -1294,7 +1287,6 @@
         ],
         "responses": {
           "200": {
-            "description": "an array of users favorites recipes",
             "schema": {
               "type": "object",
               "properties": {
