@@ -106,7 +106,14 @@ export default (state = initialState, action) => {
       };
 
     case FETCH_SINGLE_RECIPE_SUCCESS:
-      return { ...state, recipe: { payload: { ...state.recipe.payload, ...action.recipe }, isFetching: false, notFound: false } };
+      return {
+        ...state,
+        recipe: {
+          payload: { ...state.recipe.payload, ...action.recipe },
+          isFetching: false,
+          notFound: false
+        }
+      };
 
     case ADD_NEW_REVIEW:
       return {
@@ -134,7 +141,10 @@ export default (state = initialState, action) => {
             downvotes: action.recipe.downvotes
           }
         },
-        recipes: { ...state.recipes, payload: updateItemInArray(state.recipes.payload, action.recipe) }
+        recipes: {
+          ...state.recipes,
+          payload: updateItemInArray(state.recipes.payload, action.recipe)
+        }
       };
 
     case DOWNVOTE_RECIPE:
@@ -148,7 +158,10 @@ export default (state = initialState, action) => {
             upvotes: action.recipe.upvotes,
           }
         },
-        recipes: { ...state.recipes, payload: updateItemInArray(state.recipes.payload, action.recipe) }
+        recipes: {
+          ...state.recipes,
+          payload: updateItemInArray(state.recipes.payload, action.recipe)
+        }
       };
 
     case FETCH_LATEST_RECIPES_START:
@@ -220,8 +233,14 @@ export default (state = initialState, action) => {
     case ADD_NEW_RECIPE:
       return {
         ...state,
-        recipes: { ...state.recipes, payload: [action.recipe, ...state.recipes.payload] },
-        userRecipes: { ...state.userRecipes, payload: [action.recipe, ...state.userRecipes.payload] }
+        recipes: {
+          ...state.recipes,
+          payload: [action.recipe, ...state.recipes.payload]
+        },
+        userRecipes: {
+          ...state.userRecipes,
+          payload: [action.recipe, ...state.userRecipes.payload]
+        }
       };
 
     case FETCH_USER_RECIPES_START:

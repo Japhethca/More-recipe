@@ -118,7 +118,7 @@ $btn-hover: rgba(255, 255, 0, 0.459);
     }
 
     &:hover {
-        background-color: lighten($btn-backround-color, .2);
+      background-color: lighten($btn-backround-color, 0.2);
     }
   }
 }

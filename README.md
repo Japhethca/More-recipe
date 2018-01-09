@@ -61,9 +61,9 @@ To test app:
 ###  Site Links
 [More-recipe (Template)](https://japhethca.github.io/More-recipe/)
 
-[More-recipe (Hosted on heroku)](https://more-recipe-cj.herokuapp.com/)
+[More-recipe (Hosted on Heroku)](https://more-recipe-cj.herokuapp.com/)
 
-[More-recipe (API documentations)](https://more-recipe-cj.herokuapp.com/api/docs)
+[More-recipe (API Documentations)](https://more-recipe-cj.herokuapp.com/api/docs)
 
 ### License
 This project is licensed under MIT License, see LICENSE for more info.

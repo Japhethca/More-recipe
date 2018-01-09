@@ -4,7 +4,7 @@ $side-bar-bg-color: rgb(223, 63, 63);
 $side-bar-width: 10%;
 $active-color: #fff;
 
-$profile-cover-bg-color: #E4E6EA;
+$profile-cover-bg-color: #e4e6ea;
 
 $error-txt-color: rgb(223, 63, 63);
 
@@ -13,7 +13,7 @@ $update-btn-bg-color: rgb(9, 9, 63);
 $update-btn-hover-color: darken($update-btn-bg-color, 10);
 $upload-btn-color:  #808080;
 $upload-btn-bg-color: #fff;
-$side-bar-link-color: #E4E6EA;
+$side-bar-link-color: #e4e6ea;
 
 img {
   align-items: center;
@@ -111,10 +111,10 @@ img {
     and (max-device-width: 480px)
     and (-webkit-min-device-pixel-ratio: 2) {
       font-family: 'Merriweather Sans', sans-serif;
-      margin-bottom: 15px;
-      margin-left: 10px;
       font-size: larger;
       line-height: 30px;
+      margin-bottom: 15px;
+      margin-left: 10px;
       text-align: center;
 
       h5 {
@@ -123,14 +123,15 @@ img {
       }
     }
   }
+
   .modal-trigger.btn.blue {
     margin-top: 10px;
   }
 }
 
 .container .row {
-  margin-left: 0rem;
-  margin-right: 0rem;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .sidebar {
@@ -146,15 +147,15 @@ img {
       color: $side-bar-link-color;
 
       &:hover {
-        color: lighten($active-color, .6);
+        color: lighten($active-color, 0.6);
         font-weight: bolder;
       }
     }
   }
 
   h5 {
-    margin-top: 30px;
     color: $active-color;
+    margin-top: 30px;
   }
 
   .user {
