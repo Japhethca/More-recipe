@@ -12,7 +12,7 @@ import SearchPage from '../SearchPage';
 import '../styles/sass/index.scss';
 
 /**
- *
+ * @description main app node
  * @return {ReactElement} markup
  */
 const App = () => (
