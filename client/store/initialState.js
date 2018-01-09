@@ -37,6 +37,7 @@ export default {
     recipe: {
       notFound: false,
       isFetching: false,
+      created: false,
       payload: {
         name: '',
         description: '',

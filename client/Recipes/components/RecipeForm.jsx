@@ -12,7 +12,6 @@ const propTypes = {
   onChange: PropTypes.func.isRequired,
   handleEditorChange: PropTypes.func.isRequired,
   title: PropTypes.string,
-  clearForm: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired
 };
 
@@ -28,8 +27,6 @@ const RecipeForm = (props) => {
     plugins: 'lists textcolor',
     toolbar: 'bullist numlist | bold italic | strikethrough'
   };
-
-  const clearForm = node => (props.clearForm ? node.clear() : null);
 
   /**
    * renders Tiny mce editor
@@ -78,7 +75,7 @@ const RecipeForm = (props) => {
     <div className="wrapper row">
       <div className="card col s12">
         <h4 className="header">{props.title}</h4>
-        <form onSubmit={props.onSubmit} ref={node => clearForm(node)}>
+        <form onSubmit={props.onSubmit}>
 
           {renderInputFieldFor('name', 'Enter Recipe Name', validationErrors.name)}
           {renderInputFieldFor('description', 'Enter Description', validationErrors.description)}
@@ -100,7 +97,13 @@ const RecipeForm = (props) => {
             />
           </div>
           <div className="input-btn">
-            <button className="submit-btn waves-effect waves-ripple" type="submit"> { props.isFetching ? 'Submiting...' : 'Submit' }</button>
+            <button
+              className="submit-btn waves-effect waves-ripple"
+              disabled={props.isFetching}
+              type="submit"
+            >
+              { props.isFetching ? 'Submiting...' : 'Submit' }
+            </button>
           </div>
         </form>
       </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { recipeFormValidator } from '../../utilities/validators';
 import { handleCreateRecipe, handleUpdateRecipe } from '../actions';
@@ -26,8 +27,19 @@ class CreateUpdateRecipe extends Component {
       direction: this.props.recipe.direction || '',
       image: this.props.recipe.image || '',
       validationErrors: {},
-      clearForm: false
+      recipe: this.props.recipe
     };
+  }
+
+  /**
+   *@description updates state when a new props arrives
+   * @param {Object} nextProps
+   * @returns {undefined}
+   */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.recipe !== this.props.recipe) {
+      this.setState({ recipe: nextProps.recipe });
+    }
   }
 
   /**
@@ -64,7 +76,7 @@ class CreateUpdateRecipe extends Component {
       description: this.state.description,
       ingredients: this.state.ingredients,
       name: this.state.name,
-      id: this.state.id
+      id: this.state.id,
     };
     if (this.isValid()) {
       return this.props.type === 'create' ?
@@ -72,6 +84,7 @@ class CreateUpdateRecipe extends Component {
         this.props.handleUpdateRecipe(postData);
     }
   }
+
 
   /**
    * @description handles Tiny MCE editor change
@@ -114,16 +127,16 @@ class CreateUpdateRecipe extends Component {
 
     return (
       <div>
-        <RecipeForm
+        { this.state.recipe.created ? <Redirect to="/my-recipes" /> : <RecipeForm
           validationErrors={this.state.validationErrors}
           recipe={recipeData}
           onSubmit={this.onSubmit}
           onChange={this.onChange}
           handleEditorChange={this.handleEditorChange}
           title={this.props.title}
-          clearForm={this.state.clearForm}
           isFetching={this.props.loader.isFetching}
         />
+    }
       </div>
     );
   }
@@ -145,7 +158,8 @@ CreateUpdateRecipe.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  loader: state.loader
+  loader: state.loader,
+  recipe: state.recipeReducer.recipe
 });
 
 

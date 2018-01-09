@@ -18,7 +18,8 @@ const propTypes = {
   handleUpvote: PropTypes.func.isRequired,
   handleDownvote: PropTypes.func.isRequired,
   handleAddToFavorites: PropTypes.func.isRequired,
-  handleRemoveFromFavorites: PropTypes.func.isRequired
+  handleRemoveFromFavorites: PropTypes.func.isRequired,
+  hidden: PropTypes.bool
 };
 
 /**
@@ -132,7 +133,11 @@ class ActionButtons extends Component {
     return (
       <div>
         <ul className="btn-list">
-          <li><ReviewButton reviews={recipe.Reviews && recipe.Reviews.length} /></li>
+          <li><ReviewButton
+            reviews={recipe.Reviews && recipe.Reviews.length}
+            hidden={this.props.hidden}
+          />
+          </li>
           <li><UpvoteButton upvotes={recipe.upvotes} upvote={this.upvote} /></li>
           <li><DownvoteButton downvotes={recipe.downvotes} downvote={this.downvote} /></li>
           <li><FavoritesButton
@@ -150,6 +155,9 @@ const mapStateToProps = state => ({
   favorites: state.recipeReducer.favorites.payload
 });
 
+ActionButtons.defaultProps = {
+  hidden: false
+};
 
 ActionButtons.propTypes = propTypes;
 

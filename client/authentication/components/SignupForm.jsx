@@ -73,7 +73,7 @@ const SignupForm = (props) => {
             />
           </div>
           <div className="input-field col s12">
-            <button className="btn-large auth-btn" type="submit">
+            <button className="btn-large auth-btn" type="submit" disabled={props.isFetching}>
               {props.isFetching ? 'Registering...' : 'Register'}
             </button>
           </div>

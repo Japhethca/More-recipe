@@ -15,7 +15,7 @@ const propTypes = {
  * @returns {ReactElement} markup
  */
 const UpvoteButton = ({ upvote, upvotes }) => (
-  <div className="action-btns">
+  <div className="action-btns" title="Upvotes">
     <button onClick={upvote} className="">
       <i className="material-icons">thumb_up</i>&nbsp;
       {upvotes}

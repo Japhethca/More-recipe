@@ -19,7 +19,8 @@ import {
   REMOVE_FROM_FAVORITES,
   NOT_FOUND,
   DELETE_USER_RECIPE,
-  ADD_TO_FAVORITES
+  ADD_TO_FAVORITES,
+  RECIPE_CREATED
 } from './actionTypes';
 
 
@@ -46,6 +47,7 @@ const initialState = {
   recipe: {
     notFound: false,
     isFetching: false,
+    created: false,
     payload: {
       name: '',
       description: '',
@@ -112,6 +114,15 @@ export default (state = initialState, action) => {
           payload: { ...state.recipe.payload, ...action.recipe },
           isFetching: false,
           notFound: false
+        }
+      };
+
+    case RECIPE_CREATED:
+      return {
+        ...state,
+        recipe: {
+          ...state.recipe,
+          created: true
         }
       };
 
@@ -260,6 +271,10 @@ export default (state = initialState, action) => {
           totalPages: action.totalPages,
           payload: [...action.payload],
           isFetching: action.isFetching
+        },
+        recipe: {
+          ...state.recipe,
+          created: false
         }
       };
 

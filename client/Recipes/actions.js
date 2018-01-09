@@ -7,7 +7,7 @@ import { UPDATE_RECIPE, ADD_NEW_RECIPE,
   FETCH_SINGLE_RECIPE_START,
   FETCH_SINGLE_RECIPE_SUCCESS,
   DELETE_USER_RECIPE, ADD_TO_FAVORITES,
-  REMOVE_FROM_FAVORITES, IS_FETCHING } from './actionTypes';
+  REMOVE_FROM_FAVORITES, IS_FETCHING, RECIPE_CREATED } from './actionTypes';
 
   /**
  * @description creates isfetching action
@@ -33,6 +33,9 @@ const updateRecipeAction = recipe => ({
   recipe
 });
 
+const created = () => ({
+  type: RECIPE_CREATED
+});
 
 /**
  * @description creates add recipe action
@@ -55,6 +58,7 @@ const handleRequest = (method, actionCreator) => data => (dispatch) => {
   const url = method === 'post' ? '/api/recipe' : `/api/recipe/${data.id}`;
   const makeRequest = () => request(url, data)
     .then((res) => {
+      dispatch(created());
       dispatch(actionCreator(res.data.recipe));
       toastr.success(res.data.message);
       dispatch(isFetching(false, true));

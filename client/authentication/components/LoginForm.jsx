@@ -51,7 +51,12 @@ const LoginForm = (props) => {
             />
           </div>
           <div className="input-field col s12">
-            <button className="btn-large auth-btn" type="submit"> {props.isFetching ? 'Loging In...' : 'Login' }
+            <button
+              className="btn-large auth-btn"
+              type="submit"
+              disabled={props.isFetching}
+            >
+              {props.isFetching ? 'Loging In...' : 'Login' }
             </button>
           </div>
           <div className="auth-link">
