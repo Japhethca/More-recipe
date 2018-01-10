@@ -93,7 +93,7 @@ class Signup extends Component {
             onSubmit={this.onSubmit}
             formData={formData}
             isFetching={this.props.loader.isFetching}
-            serverErrors={this.props.authentication.errors || ''}
+            serverErrors={this.props.authentication.signupErrors || ''}
             validationErrors={this.state.validationErrors}
           />
         }

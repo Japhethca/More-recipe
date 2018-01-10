@@ -23,20 +23,8 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      serverErrors: this.props.authentication.errors || '',
       validationErrors: {},
     };
-  }
-
-  /**
-   * @param {object} nextProps
-   * @memberof Login
-   * @returns {undefined}
-   */
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.authentication.errors !== null) {
-      this.setState({ serverErrors: nextProps.authentication.errors });
-    }
   }
 
   /**
@@ -98,7 +86,7 @@ class Login extends Component {
             onSubmit={this.onSubmit}
             formData={formData}
             isFetching={this.props.loader.isFetching}
-            serverErrors={this.state.serverErrors}
+            serverErrors={this.props.authentication.loginErrors || ''}
             validationErrors={this.state.validationErrors}
           />
         }
