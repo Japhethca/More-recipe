@@ -78,6 +78,7 @@ const Card = (props) => {
         <div className="card-action">
           <ActionButtons
             recipe={recipe}
+            hidden
           />
         </div>
       }

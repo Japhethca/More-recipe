@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import '../buttons.scss';
 
 const propTypes = {
-  reviews: PropTypes.number
+  reviews: PropTypes.number,
+  hidden: PropTypes.bool
 };
 
 /**
@@ -11,14 +12,18 @@ const propTypes = {
  * @param {object} props - React props
  * @returns {ReactElement} markup
  */
-const ReviewButton = ({ reviews }) => (
-  <span className="action-btns">
+const ReviewButton = ({ reviews, hidden }) => (
+  <span
+    className={`action-btns ${hidden && 'hide'}`}
+    title="Reviews"
+  >
     <i className="material-icons">rate_review</i><span id="reivews" > {reviews} </span>
   </span >
 );
 
 ReviewButton.propTypes = propTypes;
 ReviewButton.defaultProps = {
-  reviews: 0
+  reviews: 0,
+  hidden: false
 };
 export default ReviewButton;
