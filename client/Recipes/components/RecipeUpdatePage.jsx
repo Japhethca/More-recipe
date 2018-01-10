@@ -14,7 +14,7 @@ const RecipeUpdatePage = ({ location, history }) => {
     <UpdateRecipe
       title="Update Recipe"
       type="update"
-      recipe={location.state}
+      recipeUpdateData={location.state}
     />
   );
 };
