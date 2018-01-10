@@ -20,7 +20,9 @@ const SignupForm = (props) => {
         <div className="header-text">
           <h4>Sign Up</h4>
         </div>
-        {serverErrors && <span className="server-error-text" style={{ textAlign: 'center' }}>{serverErrors}</span>}
+        <div className="server-error-text">
+          {serverErrors && <span >{serverErrors}</span>}
+        </div>
         <form className="" onSubmit={onSubmit}>
           <div className="input-field col s12">
             <TextField

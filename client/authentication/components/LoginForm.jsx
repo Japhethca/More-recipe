@@ -21,7 +21,9 @@ const LoginForm = (props) => {
         <div className="header-text">
           <h4>Log In</h4>
         </div>
-        {serverErrors && <span className="server-error-text" > {serverErrors} </span> }
+        <div className="server-error-text">
+          {serverErrors && <span > {serverErrors} </span> }
+        </div>
         <form className="" onSubmit={onSubmit}>
           <div className="input-field col s12 m12">
             <TextField

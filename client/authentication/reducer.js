@@ -1,13 +1,14 @@
 import lodash from 'lodash';
 
-import { SET_CURRENT_USER } from './actionTypes';
+import { SET_CURRENT_USER, SIGNUP_FAILED_ERRORS, LOGIN_FAILED_ERRORS } from './actionTypes';
 
 
 const initialState = {
   isFetching: false,
   isAuthenticated: false,
   user: {},
-  errors: ''
+  loginErrors: '',
+  signupErrors: ''
 };
 
 /**
@@ -22,9 +23,17 @@ export default (state = initialState, action) => {
       return {
         isAuthenticated: !lodash.isEmpty(action.user),
         user: action.user,
-        errors: action.errors
       };
-
+    case SIGNUP_FAILED_ERRORS:
+      return {
+        ...state,
+        signupErrors: action.errors
+      };
+    case LOGIN_FAILED_ERRORS:
+      return {
+        ...state,
+        loginErrors: action.errors
+      };
     default:
       return state;
   }
