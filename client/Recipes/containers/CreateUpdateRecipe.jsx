@@ -20,12 +20,12 @@ class CreateUpdateRecipe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.recipe.id || '',
-      name: this.props.recipe.name || '',
-      description: this.props.recipe.description || '',
-      ingredients: this.props.recipe.ingredients || '',
-      direction: this.props.recipe.direction || '',
-      image: this.props.recipe.image || '',
+      id: this.props.recipeUpdateData.id || '',
+      name: this.props.recipeUpdateData.name || '',
+      description: this.props.recipeUpdateData.description || '',
+      ingredients: this.props.recipeUpdateData.ingredients || '',
+      direction: this.props.recipeUpdateData.direction || '',
+      image: this.props.recipeUpdateData.image || '',
       validationErrors: {},
       recipe: this.props.recipe
     };
@@ -124,7 +124,6 @@ class CreateUpdateRecipe extends Component {
       ingredients: this.state.ingredients,
       image: this.state.image
     };
-
     return (
       <div>
         { this.state.recipe.created ? <Redirect to="/my-recipes" /> : <RecipeForm
@@ -145,7 +144,8 @@ class CreateUpdateRecipe extends Component {
 CreateUpdateRecipe.propTypes = {
   handleCreateRecipe: PropTypes.func.isRequired,
   handleUpdateRecipe: PropTypes.func.isRequired,
-  recipe: PropTypes.objectOf(PropTypes.any),
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  recipeUpdateData: PropTypes.objectOf(PropTypes.any),
   title: PropTypes.string,
   type: PropTypes.string,
   loader: PropTypes.objectOf(PropTypes.any).isRequired
@@ -154,7 +154,7 @@ CreateUpdateRecipe.propTypes = {
 CreateUpdateRecipe.defaultProps = {
   title: 'Create Recipe',
   type: 'create',
-  recipe: {},
+  recipeUpdateData: {},
 };
 
 const mapStateToProps = state => ({
