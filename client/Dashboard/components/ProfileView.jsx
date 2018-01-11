@@ -22,7 +22,7 @@ const ProfileView = ({ profile }) => (
         <div className="row">
           <div className="col s12 m6 l4">
             <img
-              src={profile.payload.photo || 'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526934/avatar_sq5zgy.png'}
+              src={profile.payload.photo || 'https://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526934/avatar_sq5zgy.png'}
               alt=""
               className="profile-image"
             />

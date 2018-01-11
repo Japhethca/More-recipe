@@ -1,18 +1,25 @@
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
-import { ADD_NEW_REVIEW } from '../Recipes/actionTypes';
+import { ADD_NEW_REVIEW_SUCCESS, ADD_NEW_REVIEW_FAILED } from '../Recipes/actionTypes';
+
 
 /**
  * @param {object} review
  * @returns {object} - action
  */
-function addNewReview(review) {
-  return {
-    type: ADD_NEW_REVIEW,
-    review
-  };
-}
+const addNewReviewSuccess = review => ({
+  type: ADD_NEW_REVIEW_SUCCESS,
+  review
+});
+/**
+ * @param {object} review
+ * @returns {object} - action
+ */
+const addNewReviewFailed = () => ({
+  type: ADD_NEW_REVIEW_FAILED,
+});
+
 
 /**
  * @description handles api call for adding reviews
@@ -23,9 +30,10 @@ function addNewReview(review) {
 export default (id, data) => (dispatch) => {
   axios.post(`/api/recipe/${id}/review`, data)
     .then((response) => {
-      dispatch(addNewReview(response.data.review));
+      dispatch(addNewReviewSuccess(response.data.review));
       toastr.success(response.data.message);
     }).catch((error) => {
+      dispatch(addNewReviewFailed());
       toastr.error(error.response.data.message);
     });
 };

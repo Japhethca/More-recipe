@@ -7,7 +7,10 @@ import { UPDATE_RECIPE, ADD_NEW_RECIPE,
   FETCH_SINGLE_RECIPE_START,
   FETCH_SINGLE_RECIPE_SUCCESS,
   DELETE_USER_RECIPE, ADD_TO_FAVORITES,
-  REMOVE_FROM_FAVORITES, IS_FETCHING, RECIPE_CREATED } from './actionTypes';
+  REMOVE_FROM_FAVORITES, IS_FETCHING, RECIPE_CREATED,
+  REMOVE_FROM_FAVORITES_FAILED,
+  DELETE_USER_RECIPE_FAILED,
+  ADD_TO_FAVORITES_FAILED } from './actionTypes';
 
   /**
  * @description creates isfetching action
@@ -73,7 +76,7 @@ const handleRequest = (method, actionCreator) => data => (dispatch) => {
   if (typeof (data.image) === 'object') {
     return upload(data.image).end((err, res) => {
       if (!err) {
-        data.image = res.body.url;
+        data.image = res.body.secure_url;
         makeRequest();
       } else {
         dispatch(isFetching(false));
@@ -139,12 +142,18 @@ export const getSingleRecipe = id => (dispatch) => {
  * @param {number} id
  * @returns {object} action object
  */
-function deleteRecipeAction(id) {
-  return {
-    type: DELETE_USER_RECIPE,
-    id
-  };
-}
+const deleteRecipeAction = id => ({
+  type: DELETE_USER_RECIPE,
+  id
+});
+
+/**
+ * @description dispatch when delete fails
+ * @returns {object} action object
+ */
+const deleteRecipeActionFailed = () => ({
+  type: DELETE_USER_RECIPE_FAILED,
+});
 
 /**
  * @description handles deleting recipe
@@ -157,7 +166,10 @@ export const handleDeleteRecipe = id => dispatch => axios.delete(`/api/recipe/${
       dispatch(deleteRecipeAction(id));
       toastr.info(res.data.message);
     }
-  }).catch(error => toastr.info(error.response.data.message));
+  }).catch((error) => {
+    toastr.info(error.response.data.message);
+    dispatch(deleteRecipeActionFailed());
+  });
 
 /**
  * @param {number} id
@@ -166,6 +178,14 @@ export const handleDeleteRecipe = id => dispatch => axios.delete(`/api/recipe/${
 const removeFavoritesAction = id => ({
   type: REMOVE_FROM_FAVORITES,
   id
+});
+
+/**
+ * @param {number} id
+ * @returns {object} acion
+ */
+const removeFavoritesActionFailed = () => ({
+  type: REMOVE_FROM_FAVORITES_FAILED,
 });
 
 /**
@@ -180,7 +200,7 @@ export const handleRemoveFromFavorites = recipeId => dispatch => axios.delete(`/
       dispatch(removeFavoritesAction(recipeId));
       toastr.info(response.data.message);
     }
-  }).catch();
+  }).catch(() => dispatch(removeFavoritesActionFailed()));
 
 /**
  * @description creates add to favorites action
@@ -190,6 +210,15 @@ export const handleRemoveFromFavorites = recipeId => dispatch => axios.delete(`/
 const addToFavoriteAction = recipe => ({
   type: ADD_TO_FAVORITES,
   recipe
+});
+
+/**
+ * @description creates add to favorites action
+ * @param {object} recipe
+ * @returns {object} action
+ */
+const addToFavoriteActionFailed = () => ({
+  type: ADD_TO_FAVORITES_FAILED,
 });
 
 /**
@@ -204,4 +233,7 @@ export const handleAddToFavorites = recipe => dispatch => axios.post(`/api/users
       dispatch(addToFavoriteAction(recipe));
       toastr.success(response.data.message);
     }
-  }).catch();
+  }).catch((error) => {
+    addToFavoriteActionFailed();
+    toastr.error(error.response.data.message);
+  });
