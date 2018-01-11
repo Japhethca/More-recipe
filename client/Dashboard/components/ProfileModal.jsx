@@ -131,7 +131,7 @@ class ProfileModal extends Component {
               <img
                 id="img1"
                 src={this.state.photo ||
-                  'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526934/avatar_sq5zgy.png'}
+                  'https://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526934/avatar_sq5zgy.png'}
                 alt=""
               />
               <div className="upload-btn-wrapper">

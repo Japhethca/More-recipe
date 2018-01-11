@@ -15,7 +15,7 @@ const SignupForm = (props) => {
     serverErrors, onChange, onSubmit, validationErrors, formData
   } = props;
   return (
-    <div className="row auth-form">
+    <div className="row auth-form container">
       <div className="card col s12 m4 offset-m4 z-depth-4">
         <div className="header-text">
           <h4>Sign Up</h4>

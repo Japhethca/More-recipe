@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 
 import {
   setUser as setCurrentUser,
-  isTokenValid, LoginPage, LandingPage, SignupPage,
+  isTokenValid, LandingPage,
   setAuthorization } from './authentication';
 import store from './store/configureStore';
 import App from './App';
@@ -22,8 +22,6 @@ render(
     <Provider store={store}>
       <BrowserRouter>
         <Switch >
-          <Route path="/signin" exact component={LoginPage} />
-          <Route path="/signup" exact component={SignupPage} />
           <Route path="/" exact component={LandingPage} />
           <Route component={App} />
         </Switch>
