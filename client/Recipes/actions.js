@@ -50,6 +50,7 @@ const createRecipeAction = recipe => ({
   recipe
 });
 
+
 /**
  * @description handles api request
  * @argument {object} method
@@ -84,9 +85,7 @@ const handleRequest = (method, actionCreator) => data => (dispatch) => {
       }
     });
   }
-  if (typeof (data.image) !== 'object') {
-    makeRequest();
-  }
+  makeRequest();
 };
 
 export const handleCreateRecipe = handleRequest('post', createRecipeAction);
@@ -126,7 +125,7 @@ const fetchSingleRecipeFailed = () => (
 
 export const getSingleRecipe = id => (dispatch) => {
   dispatch(fetchSingleRecipeStart());
-  axios.get(`/api/recipe/${id}`)
+  return axios.get(`/api/recipe/${id}`)
     .then((response) => {
       dispatch(fetchSingleRecipe(response.data.recipe));
     })
@@ -181,7 +180,6 @@ const removeFavoritesAction = id => ({
 });
 
 /**
- * @param {number} id
  * @returns {object} acion
  */
 const removeFavoritesActionFailed = () => ({

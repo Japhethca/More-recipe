@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import '../buttons.scss';
-
 
 const propTypes = {
   upvotes: PropTypes.number.isRequired,

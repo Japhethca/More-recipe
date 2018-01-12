@@ -45,7 +45,7 @@ const getUserProfileFailed = () => ({
  */
 export const handleGetUserProfile = () => (dispatch) => {
   dispatch(getUserProfileStart());
-  axios.get('/api/users/profile')
+  return axios.get('/api/users/profile')
     .then((res) => {
       dispatch(getUserProfile(res.data));
     }).catch(() => {
@@ -175,7 +175,7 @@ const userRecipesAction = (payload, currentPage, totalPages) => ({
  */
 export const handleGetUserRecipes = (page = 1, limit = 12) => (dispatch) => {
   dispatch(fetchUserRecipesStartAction());
-  axios.get(`/api/users/recipes?limit=${limit}&page=${page}`)
+  return axios.get(`/api/users/recipes?limit=${limit}&page=${page}`)
     .then((res) => {
       const numPages = Math.ceil(res.data.count / limit);
       dispatch(userRecipesAction(res.data.recipes, page, numPages));
@@ -231,7 +231,7 @@ function getFavoritesFailedAction() {
  */
 export const handleGetFavorites = (page = 1, limit = 12) => (dispatch) => {
   dispatch(getFavoritesStartAction());
-  axios.get(`/api/users/favorites?limit=${limit}&page=${page}`)
+  return axios.get(`/api/users/favorites?limit=${limit}&page=${page}`)
     .then((res) => {
       const favorites = res.data.favorites.map(favorite => favorite.Recipe);
       const numPages = Math.ceil(res.data.count / limit);

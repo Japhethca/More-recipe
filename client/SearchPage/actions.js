@@ -42,7 +42,7 @@ const searchActionFailed = () => ({
  */
 export default (query, page = 1, limit = 3) => (dispatch) => {
   dispatch(searchActionStart());
-  axios.get(`/api/recipes?search=${query}`).then((response) => {
+  return axios.get(`/api/recipes?search=${query}`).then((response) => {
     const numPages = Math.ceil(response.data.count / limit);
     dispatch(searchAction(response.data.recipes, page, numPages));
   })

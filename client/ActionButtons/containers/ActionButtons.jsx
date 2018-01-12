@@ -27,7 +27,7 @@ const propTypes = {
  * @class ActionButtons
  * @extends {Component}
  */
-class ActionButtons extends Component {
+export class ActionButtons extends Component {
   /**
    * @description Creates an instance of ActionButtons.
    * @param {object} props - React props
@@ -160,7 +160,6 @@ ActionButtons.defaultProps = {
 };
 
 ActionButtons.propTypes = propTypes;
-
 
 export default connect(mapStateToProps, {
   handleAddToFavorites,

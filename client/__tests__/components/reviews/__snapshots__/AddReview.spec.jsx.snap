@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddReview />  should match match snapshot 1`] = `
+<form
+  className="review-form"
+  onSubmit={[Function]}
+>
+  <div
+    className="review-input"
+  >
+    <textarea
+      className=""
+      id="reviewText"
+      name="content"
+      onChange={[Function]}
+      placeholder="add your reviews here"
+      type="text"
+      value="new review"
+    />
+  </div>
+  <div>
+    <button
+      className="btn-class"
+      disabled={false}
+      type="submit"
+    >
+      Post Review
+    </button>
+  </div>
+</form>
+`;

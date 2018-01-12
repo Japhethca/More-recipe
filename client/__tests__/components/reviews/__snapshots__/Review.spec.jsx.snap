@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Review />  should match match snapshot 1`] = `
+<div
+  className="single-review z-depth-2"
+>
+  <span
+    className="user"
+  />
+  <span
+    className="meta-date"
+  >
+    13 days ago
+  </span>
+  <hr />
+  <p
+    className="review-content"
+  >
+    this is a great recipe
+  </p>
+</div>
+`;

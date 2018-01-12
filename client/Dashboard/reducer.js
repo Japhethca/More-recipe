@@ -44,6 +44,7 @@ export default (state = initialState, action) => {
     case types.EDIT_USER_PROFILE:
       return {
         ...state,
+        method: 'PUT',
         payload: { ...action.newProfile },
         isFetching: false
       };
@@ -51,6 +52,7 @@ export default (state = initialState, action) => {
     case types.EDIT_USER_PROFILE_FAILED:
       return {
         ...state,
+        method: 'PUT',
         payload: { ...action.newProfile },
         isFetching: false
       };

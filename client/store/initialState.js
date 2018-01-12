@@ -15,7 +15,6 @@ export default {
     errors: ''
   },
   recipeReducer: {
-    NotFound: false,
     recipes: {
       payload: [],
       totalPages: 0,
