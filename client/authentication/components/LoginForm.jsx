@@ -16,7 +16,7 @@ const LoginForm = (props) => {
     validationErrors, serverErrors, onChange, onSubmit, formData
   } = props;
   return (
-    <div className="row auth-form">
+    <div className="row auth-form container">
       <div className="card col s12 m6 offset-m4 l4 offset-l4 z-depth-4">
         <div className="header-text">
           <h4>Log In</h4>

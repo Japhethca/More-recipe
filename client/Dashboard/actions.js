@@ -120,7 +120,7 @@ export const handleEditUserProfile = data => (dispatch) => {
   if (typeof (data.photo) === 'object') {
     upload(data.photo).end((err, res) => {
       if (!err) {
-        data.photo = res.body.url;
+        data.photo = res.body.secure_url;
         makeRequest(data);
       } else {
         toastr.error('Failed to load image');

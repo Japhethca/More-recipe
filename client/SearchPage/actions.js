@@ -1,5 +1,5 @@
 import axios from 'axios';
-import SEARCH_RECIPE from './actionTypes';
+import { SEARCH_RECIPE_SUCCESS, SEARCH_RECIPE_START, SEARCH_RECIPE_FAILED } from './actionTypes';
 
 
 /**
@@ -7,16 +7,31 @@ import SEARCH_RECIPE from './actionTypes';
  * @param {Array} payload
  * @param {Number} currentPage
  * @param {Number} totalPages
- * @param {Boolean} isFetching
  * @returns {Object} - search result action
  */
-const searchAction = (payload, currentPage, totalPages, isFetching = false) => ({
-  type: SEARCH_RECIPE,
+const searchAction = (payload, currentPage, totalPages) => ({
+  type: SEARCH_RECIPE_SUCCESS,
   payload,
   currentPage,
   totalPages,
-  isFetching
 });
+
+/**
+ * @description dispatched request start
+ * @returns {Object} - search result action
+ */
+const searchActionStart = () => ({
+  type: SEARCH_RECIPE_START,
+});
+
+/**
+ * @description dispatched when request fails
+ * @returns {Object} - search result action
+ */
+const searchActionFailed = () => ({
+  type: SEARCH_RECIPE_FAILED,
+});
+
 
 /**
  * @description makes an api call to search for recipe
@@ -26,13 +41,13 @@ const searchAction = (payload, currentPage, totalPages, isFetching = false) => (
  * @returns {Promise} - axios promise
  */
 export default (query, page = 1, limit = 3) => (dispatch) => {
-  dispatch(searchAction([], 0, 0, true));
+  dispatch(searchActionStart());
   axios.get(`/api/recipes?search=${query}`).then((response) => {
     const numPages = Math.ceil(response.data.count / limit);
     dispatch(searchAction(response.data.recipes, page, numPages));
   })
     .catch(() => {
-      dispatch(searchAction([]));
+      dispatch(searchActionFailed());
     });
 };
 

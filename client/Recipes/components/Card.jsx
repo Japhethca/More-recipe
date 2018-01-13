@@ -66,7 +66,7 @@ const Card = (props) => {
         >
           <img
             src={recipe.image
-          || 'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526912/recipe-card-placeholder_ta9ikp.jpg'}
+          || 'https://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526912/recipe-card-placeholder_ta9ikp.jpg'}
             alt={recipe.name}
             className="responsive-img recipe-image"
           />
