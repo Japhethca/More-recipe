@@ -1,5 +1,7 @@
-$footer-bg-color: #808080;
-$footer-color: #fff;
+@import "../styles/sass/base";
+
+$footer-bg-color: $grey-color;
+$footer-color: $white-color;
 
 .page-footer {
   background-color: $footer-bg-color;

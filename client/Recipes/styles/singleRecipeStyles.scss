@@ -1,8 +1,10 @@
+@import "../../styles/sass/base";
+
 $hr-line-color: #333;
 $hr-line-color-2: #ccc;
-$recipe-items-header-color: #a52a2a;
-$author-color: #a52a2a;
-$meta-color: #808080;
+$recipe-items-header-color: $brown-color;
+$author-color: $brown-color;
+$meta-color: $grey-color;
 
 .recipe-details {
   p,

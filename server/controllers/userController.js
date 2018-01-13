@@ -9,36 +9,36 @@ const { Users } = models;
 
 /**
  * @description signs up user
- * @param {object} req - Express http request
- * @param {object} res - Express http response
+ * @param {object} request - Express http request
+ * @param {object} response - Express http response
  * @returns {object} Http response
  */
-export const signup = (req, res) => Users.findAll({
+export const signup = (request, response) => Users.findAll({
   where: {
-    $or: [{ email: req.body.email }, { username: req.body.username }]
+    $or: [{ email: request.body.email }, { username: request.body.username }]
   },
 })
   .then((users) => {
     // checks if the user is already in the databse
     if (users.length > 0) {
-      return res.status(409).json({
+      return response.status(409).json({
         status: 'failed',
         message: 'User with Email or Username already exists'
       });
     } // creates new user
-    if (req.body.password !== req.body.verifyPassword) {
-      return res.status(409).json({
+    if (request.body.password !== request.body.verifyPassword) {
+      return response.status(409).json({
         status: 'failed',
         message: 'Password did not match'
       });
     }
     return Users.create({
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      username: req.body.username,
-      password: req.body.password,
-      aboutme: req.body.aboutme,
-      email: req.body.email,
+      firstname: request.body.firstname,
+      lastname: request.body.lastname,
+      username: request.body.username,
+      password: request.body.password,
+      aboutme: request.body.aboutme,
+      email: request.body.email,
     })
       .then((user) => {
         const token = jwt.sign({
@@ -46,7 +46,7 @@ export const signup = (req, res) => Users.findAll({
           user: user.username
         }, app.get('secret_key'), { expiresIn: '1d' });
 
-        res.status(201).json({
+        response.status(201).json({
           status: 'success',
           message: 'Account Successfully created!',
           token,
@@ -55,7 +55,7 @@ export const signup = (req, res) => Users.findAll({
           }
         });
       })
-      .catch(() => res.status(500).json({
+      .catch(() => response.status(500).json({
         status: 'failed',
         message: 'Server Error'
       }));
@@ -63,27 +63,27 @@ export const signup = (req, res) => Users.findAll({
 
 /**
  * @description signs / logs users into application
- * @param {object} req - Express http request
- * @param {object} res - Express http response
+ * @param {object} request - Express http request
+ * @param {object} response - Express http response
  * @returns {object} Http response
  */
-export const signin = (req, res) => Users.findOne({
+export const signin = (request, response) => Users.findOne({
   where: {
     $or: {
-      email: req.body.email,
-      username: req.body.username
+      email: request.body.email,
+      username: request.body.username
     }
   },
   attributes: ['id', 'username', 'password'],
 })
   .then((user) => {
     if (!user) {
-      return res.status(404).json({
+      return response.status(404).json({
         status: 'failed',
         message: 'User does not exist'
       });
-    } else if (!bcrypt.compareSync(req.body.password, user.password)) {
-      return res.status(403).json({
+    } else if (!bcrypt.compareSync(request.body.password, user.password)) {
+      return response.status(403).json({
         status: 'failed',
         message: 'Password Incorrect'
       });
@@ -93,7 +93,7 @@ export const signin = (req, res) => Users.findOne({
       user: user.username
     }, app.get('secret_key'), { expiresIn: '1d' });
 
-    return res.status(200).json({
+    return response.status(200).json({
       status: 'success',
       message: 'Login Successful!',
       token,
@@ -103,46 +103,46 @@ export const signin = (req, res) => Users.findOne({
       },
     });
   })
-  .catch(() => res.status(500).json({
+  .catch(() => response.status(500).json({
     status: 'failed',
     message: 'Server Error',
   }));
 
 /**
  * @description gets single user profile details
- * @param {object} req
- * @param {object} res
+ * @param {object} request
+ * @param {object} response
  * @returns {object} Http response
  */
-export const userProfile = (req, res) => Users.findOne({
+export const userProfile = (request, response) => Users.findOne({
   where: {
-    id: req.decoded.id
+    id: request.decoded.id
   },
-}).then(user => res.status(200).json(user))
-  .catch(err => res.status(500).json(err));
+}).then(user => response.status(200).json(user))
+  .catch(err => response.status(500).json(err));
 
 /**
  * @description updates user profile
- * @param {object} req - Express http request
- * @param {object} res - Express http response
+ * @param {object} request - Express http request
+ * @param {object} response - Express http response
  * @returns {object} Http response
  */
-export const updateProfile = (req, res) => Users.findOne({
+export const updateProfile = (request, response) => Users.findOne({
   where: {
-    id: req.decoded.id
+    id: request.decoded.id
   }
 }).then((user) => {
   user.update({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    aboutme: req.body.aboutme,
-    photo: req.body.photo,
-  }).then(() => res.status(201).json({
+    firstname: request.body.firstname,
+    lastname: request.body.lastname,
+    aboutme: request.body.aboutme,
+    photo: request.body.photo,
+  }).then(() => response.status(201).json({
     status: 'success',
     message: 'Profile Update Successful',
     userData: user
   }));
-}).catch(() => res.status(500).json({
+}).catch(() => response.status(500).json({
   status: 'failed',
   message: 'Server Error'
 }));

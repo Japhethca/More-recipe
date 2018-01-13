@@ -1,7 +1,8 @@
-$text-color: white;
+@import "../../styles/sass/base";
+
+$text-color: $white-color;
 $btn-color: #a6dc00;
 $btn-hover: #353e17;
-$black-color: #222;
 
 .header-logo {
   padding: 10px;

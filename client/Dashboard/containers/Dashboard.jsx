@@ -4,11 +4,9 @@ import { connect } from 'react-redux';
 import { NavLink, Route } from 'react-router-dom';
 
 import ProfilePage from './ProfilePage';
-import Authenticate from '../../authentication';
+import AuthenticateRoute from '../../authentication';
 import UserRecipesPage from './UserRecipesPage';
 import FavoritesPage from './FavoritesPage';
-import UpdateRecipe from '../../Recipes/components/RecipeUpdatePage';
-import CreateRecipe from '../../Recipes/containers/CreateUpdateRecipe';
 import { handleLogout } from '../../authentication/actions';
 import '../styles/dashboard.scss';
 /**
@@ -47,10 +45,8 @@ class Dashboard extends Component {
             </ul>
           </div>
           <div className="col s12 m9 l9 content">
-            <Route path="/create" exact component={Authenticate(CreateRecipe)} />
-            <Route path="/favorites" exact component={Authenticate(FavoritesPage)} />
-            <Route path="/my-recipes" exact component={Authenticate(UserRecipesPage)} />
-            <Route path="/update/:id" exact component={Authenticate(UpdateRecipe)} />
+            <Route path="/favorites" exact component={AuthenticateRoute(FavoritesPage)} />
+            <Route path="/my-recipes" exact component={AuthenticateRoute(UserRecipesPage)} />
           </div>
         </div>
       </div>

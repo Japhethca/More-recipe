@@ -1,6 +1,7 @@
+@import "../styles/sass/base";
+
 $pagination-bg-color-link: #393030;
-$white-color: #fff;
-$browb-color: rgb(165, 43, 43);
+
 
 .pag-list {
 
@@ -33,7 +34,7 @@ $browb-color: rgb(165, 43, 43);
 }
 
 .active-page {
-  background-color: $browb-color;
+  background-color: $brown-color;
   color: $white-color;
 
   &:focus {
@@ -47,7 +48,7 @@ $browb-color: rgb(165, 43, 43);
 
 .next-prev {
 
-  border: 1px $browb-color solid;
+  border: 1px $brown-color solid;
   cursor: pointer;
 
   a:focus {

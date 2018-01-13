@@ -6,6 +6,8 @@ import NavigationBar from '../common/NavigationBar';
 import Footer from '../common/Footer';
 import AuthenticateRoute from '../authentication';
 import HomePage from '../HomePage';
+import UpdateRecipe from '../Recipes/components/RecipeUpdatePage';
+import CreateRecipe from '../Recipes/containers/CreateUpdateRecipe';
 import Dashboard from '../Dashboard';
 import SingleRecipePage from '../Recipes/containers/SingleRecipePage';
 import SearchPage from '../SearchPage';
@@ -29,6 +31,8 @@ const App = () => (
       />
 
       <Switch>
+        <Route path="/create" exact component={AuthenticateRoute(CreateRecipe)} />
+        <Route path="/update/:id" exact component={AuthenticateRoute(UpdateRecipe)} />
         <Route path="/recipe/:nameId" exact component={AuthenticateRoute(SingleRecipePage)} />
         <Route path="/recipes" exact component={AuthenticateRoute(HomePage)} />
         <Route path="/search" exact component={AuthenticateRoute(SearchPage)} />

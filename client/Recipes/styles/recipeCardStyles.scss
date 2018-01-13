@@ -1,6 +1,8 @@
-$btn-bg-color: #fff;
-$card-linkl-color: rgb(148, 36, 36);
-$meta-data-color: #808080;
+@import "../../styles/sass/base";
+
+$btn-bg-color: $white-color;
+$card-linkl-color: $brown-color;
+$meta-data-color: $grey-color;
 
 #recipe-card {
   height: 400px;

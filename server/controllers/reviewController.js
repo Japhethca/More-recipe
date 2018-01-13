@@ -1,4 +1,5 @@
 import model from '../models';
+import pagination from '../middlewares/pagination';
 
 const { Recipes, Users, Reviews } = model;
 
@@ -52,39 +53,38 @@ export const postReview = (req, res) => Recipes.findOne({
 
 /**
  * @description returns all reviews for a single recipe
- * @param {object} req - Express http request
- * @param {object} res - Express http response
+ * @param {object} request - Express http request
+ * @param {object} response - Express http response
  * @returns {object} Http response
  */
-export const getRecipeReview = (req, res) => {
-  const limit = req.query.limit || 10;
-  const page = parseInt(req.query.page, 10) || 1;
-  const offset = page !== 1 ? limit * (page - 1) : null;
-
+export const getRecipeReview = (request, response) => {
+  const { limit, page, offset } = pagination(request.query.limit, request.query.page);
   Reviews.findAndCountAll({
     limit,
     offset,
     where: {
-      recipeId: req.params.recipeId,
+      recipeId: request.params.recipeId,
     },
     include: [{ model: Users, attributes: ['username', 'photo'] }]
   })
     .then((result) => {
       if ((result.count < 1)) {
-        return res.status(404).json({
+        return response.status(404).json({
           status: 'failed',
           message: 'No reviews for this recipe'
         });
       }
-      res.status(200).json({
+      response.status(200).json({
         status: 'success',
         message: 'Recipe Reviews',
+        currentPage: page,
+        totalPages: limit === null ? 1 : Math.ceil(result.count / limit),
         count: result.count,
         reviews: result.rows
       });
     })
     .catch(() => {
-      res.json(500).json({
+      response.json(500).json({
         status: 'failed',
         message: 'Server Error',
       });

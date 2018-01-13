@@ -1,18 +1,17 @@
-$header-bg-color: rgb(223, 63, 63);
-$header-text-color: #fff;
+@import "../../styles/sass/base";
 
-$border-color: rgb(223, 63, 63);
-$btn-bg-color: #fff;
-$btn-color: #090804;
-$black-color: #222;
-$grey-color: grey;
+$header-bg-color: $red-color;
+$header-text-color: $white-color;
 
+$border-color: $red-color;
+$btn-bg-color: $white-color;
+$btn-color: $black-color;
 
-$btn-hover-bg-color: rgb(223, 63, 63);
-$btn-hover-color: #fff;
+$btn-hover-bg-color: $red-color;
+$btn-hover-color: $white-color;
 $link-hover-color: #60A39A;
 $link-color: darken($link-hover-color, 10);
-$error-txt-color: #ff0000;
+$error-txt-color: $red-color;
 
 .auth-form {
   border-radius: 10px;

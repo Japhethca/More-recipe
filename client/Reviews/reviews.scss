@@ -1,19 +1,18 @@
-
-$brown-color: rgb(165, 42, 42);
+@import "../styles/sass/base";
 
 $review-color: #808080;
 $textarea-border-color: $review-color;
 $text-area-text-color: darken($review-color, 10);
-$text-area-bg-color: #fff;
+$text-area-bg-color: $white-color;
 
 $btn-border-color: $textarea-border-color;
 $btn-color: $btn-border-color;
-$btn-bg-color: #fff;
+$btn-bg-color: $white-color;
 $btn-hover-bg-color: $btn-color;
 $btn-hover-color: $btn-bg-color;
 
 $no-reviews-color: lighten($review-color, 10);
-$review-bg-color: #fff;
+$review-bg-color: $white-color;
 $user-text-color: #5151b6;
 
 

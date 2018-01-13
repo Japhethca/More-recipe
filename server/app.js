@@ -8,7 +8,7 @@ import logger from 'morgan';
 
 
 import webpackConfig from '../webpack.config.dev';
-import apiRouter from './routes/ApiRouter';
+import apiRouter from './routes/apiRouter';
 
 
 dotenv.config();
@@ -62,8 +62,6 @@ app.all('*', (req, res) => {
 
 // server initialization
 const port = process.env.PORT || 50000;
-app.listen(port, () => {
-  console.log(`Server running. listening on port:  ${port}`);
-});
+app.listen(port);
 
 export default app;

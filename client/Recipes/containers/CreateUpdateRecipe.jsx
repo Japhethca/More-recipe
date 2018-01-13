@@ -126,7 +126,8 @@ class CreateUpdateRecipe extends Component {
     };
     return (
       <div>
-        { this.state.recipe.created ? <Redirect to="/my-recipes" /> : <RecipeForm
+        { this.state.recipe.created ? <Redirect to="/my-recipes" />
+        : <RecipeForm
           validationErrors={this.state.validationErrors}
           recipe={recipeData}
           onSubmit={this.onSubmit}

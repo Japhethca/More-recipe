@@ -1,5 +1,5 @@
 import model from '../models';
-
+import pagination from '../middlewares/pagination';
 
 const { Favorites, Recipes, Users } = model;
 
@@ -10,13 +10,7 @@ const { Favorites, Recipes, Users } = model;
  * @returns {object} response - Express response
  */
 export const getUserFavorites = (request, response) => {
-  let limit = null;
-  if (parseInt(request.query.limit, 10)) {
-    limit = request.query.limit || null;
-  }
-  const page = parseInt(request.query.page, 10) || 1;
-  const offset = page !== 1 ? limit * (page - 1) : null;
-
+  const { limit, page, offset } = pagination(request.query.limit, request.query.page);
   Favorites.findAndCountAll({
     limit,
     offset,
@@ -48,6 +42,8 @@ export const getUserFavorites = (request, response) => {
         response.status(200).json({
           status: 'success',
           message: `${request.decoded.user} Favorite recipes`,
+          currentPage: page,
+          totalPages: limit === null ? 1 : Math.ceil(result.count / limit),
           count: result.count,
           favorites: result.rows
         });
