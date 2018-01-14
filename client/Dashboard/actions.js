@@ -97,41 +97,65 @@ const editProfileFailedAction = (newProfile, isFetching = false) => ({
 });
 
 
+// /**
+//  * @description make an apit for to get users profile
+//  * @export
+//  * @param {Object} data - user object
+//  * @returns {promise} axios or supseragent
+//  */
+// export const handleEditUserProfile = data => (dispatch) => {
+//   const makeRequest = profileData => axios.put('/api/users/profile', profileData)
+//     .then((res) => {
+//       dispatch(editProfileAction(res.data.userData));
+//       toastr.success(res.data.message);
+//     })
+//     .catch((error) => {
+//       if (error.response.data) {
+//         toastr.error(error.response.data.message);
+//         dispatch(editProfileFailedAction());
+//       }
+//     });
+
+//   dispatch(editProfileStartAction());
+//   if (typeof (data.photo) === 'object') {
+//     upload(data.photo).end((err, res) => {
+//       if (!err) {
+//         data.photo = res.body.url;
+//         makeRequest(data);
+//       } else {
+//         toastr.error('Failed to load image');
+//         dispatch(editProfileFailedAction());
+//       }
+//     });
+//   } else {
+//     makeRequest(data);
+//   }
+// };
+
 /**
  * @description make an apit for to get users profile
  * @export
- * @param {Object} data - user object
+ * @param {Object} profileData - user object
  * @returns {promise} axios or supseragent
  */
-export const handleEditUserProfile = data => (dispatch) => {
-  const makeRequest = profileData => axios.put('/api/users/profile', profileData)
-    .then((res) => {
-      dispatch(editProfileAction(res.data.userData));
-      toastr.success(res.data.message);
-    })
-    .catch((error) => {
-      if (error.response.data) {
-        toastr.error(error.response.data.message);
-        dispatch(editProfileFailedAction());
-      }
-    });
-
+export const handleEditUserProfile = profileData => async (dispatch) => {
   dispatch(editProfileStartAction());
-  if (typeof (data.photo) === 'object') {
-    upload(data.photo).end((err, res) => {
-      if (!err) {
-        data.photo = res.body.url;
-        makeRequest(data);
-      } else {
-        toastr.error('Failed to load image');
-        dispatch(editProfileFailedAction());
-      }
+  if (typeof (profileData.photo) === 'object') {
+    await upload(profileData.photo).then((res) => {
+      profileData.photo = res.body.url;
+    }).catch(() => {
+      dispatch(editProfileFailedAction());
+      toastr.error('failed to load image');
     });
-  } else {
-    makeRequest(data);
   }
+  return axios.put('/api/users/profile', profileData).then((response) => {
+    dispatch(editProfileAction(response.data.userData));
+    toastr.success(response.data.message);
+  }).catch((error) => {
+    dispatch(editProfileFailedAction());
+    toastr.error(error.response.data.message);
+  });
 };
-
 /**
  * @description creates user recipes action
  * @param {array} payload

@@ -32,7 +32,9 @@ class FavoritesPage extends Component {
  */
   componentDidMount() {
     const { page } = qs.parse(this.state.page, { ignoreQueryPrefix: true });
-    this.props.handleGetFavorites(page);
+    if (!this.props.favorites.payload.length > 0) {
+      this.props.handleGetFavorites(page);
+    }
   }
 
   /**

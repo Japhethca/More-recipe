@@ -1,5 +1,6 @@
 import { render } from 'react-dom';
 import React from 'react';
+import 'babel-polyfill';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwt from 'jsonwebtoken';

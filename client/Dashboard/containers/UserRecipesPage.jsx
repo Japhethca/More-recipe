@@ -34,7 +34,9 @@ class UserRecipesPage extends Component {
    */
   componentDidMount() {
     const { page } = qs.parse(this.state.page, { ignoreQueryPrefix: true });
-    this.props.handleGetUserRecipes(page);
+    if (!this.props.userRecipes.payload.length > 0) {
+      this.props.handleGetUserRecipes(page);
+    }
   }
 
   /**
