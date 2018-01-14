@@ -12,7 +12,8 @@ import {
   FETCH_USER_RECIPES_START,
   FETCH_USER_RECIPES_SUCCESS,
   ADD_NEW_RECIPE,
-  ADD_NEW_REVIEW,
+  ADD_NEW_REVIEW_SUCCESS,
+  ADD_NEW_REVIEW_FAILED,
   UPVOTE_RECIPE,
   UPDATE_RECIPE,
   DOWNVOTE_RECIPE,
@@ -20,7 +21,10 @@ import {
   NOT_FOUND,
   DELETE_USER_RECIPE,
   ADD_TO_FAVORITES,
-  RECIPE_CREATED
+  RECIPE_CREATED,
+  REMOVE_FROM_FAVORITES_FAILED,
+  DELETE_USER_RECIPE_FAILED,
+  ADD_TO_FAVORITES_FAILED
 } from './actionTypes';
 
 
@@ -34,14 +38,10 @@ const initialState = {
   },
   userRecipes: {
     payload: [],
-    totalPages: 0,
-    currentPage: 0,
     isFetching: false
   },
   favorites: {
     payload: [],
-    totalPages: 0,
-    currentPage: 0,
     isFetching: false
   },
   recipe: {
@@ -126,7 +126,7 @@ export default (state = initialState, action) => {
         }
       };
 
-    case ADD_NEW_REVIEW:
+    case ADD_NEW_REVIEW_SUCCESS:
       return {
         ...state,
         recipe: {
@@ -136,6 +136,19 @@ export default (state = initialState, action) => {
             Reviews: [
               ...state.recipe.payload.Reviews,
               action.review
+            ]
+          }
+        }
+      };
+    case ADD_NEW_REVIEW_FAILED:
+      return {
+        ...state,
+        recipe: {
+          ...state.recipe,
+          payload: {
+            ...state.recipe.payload,
+            Reviews: [
+              ...state.recipe.payload.Reviews
             ]
           }
         }
@@ -241,6 +254,11 @@ export default (state = initialState, action) => {
         }
       };
 
+    case DELETE_USER_RECIPE_FAILED:
+      return {
+        ...state
+      };
+
     case ADD_NEW_RECIPE:
       return {
         ...state,
@@ -267,10 +285,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userRecipes: {
-          currentPage: action.currentPage,
-          totalPages: action.totalPages,
           payload: [...action.payload],
-          isFetching: action.isFetching
+          isFetching: false
         },
         recipe: {
           ...state.recipe,
@@ -300,8 +316,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         favorites: {
-          currentPage: action.currentPage,
-          totalPages: action.totalPages,
           payload: [...action.payload],
           isFetching: false
         }
@@ -328,12 +342,29 @@ export default (state = initialState, action) => {
         }
       };
 
+    case ADD_TO_FAVORITES_FAILED:
+      return {
+        ...state,
+        favorites: {
+          payload: [
+            ...state.favorites.payload
+          ]
+        }
+      };
+
     case REMOVE_FROM_FAVORITES:
       return {
         ...state,
         favorites: {
           ...state.favorites,
           payload: state.favorites.payload.filter(favorite => favorite.id !== action.id)
+        }
+      };
+    case REMOVE_FROM_FAVORITES_FAILED:
+      return {
+        ...state,
+        favorites: {
+          ...state.favorites
         }
       };
 

@@ -45,7 +45,7 @@ const getUserProfileFailed = () => ({
  */
 export const handleGetUserProfile = () => (dispatch) => {
   dispatch(getUserProfileStart());
-  axios.get('/api/users/profile')
+  return axios.get('/api/users/profile')
     .then((res) => {
       dispatch(getUserProfile(res.data));
     }).catch(() => {
@@ -96,44 +96,8 @@ const editProfileFailedAction = (newProfile, isFetching = false) => ({
   isFetching
 });
 
-
-// /**
-//  * @description make an apit for to get users profile
-//  * @export
-//  * @param {Object} data - user object
-//  * @returns {promise} axios or supseragent
-//  */
-// export const handleEditUserProfile = data => (dispatch) => {
-//   const makeRequest = profileData => axios.put('/api/users/profile', profileData)
-//     .then((res) => {
-//       dispatch(editProfileAction(res.data.userData));
-//       toastr.success(res.data.message);
-//     })
-//     .catch((error) => {
-//       if (error.response.data) {
-//         toastr.error(error.response.data.message);
-//         dispatch(editProfileFailedAction());
-//       }
-//     });
-
-//   dispatch(editProfileStartAction());
-//   if (typeof (data.photo) === 'object') {
-//     upload(data.photo).end((err, res) => {
-//       if (!err) {
-//         data.photo = res.body.url;
-//         makeRequest(data);
-//       } else {
-//         toastr.error('Failed to load image');
-//         dispatch(editProfileFailedAction());
-//       }
-//     });
-//   } else {
-//     makeRequest(data);
-//   }
-// };
-
 /**
- * @description make an apit for to get users profile
+ * @description make an api request for to get users profile
  * @export
  * @param {Object} profileData - user object
  * @returns {promise} axios or supseragent
@@ -157,20 +121,14 @@ export const handleEditUserProfile = profileData => async (dispatch) => {
   });
 };
 /**
- * @description creates user recipes action
- * @param {array} payload
- * @param {Number} currentPage
- * @param {Number} totalPages
+ * @description dispatch on start of api call
  * @returns {Object} action
  */
 const fetchUserRecipesStartAction = () => ({
   type: types.FETCH_USER_RECIPES_START,
 });
 /**
- * @description creates user recipes action
- * @param {array} payload
- * @param {Number} currentPage
- * @param {Number} totalPages
+ * @description dispatched when fetching user recipes fails
  * @returns {Object} action
  */
 const fetchUserRecipesFailedAction = () => ({
@@ -178,17 +136,13 @@ const fetchUserRecipesFailedAction = () => ({
 });
 
 /**
- * @description creates user recipes action
+ * @description dispatch when fetching user recipes is successful
  * @param {array} payload
- * @param {Number} currentPage
- * @param {Number} totalPages
  * @returns {Object} action
  */
-const userRecipesAction = (payload, currentPage, totalPages) => ({
+const userRecipesAction = payload => ({
   type: types.FETCH_USER_RECIPES_SUCCESS,
   payload,
-  currentPage,
-  totalPages,
 });
 
 /**
@@ -197,32 +151,25 @@ const userRecipesAction = (payload, currentPage, totalPages) => ({
  * @argument {Number} limit
  * @returns {promise} axios promise
  */
-export const handleGetUserRecipes = (page = 1, limit = 12) => (dispatch) => {
+export const handleGetUserRecipes = () => (dispatch) => {
   dispatch(fetchUserRecipesStartAction());
-  axios.get(`/api/users/recipes?limit=${limit}&page=${page}`)
+  return axios.get('/api/users/recipes')
     .then((res) => {
-      const numPages = Math.ceil(res.data.count / limit);
-      dispatch(userRecipesAction(res.data.recipes, page, numPages));
-    }).catch((error) => {
-      if (error.response.status === 404 && page > 0) {
-        dispatch(fetchUserRecipesFailedAction());
-      }
+      dispatch(userRecipesAction(res.data.recipes));
+    }).catch(() => {
+      dispatch(fetchUserRecipesFailedAction());
     });
 };
 
 /**
  * @description dispatched on user favorites fetch success
  * @param {array} payload
- * @param {Number} currentPage
- * @param {Number} totalPages
  * @returns {Object} action
  */
-function getFavoritesAction(payload, currentPage, totalPages) {
+function getFavoritesAction(payload) {
   return {
     type: types.FETCH_USER_FAVORITES_SUCCESS,
     payload,
-    currentPage,
-    totalPages,
   };
 }
 
@@ -253,13 +200,12 @@ function getFavoritesFailedAction() {
  * @param {Number} limit
  * @returns {promise} axios promise
  */
-export const handleGetFavorites = (page = 1, limit = 12) => (dispatch) => {
+export const handleGetFavorites = () => (dispatch) => {
   dispatch(getFavoritesStartAction());
-  axios.get(`/api/users/favorites?limit=${limit}&page=${page}`)
+  return axios.get('/api/users/favorites')
     .then((res) => {
       const favorites = res.data.favorites.map(favorite => favorite.Recipe);
-      const numPages = Math.ceil(res.data.count / limit);
-      dispatch(getFavoritesAction(favorites, page, numPages));
+      dispatch(getFavoritesAction(favorites));
     }).catch(() => {
       dispatch(getFavoritesFailedAction());
     });

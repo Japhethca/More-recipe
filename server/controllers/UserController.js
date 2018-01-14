@@ -70,7 +70,7 @@ export const signup = (req, res) => Users.findAll({
 export const signin = (req, res) => Users.findOne({
   where: {
     $or: {
-      email: req.body.email,
+      email: req.body.email.toLowerCase(),
       username: req.body.username
     }
   },
