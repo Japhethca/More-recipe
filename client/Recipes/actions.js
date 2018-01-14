@@ -15,27 +15,17 @@ import { UPDATE_RECIPE, ADD_NEW_RECIPE,
   /**
  * @description creates isfetching action
  * @param {Boolean} state --http loading state
- * @param {Boolean} status --http loading status
- * @param {String} dataType -- type of data being fetched
  * @return {Object} - action
  */
-export const isFetching = (state, status = false, dataType = 'recipes') => ({
+export const isFetching = state => ({
   type: IS_FETCHING,
-  isFetching: state,
-  completed: status,
-  dataType
+  isFetching: state
 });
 
 /**
- * @description creates update recipe action
- * @param {object} recipe - recipe object
+ * @description dispatched when a new recipe is created
  * @returns {object} action
  */
-const updateRecipeAction = recipe => ({
-  type: UPDATE_RECIPE,
-  recipe
-});
-
 const created = () => ({
   type: RECIPE_CREATED
 });
@@ -51,46 +41,66 @@ const createRecipeAction = recipe => ({
 });
 
 /**
- * @description handles api request
- * @argument {object} method
- * @argument {function} actionCreator
+ * @description handles recipe creation
+ * @argument {object} recipeData
  * @returns {promise} axios promise
  */
-const handleRequest = (method, actionCreator) => data => (dispatch) => {
-  const request = method === 'put' ? axios.put : axios.post;
-  const url = method === 'post' ? '/api/recipe' : `/api/recipe/${data.id}`;
-  const makeRequest = () => request(url, data)
-    .then((res) => {
-      dispatch(created());
-      dispatch(actionCreator(res.data.recipe));
-      toastr.success(res.data.message);
-      dispatch(isFetching(false, true));
-    })
-    .catch((error) => {
-      if (error.response.data) {
-        dispatch(isFetching(false));
-        toastr.error(error.response.data.message);
-      }
-    });
+export const handleCreateRecipe = recipeData => async (dispatch) => {
   dispatch(isFetching(true));
-  if (typeof (data.image) === 'object') {
-    return upload(data.image).end((err, res) => {
-      if (!err) {
-        data.image = res.body.secure_url;
-        makeRequest();
-      } else {
-        dispatch(isFetching(false));
-        toastr.error('failed to load image');
-      }
+  if (typeof (recipeData.image) === 'object') {
+    await upload(recipeData.image).then((res) => {
+      recipeData.image = res.body.url;
+    }).catch(() => {
+      dispatch(isFetching(false));
+      toastr.error('failed to load image');
     });
   }
-  if (typeof (data.image) !== 'object') {
-    makeRequest();
-  }
+  return axios.post('/api/recipe', recipeData).then((response) => {
+    dispatch(created());
+    dispatch(createRecipeAction(response.data.recipe));
+    toastr.success(response.data.message);
+    dispatch(isFetching(false));
+  }).catch((error) => {
+    dispatch(isFetching(false));
+    toastr.error(error.response.data.message);
+  });
 };
 
-export const handleCreateRecipe = handleRequest('post', createRecipeAction);
-export const handleUpdateRecipe = handleRequest('put', updateRecipeAction);
+/**
+ * @description creates update recipe action
+ * @param {object} recipe - recipe object
+ * @returns {object} action
+ */
+const updateRecipeAction = recipe => ({
+  type: UPDATE_RECIPE,
+  recipe
+});
+
+/**
+ * @description handles recipe update
+ * @argument {object} recipeData
+ * @returns {promise} axios promise
+ */
+export const handleUpdateRecipe = recipeData => async (dispatch) => {
+  dispatch(isFetching(true));
+  if (typeof (recipeData.image) === 'object') {
+    await upload(recipeData.image).then((res) => {
+      recipeData.image = res.body.url;
+    }).catch(() => {
+      dispatch(isFetching(false));
+      toastr.error('failed to load image');
+    });
+  }
+  return axios.put(`/api/recipe/${recipeData.id}`, recipeData).then((response) => {
+    dispatch(created());
+    dispatch(updateRecipeAction(response.data.recipe));
+    toastr.success(response.data.message);
+    dispatch(isFetching(false));
+  }).catch((error) => {
+    dispatch(isFetching(false));
+    toastr.error(error.response.data.message);
+  });
+};
 
 /**
  * @description dispatched when recipe has been fetched
@@ -126,7 +136,7 @@ const fetchSingleRecipeFailed = () => (
 
 export const getSingleRecipe = id => (dispatch) => {
   dispatch(fetchSingleRecipeStart());
-  axios.get(`/api/recipe/${id}`)
+  return axios.get(`/api/recipe/${id}`)
     .then((response) => {
       dispatch(fetchSingleRecipe(response.data.recipe));
     })
@@ -181,7 +191,7 @@ const removeFavoritesAction = id => ({
 });
 
 /**
- * @param {number} id
+ * @description dispatched when removing from favorites fails
  * @returns {object} acion
  */
 const removeFavoritesActionFailed = () => ({
