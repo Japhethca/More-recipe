@@ -15,7 +15,7 @@ describe('<Loader /> ', () => {
     expect(wrapper.find('div').length).toBe(1);
   });
 
-  it('should have a GridLoader component', () => {
+  it('should match snapshot', () => {
     const wrapper = shallow(<Loader {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });

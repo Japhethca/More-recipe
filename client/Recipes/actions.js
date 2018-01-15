@@ -15,28 +15,18 @@ import { UPDATE_RECIPE, ADD_NEW_RECIPE,
   /**
  * @description creates isfetching action
  * @param {Boolean} state --http loading state
- * @param {Boolean} status --http loading status
- * @param {String} dataType -- type of data being fetched
  * @return {Object} - action
  */
-export const isFetching = (state, status = false, dataType = 'recipes') => ({
+export const isFetching = state => ({
   type: IS_FETCHING,
-  isFetching: state,
-  completed: status,
-  dataType
+  isFetching: state
 });
 
 /**
- * @description creates update recipe action
- * @param {object} recipe - recipe object
+ * @description dispatched when a new recipe is created
  * @returns {object} action
  */
-const updateRecipeAction = recipe => ({
-  type: UPDATE_RECIPE,
-  recipe
-});
-
-const created = () => ({
+export const created = () => ({
   type: RECIPE_CREATED
 });
 
@@ -45,58 +35,80 @@ const created = () => ({
  * @param {object} recipe
  * @returns {object} action object
  */
-const createRecipeAction = recipe => ({
+export const createRecipeAction = recipe => ({
   type: ADD_NEW_RECIPE,
   recipe
 });
 
 
 /**
- * @description handles api request
- * @argument {object} method
- * @argument {function} actionCreator
+ * @description handles recipe creation
+ * @argument {object} recipeData
  * @returns {promise} axios promise
  */
-const handleRequest = (method, actionCreator) => data => (dispatch) => {
-  const request = method === 'put' ? axios.put : axios.post;
-  const url = method === 'post' ? '/api/recipe' : `/api/recipe/${data.id}`;
-  const makeRequest = () => request(url, data)
-    .then((res) => {
-      dispatch(created());
-      dispatch(actionCreator(res.data.recipe));
-      toastr.success(res.data.message);
-      dispatch(isFetching(false, true));
-    })
-    .catch((error) => {
-      if (error.response.data) {
-        dispatch(isFetching(false));
-        toastr.error(error.response.data.message);
-      }
-    });
+export const handleCreateRecipe = recipeData => async (dispatch) => {
   dispatch(isFetching(true));
-  if (typeof (data.image) === 'object') {
-    return upload(data.image).end((err, res) => {
-      if (!err) {
-        data.image = res.body.secure_url;
-        makeRequest();
-      } else {
-        dispatch(isFetching(false));
-        toastr.error('failed to load image');
-      }
+  if (typeof (recipeData.image) === 'object') {
+    await upload(recipeData.image).then((res) => {
+      recipeData.image = res.body.url;
+    }).catch(() => {
+      dispatch(isFetching(false));
+      toastr.error('failed to load image');
     });
   }
-  makeRequest();
+  return axios.post('/api/recipe', recipeData).then((response) => {
+    dispatch(created());
+    dispatch(createRecipeAction(response.data.recipe));
+    toastr.success(response.data.message);
+    dispatch(isFetching(false));
+  }).catch((error) => {
+    dispatch(isFetching(false));
+    toastr.error(error.response.data.message);
+  });
 };
 
-export const handleCreateRecipe = handleRequest('post', createRecipeAction);
-export const handleUpdateRecipe = handleRequest('put', updateRecipeAction);
+/**
+ * @description creates update recipe action
+ * @param {object} recipe - recipe object
+ * @returns {object} action
+ */
+export const updateRecipeAction = recipe => ({
+  type: UPDATE_RECIPE,
+  recipe
+});
+
+/**
+ * @description handles recipe update
+ * @argument {object} recipeData
+ * @returns {promise} axios promise
+ */
+export const handleUpdateRecipe = recipeData => async (dispatch) => {
+  dispatch(isFetching(true));
+  if (typeof (recipeData.image) === 'object') {
+    await upload(recipeData.image).then((res) => {
+      recipeData.image = res.body.url;
+    }).catch(() => {
+      dispatch(isFetching(false));
+      toastr.error('failed to load image');
+    });
+  }
+  return axios.put(`/api/recipe/${recipeData.id}`, recipeData).then((response) => {
+    dispatch(created());
+    dispatch(updateRecipeAction(response.data.recipe));
+    toastr.success(response.data.message);
+    dispatch(isFetching(false));
+  }).catch((error) => {
+    dispatch(isFetching(false));
+    toastr.error(error.response.data.message);
+  });
+};
 
 /**
  * @description dispatched when recipe has been fetched
  * @param {object} recipe
  * @returns {object} actions
  */
-const fetchSingleRecipe = recipe => (
+export const fetchSingleRecipe = recipe => (
   {
     type: FETCH_SINGLE_RECIPE_SUCCESS,
     recipe
@@ -107,7 +119,7 @@ const fetchSingleRecipe = recipe => (
  * @description dispatched when starting to fetch single recipes
  * @returns {object} actions
  */
-const fetchSingleRecipeStart = () => (
+export const fetchSingleRecipeStart = () => (
   {
     type: FETCH_SINGLE_RECIPE_START
   }
@@ -117,7 +129,7 @@ const fetchSingleRecipeStart = () => (
  * @description dispatched when fetching recipe failed
  * @returns {object} actions
  */
-const fetchSingleRecipeFailed = () => (
+export const fetchSingleRecipeFailed = () => (
   {
     type: FETCH_SINGLE_RECIPE_FAILED
   }
@@ -141,7 +153,7 @@ export const getSingleRecipe = id => (dispatch) => {
  * @param {number} id
  * @returns {object} action object
  */
-const deleteRecipeAction = id => ({
+export const deleteRecipeAction = id => ({
   type: DELETE_USER_RECIPE,
   id
 });
@@ -150,7 +162,7 @@ const deleteRecipeAction = id => ({
  * @description dispatch when delete fails
  * @returns {object} action object
  */
-const deleteRecipeActionFailed = () => ({
+export const deleteRecipeActionFailed = () => ({
   type: DELETE_USER_RECIPE_FAILED,
 });
 
@@ -174,15 +186,16 @@ export const handleDeleteRecipe = id => dispatch => axios.delete(`/api/recipe/${
  * @param {number} id
  * @returns {object} acion
  */
-const removeFavoritesAction = id => ({
+export const removeFavoritesAction = id => ({
   type: REMOVE_FROM_FAVORITES,
   id
 });
 
 /**
+ * @description dispatched when removing from favorites fails
  * @returns {object} acion
  */
-const removeFavoritesActionFailed = () => ({
+export const removeFavoritesActionFailed = () => ({
   type: REMOVE_FROM_FAVORITES_FAILED,
 });
 
@@ -194,10 +207,8 @@ const removeFavoritesActionFailed = () => ({
  */
 export const handleRemoveFromFavorites = recipeId => dispatch => axios.delete(`/api/users/favorites/${recipeId}`)
   .then((response) => {
-    if (response.data.status === 'success') {
-      dispatch(removeFavoritesAction(recipeId));
-      toastr.info(response.data.message);
-    }
+    dispatch(removeFavoritesAction(recipeId));
+    toastr.info(response.data.message);
   }).catch(() => dispatch(removeFavoritesActionFailed()));
 
 /**
@@ -205,7 +216,7 @@ export const handleRemoveFromFavorites = recipeId => dispatch => axios.delete(`/
  * @param {object} recipe
  * @returns {object} action
  */
-const addToFavoriteAction = recipe => ({
+export const addToFavoriteAction = recipe => ({
   type: ADD_TO_FAVORITES,
   recipe
 });
@@ -215,7 +226,7 @@ const addToFavoriteAction = recipe => ({
  * @param {object} recipe
  * @returns {object} action
  */
-const addToFavoriteActionFailed = () => ({
+export const addToFavoriteActionFailed = () => ({
   type: ADD_TO_FAVORITES_FAILED,
 });
 

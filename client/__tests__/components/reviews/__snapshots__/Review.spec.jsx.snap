@@ -10,7 +10,7 @@ exports[`<Review />  should match match snapshot 1`] = `
   <span
     className="meta-date"
   >
-    13 days ago
+    16 days ago
   </span>
   <hr />
   <p

@@ -13,7 +13,7 @@ import Loader from '../../common/Loader';
  * @class SingleRecipePage
  * @extends {Component}
  */
-class SingleRecipePage extends Component {
+export class SingleRecipePage extends Component {
   /**
    * @description Creates an instance of SingleRecipePage.
    * @param {any} props

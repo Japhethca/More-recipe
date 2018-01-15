@@ -13,7 +13,7 @@ import SignupForm from '../components/SignupForm';
  * @class Signup
  * @extends {Component}
  */
-class Signup extends Component {
+export class Signup extends Component {
   /**
    * @description Creates an instance of Signup.
    * @param {object} props

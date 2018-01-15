@@ -47,7 +47,7 @@ const Card = (props) => {
    */
   const renderUpdate = () => (
     <button
-      className="btn-floating white waves-effect waves-blue modal-trigger"
+      className="btn-floating white waves-effect waves-blue"
       onClick={onUpdateClick}
     >
       <i className="material-icons blue-text">edit</i>

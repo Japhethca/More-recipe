@@ -4,8 +4,8 @@ import { shallow } from 'enzyme';
 import DownvoteButton from '../../../ActionButtons/components/DownvoteButton';
 
 const props = {
-  upvotes: 2,
-  upvote: jest.fn(() => {})
+  downvotes: 2,
+  downvote: jest.fn(() => {})
 };
 
 describe('<DownvoteButton />', () => {

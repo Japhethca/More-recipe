@@ -2,11 +2,11 @@ import React from 'react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
 import Review from '../../../Reviews/components/Review';
-import recipesMock from '../../__mock__/recipesMock';
+import mockData from '../../__mock__/mockData';
 
 
 const props = {
-  review: recipesMock.Review
+  review: mockData.Review
 };
 
 describe('<Review /> ', () => {

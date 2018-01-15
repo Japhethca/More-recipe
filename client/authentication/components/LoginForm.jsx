@@ -62,7 +62,7 @@ const LoginForm = (props) => {
             </button>
           </div>
           <div className="auth-link">
-            <span> Don&#39;t have an Account? <Link to="/signup" href="/signup"> Sign Up Here </Link></span>
+            <span> Don&#39;t have an Account? <Link to="/signup" href="/signup">Sign Up Here</Link></span>
           </div>
         </form>
       </div>

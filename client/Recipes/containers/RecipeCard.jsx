@@ -11,7 +11,7 @@ import { handleDeleteRecipe, handleRemoveFromFavorites } from '../actions';
  * @class RecipeCard
  * @extends {Component}
  */
-class RecipeCard extends Component {
+export class RecipeCard extends Component {
   /**
    * @description Creates an instance of RecipeCard.
    * @param {object} props

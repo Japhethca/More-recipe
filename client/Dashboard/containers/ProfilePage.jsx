@@ -11,7 +11,7 @@ import { handleGetUserProfile } from '../actions';
  * @param {object} props
 
  */
-class ProfilePage extends Component {
+export class ProfilePage extends Component {
   /**
    * Creates an instance of ProfilePage.
    * @param {any} props

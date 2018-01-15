@@ -8,7 +8,7 @@ import { ADD_NEW_REVIEW_SUCCESS, ADD_NEW_REVIEW_FAILED } from '../Recipes/action
  * @param {object} review
  * @returns {object} - action
  */
-const addNewReviewSuccess = review => ({
+export const addNewReviewSuccess = review => ({
   type: ADD_NEW_REVIEW_SUCCESS,
   review
 });
@@ -16,7 +16,7 @@ const addNewReviewSuccess = review => ({
  * @param {object} review
  * @returns {object} - action
  */
-const addNewReviewFailed = () => ({
+export const addNewReviewFailed = () => ({
   type: ADD_NEW_REVIEW_FAILED,
 });
 

@@ -14,7 +14,7 @@ import handleSearch from '../actions';
  * @class SearchResultPage
  * @extends {Component}
  */
-class SearchResultPage extends Component {
+export class SearchResultPage extends Component {
   /**
    * @description Creates an instance of SearchResultPage.
    * @param {Object} props

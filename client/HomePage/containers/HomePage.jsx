@@ -23,7 +23,7 @@ const propTypes = {
  * @class HomePage
  * @extends {Component}
  */
-class HomePage extends Component {
+export class HomePage extends Component {
   /**
    * @description Creates an instance of Home.
    * @param {object} props

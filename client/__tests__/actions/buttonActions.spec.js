@@ -2,7 +2,7 @@ import expect from 'expect';
 
 import mockStore, { mock } from '../__mock__/configMockStore';
 import * as types from '../../Recipes/actionTypes';
-import recipesMock from '../__mock__/recipesMock';
+import mockData from '../__mock__/mockData';
 import * as actions from '../../ActionButtons/actions';
 import { handleAddToFavorites,
   handleRemoveFromFavorites } from '../../Recipes/actions';
@@ -17,13 +17,14 @@ describe('DOWNVOTE actions', () => {
   it('should create DOWNVOTE_RECIPE actions when recipe is downvoted', () => {
     mock.onGet('/api/recipe/1/downvote')
       .replyOnce(200, {
-        recipe: recipesMock.recipe,
+        recipe: mockData.recipe,
+        message: 'recipe downvoted'
       });
 
     const expectedActions = [
       {
         type: types.DOWNVOTE_RECIPE,
-        recipe: recipesMock.recipe
+        recipe: mockData.recipe
       },
     ];
     const store = mockStore({});
@@ -31,6 +32,14 @@ describe('DOWNVOTE actions', () => {
     store.dispatch(actions.handleDownvote(1)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
+  });
+
+  it('should match upvote action creator', () => {
+    const expected = recipe => ({
+      type: types.DOWNVOTE_RECIPE,
+      recipe
+    });
+    expect(actions.downvoteAction(mockData.recipe)).toEqual(expected(mockData.recipe));
   });
 });
 
@@ -43,20 +52,29 @@ describe('UPVOTE actions', () => {
   it('should create UPVOTE_RECIPE actions when recipe is upvoted', () => {
     mock.onGet('/api/recipe/1/upvote')
       .replyOnce(200, {
-        recipe: recipesMock.recipe,
+        message: 'recipe upvoted',
+        recipe: mockData.recipe,
       });
 
     const expectedActions = [
       {
         type: types.UPVOTE_RECIPE,
-        recipe: recipesMock.recipe
+        recipe: mockData.recipe
       },
     ];
     const store = mockStore({});
 
-    store.dispatch(actions.handleDownvote(1)).then(() => {
+    store.dispatch(actions.handleUpvote(1)).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
+  });
+
+  it('should match downvote action creator', () => {
+    const expected = recipe => ({
+      type: types.UPVOTE_RECIPE,
+      recipe
+    });
+    expect(actions.upvoteAction(mockData.recipe)).toEqual(expected(mockData.recipe));
   });
 });
 
@@ -69,13 +87,15 @@ describe('FAVORITE actions', () => {
   it('should create ADD_TO_FAVORITES actions when recipe is added to favorites', () => {
     mock.onGet('/api/users/favorites/1')
       .replyOnce(200, {
-        recipe: recipesMock.recipe,
+        recipe: mockData.recipe,
+        status: 'success',
+        message: 'recipe successfully added to favorites'
       });
 
     const expectedActions = [
       {
         type: types.ADD_TO_FAVORITES,
-        recipe: recipesMock.recipe
+        recipe: mockData.recipe
       },
     ];
     const store = mockStore({});

@@ -1,7 +1,7 @@
 import expect from 'expect';
 
 import mockStore, { mock } from '../__mock__/configMockStore';
-import recipesMock from '../__mock__/recipesMock';
+import mockData from '../__mock__/mockData';
 import { SEARCH_RECIPE_SUCCESS,
   SEARCH_RECIPE_START,
   SEARCH_RECIPE_FAILED } from '../../SearchPage/actionTypes';
@@ -17,7 +17,7 @@ describe('SEARCH RECIPE actions', () => {
   it('creates SEARCH_RECIPE_SUCCESS actions when fetching search results has been done', () => {
     mock.onGet('/api/recipes?search=egusi')
       .replyOnce(200, {
-        recipes: recipesMock.recipes,
+        recipes: mockData.recipes,
         count: 3
       });
 
@@ -27,7 +27,7 @@ describe('SEARCH RECIPE actions', () => {
       },
       {
         type: SEARCH_RECIPE_SUCCESS,
-        payload: recipesMock.recipes,
+        payload: mockData.recipes,
         currentPage: 1,
         totalPages: 1,
       },

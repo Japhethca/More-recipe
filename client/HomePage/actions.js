@@ -12,15 +12,13 @@ import {
  * @param {array} payload
  * @param {Number} currentPage
  * @param {Number} totalPages
- * @param {Boolean} isFetchingRecipes
  * @returns {object} of action type
  */
-const latestRecipesSuccess = (payload, currentPage, totalPages, isFetchingRecipes = false) => ({
+const latestRecipesSuccess = (payload, currentPage, totalPages) => ({
   type: FETCH_LATEST_RECIPES_SUCCESS,
   payload,
   currentPage,
   totalPages,
-  isFetching: isFetchingRecipes
 });
 
 /**
@@ -33,10 +31,6 @@ const latestRecipesFailed = () => ({
 
 /**
  * @description get all recipes action creators
- * @param {array} payload
- * @param {Number} currentPage
- * @param {Number} totalPages
- * @param {Boolean} isFetchingRecipes
  * @returns {object} of action type
  */
 const latestRecipesStart = () => ({

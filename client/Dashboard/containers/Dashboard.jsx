@@ -17,7 +17,7 @@ import '../styles/dashboard.scss';
  * @class Dashboard
  * @extends {Component}
  */
-class Dashboard extends Component {
+export class Dashboard extends Component {
   /**
    * @description logs user out of application onclick
    * @memberof Dashboard

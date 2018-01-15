@@ -12,7 +12,7 @@ import LoginForm from '../components/LoginForm';
  * @class Login
  * @extends {Component}
  */
-class Login extends Component {
+export class Login extends Component {
   /**
    * @description Creates an instance of Login.
    * @param {object} props - react props

@@ -11,7 +11,7 @@ import RecipeForm from '../components/RecipeForm';
  * @class CreateUpdateRecipe
  * @extends {Component}
  */
-class CreateUpdateRecipe extends Component {
+export class CreateUpdateRecipe extends Component {
 /**
  * @description Creates an instance of CreateUpdateRecipe.
  * @param {object} props

@@ -6,14 +6,24 @@ import rootReducer from '../reducers';
 import initialState from './initialState';
 
 // creates redux store
-const store = createStore(
+const devStore = createStore(
   rootReducer,
   initialState,
   compose(
-    applyMiddleware(thunk),
+    applyMiddleware(thunk.withExtraArgument()),
     reduxReset(),
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 );
 
+const prodStore = createStore(
+  rootReducer,
+  initialState,
+  compose(
+    applyMiddleware(thunk.withExtraArgument()),
+    reduxReset(),
+  )
+);
+
+const store = process.env.NODE_ENV === 'production' ? prodStore : devStore;
 export default store;

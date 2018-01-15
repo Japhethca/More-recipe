@@ -19,7 +19,7 @@ const propTypes = {
  * @class NavigationBar
  * @extends {Component}
  */
-class NavigationBar extends Component {
+export class NavigationBar extends Component {
   /**
    * Creates an instance of NavigationBar.
    * @param {object} props

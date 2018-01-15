@@ -67,7 +67,6 @@ export class ActionButtons extends Component {
    */
   onFavoriteClick = (event) => {
     event.preventDefault();
-    this.toggleFavorite();
     if (!this.isInFavorites()) {
       this.props.handleAddToFavorites(this.props.recipe);
     } else {
@@ -86,19 +85,6 @@ export class ActionButtons extends Component {
       return true;
     }
     return false;
-  }
-
-  /**
-   * @description handles toggling of favorite state
-   * @returns {undefined}
-   * @memberof ActionButtons
-   */
-  toggleFavorite = () => {
-    if (this.state.isFavorite) {
-      this.setState({ isFavorite: false });
-    } else {
-      this.setState({ isFavorite: true });
-    }
   }
 
   /**

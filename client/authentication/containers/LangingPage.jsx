@@ -12,7 +12,7 @@ import '../syles/landing.scss';
  * @description displays landing page
  * @returns {ReactElement} markup
  */
-class LandingPage extends Component {
+export class LandingPage extends Component {
   /**
    * @returns {ReactElement} markup
    * @memberof LandingPage

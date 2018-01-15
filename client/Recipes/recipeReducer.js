@@ -36,14 +36,10 @@ const initialState = {
   },
   userRecipes: {
     payload: [],
-    totalPages: 0,
-    currentPage: 0,
     isFetching: false
   },
   favorites: {
     payload: [],
-    totalPages: 0,
-    currentPage: 0,
     isFetching: false
   },
   recipe: {
@@ -287,10 +283,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userRecipes: {
-          currentPage: action.currentPage,
-          totalPages: action.totalPages,
           payload: [...action.payload],
-          isFetching: action.isFetching
+          isFetching: false
         },
         recipe: {
           ...state.recipe,
@@ -320,8 +314,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         favorites: {
-          currentPage: action.currentPage,
-          totalPages: action.totalPages,
           payload: [...action.payload],
           isFetching: false
         }
@@ -350,7 +342,10 @@ export default (state = initialState, action) => {
 
     case ADD_TO_FAVORITES_FAILED:
       return {
-        ...state
+        ...state,
+        favorites: {
+          ...state.favorites
+        }
       };
 
     case REMOVE_FROM_FAVORITES:
