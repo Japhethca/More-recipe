@@ -38,6 +38,9 @@
     "roots": [
       "./client"
     ],
+    "setupFiles": [
+      "raf/polyfill"
+    ],
     "setupTestFrameworkScriptFile": "./client/__tests__/setup.js",
     "testPathIgnorePatterns": [
       "client/__tests__/__mock__",
@@ -131,6 +134,7 @@
     "nightwatch": "^0.9.19",
     "node-sass": "^4.5.3",
     "nyc": "^11.2.1",
+    "raf": "^3.4.0",
     "react-test-renderer": "^16.0.0",
     "redux-mock-store": "^1.4.0",
     "sass-loader": "^6.0.6",

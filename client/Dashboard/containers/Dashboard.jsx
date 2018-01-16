@@ -4,16 +4,22 @@ import { connect } from 'react-redux';
 import { NavLink, Route } from 'react-router-dom';
 
 import ProfilePage from './ProfilePage';
-import Authenticate from '../../authentication';
+import AuthenticateRoute from '../../authentication/containers/AuthenticateRoute';
 import UserRecipesPage from './UserRecipesPage';
 import FavoritesPage from './FavoritesPage';
 import UpdateRecipe from '../../Recipes/components/RecipeUpdatePage';
 import CreateRecipe from '../../Recipes/containers/CreateUpdateRecipe';
 import { handleLogout } from '../../authentication/actions';
 import '../styles/dashboard.scss';
+
+
+const propTypes = {
+  handleLogout: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  profile: PropTypes.objectOf(PropTypes.any).isRequired
+};
+
 /**
- *
- *
  * @class Dashboard
  * @extends {Component}
  */
@@ -47,10 +53,10 @@ export class Dashboard extends Component {
             </ul>
           </div>
           <div className="col s12 m9 l9 content">
-            <Route path="/create" exact component={Authenticate(CreateRecipe)} />
-            <Route path="/favorites" exact component={Authenticate(FavoritesPage)} />
-            <Route path="/my-recipes" exact component={Authenticate(UserRecipesPage)} />
-            <Route path="/update/:id" exact component={Authenticate(UpdateRecipe)} />
+            <Route path="/create" exact component={AuthenticateRoute(CreateRecipe)} />
+            <Route path="/favorites" exact component={AuthenticateRoute(FavoritesPage)} />
+            <Route path="/my-recipes" exact component={AuthenticateRoute(UserRecipesPage)} />
+            <Route path="/update/:id" exact component={AuthenticateRoute(UpdateRecipe)} />
           </div>
         </div>
       </div>
@@ -58,16 +64,11 @@ export class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
-  handleLogout: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  profile: PropTypes.objectOf(PropTypes.any).isRequired
-};
+Dashboard.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   profile: state.profile
 });
-
 
 const mapDispatchToProps = {
   handleLogout

@@ -5,8 +5,6 @@ export default {
   },
   results: {
     payload: [],
-    totalPages: 0,
-    currentPage: 0,
     isFetching: false
   },
   auth: {

@@ -8,15 +8,21 @@ import { handleAuthRequest } from '../actions';
 import { signinValidator } from '../../utilities/validators';
 import LoginForm from '../components/LoginForm';
 
+const propTypes = {
+  authentication: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleAuthRequest: PropTypes.func.isRequired,
+  loader: PropTypes.objectOf(PropTypes.bool).isRequired
+};
+
 /**
- * @class Login
+ * @class LoginPage
  * @extends {Component}
  */
-export class Login extends Component {
+export class LoginPage extends Component {
   /**
-   * @description Creates an instance of Login.
+   * @description Creates an instance of LoginPage.
    * @param {object} props - react props
-   * @memberof Login
+   * @memberof LoginPage
    */
   constructor(props) {
     super(props);
@@ -30,7 +36,7 @@ export class Login extends Component {
   /**
    * @description handles input change events
    * @param {SyntheticEvent} event - onchange event
-   * @memberof Login
+   * @memberof LoginPage
    * @returns {undefined}
    */
   onChange = (event) => {
@@ -41,7 +47,7 @@ export class Login extends Component {
   /**
    * @description handles form submission
    * @param {SyntheticEvent} event - onsubmit event
-   * @memberof Login
+   * @memberof LoginPage
    * @returns {undefined}
    */
   onSubmit = (event) => {
@@ -54,7 +60,7 @@ export class Login extends Component {
   /**
    *
    * @description checks if form values are valid
-   * @memberof Login
+   * @memberof LoginPage
    * @returns {Boolean} - return true/false
    */
   isValid = () => {
@@ -70,7 +76,7 @@ export class Login extends Component {
   /**
    *
    *@description renders loagin page
-   * @memberof Login
+   * @memberof LoginPage
    * @returns {ReactElement} markup
    */
   render() {
@@ -95,11 +101,7 @@ export class Login extends Component {
   }
 }
 
-Login.propTypes = {
-  authentication: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleAuthRequest: PropTypes.func.isRequired,
-  loader: PropTypes.objectOf(PropTypes.bool).isRequired
-};
+LoginPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   authentication: state.auth,
@@ -107,4 +109,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { handleAuthRequest })(Login);
+export default connect(mapStateToProps, { handleAuthRequest })(LoginPage);

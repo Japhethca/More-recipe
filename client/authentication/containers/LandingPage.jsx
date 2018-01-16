@@ -5,8 +5,11 @@ import { connect } from 'react-redux';
 
 import NavigationBar from '../../common/NavigationBar';
 import Footer from '../../common/Footer';
-import '../syles/landing.scss';
+import '../styles/landing.scss';
 
+const propTypes = {
+  Authentication: PropTypes.objectOf(PropTypes.any).isRequired
+};
 
 /**
  * @description displays landing page
@@ -50,9 +53,7 @@ export class LandingPage extends Component {
   }
 }
 
-LandingPage.propTypes = {
-  Authentication: PropTypes.objectOf(PropTypes.any).isRequired
-};
+LandingPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   Authentication: state.auth

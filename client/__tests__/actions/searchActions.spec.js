@@ -28,8 +28,6 @@ describe('SEARCH RECIPE actions', () => {
       {
         type: SEARCH_RECIPE_SUCCESS,
         payload: mockData.recipes,
-        currentPage: 1,
-        totalPages: 1,
       },
     ];
     const store = mockStore({});

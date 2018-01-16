@@ -1,6 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const propTypes = {
+  name: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  iconClassName: PropTypes.string,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  errorText: PropTypes.arrayOf(PropTypes.string),
+  iconName: PropTypes.string,
+  errorClass: PropTypes.string,
+  placeholder: PropTypes.string,
+  labelClass: PropTypes.string
+};
+
+const defaultProps = {
+  name: '',
+  value: '',
+  className: '',
+  iconClassName: '',
+  label: '',
+  errorText: [],
+  iconName: '',
+  type: 'text',
+  errorClass: '',
+  placeholder: '',
+  labelClass: ''
+};
+
 /**
  * @description displays input field
  * @param {object} props
@@ -24,33 +53,8 @@ const TextField = props => (
   </div>
 );
 
-TextField.defaultProps = {
-  name: '',
-  value: '',
-  className: '',
-  iconClassName: '',
-  label: '',
-  errorText: [],
-  iconName: '',
-  type: 'text',
-  errorClass: '',
-  placeholder: '',
-  labelClass: ''
-};
+TextField.defaultProps = defaultProps;
 
-TextField.propTypes = {
-  name: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  className: PropTypes.string,
-  iconClassName: PropTypes.string,
-  label: PropTypes.string,
-  type: PropTypes.string,
-  errorText: PropTypes.arrayOf(PropTypes.string),
-  iconName: PropTypes.string,
-  errorClass: PropTypes.string,
-  placeholder: PropTypes.string,
-  labelClass: PropTypes.string
-};
+TextField.propTypes = propTypes;
 
 export default TextField;

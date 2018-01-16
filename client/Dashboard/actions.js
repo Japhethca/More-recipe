@@ -106,7 +106,7 @@ export const handleEditUserProfile = profileData => async (dispatch) => {
   dispatch(editProfileStartAction());
   if (typeof (profileData.photo) === 'object') {
     await upload(profileData.photo).then((res) => {
-      profileData.photo = res.body.url;
+      profileData.photo = res.body.secure_url;
     }).catch(() => {
       dispatch(editProfileFailedAction());
       toastr.error('failed to load image');

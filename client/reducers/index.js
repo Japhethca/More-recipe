@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
-import { authReducer } from '../authentication';
+import authReducer from '../authentication/reducer';
 import profileReducer from '../Dashboard/reducer';
 import loader from './loader';
 import recipeReducer from '../Recipes/recipeReducer';

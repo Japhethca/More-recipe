@@ -6,6 +6,12 @@ import Recipes from '../../Recipes';
 import { handleGetUserRecipes } from '../actions';
 import Loader from '../../common/Loader';
 
+
+const propTypes = {
+  userRecipes: PropTypes.objectOf(PropTypes.shape).isRequired,
+  handleGetUserRecipes: PropTypes.func.isRequired,
+};
+
 /**
  * @description User recipes page component
  * @class UserRecipesPage
@@ -70,10 +76,7 @@ export class UserRecipesPage extends Component {
   }
 }
 
-UserRecipesPage.propTypes = {
-  userRecipes: PropTypes.objectOf(PropTypes.shape).isRequired,
-  handleGetUserRecipes: PropTypes.func.isRequired,
-};
+UserRecipesPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   userRecipes: state.recipeReducer.userRecipes,

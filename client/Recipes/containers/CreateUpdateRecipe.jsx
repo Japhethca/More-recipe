@@ -7,6 +7,23 @@ import { recipeFormValidator } from '../../utilities/validators';
 import { handleCreateRecipe, handleUpdateRecipe } from '../actions';
 import RecipeForm from '../components/RecipeForm';
 
+
+const propTypes = {
+  handleCreateRecipe: PropTypes.func.isRequired,
+  handleUpdateRecipe: PropTypes.func.isRequired,
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  recipeUpdateData: PropTypes.objectOf(PropTypes.any),
+  title: PropTypes.string,
+  type: PropTypes.string,
+  loader: PropTypes.objectOf(PropTypes.any).isRequired
+};
+
+const defaultProps = {
+  title: 'Create Recipe',
+  type: 'create',
+  recipeUpdateData: {},
+};
+
 /**
  * @class CreateUpdateRecipe
  * @extends {Component}
@@ -141,21 +158,9 @@ export class CreateUpdateRecipe extends Component {
   }
 }
 
-CreateUpdateRecipe.propTypes = {
-  handleCreateRecipe: PropTypes.func.isRequired,
-  handleUpdateRecipe: PropTypes.func.isRequired,
-  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
-  recipeUpdateData: PropTypes.objectOf(PropTypes.any),
-  title: PropTypes.string,
-  type: PropTypes.string,
-  loader: PropTypes.objectOf(PropTypes.any).isRequired
-};
+CreateUpdateRecipe.propTypes = propTypes;
 
-CreateUpdateRecipe.defaultProps = {
-  title: 'Create Recipe',
-  type: 'create',
-  recipeUpdateData: {},
-};
+CreateUpdateRecipe.defaultProps = defaultProps;
 
 const mapStateToProps = state => ({
   loader: state.loader,

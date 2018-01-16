@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 
 import UpdateRecipe from '../containers/CreateUpdateRecipe';
 
+
+const propTypes = {
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired
+};
+
 /**
  * @description renders recipe update page
  * @param {Object} props
@@ -19,9 +25,6 @@ const RecipeUpdatePage = ({ location, history }) => {
   );
 };
 
-RecipeUpdatePage.propTypes = {
-  location: PropTypes.objectOf(PropTypes.any).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired
-};
+RecipeUpdatePage.propTypes = propTypes;
 
 export default RecipeUpdatePage;

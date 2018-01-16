@@ -22,6 +22,10 @@ const propTypes = {
   hidden: PropTypes.bool
 };
 
+const defaultProps = {
+  hidden: false
+};
+
 /**
  * @description container for holding buttons
  * @class ActionButtons
@@ -137,15 +141,14 @@ export class ActionButtons extends Component {
   }
 }
 
+
+ActionButtons.defaultProps = defaultProps;
+
+ActionButtons.propTypes = propTypes;
+
 const mapStateToProps = state => ({
   favorites: state.recipeReducer.favorites.payload
 });
-
-ActionButtons.defaultProps = {
-  hidden: false
-};
-
-ActionButtons.propTypes = propTypes;
 
 export default connect(mapStateToProps, {
   handleAddToFavorites,

@@ -6,10 +6,15 @@ import ProfileView from '../components/ProfileView';
 import ProfileModal from '../components/ProfileModal';
 import { handleGetUserProfile } from '../actions';
 
+
+const propTypes = {
+  profile: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleGetUserProfile: PropTypes.func.isRequired
+};
+
 /**
  * @description renders profile page
  * @param {object} props
-
  */
 export class ProfilePage extends Component {
   /**
@@ -63,10 +68,7 @@ export class ProfilePage extends Component {
   }
 }
 
-ProfilePage.propTypes = {
-  profile: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleGetUserProfile: PropTypes.func.isRequired
-};
+ProfilePage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   profile: state.profile,

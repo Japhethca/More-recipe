@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import ReactPaginate from 'react-paginate';
 import PropTypes from 'prop-types';
 
-import './pagination.scss';
+import './styles/pagination.scss';
+
+const propTypes = {
+  totalPages: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  handlePagination: PropTypes.func.isRequired
+};
 
 
 /**
@@ -68,11 +74,6 @@ export class Pagination extends Component {
   }
 }
 
-Pagination.propTypes = {
-  totalPages: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  handlePagination: PropTypes.func.isRequired
-};
-
+Pagination.propTypes = propTypes;
 
 export default Pagination;

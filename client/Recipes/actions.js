@@ -50,7 +50,7 @@ export const handleCreateRecipe = recipeData => async (dispatch) => {
   dispatch(isFetching(true));
   if (typeof (recipeData.image) === 'object') {
     await upload(recipeData.image).then((res) => {
-      recipeData.image = res.body.url;
+      recipeData.image = res.body.secure_url;
     }).catch(() => {
       dispatch(isFetching(false));
       toastr.error('failed to load image');
@@ -86,7 +86,7 @@ export const handleUpdateRecipe = recipeData => async (dispatch) => {
   dispatch(isFetching(true));
   if (typeof (recipeData.image) === 'object') {
     await upload(recipeData.image).then((res) => {
-      recipeData.image = res.body.url;
+      recipeData.image = res.body.secure_url;
     }).catch(() => {
       dispatch(isFetching(false));
       toastr.error('failed to load image');

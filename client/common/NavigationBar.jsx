@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import SearchForm from '../SearchPage/components/SearchForm';
 import { handleLogout as logout } from '../authentication/actions';
-import './navigationBar.scss';
+import './styles/navigationBar.scss';
 
 
 const propTypes = {
@@ -13,6 +13,10 @@ const propTypes = {
   logout: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   bgColor: PropTypes.string,
+};
+
+const defaultProps = {
+  bgColor: '$nav-background-color'
 };
 
 /**
@@ -184,11 +188,10 @@ export class NavigationBar extends Component {
   }
 }
 
-NavigationBar.defaultProps = {
-  bgColor: '$nav-background-color'
-};
-
 NavigationBar.propTypes = propTypes;
+
+NavigationBar.defaultProps = defaultProps;
+
 
 const mapStateToProps = state => ({
   user: state.auth

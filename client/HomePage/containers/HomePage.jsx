@@ -10,6 +10,7 @@ import Pagination from '../../common/Pagination';
 import Loader from '../../common/Loader';
 import '../style.scss';
 
+
 const propTypes = {
   getAllRecipes: PropTypes.func.isRequired,
   handleGetFavorites: PropTypes.func.isRequired,

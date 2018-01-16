@@ -3,8 +3,16 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import TextField from '../../common/TextField';
-import '../syles/authentication.scss';
+import '../styles/authentication.scss';
 
+const propTypes = {
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  serverErrors: PropTypes.string.isRequired,
+  validationErrors: PropTypes.objectOf(PropTypes.any).isRequired,
+  formData: PropTypes.objectOf(PropTypes.any).isRequired,
+  isFetching: PropTypes.bool.isRequired
+};
 
 /**
  * @description displays downvote button
@@ -71,14 +79,6 @@ const LoginForm = (props) => {
 };
 
 
-LoginForm.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  serverErrors: PropTypes.string.isRequired,
-  validationErrors: PropTypes.objectOf(PropTypes.any).isRequired,
-  formData: PropTypes.objectOf(PropTypes.any).isRequired,
-  isFetching: PropTypes.bool.isRequired
-};
-
+LoginForm.propTypes = propTypes;
 
 export default LoginForm;

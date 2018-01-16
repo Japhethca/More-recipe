@@ -3,13 +3,13 @@ import { shallow } from 'enzyme';
 import TextField from '../../../common/TextField';
 
 const props = {
-  name: 'textfield',
+  name: '',
   value: '',
   onChange: jest.fn(),
   className: '',
   iconClassName: '',
   label: '',
-  type: 'text',
+  type: '',
   errorText: [],
   iconName: '',
   errorClass: '',
