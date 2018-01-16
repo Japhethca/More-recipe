@@ -71,7 +71,25 @@ $user-text-color: #5151b6;
   border-radius: 5px;
   color: $review-color;
   margin: 5px auto;
-  padding: 10px 5px;
+  padding: 10px;
+  height: 170px;
+  overflow: auto;
+
+  @media only screen
+  and (min-device-width: 690px)
+  and (max-device-width: 995px)
+  and (-webkit-min-device-pixel-ratio: 1) {
+    height: auto;
+    overflow: visible;
+  }
+
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    height: auto;
+    overflow: visible;
+  }
 
   .meta-date {
     font-family: 'Ubuntu', sans-serif;

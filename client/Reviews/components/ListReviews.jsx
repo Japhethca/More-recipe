@@ -19,7 +19,7 @@ const ListReviews = ({ reviews }) => (
     {reviews.length < 1 && <span className="no-reviews">No reviews yet!</span>}
     <div className="row">
       {reviews.map(review => (
-        <div key={review.id} className="col s12 m6">
+        <div key={review.id} className="col s12 m12 l6">
           <Review review={review} />
         </div>
       ))
