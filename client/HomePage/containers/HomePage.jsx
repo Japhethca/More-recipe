@@ -91,7 +91,7 @@ export class HomePage extends Component {
             <h3>Latest Recipes</h3>
             <Recipes
               recipes={this.state.recipes}
-              className="col s12 m6 l3"
+              className="col s12 m6 l4"
               showActionBtns
             />
             <div className="pagination">
