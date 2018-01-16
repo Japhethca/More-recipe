@@ -20,7 +20,7 @@ const propTypes = {
  * @class SearchForm
  * @extends {Component}
  */
-class SearchForm extends Component {
+export class SearchForm extends Component {
   /**
    * @description Creates an instance of SearchForm.
    * @param {object} props

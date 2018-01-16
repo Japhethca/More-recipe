@@ -12,7 +12,7 @@ import {
  * @param {object} recipe
  * @returns {object} action object
  */
-const downvoteAction = recipe => ({
+export const downvoteAction = recipe => ({
   type: DOWNVOTE_RECIPE,
   recipe
 });
@@ -28,12 +28,12 @@ export const handleDownvote = id => dispatch => axios.put(`/api/recipe/${id}/dow
     dispatch(downvoteAction(res.data.recipe));
   });
 
-  /**
+/**
   *@description dispatched on recipe upvote
  * @param {object} recipe - recipe object
  * @returns {object} action
  */
-const upvoteAction = recipe => ({
+export const upvoteAction = recipe => ({
   type: UPVOTE_RECIPE,
   recipe
 });

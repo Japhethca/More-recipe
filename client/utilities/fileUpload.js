@@ -1,6 +1,7 @@
 import superagent from 'superagent';
 import sha1 from 'sha1';
 
+
 /**
  *@description handles submiting image on cloudinary
  * @param {object} data - image object
@@ -24,6 +25,7 @@ const upload = (data) => {
   Object.keys(params).forEach((key) => {
     uploadRequest.field(key, params[key]);
   });
+
   return uploadRequest;
 };
 

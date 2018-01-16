@@ -94,3 +94,27 @@ $error-txt-color: $red-color;
     }
   }
 }
+
+.recipe-not-found {
+  text-align: center;
+
+  h4 {
+    color: $header-bg-color;
+    font-family: 'Spectral SC', serif;
+    font-size: 100px;
+    font-weight: bolder;
+    margin-top: 15vh;
+  }
+
+  span {
+    font-size: 20px;
+  }
+
+  .home {
+    color: $brown-color;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,7 +1,6 @@
-@import "../styles/sass/base";
+@import "../../styles/sass/base";
 
 $pagination-bg-color-link: #393030;
-
 
 .pag-list {
 
@@ -12,6 +11,7 @@ $pagination-bg-color-link: #393030;
     padding: 10px;
   }
 }
+
 .pagination li a {
   color: $pagination-bg-color-link;
   display: inline-block;
@@ -19,6 +19,7 @@ $pagination-bg-color-link: #393030;
   line-height: inherit;
   padding: 0 10px;
 }
+
 .link {
   cursor: pointer;
 
@@ -35,16 +36,16 @@ $pagination-bg-color-link: #393030;
 
 .active-page {
   background-color: $brown-color;
-  color: $white-color;
+
+  a {
+    color: $white-color;
+  }
 
   &:focus {
     border: 0;
   }
 }
 
-.link + .active-page {
-  color: $white-color;
-}
 
 .next-prev {
 

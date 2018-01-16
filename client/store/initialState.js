@@ -5,8 +5,6 @@ export default {
   },
   results: {
     payload: [],
-    totalPages: 0,
-    currentPage: 0,
     isFetching: false
   },
   auth: {
@@ -15,7 +13,6 @@ export default {
     errors: ''
   },
   recipeReducer: {
-    NotFound: false,
     recipes: {
       payload: [],
       totalPages: 0,
@@ -24,14 +21,10 @@ export default {
     },
     userRecipes: {
       payload: [],
-      totalPages: 0,
-      currentPage: 0,
       isFetching: false
     },
     favorites: {
       payload: [],
-      totalPages: 0,
-      currentPage: 0,
       isFetching: false
     },
     recipe: {

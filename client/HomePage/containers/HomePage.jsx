@@ -10,6 +10,7 @@ import Pagination from '../../common/Pagination';
 import Loader from '../../common/Loader';
 import '../style.scss';
 
+
 const propTypes = {
   getAllRecipes: PropTypes.func.isRequired,
   handleGetFavorites: PropTypes.func.isRequired,
@@ -23,7 +24,7 @@ const propTypes = {
  * @class HomePage
  * @extends {Component}
  */
-class HomePage extends Component {
+export class HomePage extends Component {
   /**
    * @description Creates an instance of Home.
    * @param {object} props

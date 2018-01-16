@@ -18,7 +18,6 @@ import {
   UPDATE_RECIPE,
   DOWNVOTE_RECIPE,
   REMOVE_FROM_FAVORITES,
-  NOT_FOUND,
   DELETE_USER_RECIPE,
   ADD_TO_FAVORITES,
   RECIPE_CREATED,
@@ -29,7 +28,6 @@ import {
 
 
 const initialState = {
-  NotFound: false,
   recipes: {
     payload: [],
     totalPages: 0,
@@ -38,14 +36,10 @@ const initialState = {
   },
   userRecipes: {
     payload: [],
-    totalPages: 0,
-    currentPage: 0,
     isFetching: false
   },
   favorites: {
     payload: [],
-    totalPages: 0,
-    currentPage: 0,
     isFetching: false
   },
   recipe: {
@@ -289,10 +283,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userRecipes: {
-          currentPage: action.currentPage,
-          totalPages: action.totalPages,
           payload: [...action.payload],
-          isFetching: action.isFetching
+          isFetching: false
         },
         recipe: {
           ...state.recipe,
@@ -322,8 +314,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         favorites: {
-          currentPage: action.currentPage,
-          totalPages: action.totalPages,
           payload: [...action.payload],
           isFetching: false
         }
@@ -354,9 +344,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         favorites: {
-          payload: [
-            ...state.favorites.payload
-          ]
+          ...state.favorites
         }
       };
 
@@ -374,11 +362,6 @@ export default (state = initialState, action) => {
         favorites: {
           ...state.favorites
         }
-      };
-
-    case NOT_FOUND:
-      return {
-        ...state, NotFound: action.status
       };
 
     default:

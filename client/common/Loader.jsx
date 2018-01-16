@@ -2,7 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { GridLoader } from 'react-spinners';
 
-import './loader.scss';
+import './styles/loader.scss';
+
+const propTypes = {
+  isFetching: PropTypes.bool
+};
+
+const defaultProps = {
+  isFetching: false
+};
 
 /**
  * @description displays loading indicator
@@ -18,12 +26,8 @@ const Loader = props => (
   </div>
 );
 
-Loader.propTypes = {
-  isFetching: PropTypes.bool
-};
+Loader.propTypes = propTypes;
 
-Loader.defaultProps = {
-  isFetching: false
-};
+Loader.defaultProps = defaultProps;
 
 export default Loader;

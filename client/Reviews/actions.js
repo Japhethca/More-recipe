@@ -8,7 +8,7 @@ import { ADD_NEW_REVIEW_SUCCESS, ADD_NEW_REVIEW_FAILED } from '../Recipes/action
  * @param {object} review
  * @returns {object} - action
  */
-const addNewReviewSuccess = review => ({
+export const addNewReviewSuccess = review => ({
   type: ADD_NEW_REVIEW_SUCCESS,
   review
 });
@@ -16,7 +16,7 @@ const addNewReviewSuccess = review => ({
  * @param {object} review
  * @returns {object} - action
  */
-const addNewReviewFailed = () => ({
+export const addNewReviewFailed = () => ({
   type: ADD_NEW_REVIEW_FAILED,
 });
 
@@ -27,14 +27,12 @@ const addNewReviewFailed = () => ({
  * @param {Object} data - form content data
  * @returns {Promise} - returns a promise object
  */
-export default (id, data) => (dispatch) => {
-  axios.post(`/api/recipe/${id}/review`, data)
-    .then((response) => {
-      dispatch(addNewReviewSuccess(response.data.review));
-      toastr.success(response.data.message);
-    }).catch((error) => {
-      dispatch(addNewReviewFailed());
-      toastr.error(error.response.data.message);
-    });
-};
+export default (id, data) => dispatch => axios.post(`/api/recipe/${id}/review`, data)
+  .then((response) => {
+    dispatch(addNewReviewSuccess(response.data.review));
+    toastr.success(response.data.message);
+  }).catch((error) => {
+    dispatch(addNewReviewFailed());
+    toastr.error(error.response.data.message);
+  });
 

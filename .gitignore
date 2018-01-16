@@ -4,5 +4,5 @@ node_modules
 .nyc_output
 coverage
 .DS_Store
-selenium-debug.log
 bin
+selenium-debug.log

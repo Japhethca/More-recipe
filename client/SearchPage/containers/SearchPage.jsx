@@ -8,13 +8,18 @@ import Loader from '../../common/Loader';
 import Recipes from '../../Recipes';
 import handleSearch from '../actions';
 
+const propTypes = {
+  results: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleSearch: PropTypes.func.isRequired,
+};
 
 /**
  * @description Search result page
  * @class SearchResultPage
  * @extends {Component}
  */
-class SearchResultPage extends Component {
+export class SearchResultPage extends Component {
   /**
    * @description Creates an instance of SearchResultPage.
    * @param {Object} props
@@ -64,7 +69,7 @@ class SearchResultPage extends Component {
     const { query } = qs.parse(this.props.history.location.search, { ignoreQueryPrefix: true });
     const results = this.state.searchResults.payload;
     return (
-      <div className="container">
+      <div className="container search-page">
         {
           this.props.results.isFetching ? <Loader isFetching /> :
 
@@ -80,11 +85,7 @@ class SearchResultPage extends Component {
   }
 }
 
-SearchResultPage.propTypes = {
-  results: PropTypes.objectOf(PropTypes.any).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleSearch: PropTypes.func.isRequired,
-};
+SearchResultPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   results: state.results,

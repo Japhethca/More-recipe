@@ -4,18 +4,24 @@ import { connect } from 'react-redux';
 import { NavLink, Route } from 'react-router-dom';
 
 import ProfilePage from './ProfilePage';
-import AuthenticateRoute from '../../authentication';
+import AuthenticateRoute from '../../authentication/containers/AuthenticateRoute';
 import UserRecipesPage from './UserRecipesPage';
 import FavoritesPage from './FavoritesPage';
 import { handleLogout } from '../../authentication/actions';
 import '../styles/dashboard.scss';
+
+
+const propTypes = {
+  handleLogout: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  profile: PropTypes.objectOf(PropTypes.any).isRequired
+};
+
 /**
- *
- *
  * @class Dashboard
  * @extends {Component}
  */
-class Dashboard extends Component {
+export class Dashboard extends Component {
   /**
    * @description logs user out of application onclick
    * @memberof Dashboard
@@ -54,16 +60,11 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
-  handleLogout: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  profile: PropTypes.objectOf(PropTypes.any).isRequired
-};
+Dashboard.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   profile: state.profile
 });
-
 
 const mapDispatchToProps = {
   handleLogout

@@ -7,6 +7,11 @@ const propTypes = {
   hidden: PropTypes.bool
 };
 
+const defaultProps = {
+  reviews: 0,
+  hidden: false
+};
+
 /**
  * @description displays review button
  * @param {object} props - React props
@@ -22,8 +27,6 @@ const ReviewButton = ({ reviews, hidden }) => (
 );
 
 ReviewButton.propTypes = propTypes;
-ReviewButton.defaultProps = {
-  reviews: 0,
-  hidden: false
-};
+ReviewButton.defaultProps = defaultProps;
+
 export default ReviewButton;

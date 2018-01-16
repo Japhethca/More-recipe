@@ -1,2 +1,4 @@
 node_modules
 public
+client/__tests__
+e2e-tests

@@ -4,7 +4,9 @@ import ReduxToastr from 'react-redux-toastr';
 
 import NavigationBar from '../common/NavigationBar';
 import Footer from '../common/Footer';
-import AuthenticateRoute, { LoginPage, SignupPage } from '../authentication';
+import AuthenticateRoute from '../authentication/containers/AuthenticateRoute';
+import LoginPage from '../authentication/containers/LoginPage';
+import SignupPage from '../authentication/containers/SignupPage';
 import HomePage from '../HomePage';
 import UpdateRecipe from '../Recipes/components/RecipeUpdatePage';
 import CreateRecipe from '../Recipes/containers/CreateUpdateRecipe';
@@ -43,7 +45,6 @@ const App = () => (
     </div>
     <Footer />
   </div>
-
 );
 
 

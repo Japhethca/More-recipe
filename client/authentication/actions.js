@@ -58,7 +58,7 @@ export const handleAuthRequest = (userdata, requestType) => {
 
   return (dispatch) => {
     dispatch(isFetching(true));
-    axios.post(url, userdata)
+    return axios.post(url, userdata)
       .then((res) => {
         const { token } = res.data;
         localStorage.setItem('token', token);

@@ -49,7 +49,6 @@ const RecipeForm = (props) => {
     </div>
   );
 
-
   /**
    * @description renders a text field
    * @param {string} name
@@ -58,15 +57,14 @@ const RecipeForm = (props) => {
    * @return {DomElement} - html markup
    */
   const renderInputFieldFor = (name, label, validator) => (
-    <div>
+    <div className="input-field col s12 text-field">
       <input
         name={name}
         type="text"
         value={props.recipe[name]}
         onChange={props.onChange}
-        placeholder={label}
-        className="text-field"
       />
+      <label className="active" htmlFor={name}>{label}</label>
       {validator && <span className="error-text"> { validator[0] }</span>}
     </div>);
 

@@ -8,7 +8,7 @@ dotenv.config();
 
 module.exports = {
   devtool: 'eval-source-map',
-  entry: [
+  entry: ['babel-polyfill',
     './client/index.jsx'
   ],
   target: 'web',
@@ -58,6 +58,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
+        NODE_ENV: JSON.stringify('development'),
         CLOUDINARY_NAME: JSON.stringify(process.env.CLOUDINARY_NAME),
         CLOUDINARY_PRESETS: JSON.stringify(process.env.CLOUDINARY_PRESETS),
         CLOUDINARY_API_KEYS: JSON.stringify(process.env.CLOUDINARY_API_KEYS),
