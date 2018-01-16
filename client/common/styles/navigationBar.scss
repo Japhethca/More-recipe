@@ -1,9 +1,9 @@
-$nav-background-color: #fff;
-$grey-color: #808080;
-$nav-color: rgb(223, 63, 63);
-$black-color: #222;
+@import "../../styles/sass/base";
+
+$nav-background-color: $white-color;
+$nav-color: $red-color;
 $btn-backround-color: #eeeeee;
-$btn-color: #fff;
+$btn-color: $white-color;
 $btn-hover: rgba(255, 255, 0, 0.459);
 
 .nav-menu {

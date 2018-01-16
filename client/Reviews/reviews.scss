@@ -1,19 +1,18 @@
-
-$brown-color: rgb(165, 42, 42);
+@import "../styles/sass/base";
 
 $review-color: #808080;
 $textarea-border-color: $review-color;
 $text-area-text-color: darken($review-color, 10);
-$text-area-bg-color: #fff;
+$text-area-bg-color: $white-color;
 
 $btn-border-color: $textarea-border-color;
 $btn-color: $btn-border-color;
-$btn-bg-color: #fff;
+$btn-bg-color: $white-color;
 $btn-hover-bg-color: $btn-color;
 $btn-hover-color: $btn-bg-color;
 
 $no-reviews-color: lighten($review-color, 10);
-$review-bg-color: #fff;
+$review-bg-color: $white-color;
 $user-text-color: #5151b6;
 
 
@@ -72,7 +71,25 @@ $user-text-color: #5151b6;
   border-radius: 5px;
   color: $review-color;
   margin: 5px auto;
-  padding: 10px 5px;
+  padding: 10px;
+  height: 170px;
+  overflow: auto;
+
+  @media only screen
+  and (min-device-width: 690px)
+  and (max-device-width: 995px)
+  and (-webkit-min-device-pixel-ratio: 1) {
+    height: auto;
+    overflow: visible;
+  }
+
+  @media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    height: auto;
+    overflow: visible;
+  }
 
   .meta-date {
     font-family: 'Ubuntu', sans-serif;

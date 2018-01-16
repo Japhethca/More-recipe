@@ -7,8 +7,6 @@ import ProfilePage from './ProfilePage';
 import AuthenticateRoute from '../../authentication/containers/AuthenticateRoute';
 import UserRecipesPage from './UserRecipesPage';
 import FavoritesPage from './FavoritesPage';
-import UpdateRecipe from '../../Recipes/components/RecipeUpdatePage';
-import CreateRecipe from '../../Recipes/containers/CreateUpdateRecipe';
 import { handleLogout } from '../../authentication/actions';
 import '../styles/dashboard.scss';
 
@@ -53,10 +51,8 @@ export class Dashboard extends Component {
             </ul>
           </div>
           <div className="col s12 m9 l9 content">
-            <Route path="/create" exact component={AuthenticateRoute(CreateRecipe)} />
             <Route path="/favorites" exact component={AuthenticateRoute(FavoritesPage)} />
             <Route path="/my-recipes" exact component={AuthenticateRoute(UserRecipesPage)} />
-            <Route path="/update/:id" exact component={AuthenticateRoute(UpdateRecipe)} />
           </div>
         </div>
       </div>

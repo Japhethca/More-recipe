@@ -1,9 +1,11 @@
-$action-button-bg-color: #fff;
-$button-color: rgb(41, 16, 16);
+@import "../styles/sass/base";
 
+$action-button-bg-color: $white-color;
+$button-color: rgb(41, 16, 16);
+$action-btn-color: rgb(77, 75, 75);
 
 .action-btns {
-  color: rgb(77, 75, 75);
+  color: $action-btn-color;
   font-size: 15px;
   cursor: pointer;
 
@@ -35,7 +37,7 @@ $button-color: rgb(41, 16, 16);
   }
 }
 .favorite {
-  color: red;
+  color: $red-color;
 }
 
 .hide {

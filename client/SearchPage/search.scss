@@ -1,8 +1,10 @@
-$search-bg-color: #fff;
-$search-txt-color: #222;
-$search-active-bg-color: lighten(rgb(212, 48, 48), 5);
-$search-active-color: #fff;
-$search-border-color: rgb(128, 128, 128);
+@import "../styles/sass/base";
+
+$search-bg-color: $white-color;
+$search-txt-color: $black-color;
+$search-active-bg-color: lighten($red-color, 5);
+$search-active-color: $white-color;
+$search-border-color: lighten($grey-color, 0.5);
 
 
 .search-input {
@@ -15,9 +17,17 @@ $search-border-color: rgb(128, 128, 128);
     padding: 0 5px;
     width: 200px;
 
+    @media (min-width:1025px) {
+      width: inherit;
+    }
+
+    @media (min-width:801px) {
+      width: inherit;
+    }
+
     @media only screen
-    and (min-device-width: 768px)
-    and (max-device-width: 1366px)
+    and (min-device-width: 690px)
+    and (max-device-width: 995px)
     and (-webkit-min-device-pixel-ratio: 1) {
       height: 50px;
       width: 98vw;
@@ -39,9 +49,17 @@ $search-border-color: rgb(128, 128, 128);
       color: $search-active-color;
       width: 400px;
 
+      @media (min-width:1025px) {
+        width: inherit;
+      }
+
+      @media (min-width:801px) {
+        width: 400px;
+      }
+
       @media only screen
-      and (min-device-width: 768px)
-      and (max-device-width: 1366px)
+      and (min-device-width: 690px)
+      and (max-device-width: 995px)
       and (-webkit-min-device-pixel-ratio: 1) {
         width: 98.5vw;
       }

@@ -1,17 +1,20 @@
-$border-color: rgb(17, 110, 110);
-$red-color: #ff0000;
-$btn-color: #fff;
-$btn-bg-color: #808080;
+@import "../../styles/sass/base";
+
+$red-color: $red-color;
+$btn-color: $white-color;
+$btn-bg-color: $grey-color;
 $btn-hover-bg-color: darken($btn-bg-color, 5);
-$upload-btn-color: #808080;
-$upload-btn-bg-color: #fff;
+$upload-btn-color: $grey-color;
+$upload-btn-bg-color: $white-color;
 
 .card {
   margin: 10px;
   padding: 10px;
+  margin-top: 30px;
 
   .header {
     margin-bottom: 30px;
+    text-align: center;
   }
 
   .image-class {

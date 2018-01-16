@@ -1,7 +1,7 @@
 import express from 'express';
 import swaggerUI from 'swagger-ui-express';
 
-import ApiV1 from './ApiV1';
+import apiV1 from './apiV1';
 import Authenticator from '../middlewares/Authenticator';
 
 const swaggerDocs = require('../../swagger.json');
@@ -13,11 +13,11 @@ const options = {
 };
 
 
-const ApiRouter = express.Router();
+const apiRouter = express.Router();
 
-ApiRouter.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs, options));
-ApiRouter.use(Authenticator.authenticate);
-ApiRouter.use(ApiV1);
-ApiRouter.use('/v1', Authenticator.authenticate, ApiV1);
+apiRouter.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs, options));
+apiRouter.use(Authenticator.authenticate);
+apiRouter.use(apiV1);
+apiRouter.use('/v1', Authenticator.authenticate, apiV1);
 
-export default ApiRouter;
+export default apiRouter;

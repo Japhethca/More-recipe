@@ -20,6 +20,6 @@ describe('<App />', () => {
   it('should contain a Switch and Route element', () => {
     const wrapper = shallow(<App />);
     expect(wrapper.find('Switch').length).toBe(1);
-    expect(wrapper.find('Route').length).toBe(6);
+    expect(wrapper.find('Route').length).toBe(8);
   });
 });

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 import models from '../models';
+import pagination from '../middlewares/pagination';
 import { checkQuery } from '../middlewares/validators';
 
 const { Recipes, Users, Reviews } = models;
@@ -57,10 +58,7 @@ export const sortOrOrderRecipes = (request, response, next) => {
  */
 export const searchRecipe = (request, response, next) => {
   if (request.query.search) {
-    const limit = request.query.limit || 10;
-    const page = parseInt(request.query.page, 10) || 1;
-    const offset = page !== 1 ? limit * (page - 1) : null;
-
+    const { limit, page, offset } = pagination(request.query.limit, request.query.page);
     return Recipes.findAndCountAll({
       limit,
       offset,
@@ -92,6 +90,8 @@ export const searchRecipe = (request, response, next) => {
           response.status(200).json({
             status: 'success',
             message: 'Search Result(s)',
+            currentPage: page,
+            totalPages: limit === null ? 1 : Math.ceil(result.count / limit),
             count: result.count,
             recipes: result.rows
           });
@@ -113,13 +113,7 @@ export const searchRecipe = (request, response, next) => {
  * @returns {Object} - Http response
  */
 export const allRecipes = (request, response) => {
-  let limit = null;
-  if (parseInt(request.query.limit, 10)) {
-    limit = request.query.limit || null;
-  }
-  const page = parseInt(request.query.page, 10) || 1;
-  const offset = page !== 1 ? limit * (page - 1) : null;
-
+  const { limit, page, offset } = pagination(request.query.limit, request.query.page);
   return Recipes.findAndCountAll({
     include: [
       {
@@ -137,6 +131,8 @@ export const allRecipes = (request, response) => {
         return response.status(200).json({
           status: 'success',
           message: 'All recipes:',
+          currentPage: page,
+          totalPages: limit === null ? 1 : Math.ceil(result.count / limit),
           count: result.count,
           recipes: result.rows
         });
@@ -333,13 +329,7 @@ export const deleteRecipe = (request, response) => {
  * @returns {object} Http response
  */
 export const getUserRecipes = (request, response) => {
-  let limit = null;
-  if (parseInt(request.query.limit, 10)) {
-    limit = request.query.limit || null;
-  }
-  const page = parseInt(request.query.page, 10) || 1;
-  const offset = page !== 1 ? limit * (page - 1) : null;
-
+  const { limit, page, offset } = pagination(request.query.limit, request.query.page);
   return Recipes.findAndCountAll({
     limit,
     offset,
@@ -362,6 +352,8 @@ export const getUserRecipes = (request, response) => {
           response.status(200).json({
             status: 'success',
             message: 'Successfully loaded users recipes',
+            currentPage: page,
+            totalPages: limit === null ? 1 : Math.ceil(result.count / limit),
             count: result.count,
             recipes: result.rows
           });

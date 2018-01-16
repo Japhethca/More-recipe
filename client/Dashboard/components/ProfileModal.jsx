@@ -111,7 +111,7 @@ export class ProfileModal extends Component {
         onChange={this.onChange}
         value={value || ''}
       />
-      <label htmlFor={name}>{label}</label>
+      <label className="active" htmlFor={name}>{label}</label>
     </div>
   );
 

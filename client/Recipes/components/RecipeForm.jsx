@@ -71,7 +71,7 @@ const RecipeForm = (props) => {
   const { validationErrors } = props;
   return (
     <div className="wrapper row">
-      <div className="card col s12">
+      <div className="card col s12 m8 offset-m2 l8-offset-l2">
         <h4 className="header">{props.title}</h4>
         <form onSubmit={props.onSubmit}>
 
@@ -89,7 +89,7 @@ const RecipeForm = (props) => {
             <img
               id="img2"
               src={props.recipe.image ||
-                  'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526912/recipe-card-placeholder_ta9ikp.jpg'}
+                  'https://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526912/recipe-card-placeholder_ta9ikp.jpg'}
               alt="Recipe"
               className="image-class"
             />

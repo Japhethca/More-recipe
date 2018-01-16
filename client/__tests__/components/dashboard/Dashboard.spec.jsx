@@ -21,7 +21,7 @@ describe('<Dashboard />', () => {
   it('should have a NavLink and Route component', () => {
     const wrapper = shallow(<Dashboard {...props} />);
     expect(wrapper.find('NavLink').length).toBe(4);
-    expect(wrapper.find('Route').length).toBe(5);
+    expect(wrapper.find('Route').length).toBe(2);
   });
 
   it('should handle logout', () => {
