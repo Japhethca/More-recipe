@@ -26,7 +26,7 @@ export const isFetching = state => ({
  * @description dispatched when a new recipe is created
  * @returns {object} action
  */
-const created = () => ({
+export const created = () => ({
   type: RECIPE_CREATED
 });
 
@@ -35,10 +35,11 @@ const created = () => ({
  * @param {object} recipe
  * @returns {object} action object
  */
-const createRecipeAction = recipe => ({
+export const createRecipeAction = recipe => ({
   type: ADD_NEW_RECIPE,
   recipe
 });
+
 
 /**
  * @description handles recipe creation
@@ -49,7 +50,7 @@ export const handleCreateRecipe = recipeData => async (dispatch) => {
   dispatch(isFetching(true));
   if (typeof (recipeData.image) === 'object') {
     await upload(recipeData.image).then((res) => {
-      recipeData.image = res.body.url;
+      recipeData.image = res.body.secure_url;
     }).catch(() => {
       dispatch(isFetching(false));
       toastr.error('failed to load image');
@@ -71,7 +72,7 @@ export const handleCreateRecipe = recipeData => async (dispatch) => {
  * @param {object} recipe - recipe object
  * @returns {object} action
  */
-const updateRecipeAction = recipe => ({
+export const updateRecipeAction = recipe => ({
   type: UPDATE_RECIPE,
   recipe
 });
@@ -85,7 +86,7 @@ export const handleUpdateRecipe = recipeData => async (dispatch) => {
   dispatch(isFetching(true));
   if (typeof (recipeData.image) === 'object') {
     await upload(recipeData.image).then((res) => {
-      recipeData.image = res.body.url;
+      recipeData.image = res.body.secure_url;
     }).catch(() => {
       dispatch(isFetching(false));
       toastr.error('failed to load image');
@@ -107,7 +108,7 @@ export const handleUpdateRecipe = recipeData => async (dispatch) => {
  * @param {object} recipe
  * @returns {object} actions
  */
-const fetchSingleRecipe = recipe => (
+export const fetchSingleRecipe = recipe => (
   {
     type: FETCH_SINGLE_RECIPE_SUCCESS,
     recipe
@@ -118,7 +119,7 @@ const fetchSingleRecipe = recipe => (
  * @description dispatched when starting to fetch single recipes
  * @returns {object} actions
  */
-const fetchSingleRecipeStart = () => (
+export const fetchSingleRecipeStart = () => (
   {
     type: FETCH_SINGLE_RECIPE_START
   }
@@ -128,7 +129,7 @@ const fetchSingleRecipeStart = () => (
  * @description dispatched when fetching recipe failed
  * @returns {object} actions
  */
-const fetchSingleRecipeFailed = () => (
+export const fetchSingleRecipeFailed = () => (
   {
     type: FETCH_SINGLE_RECIPE_FAILED
   }
@@ -152,7 +153,7 @@ export const getSingleRecipe = id => (dispatch) => {
  * @param {number} id
  * @returns {object} action object
  */
-const deleteRecipeAction = id => ({
+export const deleteRecipeAction = id => ({
   type: DELETE_USER_RECIPE,
   id
 });
@@ -161,7 +162,7 @@ const deleteRecipeAction = id => ({
  * @description dispatch when delete fails
  * @returns {object} action object
  */
-const deleteRecipeActionFailed = () => ({
+export const deleteRecipeActionFailed = () => ({
   type: DELETE_USER_RECIPE_FAILED,
 });
 
@@ -185,7 +186,7 @@ export const handleDeleteRecipe = id => dispatch => axios.delete(`/api/recipe/${
  * @param {number} id
  * @returns {object} acion
  */
-const removeFavoritesAction = id => ({
+export const removeFavoritesAction = id => ({
   type: REMOVE_FROM_FAVORITES,
   id
 });
@@ -194,7 +195,7 @@ const removeFavoritesAction = id => ({
  * @description dispatched when removing from favorites fails
  * @returns {object} acion
  */
-const removeFavoritesActionFailed = () => ({
+export const removeFavoritesActionFailed = () => ({
   type: REMOVE_FROM_FAVORITES_FAILED,
 });
 
@@ -206,10 +207,8 @@ const removeFavoritesActionFailed = () => ({
  */
 export const handleRemoveFromFavorites = recipeId => dispatch => axios.delete(`/api/users/favorites/${recipeId}`)
   .then((response) => {
-    if (response.data.status === 'success') {
-      dispatch(removeFavoritesAction(recipeId));
-      toastr.info(response.data.message);
-    }
+    dispatch(removeFavoritesAction(recipeId));
+    toastr.info(response.data.message);
   }).catch(() => dispatch(removeFavoritesActionFailed()));
 
 /**
@@ -217,7 +216,7 @@ export const handleRemoveFromFavorites = recipeId => dispatch => axios.delete(`/
  * @param {object} recipe
  * @returns {object} action
  */
-const addToFavoriteAction = recipe => ({
+export const addToFavoriteAction = recipe => ({
   type: ADD_TO_FAVORITES,
   recipe
 });
@@ -227,7 +226,7 @@ const addToFavoriteAction = recipe => ({
  * @param {object} recipe
  * @returns {object} action
  */
-const addToFavoriteActionFailed = () => ({
+export const addToFavoriteActionFailed = () => ({
   type: ADD_TO_FAVORITES_FAILED,
 });
 

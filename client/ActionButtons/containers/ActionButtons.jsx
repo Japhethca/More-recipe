@@ -22,12 +22,16 @@ const propTypes = {
   hidden: PropTypes.bool
 };
 
+const defaultProps = {
+  hidden: false
+};
+
 /**
  * @description container for holding buttons
  * @class ActionButtons
  * @extends {Component}
  */
-class ActionButtons extends Component {
+export class ActionButtons extends Component {
   /**
    * @description Creates an instance of ActionButtons.
    * @param {object} props - React props
@@ -67,7 +71,6 @@ class ActionButtons extends Component {
    */
   onFavoriteClick = (event) => {
     event.preventDefault();
-    this.toggleFavorite();
     if (!this.isInFavorites()) {
       this.props.handleAddToFavorites(this.props.recipe);
     } else {
@@ -86,19 +89,6 @@ class ActionButtons extends Component {
       return true;
     }
     return false;
-  }
-
-  /**
-   * @description handles toggling of favorite state
-   * @returns {undefined}
-   * @memberof ActionButtons
-   */
-  toggleFavorite = () => {
-    if (this.state.isFavorite) {
-      this.setState({ isFavorite: false });
-    } else {
-      this.setState({ isFavorite: true });
-    }
   }
 
   /**
@@ -151,16 +141,14 @@ class ActionButtons extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  favorites: state.recipeReducer.favorites.payload
-});
 
-ActionButtons.defaultProps = {
-  hidden: false
-};
+ActionButtons.defaultProps = defaultProps;
 
 ActionButtons.propTypes = propTypes;
 
+const mapStateToProps = state => ({
+  favorites: state.recipeReducer.favorites.payload
+});
 
 export default connect(mapStateToProps, {
   handleAddToFavorites,

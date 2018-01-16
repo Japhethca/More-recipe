@@ -7,11 +7,28 @@ import swal from 'sweetalert';
 import Card from '../components/Card';
 import { handleDeleteRecipe, handleRemoveFromFavorites } from '../actions';
 
+
+const propTypes = {
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleDeleteRecipe: PropTypes.func.isRequired,
+  handleRemoveFromFavorites: PropTypes.func.isRequired,
+  showModifyButtons: PropTypes.bool,
+  showActionBtns: PropTypes.bool,
+  showRemoveFavorite: PropTypes.bool,
+};
+
+const defaultProps = {
+  showModifyButtons: false,
+  showActionBtns: true,
+  showRemoveFavorite: false
+};
+
 /**
  * @class RecipeCard
  * @extends {Component}
  */
-class RecipeCard extends Component {
+export class RecipeCard extends Component {
   /**
    * @description Creates an instance of RecipeCard.
    * @param {object} props
@@ -95,22 +112,9 @@ render() {
 }
 }
 
-RecipeCard.propTypes = {
-  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleDeleteRecipe: PropTypes.func.isRequired,
-  handleRemoveFromFavorites: PropTypes.func.isRequired,
-  showModifyButtons: PropTypes.bool,
-  showActionBtns: PropTypes.bool,
-  showRemoveFavorite: PropTypes.bool,
+RecipeCard.propTypes = propTypes;
 
-};
-
-RecipeCard.defaultProps = {
-  showModifyButtons: false,
-  showActionBtns: true,
-  showRemoveFavorite: false
-};
+RecipeCard.defaultProps = defaultProps;
 
 const mapStateToProps = state => ({
   favorites: state.recipeReducer.favorites

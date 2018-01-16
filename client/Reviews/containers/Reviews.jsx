@@ -17,7 +17,7 @@ const propTypes = {
  * @class Reviews
  * @extends {Component}
  */
-class Reviews extends Component {
+export class Reviews extends Component {
   /**
    * @description Creates an instance of Reviews.
    * @param {any} props

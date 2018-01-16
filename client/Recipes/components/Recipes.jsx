@@ -4,6 +4,23 @@ import RecipeCard from '../containers/RecipeCard';
 
 import '../styles/recipesStyles.scss';
 
+const propTypes = {
+  recipes: PropTypes.arrayOf(PropTypes.any).isRequired,
+  showActionBtns: PropTypes.bool,
+  showModifyButtons: PropTypes.bool,
+  showRemoveFavorite: PropTypes.bool,
+  className: PropTypes.string,
+  noItemText: PropTypes.string
+};
+
+const defaultProps = {
+  showActionBtns: true,
+  showModifyButtons: false,
+  showRemoveFavorite: false,
+  className: 'col s12 m4 l3',
+  noItemText: 'No Recipes Yet'
+};
+
 /**
  * @description displays a list of recipes in cards
  * @param {Object} props
@@ -31,21 +48,8 @@ const Recipes = ({
 );
 
 
-Recipes.propTypes = {
-  recipes: PropTypes.arrayOf(PropTypes.any).isRequired,
-  showActionBtns: PropTypes.bool,
-  showModifyButtons: PropTypes.bool,
-  showRemoveFavorite: PropTypes.bool,
-  className: PropTypes.string,
-  noItemText: PropTypes.string
-};
+Recipes.propTypes = propTypes;
 
-Recipes.defaultProps = {
-  showActionBtns: true,
-  showModifyButtons: false,
-  showRemoveFavorite: false,
-  className: 'col s12 m4 l3',
-  noItemText: 'No Recipes Yet'
-};
+Recipes.defaultProps = defaultProps;
 
 export default Recipes;

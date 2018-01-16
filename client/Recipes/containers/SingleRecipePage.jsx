@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import _ from 'lodash';
 
 import SingleRecipe from '../components/SingleRecipe';
 import { getSingleRecipe } from '../actions';
 import Loader from '../../common/Loader';
+import NotFound from '../../authentication/components/NotFound';
+
+
+const propTypes = {
+  getSingleRecipe: PropTypes.func.isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 /**
  * @description SingleRecipe page
  * @class SingleRecipePage
  * @extends {Component}
  */
-class SingleRecipePage extends Component {
+export class SingleRecipePage extends Component {
   /**
    * @description Creates an instance of SingleRecipePage.
    * @param {any} props
@@ -33,9 +40,7 @@ class SingleRecipePage extends Component {
    * @returns {undefined}
    */
   componentDidMount() {
-    if (this.id === undefined || !this.props.recipe) {
-      this.props.history.push('/recipes');
-    } else {
+    if (this.id !== undefined || this.props.recipe) {
       this.props.getSingleRecipe(this.id);
     }
   }
@@ -56,8 +61,8 @@ class SingleRecipePage extends Component {
    * @returns {reactElement} markup
    */
   render() {
-    if (this.state.recipe.notFound) {
-      return <Redirect to="/recipes" />;
+    if (this.state.recipe.notFound || this.id === undefined) {
+      return <NotFound />;
     }
     return (
       <div>
@@ -72,13 +77,7 @@ class SingleRecipePage extends Component {
   }
 }
 
-SingleRecipePage.propTypes = {
-  getSingleRecipe: PropTypes.func.isRequired,
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
+SingleRecipePage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   recipe: state.recipeReducer.recipe,

@@ -18,7 +18,6 @@ import {
   UPDATE_RECIPE,
   DOWNVOTE_RECIPE,
   REMOVE_FROM_FAVORITES,
-  NOT_FOUND,
   DELETE_USER_RECIPE,
   ADD_TO_FAVORITES,
   RECIPE_CREATED,
@@ -29,7 +28,6 @@ import {
 
 
 const initialState = {
-  NotFound: false,
   recipes: {
     payload: [],
     totalPages: 0,
@@ -346,9 +344,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         favorites: {
-          payload: [
-            ...state.favorites.payload
-          ]
+          ...state.favorites
         }
       };
 
@@ -366,11 +362,6 @@ export default (state = initialState, action) => {
         favorites: {
           ...state.favorites
         }
-      };
-
-    case NOT_FOUND:
-      return {
-        ...state, NotFound: action.status
       };
 
     default:

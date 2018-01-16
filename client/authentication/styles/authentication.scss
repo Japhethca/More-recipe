@@ -6,7 +6,7 @@ $btn-bg-color: #fff;
 $btn-color: #090804;
 $black-color: #222;
 $grey-color: grey;
-
+$brown-color: rgb(110, 23, 23);
 
 $btn-hover-bg-color: rgb(223, 63, 63);
 $btn-hover-color: #fff;
@@ -92,6 +92,30 @@ $error-txt-color: #ff0000;
 
     span {
       color: $black-color;
+    }
+  }
+}
+
+.recipe-not-found {
+  text-align: center;
+
+  h4 {
+    color: $header-bg-color;
+    font-family: 'Spectral SC', serif;
+    font-size: 100px;
+    font-weight: bolder;
+    margin-top: 15vh;
+  }
+
+  span {
+    font-size: 20px;
+  }
+
+  .home {
+    color: $brown-color;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 }

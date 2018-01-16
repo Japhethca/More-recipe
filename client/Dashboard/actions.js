@@ -15,7 +15,7 @@ import * as types from '../Recipes/actionTypes';
  * @param {object} isFetching
  * @returns {object} redux action
  */
-const getUserProfile = profile => ({
+export const getUserProfile = profile => ({
   type: GET_USER_PROFILE,
   profile,
 });
@@ -26,7 +26,7 @@ const getUserProfile = profile => ({
  * @param {object} isFetching
  * @returns {object} redux action
  */
-const getUserProfileStart = () => ({
+export const getUserProfileStart = () => ({
   type: GET_USER_PROFILE_START,
 });
 
@@ -34,7 +34,7 @@ const getUserProfileStart = () => ({
  * @description dispatch when getting user profile fails
  * @returns {object} redux action
  */
-const getUserProfileFailed = () => ({
+export const getUserProfileFailed = () => ({
   type: GET_USER_PROFILE_FAILED,
 });
 
@@ -62,7 +62,7 @@ export const handleGetUserProfile = () => (dispatch) => {
  * @returns {object} redux action
  */
 
-const editProfileAction = (newProfile, isFetching = false) => ({
+export const editProfileAction = (newProfile, isFetching = false) => ({
   type: EDIT_USER_PROFILE,
   newProfile,
   isFetching
@@ -76,7 +76,7 @@ const editProfileAction = (newProfile, isFetching = false) => ({
  * @returns {object} redux action
  */
 
-const editProfileStartAction = (newProfile, isFetching = false) => ({
+export const editProfileStartAction = (newProfile, isFetching = false) => ({
   type: EDIT_USER_PROFILE_START,
   newProfile,
   isFetching
@@ -90,7 +90,7 @@ const editProfileStartAction = (newProfile, isFetching = false) => ({
  * @returns {object} redux action
  */
 
-const editProfileFailedAction = (newProfile, isFetching = false) => ({
+export const editProfileFailedAction = (newProfile, isFetching = false) => ({
   type: EDIT_USER_PROFILE_FAILED,
   newProfile,
   isFetching
@@ -106,7 +106,7 @@ export const handleEditUserProfile = profileData => async (dispatch) => {
   dispatch(editProfileStartAction());
   if (typeof (profileData.photo) === 'object') {
     await upload(profileData.photo).then((res) => {
-      profileData.photo = res.body.url;
+      profileData.photo = res.body.secure_url;
     }).catch(() => {
       dispatch(editProfileFailedAction());
       toastr.error('failed to load image');
@@ -120,18 +120,20 @@ export const handleEditUserProfile = profileData => async (dispatch) => {
     toastr.error(error.response.data.message);
   });
 };
+
 /**
  * @description dispatch on start of api call
  * @returns {Object} action
  */
-const fetchUserRecipesStartAction = () => ({
+export const fetchUserRecipesStartAction = () => ({
   type: types.FETCH_USER_RECIPES_START,
 });
+
 /**
  * @description dispatched when fetching user recipes fails
  * @returns {Object} action
  */
-const fetchUserRecipesFailedAction = () => ({
+export const fetchUserRecipesFailedAction = () => ({
   type: types.FETCH_USER_RECIPES_FAILED,
 });
 
@@ -140,7 +142,7 @@ const fetchUserRecipesFailedAction = () => ({
  * @param {array} payload
  * @returns {Object} action
  */
-const userRecipesAction = payload => ({
+export const userRecipesAction = payload => ({
   type: types.FETCH_USER_RECIPES_SUCCESS,
   payload,
 });
@@ -166,38 +168,30 @@ export const handleGetUserRecipes = () => (dispatch) => {
  * @param {array} payload
  * @returns {Object} action
  */
-function getFavoritesAction(payload) {
-  return {
-    type: types.FETCH_USER_FAVORITES_SUCCESS,
-    payload,
-  };
-}
+export const getFavoritesAction = payload => ({
+  type: types.FETCH_USER_FAVORITES_SUCCESS,
+  payload,
+});
 
 /**
  * @description dispatched when request starts
  * @returns {Object} action
  */
-function getFavoritesStartAction() {
-  return {
-    type: types.FETCH_USER_FAVORITES_START,
-  };
-}
+export const getFavoritesStartAction = () => ({
+  type: types.FETCH_USER_FAVORITES_START,
+});
 
 /**
  * @description dispatched when fetch favorites request fails
  * @returns {Object} action
  */
-function getFavoritesFailedAction() {
-  return {
-    type: types.FETCH_USER_FAVORITES_FAILED,
-  };
-}
+export const getFavoritesFailedAction = () => ({
+  type: types.FETCH_USER_FAVORITES_FAILED,
+});
 
 /**
  * @description an action for getting users favorite recipes
  * @export
- * @param {Number} page
- * @param {Number} limit
  * @returns {promise} axios promise
  */
 export const handleGetFavorites = () => (dispatch) => {

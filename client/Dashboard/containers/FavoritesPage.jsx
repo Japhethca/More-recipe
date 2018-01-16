@@ -6,11 +6,17 @@ import Recipes from '../../Recipes';
 import { handleGetFavorites } from '../actions';
 import Loader from '../../common/Loader';
 
+
+const propTypes = {
+  favorites: PropTypes.objectOf(PropTypes.shape).isRequired,
+  handleGetFavorites: PropTypes.func.isRequired,
+};
+
 /**
  * @class FavoritesPage
  * @extends {Component}
  */
-class FavoritesPage extends Component {
+export class FavoritesPage extends Component {
 /**
  * Creates an instance of FavoritesPage.
  * @param {object} props
@@ -24,9 +30,10 @@ class FavoritesPage extends Component {
   }
 
   /**
- * @memberof FavoritesPage
- * @returns {undefined}
- */
+   * @description makes api call if there is no favorites
+  * @memberof FavoritesPage
+  * @returns {undefined}
+  */
   componentDidMount() {
     if (!this.props.favorites.payload.length > 0) {
       this.props.handleGetFavorites();
@@ -69,10 +76,7 @@ class FavoritesPage extends Component {
   }
 }
 
-FavoritesPage.propTypes = {
-  favorites: PropTypes.objectOf(PropTypes.shape).isRequired,
-  handleGetFavorites: PropTypes.func.isRequired,
-};
+FavoritesPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   favorites: state.recipeReducer.favorites,

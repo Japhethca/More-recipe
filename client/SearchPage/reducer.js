@@ -2,8 +2,6 @@ import { SEARCH_RECIPE_SUCCESS, SEARCH_RECIPE_START, SEARCH_RECIPE_FAILED } from
 
 const initialState = {
   payload: [],
-  totalPages: 0,
-  currentPage: 0,
   isFetching: false
 };
 
@@ -17,8 +15,6 @@ const search = (state = initialState, action) => {
 
     case SEARCH_RECIPE_SUCCESS:
       return {
-        currentPage: action.currentPage,
-        totalPages: action.totalPages,
         payload: [...action.payload],
         isFetching: false
       };

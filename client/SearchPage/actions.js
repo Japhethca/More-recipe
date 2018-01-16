@@ -12,8 +12,6 @@ import { SEARCH_RECIPE_SUCCESS, SEARCH_RECIPE_START, SEARCH_RECIPE_FAILED } from
 const searchAction = (payload, currentPage, totalPages) => ({
   type: SEARCH_RECIPE_SUCCESS,
   payload,
-  currentPage,
-  totalPages,
 });
 
 /**
@@ -36,15 +34,12 @@ const searchActionFailed = () => ({
 /**
  * @description makes an api call to search for recipe
  * @param {String} query - search query
- * @param {Number} page - current page
- * @param {Number} limit - search limit
  * @returns {Promise} - axios promise
  */
-export default (query, page = 1, limit = 3) => (dispatch) => {
+export default query => (dispatch) => {
   dispatch(searchActionStart());
-  axios.get(`/api/recipes?search=${query}`).then((response) => {
-    const numPages = Math.ceil(response.data.count / limit);
-    dispatch(searchAction(response.data.recipes, page, numPages));
+  return axios.get(`/api/recipes?search=${query}`).then((response) => {
+    dispatch(searchAction(response.data.recipes));
   })
     .catch(() => {
       dispatch(searchActionFailed());

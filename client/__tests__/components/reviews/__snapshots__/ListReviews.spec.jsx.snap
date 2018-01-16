@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ListReviews />  should match match snapshot 1`] = `
+<div
+  className="review-list"
+>
+  <h4>
+    Reviews
+  </h4>
+  <div
+    className="row"
+  >
+    <div
+      className="col s12 m6"
+    >
+      <Review
+        review={
+          Object {
+            "User": "chidex",
+            "content": "this is a great recipe",
+            "createdAt": "2017-12-30T22:05:17.204Z",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;

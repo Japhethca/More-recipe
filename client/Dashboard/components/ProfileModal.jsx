@@ -17,7 +17,7 @@ const propTypes = {
  * @class ProfileModal
  * @extends {Component}
  */
-class ProfileModal extends Component {
+export class ProfileModal extends Component {
   /**
    * Creates an instance of ProfilePage.
    * @param {Object} props
