@@ -6,3 +6,6 @@ coverage
 .DS_Store
 bin
 selenium-debug.log
+e2e_reports
+coverage
+screenshots

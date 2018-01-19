@@ -17,10 +17,6 @@ describe('<FavoritesPage />', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('div').length).toBe(1);
-  });
-
-  it('should have a Recipes component', () => {
-    const wrapper = shallow(<FavoritesPage {...props} />);
     expect(wrapper.find('Recipes').length).toBe(1);
   });
 
@@ -29,9 +25,10 @@ describe('<FavoritesPage />', () => {
     expect(wrapper.instance().props.favorites).toBe(props.favorites);
   });
 
-  it('should receive new props', () => {
+  it('should receive new favorites list', () => {
     const wrapper = shallow(<FavoritesPage {...props} />);
-    const componentWillReceivePropSpy = jest.spyOn(wrapper.instance(), 'componentWillReceiveProps');
+    const componentWillReceivePropSpy = jest
+      .spyOn(wrapper.instance(), 'componentWillReceiveProps');
     const newProps = {
       favorites: {
         payload: [],
@@ -41,11 +38,13 @@ describe('<FavoritesPage />', () => {
     };
     wrapper.setProps({ ...newProps });
     expect(componentWillReceivePropSpy).toHaveBeenCalled();
+    expect(wrapper.instance().props.favorites.payload).toEqual([])
   });
 
   it('should get favorites on mount', () => {
     const wrapper = shallow(<FavoritesPage {...props} />);
-    const componentDidMountSpy = jest.spyOn(wrapper.instance(), 'componentDidMount');
+    const componentDidMountSpy = jest
+      .spyOn(wrapper.instance(), 'componentDidMount');
     wrapper.setProps({ ...props, favorites: { payload: [] } });
     wrapper.instance().componentDidMount();
     expect(componentDidMountSpy).toHaveBeenCalled();

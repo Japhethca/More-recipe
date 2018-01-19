@@ -1,5 +1,4 @@
 import React from 'react';
-// import expect from 'expect';
 import { shallow } from 'enzyme';
 import AuthenticateRoute from '../../../authentication/containers/AuthenticateRoute';
 import LoginForm from '../../../authentication/components/LoginForm';
@@ -43,9 +42,10 @@ describe('<AuthenticateRoute />', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should receive new props', () => {
+  it('should change authentication mode when new props arrives', () => {
     const wrapper = shallow(<WrappedComponent {...props} {...state} />);
-    const componentWillReceivePropsSpy = jest.spyOn(wrapper.instance(), 'componentWillReceiveProps');
+    const componentWillReceivePropsSpy = jest
+      .spyOn(wrapper.instance(), 'componentWillReceiveProps');
     wrapper.setProps({ ...props, isAuthenticated: true });
     expect(componentWillReceivePropsSpy).toHaveBeenCalled();
     expect(toJson(wrapper)).toMatchSnapshot();

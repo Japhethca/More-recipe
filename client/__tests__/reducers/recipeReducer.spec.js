@@ -15,16 +15,20 @@ describe('SINGLE RECIPE reducer', () => {
     const fetchSingleRecipeStartAction = {
       type: types.FETCH_SINGLE_RECIPE_START,
     };
-    expect(reducer(initialState, fetchSingleRecipeStartAction).recipe.isFetching).toEqual(true);
+    expect(reducer(initialState, fetchSingleRecipeStartAction).recipe.isFetching)
+      .toEqual(true);
   });
 
   it('should handle FETCH_SINGLE_RECIPE_FAILED', () => {
     const fetchSingleRecipeFailedAction = {
       type: types.FETCH_SINGLE_RECIPE_FAILED,
     };
-    expect(reducer(initialState, fetchSingleRecipeFailedAction).recipe.payload).toEqual({});
-    expect(reducer(initialState, fetchSingleRecipeFailedAction).recipe.isFetching).toEqual(false);
-    expect(reducer(initialState, fetchSingleRecipeFailedAction).recipe.notFound).toEqual(true);
+    expect(reducer(initialState, fetchSingleRecipeFailedAction).recipe.payload)
+      .toEqual({});
+    expect(reducer(initialState, fetchSingleRecipeFailedAction).recipe.isFetching)
+      .toEqual(false);
+    expect(reducer(initialState, fetchSingleRecipeFailedAction).recipe.notFound)
+      .toEqual(true);
   });
 
   it('should handle FETCH_SINGLE_RECIPE_SUCCESS', () => {
@@ -32,15 +36,18 @@ describe('SINGLE RECIPE reducer', () => {
       type: types.FETCH_SINGLE_RECIPE_SUCCESS,
       recipe: mockData.recipe
     };
-    expect(reducer(initialState, fetchSingleRecipe).recipe.payload).toEqual(mockData.recipe);
-    expect(reducer(initialState, fetchSingleRecipe).recipe.isFetching).toEqual(false);
+    expect(reducer(initialState, fetchSingleRecipe).recipe.payload)
+      .toEqual(mockData.recipe);
+    expect(reducer(initialState, fetchSingleRecipe).recipe.isFetching)
+      .toEqual(false);
   });
 
   it('should handle RECIPE_CREATED', () => {
     const fetchSingleRecipe = {
       type: types.RECIPE_CREATED,
     };
-    expect(reducer(initialState, fetchSingleRecipe).recipe.created).toEqual(true);
+    expect(reducer(initialState, fetchSingleRecipe).recipe.created)
+      .toEqual(true);
   });
 });
 
@@ -60,7 +67,8 @@ describe('REVIEWS reducer', () => {
       type: types.ADD_NEW_REVIEW_FAILED,
     };
     initialState.recipe.payload = mockData.recipe;
-    expect(reducer(initialState, getReviewSucessAction).recipe.payload.Reviews.length)
+    expect(reducer(initialState, getReviewSucessAction)
+      .recipe.payload.Reviews.length)
       .toEqual(1);
   });
 });

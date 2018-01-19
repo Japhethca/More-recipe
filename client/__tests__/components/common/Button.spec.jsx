@@ -11,14 +11,10 @@ const props = {
 };
 
 describe('<Button /> ', () => {
-  it('should mount without exploding', () => {
+  it('renders without exploding', () => {
     const wrapper = shallow(<Button {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('div').length).toBe(1);
-  });
-
-  it('should have an button elements', () => {
-    const wrapper = shallow(<Button {...props} />);
     expect(wrapper.find('button').length).toEqual(1);
     expect(wrapper.find('button').text()).toBe('submit');
   });

@@ -30,21 +30,18 @@ describe('<SingleRecipePage />', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('div').length).toBe(1);
-  });
-
-  it('should have a SingleRecipe component', () => {
-    const wrapper = shallow(<SingleRecipePage {...props} />);
     expect(wrapper.find('SingleRecipe').length).toBe(1);
   });
 
-  it('should have a valid props', () => {
+  it('should render with the passed in props', () => {
     const wrapper = shallow(<SingleRecipePage {...props} />);
     expect(wrapper.instance().props.recipe).toBe(props.recipe);
   });
 
-  it('should receive new props', () => {
+  it('should update recipe data when new props arrives', () => {
     const wrapper = shallow(<SingleRecipePage {...props} {...state} />);
-    const componentWillReceivePropSpy = jest.spyOn(wrapper.instance(), 'componentWillReceiveProps');
+    const componentWillReceivePropSpy = jest
+      .spyOn(wrapper.instance(), 'componentWillReceiveProps');
     const newProps = {
       recipe: {
         payload: [],
@@ -57,9 +54,10 @@ describe('<SingleRecipePage />', () => {
     expect(wrapper.instance().state.recipe).toEqual(newProps.recipe);
   });
 
-  it('should get single recipe', () => {
+  it('should call getSingleRecipe on component mount', () => {
     const wrapper = shallow(<SingleRecipePage {...props} />);
-    const componentDidMountSpy = jest.spyOn(wrapper.instance(), 'componentDidMount');
+    const componentDidMountSpy = jest
+      .spyOn(wrapper.instance(), 'componentDidMount');
     wrapper.setProps({ ...props, recipe: { payload: [] } });
     wrapper.instance().componentDidMount();
     expect(componentDidMountSpy).toHaveBeenCalled();

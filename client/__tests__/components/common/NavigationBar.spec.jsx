@@ -19,28 +19,23 @@ describe('<NavigationBar />', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('nav').length).toBe(1);
-  });
-
-  it('should contain NavLink element', () => {
-    const wrapper = shallow(<NavigationBar {...props} {...state} />);
     expect(wrapper.find('NavLink').length).toBe(12);
   });
 
-
-  it('should handle logout', () => {
+  it('should logout user when logout button is clicked', () => {
     const wrapper = shallow(<NavigationBar {...props} />);
 
-    wrapper.instance().onClick();
+    wrapper.find('.side-nav').find('button').simulate('click');
     expect(wrapper.instance().props.logout).toHaveBeenCalled();
     expect(wrapper.instance().props.history.push).toHaveBeenCalled();
   });
 
-  it('should handle search icon click on mobile', () => {
+  it('should toggles search when clicked', () => {
     const wrapper = shallow(<NavigationBar {...props} />);
 
-    wrapper.instance().toggleSearch();
+    wrapper.find('.search-icon').find('button').simulate('click');
     expect(wrapper.instance().state.isSearching).toBe(true);
-    wrapper.instance().toggleSearch();
+    wrapper.find('.search-icon').find('button').simulate('click');
     expect(wrapper.instance().state.isSearching).toBe(false);
   });
 });

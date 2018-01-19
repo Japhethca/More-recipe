@@ -1,5 +1,4 @@
 import React from 'react';
-// import expect from 'expect';
 import { shallow } from 'enzyme';
 import { LoginPage } from '../../../authentication/containers/LoginPage';
 
@@ -12,7 +11,7 @@ const event = {
   preventDefault: jest.fn(),
   target: {
     name: 'email',
-    value: 'value'
+    value: 'example@gmail.com'
   }
 };
 const state = {
@@ -25,21 +24,33 @@ describe('<LoginPage />', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('div').length).toBe(1);
-  });
-
-
-  it('should contain a LoginForm', () => {
-    const wrapper = shallow(<LoginPage {...props} />);
     expect(wrapper.find('LoginForm').length).toBe(1);
   });
 
-  it('should call simulate onSubmit and onChange', () => {
+  it('should change email state when change is simulated', () => {
     const wrapper = shallow(<LoginPage {...props} {...state} />);
-    const onsubmitSpy = jest.spyOn(wrapper.instance(), 'onSubmit');
-    const onChangeSpy = jest.spyOn(wrapper.instance(), 'onChange');
-    wrapper.instance().onChange(event);
-    wrapper.instance().onSubmit(event);
-    expect(onsubmitSpy).toHaveBeenCalled();
-    expect(onChangeSpy).toHaveBeenCalled();
+    wrapper.find('LoginForm').simulate('change', event);
+    expect(wrapper.instance().state.email).toBe('example@gmail.com')
+  });
+
+  it('should simulate submit event', () => {
+    const wrapper = shallow(<LoginPage {...props} {...state} />);
+    const handleRequestSpy = jest.spyOn(wrapper.instance().props, 'handleAuthRequest');
+    wrapper.instance().setState({...state})
+    wrapper.find('LoginForm').simulate('submit', event);
+    expect(handleRequestSpy).toHaveBeenCalled();
+  });
+
+  it('should redirect authenticated users', () => {
+    const wrapper = shallow(<LoginPage {...props} {...state} />);
+    wrapper.setProps({...props, authentication: {isAuthenticated: true}})
+    expect(wrapper.find('Redirect').length).toEqual(1);
+  });
+
+  it('should return validation errors if inputs fields are empty', () => {
+    const newState = {email: '', password: '', validationErrors: {}};
+    const wrapper = shallow(<LoginPage {...props} {...newState} />);
+    wrapper.find('LoginForm').simulate('submit', event);
+    expect(wrapper.instance().state.validationErrors).toBeDefined();
   });
 });

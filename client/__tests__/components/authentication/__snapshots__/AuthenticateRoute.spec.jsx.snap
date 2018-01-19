@@ -39,7 +39,7 @@ exports[`<AuthenticateRoute /> renders without exploding 1`] = `
 />
 `;
 
-exports[`<AuthenticateRoute /> should receive new props 1`] = `
+exports[`<AuthenticateRoute /> should change authentication mode when new props arrives 1`] = `
 <Authenticate
   history={Object {}}
   isAuthenticated={true}

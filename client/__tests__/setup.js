@@ -29,10 +29,6 @@ global.qs = {
   parse: jest.fn()
 };
 
-global.swal = text => new Promise((resolve) => {
-  const value = true;
-  resolve(value);
-});
 
 global.uploadRequest = data => new Promise((resolve, reject) => {
   resolve(data.url);

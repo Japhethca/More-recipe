@@ -21,21 +21,22 @@ describe('<UserRecipesPage />', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('div').length).toBe(1);
+    expect(wrapper.find('Recipes').length).toBe(1);
   });
 
   it('should have a Recipes component', () => {
     const wrapper = shallow(<UserRecipesPage {...props} />);
-    expect(wrapper.find('Recipes').length).toBe(1);
   });
 
-  it('should have a valid props', () => {
+  it('should render with a valid props', () => {
     const wrapper = shallow(<UserRecipesPage {...props} />);
     expect(wrapper.instance().props.userRecipes).toBe(props.userRecipes);
   });
 
-  it('should receive new props', () => {
+  it('should receive user recipes list', () => {
     const wrapper = shallow(<UserRecipesPage {...props} {...state} />);
-    const componentWillReceivePropSpy = jest.spyOn(wrapper.instance(), 'componentWillReceiveProps');
+    const componentWillReceivePropSpy = jest
+      .spyOn(wrapper.instance(), 'componentWillReceiveProps');
     const newProps = {
       userRecipes: {
         payload: [],
@@ -45,11 +46,13 @@ describe('<UserRecipesPage />', () => {
     };
     wrapper.setProps({ ...newProps });
     expect(componentWillReceivePropSpy).toHaveBeenCalled();
+    expect(wrapper.instance().props.userRecipes.payload).toEqual([])
   });
 
-  it('should get favorites on mount', () => {
+  it('should render with user Recipes on mount', () => {
     const wrapper = shallow(<UserRecipesPage {...props} />);
-    const componentDidMountSpy = jest.spyOn(wrapper.instance(), 'componentDidMount');
+    const componentDidMountSpy = jest
+      .spyOn(wrapper.instance(), 'componentDidMount');
     wrapper.setProps({ ...props, userRecipes: { payload: [] } });
     wrapper.instance().componentDidMount();
     expect(componentDidMountSpy).toHaveBeenCalled();

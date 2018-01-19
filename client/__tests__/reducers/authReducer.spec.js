@@ -21,8 +21,10 @@ describe('AUTHENCTICATION reducer', () => {
       type: types.SET_CURRENT_USER,
       user: { id: 1 }
     };
-    expect(reducer(initialState, userAuthSuccessAction).isAuthenticated).toEqual(true);
-    expect(reducer(initialState, userAuthSuccessAction).user).toEqual(userAuthSuccessAction.user);
+    expect(reducer(initialState, userAuthSuccessAction).isAuthenticated)
+      .toEqual(true);
+    expect(reducer(initialState, userAuthSuccessAction).user)
+      .toEqual(userAuthSuccessAction.user);
   });
 
   it('should handle LOGIN_FAILED_ERRORS', () => {
@@ -30,7 +32,8 @@ describe('AUTHENCTICATION reducer', () => {
       type: types.LOGIN_FAILED_ERRORS,
       errors: 'User does not exist'
     };
-    expect(reducer(initialState, loginFailedAction).loginErrors).toEqual('User does not exist');
+    expect(reducer(initialState, loginFailedAction).loginErrors)
+      .toEqual('User does not exist');
   });
 
   it('should handle SIGNUP_FAILED_ERRORS', () => {

@@ -9,12 +9,8 @@ import searchAction from '../../SearchPage/actions';
 
 
 describe('SEARCH RECIPE actions', () => {
-  afterEach(() => {
-    mock.reset();
-    mock.restore();
-  });
-
-  it('creates SEARCH_RECIPE_SUCCESS actions when fetching search results has been done', () => {
+  it('creates SEARCH_RECIPE_SUCCESS when fetching search ' +
+    'results has been done', () => {
     mock.onGet('/api/recipes?search=egusi')
       .replyOnce(200, {
         recipes: mockData.recipes,
@@ -37,7 +33,7 @@ describe('SEARCH RECIPE actions', () => {
     });
   });
 
-  it('creates SEARCH_RECIPE actions when fetching fails', () => {
+  it('creates SEARCH_RECIPE when fetching fails', () => {
     mock.onGet('/api/recipes?search=kkjkjnb')
       .replyOnce(404);
 

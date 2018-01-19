@@ -18,7 +18,9 @@ const event = {
   preventDefault: jest.fn()
 };
 
-const store = mockStore({ favorites: mockData.recipes });
+const store = mockStore({
+  recipeReducer:
+  {favorites: {payload: mockData.recipes} }});
 const state = {
   favorites: mockData.recipes
 };
@@ -32,6 +34,8 @@ describe('<ActionButtons />', () => {
     expect(wrapper.find('div').length).toBe(1);
     expect(wrapper.find('ul').length).toBe(1);
     expect(wrapper.find('li').length).toBe(4);
+    expect(wrapper.find('ul').hasClass('btn-list')).toBe(true);
+    
 
     const inInfavoritesSpy = jest.spyOn(wrapper.instance(), 'isInFavorites');
     wrapper.instance().componentDidMount();
@@ -39,41 +43,67 @@ describe('<ActionButtons />', () => {
     expect(inInfavoritesSpy).toHaveBeenCalled();
   });
 
-  it('should have a <ReviewButton> element', () => {
+  it('should show <ReviewButton> component', () => {
     const wrapper = shallow(<ActionButtons {...state} {...props} />);
     expect(wrapper.find('ReviewButton').length).toBe(1);
   });
 
-  it('should have a ".btn-list" class', () => {
+  it('should show <UpvoteButton> component', () => {
     const wrapper = shallow(<ActionButtons {...state} {...props} />);
-    expect(wrapper.find('ul').hasClass('btn-list')).toBe(true);
+    expect(wrapper.find('UpvoteButton').length).toBe(1);
   });
 
-  it('should simulate downvote and upvote events', () => {
+  it('should show <DownvoteButton> component', () => {
     const wrapper = shallow(<ActionButtons {...state} {...props} />);
-    const upvoteSpy = jest.spyOn(wrapper.instance(), 'upvote');
-    const downvoteSpy = jest.spyOn(wrapper.instance(), 'downvote');
-
-    wrapper.instance().downvote(event);
-    wrapper.instance().upvote(event);
-
-    expect(upvoteSpy).toHaveBeenCalled();
-    expect(downvoteSpy).toHaveBeenCalled();
+    expect(wrapper.find('DownvoteButton').length).toBe(1);
   });
 
-  it('should should simulate onFavoriteClick function call', () => {
+  it('should show <FavoritesButton> component', () => {
     const wrapper = shallow(<ActionButtons {...state} {...props} />);
-    const onFavoriteClickSpy = jest.spyOn(wrapper.instance(), 'onFavoriteClick');
-    const isInFavoritesSpy = jest.spyOn(wrapper.instance(), 'isInFavorites');
-
-    wrapper.instance().onFavoriteClick(event);
-    expect(onFavoriteClickSpy).toHaveBeenCalled();
-    expect(isInFavoritesSpy).toHaveBeenCalled();
+    expect(wrapper.find('FavoritesButton').length).toBe(1);
   });
 
-  it('should should receive new props', () => {
+  it('should simulate DownvoteButton click', () => {
     const wrapper = shallow(<ActionButtons {...state} {...props} />);
-    const componentWillReceivePropsSpy = jest.spyOn(wrapper.instance(), 'componentWillReceiveProps');
+    const downvoteButton = wrapper.find('DownvoteButton').dive().find('button');
+    const handledownvoteSpy = jest.spyOn(wrapper.instance().props, 'handleDownvote');
+
+    downvoteButton.simulate('click', event);
+    expect(handledownvoteSpy).toHaveBeenCalled();
+  })
+
+  it('should simulate UpvoteButton click', () => {
+    const wrapper = shallow(<ActionButtons {...state} {...props} />);
+    const handleupvoteSpy = jest.spyOn(wrapper.instance().props, 'handleUpvote');
+    const upvoteButton = wrapper.find('UpvoteButton').dive().find('button');
+    upvoteButton.simulate('click', event)
+    expect(handleupvoteSpy).toHaveBeenCalled();
+  })
+
+  it('should simulate remove from favorite click', () => {
+    const wrapper = shallow(<ActionButtons {...state} {...props} />);
+    const favoriteButton = wrapper.find('FavoritesButton').dive().find('button')
+    const handleRemoveFromFavoritesSpy = jest
+      .spyOn(wrapper.instance().props, 'handleRemoveFromFavorites');
+
+    favoriteButton.simulate('click', event);
+    expect(handleRemoveFromFavoritesSpy).toHaveBeenCalled();
+  });
+
+  it('should simulate add to favorite click', () => {
+    const wrapper = shallow(<ActionButtons {...state} {...props} />);
+    const favoriteButton = wrapper.find('FavoritesButton').dive().find('button')
+    const handleAddToFavoritesSpy = jest
+      .spyOn(wrapper.instance().props, 'handleAddToFavorites');
+    wrapper.setProps({...props, recipe: {id: 50, name: 'ogbono soup'}});
+    favoriteButton.simulate('click', event);
+    expect(handleAddToFavoritesSpy).toHaveBeenCalled();
+  });
+
+  it('should update state when new props arrives ', () => {
+    const wrapper = shallow(<ActionButtons {...state} {...props} />);
+    const componentWillReceivePropsSpy = jest.
+       spyOn(wrapper.instance(), 'componentWillReceiveProps');
     const newProps = {
       favorites: mockData.favorites
     };

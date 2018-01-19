@@ -14,18 +14,11 @@ describe('<ListReviews /> ', () => {
     const wrapper = shallow(<ListReviews {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('h4').length).toBe(1);
-  });
-
-  it('should have a ".review-list" class', () => {
-    const wrapper = shallow(<ListReviews {...props} />);
     expect(wrapper.find('.review-list').length).toBe(1);
-  });
-
-  it('should have a Review component', () => {
-    const wrapper = shallow(<ListReviews {...props} />);
     expect(wrapper.find('Review').length).toBe(1);
   });
-  it('should match match snapshot', () => {
+
+  it('should match snapshot', () => {
     const wrapper = shallow(<ListReviews {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });

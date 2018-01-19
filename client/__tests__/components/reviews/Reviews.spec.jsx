@@ -5,7 +5,7 @@ import mockData from '../../__mock__/mockData';
 
 const props = {
   recipe: mockData.recipe,
-  handleRecipeReview: jest.fn(),
+  handleAddNewRecipeReview: jest.fn(),
 };
 
 const state = {
@@ -27,10 +27,6 @@ describe('<Reviews />', () => {
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('div').length).toBe(1);
     expect(wrapper.hasClass('reviews-page')).toBe(true);
-  });
-
-  it('should have ListReviews and AddReview components', () => {
-    const wrapper = shallow(<Reviews {...props} />);
     expect(wrapper.find('ListReviews').length).toBe(1);
     expect(wrapper.find('AddReview').length).toBe(1);
   });
@@ -41,15 +37,16 @@ describe('<Reviews />', () => {
   });
 
 
-  it('should set new state', () => {
+  it('should set new state on input change', () => {
     const wrapper = shallow(<Reviews {...props} />);
-    wrapper.instance().onChange(event);
+    wrapper.find('AddReview').simulate('change', event);
     expect(wrapper.instance().state.content).toBe('nice one');
   });
 
-  it('should submit new reviews', () => {
+  it('should simulate submit new reviews', () => {
     const wrapper = shallow(<Reviews {...props} />);
-    wrapper.instance().onSubmit(event);
-    expect(wrapper.instance().props.handleRecipeReview).toHaveBeenCalled();
+    wrapper.find('AddReview').simulate('submit', event);
+    expect(wrapper.instance()
+      .props.handleAddNewRecipeReview).toHaveBeenCalled();
   });
 });

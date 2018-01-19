@@ -27,20 +27,20 @@ describe('<SearchForm />', () => {
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('div').length).toBe(2);
     expect(wrapper.find('form').length).toBe(1);
-  });
-
-  it('should contain input element', () => {
-    const wrapper = shallow(<SearchForm {...props} />);
     expect(wrapper.find('input').length).toBe(1);
   });
 
-  it('should have onChange and onSubmit handlers', () => {
+  it('should simulate search input change', () => {
     const wrapper = shallow(<SearchForm {...props} />);
 
-    wrapper.instance().onChange(event);
+    wrapper.find('input').simulate('change', event);
     expect(wrapper.instance().state.query).toEqual('query');
+  });
 
-    wrapper.instance().onSubmit(event);
+  it('should simulate search submission', () => {
+    const wrapper = shallow(<SearchForm {...props} />);
+
+    wrapper.find('form').simulate('submit', event);
     expect(wrapper.instance().props.handleSearch).toHaveBeenCalled();
   });
 });

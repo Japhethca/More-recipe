@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Review />  should match match snapshot 1`] = `
+exports[`<Review />  should match snapshot 1`] = `
 <div
   className="single-review z-depth-2"
 >
@@ -10,7 +10,7 @@ exports[`<Review />  should match match snapshot 1`] = `
   <span
     className="meta-date"
   >
-    16 days ago
+    20 days ago
   </span>
   <hr />
   <p

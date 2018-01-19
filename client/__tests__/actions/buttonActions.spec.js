@@ -1,4 +1,5 @@
 import expect from 'expect';
+import axios from 'axios';
 
 import mockStore, { mock } from '../__mock__/configMockStore';
 import * as types from '../../Recipes/actionTypes';
@@ -9,11 +10,6 @@ import { handleAddToFavorites,
 
 
 describe('DOWNVOTE actions', () => {
-  afterEach(() => {
-    mock.reset();
-    mock.restore();
-  });
-
   it('should create DOWNVOTE_RECIPE actions when recipe is downvoted', () => {
     mock.onGet('/api/recipe/1/downvote')
       .replyOnce(200, {
@@ -39,16 +35,12 @@ describe('DOWNVOTE actions', () => {
       type: types.DOWNVOTE_RECIPE,
       recipe
     });
-    expect(actions.downvoteAction(mockData.recipe)).toEqual(expected(mockData.recipe));
+    expect(actions.downvoteAction(mockData.recipe))
+      .toEqual(expected(mockData.recipe));
   });
 });
 
 describe('UPVOTE actions', () => {
-  afterEach(() => {
-    mock.reset();
-    mock.restore();
-  });
-
   it('should create UPVOTE_RECIPE actions when recipe is upvoted', () => {
     mock.onGet('/api/recipe/1/upvote')
       .replyOnce(200, {
@@ -74,17 +66,14 @@ describe('UPVOTE actions', () => {
       type: types.UPVOTE_RECIPE,
       recipe
     });
-    expect(actions.upvoteAction(mockData.recipe)).toEqual(expected(mockData.recipe));
+    expect(actions.upvoteAction(mockData.recipe))
+      .toEqual(expected(mockData.recipe));
   });
 });
 
 describe('FAVORITE actions', () => {
-  afterEach(() => {
-    mock.reset();
-    mock.restore();
-  });
-
-  it('should create ADD_TO_FAVORITES actions when recipe is added to favorites', () => {
+  it('should create ADD_TO_FAVORITES actions when ' +
+    'recipe is added to favorites', () => {
     mock.onGet('/api/users/favorites/1')
       .replyOnce(200, {
         recipe: mockData.recipe,
@@ -105,27 +94,8 @@ describe('FAVORITE actions', () => {
     });
   });
 
-  it('should create REMOVE_FROM_FAVORITES actions when recipe is removed from favorites', () => {
-    mock.onDelete('/api/users/favorites/1')
-      .replyOnce(200, {
-        status: 'success',
-        message: 'successful'
-      });
-
-    const expectedActions = [
-      {
-        type: types.REMOVE_FROM_FAVORITES,
-        id: 1
-      },
-    ];
-    const store = mockStore({});
-
-    store.dispatch(handleRemoveFromFavorites(1)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
-  });
-
-  it('should create REMOVE_FROM_FAVORITES_FAILED actions when removing recipe from favorites fails', () => {
+  it('should create REMOVE_FROM_FAVORITES_FAILED actions when ' +
+    'removing recipe from favorites fails', () => {
     mock.onDelete('/api/users/favorites/1')
       .replyOnce(400);
 

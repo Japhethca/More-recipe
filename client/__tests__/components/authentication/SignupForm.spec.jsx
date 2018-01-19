@@ -23,11 +23,20 @@ describe('<SignupForm />', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('div').length).toBe(10);
-  });
-
-  it('should contain a TextField and Button element', () => {
-    const wrapper = shallow(<SignupForm {...props} />);
     expect(wrapper.find('TextField').length).toBe(4);
     expect(wrapper.find('button').length).toBe(1);
+  });
+
+  it('should display server error messages', () => {
+    const wrapper = shallow(<SignupForm {...props} />);
+    wrapper.setProps({...props, serverErrors: 'incorrect password'})
+    expect(wrapper.find('.server-error-text')
+      .find('span').text()).toBe('incorrect password')
+  });
+
+  it('should display "Registering in" on button when signing up', () => {
+    const wrapper = shallow(<SignupForm {...props} />);
+    wrapper.setProps({...props, isFetching: true})
+    expect(wrapper.find('button').text()).toBe('Registering...')
   });
 });

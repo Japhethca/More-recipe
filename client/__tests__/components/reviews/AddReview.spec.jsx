@@ -15,14 +15,11 @@ describe('<AddReview /> ', () => {
     const wrapper = shallow(<AddReview {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('form').length).toBe(1);
-  });
-
-  it('should have a textarea element', () => {
-    const wrapper = shallow(<AddReview {...props} />);
     expect(wrapper.find('textarea').length).toBe(1);
     expect(wrapper.find('textarea').parent().is('div')).toBe(true);
   });
-  it('should match match snapshot', () => {
+
+  it('should match snapshot', () => {
     const wrapper = shallow(<AddReview {...props} />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });

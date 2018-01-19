@@ -10,9 +10,10 @@ describe('<Footer /> ', () => {
     expect(wrapper.find('div').length).toBe(1);
   });
 
-  it('should have a footer text', () => {
+  it('should render a footer text', () => {
     const wrapper = shallow(<Footer />);
-    expect(wrapper.find('p').text()).toBe('© 2017 More Recipes Designed By Chidex');
+    expect(wrapper.find('p')
+      .text()).toBe('© 2017 More Recipes Designed By Chidex');
   });
 });
 

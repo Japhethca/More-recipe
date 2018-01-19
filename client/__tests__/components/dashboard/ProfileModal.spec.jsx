@@ -5,7 +5,7 @@ import profileMock from '../../__mock__/profileMock';
 
 const props = {
   profile: profileMock.profile,
-  handleEditUserProfile: jest.fn(),
+  handleUpdateUserProfile: jest.fn(),
   isFetching: false,
 };
 
@@ -30,28 +30,12 @@ describe('<ProfileModal />', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('div').length).toBe(9);
-  });
-
-
-  it('should have a form and a button element', () => {
-    const wrapper = shallow(<ProfileModal {...props} />);
-    // expect(wrapper.find('form').length).toBe(1);
     expect(wrapper.find('button').length).toBe(3);
-  });
-
-  it('should have an input and an image element', () => {
-    const wrapper = shallow(<ProfileModal {...props} />);
     expect(wrapper.find('input').length).toBe(4);
     expect(wrapper.find('img').length).toBe(1);
   });
 
-  it('should handle form submission', () => {
-    const wrapper = shallow(<ProfileModal {...props} />);
-    wrapper.instance().onSubmit(event);
-    expect(wrapper.instance().props.handleEditUserProfile).toHaveBeenCalled();
-  });
-
-  it('should handle input change', () => {
+  it('should render new image on change', () => {
     const wrapper = shallow(<ProfileModal {...props} {...state} />);
     wrapper.instance().onChange(event);
     expect(wrapper.instance().state.firstname).toBe('chidex');
@@ -65,9 +49,10 @@ describe('<ProfileModal />', () => {
     expect(wrapper.instance().state.photo).toEqual(new Blob());
   });
 
-  it('should receive new props', () => {
+  it('should receive new props when profile is updated', () => {
     const wrapper = shallow(<ProfileModal {...props} />);
-    const componentWillReceivePropsSpy = jest.spyOn(wrapper.instance(), 'componentWillReceiveProps');
+    const componentWillReceivePropsSpy = jest
+      .spyOn(wrapper.instance(), 'componentWillReceiveProps');
     wrapper.setProps({
       profile: {
         photo: 'http://image.com/image.jpeg',
@@ -80,9 +65,17 @@ describe('<ProfileModal />', () => {
     expect(wrapper.instance().state.firstname).toBe('chidex');
   });
 
-  it('should simulate modal close click', () => {
+  it('should simulate profile modal click form submission click', () => {
     const wrapper = shallow(<ProfileModal {...props} />);
-    const finishButton = wrapper.find('.grey').shallow();
+    const updateButton = wrapper.find('.btn .blue');
+    const handleUpdateUserProfileSpy = jest.spyOn(wrapper.instance().props, 'handleUpdateUserProfile');
+    updateButton.simulate('click', event)
+    expect(handleUpdateUserProfileSpy).toHaveBeenCalled();
+  });
+
+  it('should simulate profile form submission click', () => {
+    const wrapper = shallow(<ProfileModal {...props} />);
+    const finishButton = wrapper.find('.grey');
     const onFinishClickSpy = jest.spyOn(wrapper.instance(), 'onFinishClick');
     wrapper.instance().onFinishClick(event);
     expect(onFinishClickSpy).toHaveBeenCalled();

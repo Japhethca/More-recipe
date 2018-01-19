@@ -43,29 +43,26 @@ describe('<CreateUpdateRecipe />', () => {
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('div').length).toBe(1);
-  });
-
-  it('should have a RecipeForm component', () => {
-    const wrapper = shallow(<CreateUpdateRecipe {...props} />);
     expect(wrapper.find('RecipeForm').length).toBe(1);
-  });
-
-  it('should have a valid props', () => {
-    const wrapper = shallow(<CreateUpdateRecipe {...props} />);
-    expect(wrapper.instance().props.recipe).toBe(props.recipe);
   });
 
   it('should receive new props', () => {
     const wrapper = shallow(<CreateUpdateRecipe {...props} {...state} />);
-    const componentWillReceivePropSpy = jest.spyOn(wrapper.instance(), 'componentWillReceiveProps');
+    const componentWillReceivePropSpy = jest
+      .spyOn(wrapper.instance(), 'componentWillReceiveProps');
     wrapper.setProps({ ...props, recipe: { payload: [], created: false } });
     expect(componentWillReceivePropSpy).toHaveBeenCalled();
-    expect(wrapper.instance().props.recipe).toEqual({ payload: [], created: false });
+    expect(wrapper.instance().props.recipe).toEqual(
+      {
+        payload: [], created: false
+      });
   });
 
-  it('should handle input change', () => {
+  it('should simulate input change', () => {
     const wrapper = shallow(<CreateUpdateRecipe {...props} {...state} />);
-    wrapper.instance().onChange(event);
+    const input = wrapper.find('RecipeForm');
+
+    input.simulate('change', event);
     expect(wrapper.instance().state.name).toBe('a new recipe');
     const newEvent = {
       target: {
@@ -73,8 +70,10 @@ describe('<CreateUpdateRecipe />', () => {
         files: [new Blob()]
       }
     };
-    wrapper.instance().onChange(newEvent);
+
+    input.simulate('change', newEvent);
     expect(wrapper.instance().state.image).toEqual(new Blob());
+
     wrapper.instance().handleEditorChange({
       target:
       {
@@ -93,12 +92,14 @@ describe('<CreateUpdateRecipe />', () => {
     expect(wrapper.instance().state.ingredients).toBe('maggi');
   });
 
-  it('should handle form submission', () => {
+  it('should simulate form submission', () => {
     const wrapper = shallow(<CreateUpdateRecipe {...props} {...state} />);
-    wrapper.instance().onSubmit(event);
+    const form = wrapper.find('RecipeForm');
+    form.simulate('submit', event);
+
     expect(wrapper.instance().props.handleCreateRecipe).toHaveBeenCalled();
     wrapper.setProps({ type: 'update' });
-    wrapper.instance().onSubmit(event);
+    form.simulate('submit', event);
     expect(wrapper.instance().props.handleUpdateRecipe).toHaveBeenCalled();
   });
 });

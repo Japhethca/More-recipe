@@ -84,7 +84,7 @@ export default {
       Recipe: {
         name: 'This is a new recip',
         description: 'Ggggggg',
-        id: 95,
+        id: 2,
         ingredients: 'gggggg',
         direction: 'hhhhhh',
         image: null,
@@ -95,6 +95,7 @@ export default {
         createdAt: '2018-01-14T01:42:24.985Z',
         updatedAt: '2018-01-14T01:42:24.985Z',
         author: {
+          id: 7,
           username: 'japheth',
           photo: null
         }

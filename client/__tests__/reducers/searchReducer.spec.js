@@ -27,7 +27,8 @@ describe('SEARCH reducer', () => {
       payload: mockData.recipes
     };
     expect(reducer(initialState, getSearchAction).isFetching).toEqual(false);
-    expect(reducer(initialState, getSearchAction).payload).toEqual(mockData.recipes);
+    expect(reducer(initialState, getSearchAction).payload)
+      .toEqual(mockData.recipes);
   });
 
   it('should handle SEARCH_RECIPE_FAILED', () => {

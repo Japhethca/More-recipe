@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { SearchResultPage } from '../../../SearchPage/containers/SearchPage';
+import { SearchPage } from '../../../SearchPage/containers/SearchPage';
 import mockData from '../../__mock__/mockData';
 
 
@@ -20,33 +20,30 @@ const props = {
 const state = {
   query: '',
   searchResults: {
-    payload: mockData.recipes
+    payload: []
   }
 };
 
-describe('<SearchResultPage />', () => {
+describe('<SearchPage />', () => {
   it('should renders without exploding', () => {
-    const wrapper = shallow(<SearchResultPage {...props} />);
+    const wrapper = shallow(<SearchPage {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('div').length).toBe(2);
     expect(wrapper.hasClass('container')).toBe(true);
-  });
-
-  it('should contain Recipes component', () => {
-    const wrapper = shallow(<SearchResultPage {...props} />);
     expect(wrapper.find('Recipes').length).toBe(1);
   });
 
+
   it('should make API call when component mounts', () => {
-    const wrapper = shallow(<SearchResultPage {...props} {...state} />);
+    const wrapper = shallow(<SearchPage {...props} {...state} />);
     wrapper.instance().componentDidMount();
     expect(wrapper.instance().props.handleSearch).toHaveBeenCalled();
-    expect(wrapper.instance().state.searchResults).toEqual(state.searchResults);
+    expect(wrapper.instance().state.searchResults).toEqual(props.results);
   });
 
-  it('should receive new Props', () => {
-    const wrapper = shallow(<SearchResultPage {...props} {...state} />);
+  it('should receive new search results', () => {
+    const wrapper = shallow(<SearchPage {...props} {...state} />);
     const componentWillReceivePropsSpy = jest.spyOn(wrapper.instance(), 'componentWillReceiveProps');
     const newHistory = {
       push: jest.fn(),
