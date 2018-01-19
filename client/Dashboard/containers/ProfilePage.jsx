@@ -53,7 +53,7 @@ export class ProfilePage extends Component {
 
   /**
    * @description renders profile page
-   * @returns {ReactElement} - html
+   * @returns {ReactElement} - React DOM
    */
   render() {
     return (

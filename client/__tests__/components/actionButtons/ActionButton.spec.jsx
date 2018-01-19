@@ -35,38 +35,18 @@ describe('<ActionButtons />', () => {
     expect(wrapper.find('ul').length).toBe(1);
     expect(wrapper.find('li').length).toBe(4);
     expect(wrapper.find('ul').hasClass('btn-list')).toBe(true);
-    
-
-    const inInfavoritesSpy = jest.spyOn(wrapper.instance(), 'isInFavorites');
-    wrapper.instance().componentDidMount();
-
-    expect(inInfavoritesSpy).toHaveBeenCalled();
-  });
-
-  it('should show <ReviewButton> component', () => {
-    const wrapper = shallow(<ActionButtons {...state} {...props} />);
     expect(wrapper.find('ReviewButton').length).toBe(1);
-  });
-
-  it('should show <UpvoteButton> component', () => {
-    const wrapper = shallow(<ActionButtons {...state} {...props} />);
     expect(wrapper.find('UpvoteButton').length).toBe(1);
-  });
-
-  it('should show <DownvoteButton> component', () => {
-    const wrapper = shallow(<ActionButtons {...state} {...props} />);
     expect(wrapper.find('DownvoteButton').length).toBe(1);
-  });
-
-  it('should show <FavoritesButton> component', () => {
-    const wrapper = shallow(<ActionButtons {...state} {...props} />);
     expect(wrapper.find('FavoritesButton').length).toBe(1);
+
   });
 
   it('should simulate DownvoteButton click', () => {
     const wrapper = shallow(<ActionButtons {...state} {...props} />);
     const downvoteButton = wrapper.find('DownvoteButton').dive().find('button');
-    const handledownvoteSpy = jest.spyOn(wrapper.instance().props, 'handleDownvote');
+    const handledownvoteSpy = jest
+      .spyOn(wrapper.instance().props, 'handleDownvote');
 
     downvoteButton.simulate('click', event);
     expect(handledownvoteSpy).toHaveBeenCalled();
@@ -74,7 +54,8 @@ describe('<ActionButtons />', () => {
 
   it('should simulate UpvoteButton click', () => {
     const wrapper = shallow(<ActionButtons {...state} {...props} />);
-    const handleupvoteSpy = jest.spyOn(wrapper.instance().props, 'handleUpvote');
+    const handleupvoteSpy = jest
+      .spyOn(wrapper.instance().props, 'handleUpvote');
     const upvoteButton = wrapper.find('UpvoteButton').dive().find('button');
     upvoteButton.simulate('click', event)
     expect(handleupvoteSpy).toHaveBeenCalled();

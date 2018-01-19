@@ -6,26 +6,26 @@ const { Recipes, Users, Reviews } = model;
 
 /**
  * @description controller for posting / adding  a review
- * @param {object} req - Express http request
- * @param {object} res - Express http response
+ * @param {object} request - Express http request
+ * @param {object} response - Express http response
  * @returns {object} Http response
  */
-export const postReview = (req, res) => Recipes.findOne({
+export const postReview = (request, response) => Recipes.findOne({
   where: {
-    id: req.params.recipeId,
+    id: request.params.recipeId,
   },
 })
   .then((recipe) => {
     if (!recipe) {
-      return res.status(404).json({
+      return response.status(404).json({
         status: 'failed',
         message: 'Recipe with this Id does not exist'
       });
     }
     Reviews.create({
-      content: req.body.content,
+      content: request.body.content,
       recipeId: recipe.id,
-      userId: req.decoded.id,
+      userId: request.decoded.id,
     })
       .then((review) => {
         review.reload({
@@ -36,15 +36,15 @@ export const postReview = (req, res) => Recipes.findOne({
             }
           ]
         })
-          .then(result => res.status(201).json({
+          .then(result => response.status(201).json({
             status: 'successs',
-            message: 'Review Created',
+            message: 'Review Added Successfully',
             review: result
           }));
       });
   })
   .catch(() => {
-    res.status(500).json({
+    response.status(500).json({
       status: 'failed',
       message: 'Request was not processed'
     });
@@ -58,8 +58,13 @@ export const postReview = (req, res) => Recipes.findOne({
  * @returns {object} Http response
  */
 export const getRecipeReview = (request, response) => {
-  const { limit, page, offset } = pagination(request.query.limit, request.query.page);
-  Reviews.findAndCountAll({
+  const {
+    limit,
+    page,
+    offset
+  } = pagination(request.query.limit, request.query.page);
+
+  return Reviews.findAndCountAll({
     limit,
     offset,
     where: {
@@ -76,7 +81,7 @@ export const getRecipeReview = (request, response) => {
       }
       response.status(200).json({
         status: 'success',
-        message: 'Recipe Reviews',
+        message: 'Recipe reviews successfully returned',
         currentPage: page,
         totalPages: limit === null ? 1 : Math.ceil(result.count / limit),
         count: result.count,

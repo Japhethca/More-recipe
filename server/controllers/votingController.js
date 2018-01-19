@@ -5,14 +5,14 @@ const { Votes, Recipes } = models;
 
 /**
  * @description handles upvoting single recipe
- * @param {object} req - Express http request
- * @param {object} res - Express http response
+ * @param {object} request - Express http request
+ * @param {object} response - Express http response
  * @returns {object} Http response
  */
-export const upVote = (req, res) => Votes.findOne({
+export const upVote = (request, response) => Votes.findOne({
   where: {
-    userId: req.decoded.id,
-    recipeId: req.params.recipeId
+    userId: request.decoded.id,
+    recipeId: request.params.recipeId
   }
 })
   .then((vote) => {
@@ -21,9 +21,9 @@ export const upVote = (req, res) => Votes.findOne({
       const upvoted = vote.get('vote');
       // if user has voted before
       // look for the recipe
-      Recipes.findById(req.params.recipeId).then((recipe) => {
+      Recipes.findById(request.params.recipeId).then((recipe) => {
         if (!recipe) {
-          res.status(404).json({
+          response.status(404).json({
             status: 'failed',
             message: 'No such recipe exists'
           });
@@ -34,7 +34,7 @@ export const upVote = (req, res) => Votes.findOne({
             recipe.decrement('upvotes')
               .then(() => {
                 recipe.reload().then(() => {
-                  res.status(200).json({
+                  response.status(200).json({
                     status: 'success',
                     message: 'Recipe unvoted',
                     recipe
@@ -51,7 +51,7 @@ export const upVote = (req, res) => Votes.findOne({
                     recipe.reload();
                   })
                   .then(() => {
-                    res.status(200).json({
+                    response.status(200).json({
                       status: 'success',
                       message: 'Recipe Upvoted',
                       recipe
@@ -64,24 +64,24 @@ export const upVote = (req, res) => Votes.findOne({
     } else {
       // if recipe has not been voted by user
       // find recipe and increment its upvotes field
-      Recipes.findById(req.params.recipeId)
+      Recipes.findById(request.params.recipeId)
         .then((recipe) => {
           if (!recipe) {
-            return res.status(404).json({
+            return response.status(404).json({
               status: 'failed',
               message: 'Recipe does not exist!'
             });
           } // create a new vote if user has not voted before
           Votes.create({
             vote: 1,
-            recipeId: req.params.recipeId,
-            userId: req.decoded.id,
+            recipeId: request.params.recipeId,
+            userId: request.decoded.id,
           });
           recipe.increment('upvotes')
             .then(() => {
               recipe.reload()
                 .then(() => {
-                  res.status(200).json({
+                  response.status(200).json({
                     status: 'success',
                     message: 'Recipe Upvoted',
                     recipe
@@ -92,7 +92,7 @@ export const upVote = (req, res) => Votes.findOne({
     }
   })
   .catch(() => {
-    res.status(500).json({
+    response.status(500).json({
       status: 'failed',
       message: 'Request was not processed'
     });
@@ -101,14 +101,14 @@ export const upVote = (req, res) => Votes.findOne({
 
 /**
  * @description handles downvoting a single recipe
- * @param {object} req - Express http request
- * @param {object} res - Express http response
+ * @param {object} request - Express http request
+ * @param {object} response - Express http response
  * @returns {object} Http response
  */
-export const downVote = (req, res) => Votes.findOne({
+export const downVote = (request, response) => Votes.findOne({
   where: {
-    userId: req.decoded.id,
-    recipeId: req.params.recipeId
+    userId: request.decoded.id,
+    recipeId: request.params.recipeId
   }
 }).then((vote) => {
   /* checks if there's any vote found in the db
@@ -116,12 +116,12 @@ export const downVote = (req, res) => Votes.findOne({
       */
   if (vote) {
     const downvoted = vote.get('vote');
-    Recipes.findById(req.params.recipeId)
+    Recipes.findById(request.params.recipeId)
       .then((recipe) => {
         if (!recipe) {
-          res.status(404).json({
+          response.status(404).json({
             status: 'failed',
-            message: 'No such recipe exists'
+            message: 'Recipe does not exist'
           });
         } else if (recipe) {
           if (downvoted === 0) {
@@ -130,7 +130,7 @@ export const downVote = (req, res) => Votes.findOne({
               .then(() => {
                 recipe.reload()
                   .then(() => {
-                    res.status(200).json({
+                    response.status(200).json({
                       status: 'success',
                       message: 'Recipe Unvoted',
                       recipe
@@ -146,7 +146,7 @@ export const downVote = (req, res) => Votes.findOne({
                     recipe.reload();
                   })
                   .then(() => {
-                    res.status(200).json({
+                    response.status(200).json({
                       status: 'success',
                       message: 'Recipe Downvoted',
                       recipe
@@ -159,24 +159,24 @@ export const downVote = (req, res) => Votes.findOne({
   } else {
     // if recipe has not been voted by user
     // find recipe and increment its upvotes field
-    Recipes.findById(req.params.recipeId)
+    Recipes.findById(request.params.recipeId)
       .then((recipe) => {
         if (!recipe) {
-          return res.status(404).json({
+          return response.status(404).json({
             status: 'failed',
             message: 'Recipe does not exist!'
           });
         } // create a new vote if user has not voted before
         Votes.create({
           vote: 0,
-          recipeId: req.params.recipeId,
-          userId: req.decoded.id,
+          recipeId: request.params.recipeId,
+          userId: request.decoded.id,
         });
         recipe.increment('downvotes')
           .then(() => {
             recipe.reload()
               .then(() => {
-                res.status(200).json({
+                response.status(200).json({
                   status: 'success',
                   message: 'Recipe Downvoted',
                   recipe
@@ -187,7 +187,7 @@ export const downVote = (req, res) => Votes.findOne({
   }
 })
   .catch(() => {
-    res.status(500).json({
+    response.status(500).json({
       status: 'failed',
       message: 'Request was not Processed'
     });

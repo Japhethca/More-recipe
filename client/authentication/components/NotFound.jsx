@@ -10,7 +10,9 @@ const NotFound = () => (
       are looking for has been removed or does not exist.
     </span>
     <br />
-    <span>Go back to <Link to="/recipes" className="home" href> HomePage </Link></span>
+    <span> Go back to
+      <Link to="/recipes" className="home" href> HomePage </Link>
+    </span>
   </div>
 );
 

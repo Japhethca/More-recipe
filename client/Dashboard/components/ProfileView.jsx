@@ -22,20 +22,29 @@ const ProfileView = ({ profile }) => (
         <div className="row">
           <div className="col s12 m6 l4">
             <img
-              src={profile.payload.photo || 'https://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526934/avatar_sq5zgy.png'}
+              src={profile.payload.photo
+                || 'https://res.cloudinary.com/dcmxbxzyj/image/' +
+                'upload/v1511526934/avatar_sq5zgy.png'}
               alt=""
               className="profile-image"
             />
           </div>
           <div className="col s12 m6 l8 details">
-            <h5>{profile.payload.username}</h5><div>({profile.payload.email})</div>
+            <h5>{profile.payload.username}</h5>
+            <div>({profile.payload.email})</div>
             {profile.payload.firstname ?
               <div>{profile.payload.firstname} {profile.payload.lastname}</div>
           :
               <div>Update Profile to show real name</div>}
             {profile.payload.aboutme ?
-              <div>{profile.payload.aboutme}</div> : <div>Update Profile to add about me</div>}
-            <a className="modal-trigger btn blue" href="#update-modal">Update Profile</a>
+              <div>{profile.payload.aboutme}</div>
+              : <div>Update Profile to add about me</div>}
+            <a
+              className="modal-trigger btn blue"
+              href="#update-modal"
+            >
+              Update Profile
+            </a>
           </div>
         </div>
     }

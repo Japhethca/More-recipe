@@ -31,7 +31,8 @@ const SingleRecipe = ({ recipe }) => {
         <div className="col s12 m6">
           <img
             className="responsive-img center"
-            src={image || 'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526912/recipe-card-placeholder_ta9ikp.jpg'}
+            src={image || 'http://res.cloudinary.com/dcmxbxzyj/image' +
+              '/upload/v1511526912/recipe-card-placeholder_ta9ikp.jpg'}
             alt=""
           />
           <p className="description-text" >{description} </p>
@@ -42,7 +43,9 @@ const SingleRecipe = ({ recipe }) => {
               />
              }
           </div>
-          <span className="recipe-author">Recipe by <span>{author.username}</span> - {moment(recipe.createdAt).fromNow()}</span>
+          <span className="recipe-author">Recipe by&nbsp;
+          <span>{author.username}</span> - {moment(recipe.createdAt).fromNow()}
+          </span>
 
         </div>
         <div className="col s12 m6">

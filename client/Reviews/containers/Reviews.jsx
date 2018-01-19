@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 
 import ListReviews from '../components/ListReviews';
 import AddReview from '../components/AddReview';
-import handleRecipeReview from '../actions';
+import handleAddNewRecipeReview from '../actions';
 import '../reviews.scss';
 
 
 const propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleRecipeReview: PropTypes.func.isRequired,
+  handleAddNewRecipeReview: PropTypes.func.isRequired,
 };
 
 /**
@@ -48,7 +48,7 @@ export class Reviews extends Component {
    */
   onSubmit = (event) => {
     event.preventDefault();
-    this.props.handleRecipeReview(this.props.recipe.id, this.state);
+    this.props.handleAddNewRecipeReview(this.props.recipe.id, this.state);
     this.setState({ content: '' });
   }
 
@@ -73,4 +73,4 @@ export class Reviews extends Component {
 Reviews.propTypes = propTypes;
 
 
-export default connect(null, { handleRecipeReview })(Reviews);
+export default connect(null, { handleAddNewRecipeReview })(Reviews);

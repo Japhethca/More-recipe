@@ -1,7 +1,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/JaphethCA/More-recipe/badge.svg)](https://coveralls.io/github/JaphethCA/More-recipe)
 [![Build Status](https://travis-ci.org/JaphethCA/More-recipe.svg?branch=staging)](https://travis-ci.org/JaphethCA/More-recipe)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6fd950b5a00c5c1e492b/maintainability)](https://codeclimate.com/github/JaphethCA/More-recipe/maintainability)
-
+[![Test Coverage](https://api.codeclimate.com/v1/badges/6fd950b5a00c5c1e492b/test_coverage)](https://codeclimate.com/github/JaphethCA/More-recipe/test_coverage)
 # More-recipes
 More-Recipes provides a platform for users to share the awesome and exciting recipe ideas they have invented or learnt.
 Suppose a user comes up with a recipe, he/she can post it on **More-Recipes** and get feedback in form of reviews and votes from other users who explore that recipe. Users can also keep a list of their favorite recipes on the application.

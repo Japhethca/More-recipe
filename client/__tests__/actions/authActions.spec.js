@@ -87,7 +87,7 @@ describe('SINGNUP actions', () => {
     });
   });
 
-  it('dispatches SIGNUP_FAILED_ERRORS type on failed authentication ', () => {
+  it('dispatches SIGNUP_FAILED_ERRORS on failed authentication ', () => {
     mock.onPost('/api/users/signup', signupData)
       .replyOnce(400, {
         message: 'Email Already exists'
@@ -104,30 +104,6 @@ describe('SINGNUP actions', () => {
     store.dispatch(actions.handleAuthRequest(loginData, 'signup')).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
-  });
-});
-
-describe('AUTHORIZATION HELPERS', () => {
-  it('should return true if token is valid', () => {
-    const token = jwt.sign({ user: { id: 1 } }, 'shhhhh');
-    expect(isValidToken(token)).toBeTruthy();
-  });
-
-  it('should return false if token is valid', () => {
-    const token = 'sfflksjflkjdlfjslkfjlskjf';
-    expect(isValidToken(token)).toBeFalsy();
-  });
-
-  it('should set token in authorization headers', () => {
-    const token = jwt.sign({ user: { id: 1 } }, 'shhhhh');
-    setAuthorizationToken(token);
-    expect(axios.defaults.headers.common.token).toEqual(token);
-  });
-
-  it('should delete token in authorization headers if invalid', () => {
-    const token = false;
-    setAuthorizationToken(token);
-    expect(axios.defaults.headers.common.Authorization).toEqual(undefined);
   });
 });
 
@@ -148,7 +124,6 @@ describe('LOGOUT actions', () => {
     expect(store.getActions()).toEqual(expectedActions);
   });
 });
-
 
 describe('AUTH ACTION CREATOR', () => {
   it('should return SET_CURRENT_USER  type type', () => {
@@ -176,5 +151,29 @@ describe('AUTH ACTION CREATOR', () => {
         errors
       });
     expect(actions.signupFailed('error')).toEqual(expectedActions('error'));
+  });
+});
+
+describe('AUTHORIZATION HELPERS', () => {
+  it('should return true if token is valid', () => {
+    const token = jwt.sign({ user: { id: 1 } }, 'shhhhh');
+    expect(isValidToken(token)).toBeTruthy();
+  });
+
+  it('should return false if token is valid', () => {
+    const token = 'sfflksjflkjdlfjslkfjlskjf';
+    expect(isValidToken(token)).toBeFalsy();
+  });
+
+  it('should set token in authorization headers', () => {
+    const token = jwt.sign({ user: { id: 1 } }, 'shhhhh');
+    setAuthorizationToken(token);
+    expect(axios.defaults.headers.common.token).toEqual(token);
+  });
+
+  it('should delete token in authorization headers if invalid', () => {
+    const token = false;
+    setAuthorizationToken(token);
+    expect(axios.defaults.headers.common.Authorization).toEqual(undefined);
   });
 });

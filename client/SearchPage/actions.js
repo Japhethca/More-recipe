@@ -1,15 +1,16 @@
 import axios from 'axios';
-import { SEARCH_RECIPE_SUCCESS, SEARCH_RECIPE_START, SEARCH_RECIPE_FAILED } from './actionTypes';
+import {
+  SEARCH_RECIPE_SUCCESS,
+  SEARCH_RECIPE_START,
+  SEARCH_RECIPE_FAILED } from './actionTypes';
 
 
 /**
  * @description creates a search result action
  * @param {Array} payload
- * @param {Number} currentPage
- * @param {Number} totalPages
  * @returns {Object} - search result action
  */
-const searchAction = (payload, currentPage, totalPages) => ({
+const searchAction = payload => ({
   type: SEARCH_RECIPE_SUCCESS,
   payload,
 });

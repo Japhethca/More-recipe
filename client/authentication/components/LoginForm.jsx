@@ -25,9 +25,9 @@ const LoginForm = (props) => {
   } = props;
   return (
     <div className="row auth-form container">
-      <div className="card col s12 m6 offset-m4 l4 offset-l4 z-depth-4">
+      <div className="card col s12 m6 offset-m3 l4 offset-l4 z-depth-2">
         <div className="header-text">
-          <h4>Log In</h4>
+          <h4>Sign In</h4>
         </div>
         <div className="server-error-text">
           {serverErrors && <span > {serverErrors} </span> }
@@ -70,7 +70,9 @@ const LoginForm = (props) => {
             </button>
           </div>
           <div className="auth-link">
-            <span> Don&#39;t have an Account? <Link to="/signup" href="/signup">Sign Up Here</Link></span>
+            <span> Don&#39;t have an Account?&nbsp;
+              <Link to="/signup" href="/signup">Sign Up Here</Link>
+            </span>
           </div>
         </form>
       </div>

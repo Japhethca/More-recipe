@@ -9,7 +9,8 @@ const swaggerDocs = require('../../swagger.json');
 const options = {
   customCss: '.swagger-ui .topbar {padding: 20px 0; background-color: #714229;}',
   customSiteTitle: 'More Recipes',
-  customfavIcon: 'http://res.cloudinary.com/dcmxbxzyj/image/upload/v1508739862/favicon_i0k72l.ico'
+  customfavIcon: 'http://res.cloudinary.com/dcmxbx' +
+  'zyj/image/upload/v1508739862/favicon_i0k72l.ico'
 };
 
 

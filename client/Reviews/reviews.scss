@@ -103,6 +103,7 @@ $user-text-color: #5151b6;
 
   .review-content {
     color: $review-color;
+    overflow-wrap: break-word;
   }
 
 

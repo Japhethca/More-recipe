@@ -15,7 +15,10 @@ const { Users } = models;
  */
 export const signup = (request, response) => Users.findAll({
   where: {
-    $or: [{ email: request.body.email }, { username: request.body.username }]
+    $or: [
+      { email: request.body.email },
+      { username: request.body.username }
+    ]
   },
 })
   .then((users) => {
@@ -27,7 +30,7 @@ export const signup = (request, response) => Users.findAll({
       });
     } // creates new user
     if (request.body.password !== request.body.verifyPassword) {
-      return response.status(409).json({
+      return response.status(403).json({
         status: 'failed',
         message: 'Password did not match'
       });

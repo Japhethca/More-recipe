@@ -15,8 +15,7 @@ const propTypes = {
   getAllRecipes: PropTypes.func.isRequired,
   handleGetFavorites: PropTypes.func.isRequired,
   recipes: PropTypes.objectOf(PropTypes.any).isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-
+  history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 /**
@@ -60,7 +59,8 @@ export class HomePage extends Component {
     if (nextProps.recipes !== this.props.recipes) {
       this.setState({ recipes: nextProps.recipes.payload });
     }
-    if (this.props.history.location.search !== nextProps.history.location.search) {
+    if (this.props.history.location.search
+      !== nextProps.history.location.search) {
       this.setState({ page: nextProps.history.location.search });
     }
   }

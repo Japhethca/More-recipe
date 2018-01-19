@@ -1,4 +1,7 @@
-import { SEARCH_RECIPE_SUCCESS, SEARCH_RECIPE_START, SEARCH_RECIPE_FAILED } from './actionTypes';
+import {
+  SEARCH_RECIPE_SUCCESS,
+  SEARCH_RECIPE_START,
+  SEARCH_RECIPE_FAILED } from './actionTypes';
 
 const initialState = {
   payload: [],

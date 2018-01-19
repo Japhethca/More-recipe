@@ -36,7 +36,10 @@ const Card = (props) => {
    * @returns {DomElement} - html markup
    */
   const renderDelete = () => (
-    <button onClick={onDeleteClick} className="btn-floating white waves-effect waves-red right">
+    <button
+      onClick={onDeleteClick}
+      className="btn-floating white waves-effect waves-red right"
+    >
       <i className="material-icons red-text ">delete</i>
     </button>
   );
@@ -66,13 +69,17 @@ const Card = (props) => {
         >
           <img
             src={recipe.image
-          || 'https://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526912/recipe-card-placeholder_ta9ikp.jpg'}
+          || 'https://res.cloudinary.com/dcmxbxzyj/image/upload' +
+            '/v1511526912/recipe-card-placeholder_ta9ikp.jpg'}
             alt={recipe.name}
             className="responsive-img recipe-image"
           />
           <h5 className="ellipses">{recipe.name}</h5>
         </Link>
-        <span className="recipe-author">Recipe by <span>{recipe.author.username}</span> - {moment(recipe.createdAt).fromNow()}</span>
+        <span className="recipe-author">Recipe by&nbsp;
+        <span> {recipe.author.username}</span>&nbsp;
+          - {moment(recipe.createdAt).fromNow()}
+        </span>
         {
         showActionBtns &&
         <div className="card-action">
@@ -93,7 +100,10 @@ const Card = (props) => {
         showRemoveFavorite &&
 
         <div className="card-action">
-          <button className="btn red white-text" onClick={onRemoveFavoriteClick}>
+          <button
+            className="btn red white-text"
+            onClick={onRemoveFavoriteClick}
+          >
           Remove
           </button>
         </div>

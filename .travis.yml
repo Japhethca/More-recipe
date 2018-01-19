@@ -10,12 +10,13 @@ before_script:
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 script:
-  - npm run test:client
   - npm test
-after_success: 
-  - codeclimate-test-reporter < ./coverage/lcov.info
+after_success:
   - npm run coveralls
+  - npm run client:coverage
+  - codeclimate-test-reporter < coverage/lcov.info
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 env:
   global:
     - NODE_ENV=test
+    - CC_TEST_REPORTER_ID=$CC_TEST_REPORTER_ID

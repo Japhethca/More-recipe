@@ -16,14 +16,14 @@ const propTypes = {
 
 /**
  * @description Search result page
- * @class SearchResultPage
+ * @class SearchPage
  * @extends {Component}
  */
-export class SearchResultPage extends Component {
+export class SearchPage extends Component {
   /**
-   * @description Creates an instance of SearchResultPage.
+   * @description Creates an instance of SearchPage.
    * @param {Object} props
-   * @memberof SearchResultPage
+   * @memberof SearchPage
    */
   constructor(props) {
     super(props);
@@ -36,7 +36,7 @@ export class SearchResultPage extends Component {
 
   /**
    * @description makes an api search when component mounts
-   * @memberof SearchResultPage
+   * @memberof SearchPage
    * @returns {undefined}
    */
   componentDidMount() {
@@ -47,11 +47,12 @@ export class SearchResultPage extends Component {
   /**
    * @description checks if location and results are available in props
    * @param {object} nextProps
-   * @memberof SearchResultPage
+   * @memberof SearchPage
    * @returns {undefined}
    */
   componentWillReceiveProps(nextProps) {
-    if (nextProps.history.location.search !== this.props.history.location.search) {
+    if (nextProps.history.location.search
+      !== this.props.history.location.search) {
       this.props.handleSearch(nextProps.history.location.search);
       this.setState({ query: nextProps.history.location.search });
     }
@@ -66,7 +67,8 @@ export class SearchResultPage extends Component {
    * @returns {ReactElement} - markup
    */
   render() {
-    const { query } = qs.parse(this.props.history.location.search, { ignoreQueryPrefix: true });
+    const { query } = qs
+      .parse(this.props.history.location.search, { ignoreQueryPrefix: true });
     const results = this.state.searchResults.payload;
     return (
       <div className="container search-page">
@@ -75,7 +77,8 @@ export class SearchResultPage extends Component {
 
           <div >
             <h4> { results.length < 1
-            ? 'No' : results.length } Search Result(s) for <span> &quot;{query}&quot;</span>
+            ? 'No' : results.length } Search Result(s) for
+            <span> &quot;{query}&quot;</span>
             </h4>
             <Recipes recipes={results} noItemText="  " />
           </div>
@@ -85,11 +88,14 @@ export class SearchResultPage extends Component {
   }
 }
 
-SearchResultPage.propTypes = propTypes;
+SearchPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
   results: state.results,
 });
 
 
-export default withRouter(connect(mapStateToProps, { handleSearch })(SearchResultPage));
+export default withRouter(connect(
+  mapStateToProps,
+  { handleSearch }
+)(SearchPage));

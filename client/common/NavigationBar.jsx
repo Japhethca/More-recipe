@@ -97,7 +97,13 @@ export class NavigationBar extends Component {
       <li><NavLink to="/profile">Profile</NavLink></li>
       <li><NavLink to="/my-recipes">My Recipes</NavLink></li>
       <li ><NavLink to="/favorites">Favorites</NavLink></li>
-      <li ><button onClick={this.onClick}>Logout <i className="material-icons">exit_to_app</i></button></li>
+      <li >
+        <button
+          onClick={this.onClick}
+        > Logout
+         <i className="material-icons">exit_to_app</i>
+        </button>
+      </li>
     </ul>
   );
   /**
@@ -110,7 +116,7 @@ export class NavigationBar extends Component {
    */
   renderGuestNav = (wrapperId, wrapperClass, linkClass) => (
     <ul className={wrapperClass} id={wrapperId}>
-      <li ><NavLink to="/signin" className={linkClass}>Log In </NavLink></li>
+      <li ><NavLink to="/signin" className={linkClass}>Sign In </NavLink></li>
       <li><NavLink to="/signup" className={linkClass}>Sign Up</NavLink></li>
     </ul>
   );
@@ -134,8 +140,14 @@ export class NavigationBar extends Component {
           </li>
         </ul>
         <ul className="nav-mobile hide-on-small-only right">
-          <li className="nav-search hide-on-med-and-down"><SearchForm history={this.props.history} /></li>
-          <li><NavLink to="/create" href="create" activeClassName="active-link">Create Recipe</NavLink></li>
+          <li className="nav-search hide-on-med-and-down">
+            <SearchForm history={this.props.history} />
+          </li>
+          <li>
+            <NavLink to="/create" href="create" activeClassName="active-link">
+              Create Recipe
+            </NavLink>
+          </li>
           <li>
             <NavLink
               className="dropdown-button"
@@ -161,7 +173,10 @@ export class NavigationBar extends Component {
 
     return (
       <div className="">
-        <nav className="nav-extended nav-menu" style={this.props.bgColor && { backgroundColor: this.props.bgColor }}>
+        <nav
+          className="nav-extended nav-menu"
+          style={this.props.bgColor && { backgroundColor: this.props.bgColor }}
+        >
           <div className="nav-wrapper">
             <div className="container-fluid">
               <NavLink
@@ -171,7 +186,11 @@ export class NavigationBar extends Component {
               >
                 More Recipes
               </NavLink>
-              <NavLink to="" data-activates="more-recipe" className="button-collapse">
+              <NavLink
+                to=""
+                data-activates="more-recipe"
+                className="button-collapse"
+              >
                 <i className="material-icons">menu</i>
               </NavLink>
               {isAuthenticated ? userLinks : guestLinks}

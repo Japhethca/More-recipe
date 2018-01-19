@@ -27,28 +27,47 @@ const recipeFormRules = {
 
 /**
  * @description handles user input validation
- * @param {Object} req
- * @param {Object} res
+ * @param {Object} request
+ * @param {Object} response
  * @param {function} next
  * @param {Object} rules - validation rules
  * @returns {function} - function
  */
-const validate = (req, res, next, rules) => {
-  const validator = new Validator(req.body, rules);
+const validate = (request, response, next, rules) => {
+  const validator = new Validator(request.body, rules);
   if (validator.passes()) {
     return next();
   }
   const errors = Object.values(validator.errors.errors).map(val => val[0]);
-  return res.status(400).json({
+  return response.status(400).json({
     status: 'failed',
     message: errors
   });
 };
 
-export const signupValidator = (req, res, next) => validate(req, res, next, signupRules);
-export const signinValidator = (req, res, next) => validate(req, res, next, signinRules);
-export const reviewPostValidator = (req, res, next) => validate(req, res, next, reviewRules);
-export const recipeValidator = (req, res, next) => validate(req, res, next, recipeFormRules);
+export const signupValidator = (
+  request,
+  response,
+  next
+) => validate(request, response, next, signupRules);
+
+export const signinValidator = (
+  request,
+  response,
+  next
+) => validate(request, response, next, signinRules);
+
+export const reviewPostValidator = (
+  request,
+  response,
+  next
+) => validate(request, response, next, reviewRules);
+
+export const recipeValidator = (
+  request,
+  response,
+  next
+) => validate(request, response, next, recipeFormRules);
 
 /**
  * @description checks for valid request query
@@ -68,16 +87,16 @@ export const checkQuery = (query, validQuery) => {
 
 /**
  * @description checks for valid request parameters
- * @param {Object} req - request query
- * @param {Object} res - request query
+ * @param {Object} request - request query
+ * @param {Object} response - request query
  * @param {function} next - request query
  * @returns {Boolean} - true or false
  */
-export const checkParams = (req, res, next) => {
-  if (req.params) {
-    const param = Object.keys(req.params)[0];
-    if (_.isNaN(parseInt(req.params[param], 10))) {
-      return res.status(400).json({
+export const checkParams = (request, response, next) => {
+  if (request.params) {
+    const param = Object.keys(request.params)[0];
+    if (_.isNaN(parseInt(request.params[param], 10))) {
+      return response.status(400).json({
         status: 'failed',
         message: 'Invalid URL parameter type, parameter must be a number'
       });

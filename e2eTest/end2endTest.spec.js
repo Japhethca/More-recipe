@@ -1,5 +1,5 @@
-import selectors from './selectors';
 import faker from 'faker';
+import selectors from './selectors';
 
 const email = faker.internet.email();
 const username = faker.internet.userName();

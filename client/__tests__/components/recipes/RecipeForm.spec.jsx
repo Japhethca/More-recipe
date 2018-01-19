@@ -5,7 +5,7 @@ import RecipeForm from '../../../Recipes/components/RecipeForm';
 
 const props = {
   recipe: {},
-  validationErrors: [],
+  validationErrors: {},
   onSubmit: jest.fn(),
   onChange: jest.fn(),
   handleEditorChange: jest.fn(),

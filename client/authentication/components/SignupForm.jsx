@@ -25,7 +25,7 @@ const SignupForm = (props) => {
   } = props;
   return (
     <div className="row auth-form container">
-      <div className="card col s12 m4 offset-m4 z-depth-4">
+      <div className="card col s12 m6 offset-m3 l4 offset-l4 z-depth-2">
         <div className="header-text">
           <h4>Sign Up</h4>
         </div>
@@ -84,12 +84,18 @@ const SignupForm = (props) => {
             />
           </div>
           <div className="input-field col s12">
-            <button className="btn-large auth-btn" type="submit" disabled={props.isFetching}>
+            <button
+              className="btn-large auth-btn"
+              type="submit"
+              disabled={props.isFetching}
+            >
               {props.isFetching ? 'Registering...' : 'Register'}
             </button>
           </div>
           <div className="auth-link right">
-            <span>Have login details? <Link to="/signin" href >Login Here</Link></span>
+            <span> Have login details?&nbsp;
+              <Link to="/signin" href >Login Here</Link>
+            </span>
           </div>
         </form>
       </div>

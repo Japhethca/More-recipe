@@ -2,10 +2,14 @@ import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
 
-import upload from '../utilities/fileUpload';
-import { EDIT_USER_PROFILE, EDIT_USER_PROFILE_FAILED,
-  EDIT_USER_PROFILE_START, GET_USER_PROFILE,
-  GET_USER_PROFILE_FAILED, GET_USER_PROFILE_START } from './actionTypes';
+import fileUpload from '../utilities/fileUpload';
+import {
+  UPDATE_USER_PROFILE,
+  UPDATE_USER_PROFILE_START,
+  UPDATE_USER_PROFILE_FAILED,
+  GET_USER_PROFILE,
+  GET_USER_PROFILE_FAILED,
+  GET_USER_PROFILE_START } from './actionTypes';
 import * as types from '../Recipes/actionTypes';
 
 
@@ -62,10 +66,9 @@ export const handleGetUserProfile = () => (dispatch) => {
  * @returns {object} redux action
  */
 
-export const editProfileAction = (newProfile, isFetching = false) => ({
-  type: EDIT_USER_PROFILE,
-  newProfile,
-  isFetching
+export const updateProfileAction = newProfile => ({
+  type: UPDATE_USER_PROFILE,
+  newProfile
 });
 
 /**
@@ -76,24 +79,17 @@ export const editProfileAction = (newProfile, isFetching = false) => ({
  * @returns {object} redux action
  */
 
-export const editProfileStartAction = (newProfile, isFetching = false) => ({
-  type: EDIT_USER_PROFILE_START,
-  newProfile,
-  isFetching
+export const updateProfileStartAction = () => ({
+  type: UPDATE_USER_PROFILE_START
 });
 
 /**
- * @description edit user profile action creators
- * @param {object} newProfile - user object
- * @param {object} newProfile - user object
- * @param {Boolean} isFetching - user object
+ * @description dispatched when updating profile fails
  * @returns {object} redux action
  */
 
-export const editProfileFailedAction = (newProfile, isFetching = false) => ({
-  type: EDIT_USER_PROFILE_FAILED,
-  newProfile,
-  isFetching
+export const updateProfileFailedAction = () => ({
+  type: UPDATE_USER_PROFILE_FAILED,
 });
 
 /**
@@ -102,21 +98,21 @@ export const editProfileFailedAction = (newProfile, isFetching = false) => ({
  * @param {Object} profileData - user object
  * @returns {promise} axios or supseragent
  */
-export const handleEditUserProfile = profileData => async (dispatch) => {
-  dispatch(editProfileStartAction());
+export const handleUpdateUserProfile = profileData => async (dispatch) => {
+  dispatch(updateProfileStartAction());
   if (typeof (profileData.photo) === 'object') {
-    await upload(profileData.photo).then((res) => {
-      profileData.photo = res.body.secure_url;
+    await fileUpload(profileData.photo).then((response) => {
+      profileData.photo = response.body.secure_url;
     }).catch(() => {
-      dispatch(editProfileFailedAction());
+      dispatch(updateProfileFailedAction());
       toastr.error('failed to load image');
     });
   }
   return axios.put('/api/users/profile', profileData).then((response) => {
-    dispatch(editProfileAction(response.data.userData));
+    dispatch(updateProfileAction(response.data.userData));
     toastr.success(response.data.message);
   }).catch((error) => {
-    dispatch(editProfileFailedAction());
+    dispatch(updateProfileFailedAction());
     toastr.error(error.response.data.message);
   });
 };
@@ -149,15 +145,13 @@ export const userRecipesAction = payload => ({
 
 /**
  * @export
- * @argument {Number} page
- * @argument {Number} limit
  * @returns {promise} axios promise
  */
 export const handleGetUserRecipes = () => (dispatch) => {
   dispatch(fetchUserRecipesStartAction());
   return axios.get('/api/users/recipes')
-    .then((res) => {
-      dispatch(userRecipesAction(res.data.recipes));
+    .then((response) => {
+      dispatch(userRecipesAction(response.data.recipes));
     }).catch(() => {
       dispatch(fetchUserRecipesFailedAction());
     });
@@ -197,8 +191,9 @@ export const getFavoritesFailedAction = () => ({
 export const handleGetFavorites = () => (dispatch) => {
   dispatch(getFavoritesStartAction());
   return axios.get('/api/users/favorites')
-    .then((res) => {
-      const favorites = res.data.favorites.map(favorite => favorite.Recipe);
+    .then((response) => {
+      const favorites = response.data.favorites
+        .map(favorite => favorite.Recipe);
       dispatch(getFavoritesAction(favorites));
     }).catch(() => {
       dispatch(getFavoritesFailedAction());

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
-import upload from '../utilities/fileUpload';
+import fileUpload from '../utilities/fileUpload';
 import { UPDATE_RECIPE, ADD_NEW_RECIPE,
   FETCH_SINGLE_RECIPE_FAILED,
   FETCH_SINGLE_RECIPE_START,
@@ -49,8 +49,8 @@ export const createRecipeAction = recipe => ({
 export const handleCreateRecipe = recipeData => async (dispatch) => {
   dispatch(isFetching(true));
   if (typeof (recipeData.image) === 'object') {
-    await upload(recipeData.image).then((res) => {
-      recipeData.image = res.body.secure_url;
+    await fileUpload(recipeData.image).then((response) => {
+      recipeData.image = response.body.secure_url;
     }).catch(() => {
       dispatch(isFetching(false));
       toastr.error('failed to load image');
@@ -85,22 +85,23 @@ export const updateRecipeAction = recipe => ({
 export const handleUpdateRecipe = recipeData => async (dispatch) => {
   dispatch(isFetching(true));
   if (typeof (recipeData.image) === 'object') {
-    await upload(recipeData.image).then((res) => {
-      recipeData.image = res.body.secure_url;
+    await fileUpload(recipeData.image).then((response) => {
+      recipeData.image = response.body.secure_url;
     }).catch(() => {
       dispatch(isFetching(false));
       toastr.error('failed to load image');
     });
   }
-  return axios.put(`/api/recipe/${recipeData.id}`, recipeData).then((response) => {
-    dispatch(created());
-    dispatch(updateRecipeAction(response.data.recipe));
-    toastr.success(response.data.message);
-    dispatch(isFetching(false));
-  }).catch((error) => {
-    dispatch(isFetching(false));
-    toastr.error(error.response.data.message);
-  });
+  return axios.put(`/api/recipe/${recipeData.id}`, recipeData)
+    .then((response) => {
+      dispatch(created());
+      dispatch(updateRecipeAction(response.data.recipe));
+      toastr.success(response.data.message);
+      dispatch(isFetching(false));
+    }).catch((error) => {
+      dispatch(isFetching(false));
+      toastr.error(error.response.data.message);
+    });
 };
 
 /**
@@ -171,16 +172,17 @@ export const deleteRecipeActionFailed = () => ({
  * @param {Number} id
  * @returns {Promise} axios promise
  */
-export const handleDeleteRecipe = id => dispatch => axios.delete(`/api/recipe/${id}`)
-  .then((res) => {
-    if (res.data.status === 'success') {
-      dispatch(deleteRecipeAction(id));
-      toastr.info(res.data.message);
-    }
-  }).catch((error) => {
-    toastr.info(error.response.data.message);
-    dispatch(deleteRecipeActionFailed());
-  });
+export const handleDeleteRecipe = id => dispatch =>
+  axios.delete(`/api/recipe/${id}`)
+    .then((response) => {
+      if (response.data.status === 'success') {
+        dispatch(deleteRecipeAction(id));
+        toastr.info(response.data.message);
+      }
+    }).catch((error) => {
+      toastr.info(error.response.data.message);
+      dispatch(deleteRecipeActionFailed());
+    });
 
 /**
  * @param {number} id
@@ -205,11 +207,14 @@ export const removeFavoritesActionFailed = () => ({
  * @param {number} recipeId
  * @returns {promise} axios promise
  */
-export const handleRemoveFromFavorites = recipeId => dispatch => axios.delete(`/api/users/favorites/${recipeId}`)
-  .then((response) => {
-    dispatch(removeFavoritesAction(recipeId));
-    toastr.info(response.data.message);
-  }).catch(() => dispatch(removeFavoritesActionFailed()));
+export const handleRemoveFromFavorites = recipeId => dispatch =>
+  axios.delete(`/api/users/favorites/${recipeId}`)
+    .then((response) => {
+      dispatch(removeFavoritesAction(recipeId));
+      toastr.info(response.data.message);
+    }).catch(() => {
+      dispatch(removeFavoritesActionFailed());
+    });
 
 /**
  * @description creates add to favorites action
@@ -236,13 +241,14 @@ export const addToFavoriteActionFailed = () => ({
  * @param {object} recipe
  * @returns {promise} - axios
  */
-export const handleAddToFavorites = recipe => dispatch => axios.post(`/api/users/favorites/${recipe.id}`)
-  .then((response) => {
-    if (response.data.status === 'success') {
-      dispatch(addToFavoriteAction(recipe));
-      toastr.success(response.data.message);
-    }
-  }).catch((error) => {
-    addToFavoriteActionFailed();
-    toastr.error(error.response.data.message);
-  });
+export const handleAddToFavorites = recipe => dispatch =>
+  axios.post(`/api/users/favorites/${recipe.id}`)
+    .then((response) => {
+      if (response.data.status === 'success') {
+        dispatch(addToFavoriteAction(recipe));
+        toastr.success(response.data.message);
+      }
+    }).catch((error) => {
+      addToFavoriteActionFailed();
+      toastr.error(error.response.data.message);
+    });

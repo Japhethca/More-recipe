@@ -6,30 +6,34 @@ import app from '../app';
 const Authenticator = {
   /**
    * @description handles user authentiaction
-   * @param {Object} req - HTTP Request
-   * @param {Object} res - HTTP Response
+   * @param {Object} request - HTTP Request
+   * @param {Object} response - HTTP Response
    * @param {function} next
    * @returns {none} does not return return a value
    */
-  authenticate(req, res, next) {
-    const token = req.body.token || req.query.token || req.headers.token;
+  authenticate(request, response, next) {
+    const token = request.body.token
+      || request.query.token
+      || request.headers.token;
 
-    if (req.url === '/users/signin' || req.url === '/users/signup'
-      || req.url === '/v1/users/signin' || req.url === '/v1/users/signup') {
+    if (request.url === '/users/signin'
+      || request.url === '/users/signup'
+      || request.url === '/v1/users/signin'
+      || request.url === '/v1/users/signup') {
       next();
     } else if (token) {
       jwt.verify(token, app.get('secret_key'), (err, decoded) => {
         if (err) {
-          return res.status(401).json({
+          return response.status(401).json({
             status: 'failed',
             message: 'Authentication failed: expired/invalid token'
           });
         }
-        req.decoded = decoded;
+        request.decoded = decoded;
         next();
       });
     } else {
-      res.status(403).json({
+      response.status(403).json({
         status: 'failed',
         message: 'failed! No token. Sign in to get one.'
       });
@@ -38,12 +42,12 @@ const Authenticator = {
 
   /**
    * @description handle non inplemented request methods
-   * @param {Object} req - HTTP request
-   * @param {Object} res - HTTP response
+   * @param {Object} request - HTTP request
+   * @param {Object} response - HTTP response
    * @returns {Object} - Response
    */
-  notImplemented(req, res) {
-    return res.status(405).json({
+  notImplemented(request, response) {
+    return response.status(405).json({
       status: 'failed',
       message: 'Unsupported Request Method'
     });

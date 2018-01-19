@@ -35,7 +35,8 @@ describe('<LoginPage />', () => {
 
   it('should simulate submit event', () => {
     const wrapper = shallow(<LoginPage {...props} {...state} />);
-    const handleRequestSpy = jest.spyOn(wrapper.instance().props, 'handleAuthRequest');
+    const handleRequestSpy = jest
+      .spyOn(wrapper.instance().props, 'handleAuthRequest');
     wrapper.instance().setState({...state})
     wrapper.find('LoginForm').simulate('submit', event);
     expect(handleRequestSpy).toHaveBeenCalled();

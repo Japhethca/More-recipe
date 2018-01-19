@@ -4,7 +4,10 @@ import { toastr } from 'react-redux-toastr';
 import { isFetching } from '../Recipes/actions';
 
 import { setAuthorizationToken } from './helpers/setAuthorization';
-import { SET_CURRENT_USER, LOGIN_FAILED_ERRORS, SIGNUP_FAILED_ERRORS } from './actionTypes';
+import {
+  SET_CURRENT_USER,
+  LOGIN_FAILED_ERRORS,
+  SIGNUP_FAILED_ERRORS } from './actionTypes';
 
 /**
  * @export
@@ -54,17 +57,18 @@ export const handleLogout = () => (dispatch) => {
  * @returns {promise} axios response promise
  */
 export const handleAuthRequest = (userdata, requestType) => {
-  const url = requestType === 'login' ? '/api/users/signin' : '/api/users/signup';
+  const url = requestType === 'login' ?
+    '/api/users/signin' : '/api/users/signup';
 
   return (dispatch) => {
     dispatch(isFetching(true));
     return axios.post(url, userdata)
-      .then((res) => {
-        const { token } = res.data;
+      .then((response) => {
+        const { token } = response.data;
         localStorage.setItem('token', token);
         setAuthorizationToken(token);
         dispatch(setCurrentUser(jwt.decode(token)));
-        toastr.success(res.data.message);
+        toastr.success(response.data.message);
         dispatch(isFetching(false));
       })
       .catch((error) => {

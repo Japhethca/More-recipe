@@ -61,7 +61,8 @@ describe('SIGNUP CONTROLLER', () => {
         expect(response.body.status).to.be.eql('success');
         expect(response.body).to.have.property('message');
         expect(response.body).to.have.property('userData');
-        expect(response.body.message).to.be.eqls('Account Successfully created!');
+        expect(response.body.message)
+          .to.be.eqls('Account Successfully created!');
         done();
       });
   });

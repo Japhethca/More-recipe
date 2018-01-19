@@ -32,10 +32,5 @@ describe('<Review /> ', () => {
     expect(wrapper.find('.review-content')
       .text()).toBe('this is an awesome recipe');
   });
-
-  it('should match snapshot', () => {
-    const wrapper = shallow(<Review {...props} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-  });
 });
 

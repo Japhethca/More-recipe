@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import {
   handleDownvote,
   handleUpvote } from '../actions';
-import { handleRemoveFromFavorites, handleAddToFavorites } from '../../Recipes/actions';
-import FavoritesButton from '../components/FavoriteButton';
+import {
+  handleRemoveFromFavorites,
+  handleAddToFavorites } from '../../Recipes/actions';
+import FavoriteButton from '../components/FavoriteButton';
 import DownvoteButton from '../components/DownvoteButton';
-import ReviewButton from '../components/ReviewsButton';
+import ReviewsButton from '../components/ReviewsButton';
 import UpvoteButton from '../components/UpvoteButton';
 import '../buttons.scss';
 
@@ -123,14 +125,22 @@ export class ActionButtons extends Component {
     return (
       <div>
         <ul className="btn-list">
-          <li><ReviewButton
+          <li><ReviewsButton
             reviews={recipe.Reviews && recipe.Reviews.length}
             hidden={this.props.hidden}
           />
           </li>
-          <li><UpvoteButton upvotes={recipe.upvotes} upvote={this.upvote} /></li>
-          <li><DownvoteButton downvotes={recipe.downvotes} downvote={this.downvote} /></li>
-          <li><FavoritesButton
+          <li><UpvoteButton
+            upvotes={recipe.upvotes}
+            upvote={this.upvote}
+          />
+          </li>
+          <li><DownvoteButton
+            downvotes={recipe.downvotes}
+            downvote={this.downvote}
+          />
+          </li>
+          <li><FavoriteButton
             isInFavorites={this.isInFavorites}
             onFavoriteClick={this.onFavoriteClick}
           />
