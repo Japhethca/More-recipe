@@ -8,18 +8,15 @@
     "start": "NODE_ENV=production babel-node -- server/app.js",
     "start:dev": "nodemon --watch server --exec babel-node server/app.js",
     "test:server": "npm run start:test:db && NODE_ENV=test nyc mocha server/test/**/*.js --compilers js:babel-core/register --timeout 20000",
-    "test:client": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "test:client": "jest --coverage",
     "test": "npm run test:server && npm run test:client",
     "db:migrate": "NODE_ENV=production sequelize db:migrate:undo:all && NODE_ENV=production sequelize db:migrate",
     "test:db:migrate": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate",
     "test:db:seed": "NODE_ENV=test sequelize db:seed:all",
     "start:test:db": "npm run test:db:migrate && npm run test:db:seed",
-    "test-b": "NODE_ENV=test && nyc --reporter=html mocha --compilers js:babel-core/register --timeout 20000",
     "coveralls": "nyc report --reporter=text-lcov  | coveralls",
-    "client:coverage": "coveralls < coverage/lcov.info",
-    "e2e-test": "nightwatch",
-    "e2e-setup": "selenium-standalone install",
-    "e2e-server": "selenium-standalone start"
+    "e2e-test": "npm run test:db:migrate && nightwatch",
+    "start:e2e": "NODE_ENV=test nodemon --watch server --exec babel-node server/app.js"
   },
   "repository": {
     "type": "git",
@@ -40,7 +37,8 @@
     "roots": [
       "./client"
     ],
-    "collectCoverage": true ,
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "setupFiles": [
       "raf/polyfill"
     ],
@@ -117,6 +115,7 @@
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
     "codeclimate-test-reporter": "^0.5.0",
+    "codecov": "^3.0.0",
     "coveralls": "^2.13.1",
     "cross-env": "^5.0.5",
     "enzyme": "^3.3.0",

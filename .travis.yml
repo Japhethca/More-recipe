@@ -1,22 +1,18 @@
 node_js:
   - 'node'
+node_js:
+  - 8.1.4
 services:
   - postgresql
 before_script:
   - npm install
-  - npm install -g codeclimate-test-reporter
+  - npm install -g codecov
   - psql -c 'create database test;' -U postgres
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
 script:
   - npm test
 after_success:
   - npm run coveralls
-  - npm run client:coverage
-  - codeclimate-test-reporter < coverage/lcov.info
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - codecov
 env:
   global:
     - NODE_ENV=test
-    - CC_TEST_REPORTER_ID=$CC_TEST_REPORTER_ID

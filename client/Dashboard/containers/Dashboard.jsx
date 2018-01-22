@@ -69,7 +69,7 @@ export class Dashboard extends Component {
                   </NavLink>
               </li>
               <li><NavLink
-                to="/logout"
+                to=""
                 activeClassName="active"
                 onClick={this.onClick}
                 id="logout"
