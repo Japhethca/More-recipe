@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import Footer from '../../../common/Footer';
 
 describe('<Footer /> ', () => {
-  it('should mount without exploding', () => {
+  it('should render component without exploding', () => {
     const wrapper = shallow(<Footer />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('div').length).toBe(1);

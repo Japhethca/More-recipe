@@ -25,7 +25,7 @@ const state = {
 };
 
 describe('<ProfileModal />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<ProfileModal {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
@@ -35,49 +35,72 @@ describe('<ProfileModal />', () => {
     expect(wrapper.find('img').length).toBe(1);
   });
 
-  it('should render new image on change', () => {
-    const wrapper = shallow(<ProfileModal {...props} {...state} />);
-    wrapper.instance().onChange(event);
-    expect(wrapper.instance().state.firstname).toBe('chidex');
-    const newEvent = {
-      target: {
-        name: 'photo',
-        files: [new Blob()]
-      }
-    };
-    wrapper.instance().onChange(newEvent);
-    expect(wrapper.instance().state.photo).toEqual(new Blob());
-  });
-
-  it('should receive new props when profile is updated', () => {
-    const wrapper = shallow(<ProfileModal {...props} />);
-    const componentWillReceivePropsSpy = jest
-      .spyOn(wrapper.instance(), 'componentWillReceiveProps');
-    wrapper.setProps({
-      profile: {
-        photo: 'http://image.com/image.jpeg',
-        firstname: 'chidex',
-        lastname: 'epic',
-        aboutme: 'andela is epic'
-      }
+  describe('onchange()', () => {
+    it('should display a selected image', () => {
+      const wrapper = shallow(<ProfileModal {...props} {...state} />);
+      const newEvent = {
+        target: {
+          name: 'photo',
+          files: [new Blob()]
+        }
+      };
+      wrapper.instance().onChange(newEvent);
+      expect(wrapper.instance().state.photo).toEqual(new Blob());
     });
-    expect(componentWillReceivePropsSpy).toHaveBeenCalled();
-    expect(wrapper.instance().state.firstname).toBe('chidex');
+
+    it(
+      'should update "firstname" input field state when a user enters an input',
+      () => {
+        const wrapper = shallow(<ProfileModal {...props} {...state} />);
+        const newEvent = {
+          target: {
+            name: 'firstname',
+            value: 'john'
+          }
+        };
+        wrapper.instance().onChange(newEvent);
+        expect(wrapper.instance().state.firstname).toEqual('john');
+      }
+    );
   });
 
-  it('should simulate profile modal click form submission click', () => {
-    const wrapper = shallow(<ProfileModal {...props} />);
-    const updateButton = wrapper.find('.btn .blue');
-    const handleUpdateUserProfileSpy = jest.spyOn(wrapper.instance().props, 'handleUpdateUserProfile');
-    updateButton.simulate('click', event)
-    expect(handleUpdateUserProfileSpy).toHaveBeenCalled();
+  describe('componentWillReceiveProps', () => {
+    it('should update profile with new details new props arrives', () => {
+      const wrapper = shallow(<ProfileModal {...props} />);
+      const componentWillReceivePropsSpy = jest
+        .spyOn(wrapper.instance(), 'componentWillReceiveProps');
+      wrapper.setProps({
+        profile: {
+          photo: 'http://image.com/image.jpeg',
+          firstname: 'chidex',
+          lastname: 'epic',
+          aboutme: 'andela is epic'
+        }
+      });
+      expect(componentWillReceivePropsSpy).toHaveBeenCalled();
+      expect(wrapper.instance().state.firstname).toBe('chidex');
+      expect(wrapper.instance().state.aboutme).toBe('andela is epic');
+    });
   });
 
-  it('should simulate profile form submission click', () => {
-    const wrapper = shallow(<ProfileModal {...props} />);
-    const finishButton = wrapper.find('.grey');
-    const onFinishClickSpy = jest.spyOn(wrapper.instance(), 'onFinishClick');
-    wrapper.instance().onFinishClick(event);
-    expect(onFinishClickSpy).toHaveBeenCalled();
+  describe('onFinishCLick()', () => {
+    it('should close profile update modal', () => {
+      const wrapper = shallow(<ProfileModal {...props} />);
+      const finishButton = wrapper.find('.grey');
+      const onFinishClickSpy = jest.spyOn(wrapper.instance(), 'onFinishClick');
+      wrapper.instance().onFinishClick(event);
+      expect(onFinishClickSpy).toHaveBeenCalled();
+    });
+  });
+
+  describe('onSubmit()', () => {
+    it('should submit user profile update form', () => {
+      const wrapper = shallow(<ProfileModal {...props} />);
+      const updateButton = wrapper.find('.btn .blue');
+      const handleUpdateUserProfileSpy = jest
+        .spyOn(wrapper.instance().props, 'handleUpdateUserProfile');
+      updateButton.simulate('click', event);
+      expect(handleUpdateUserProfileSpy).toHaveBeenCalled();
+    });
   });
 });

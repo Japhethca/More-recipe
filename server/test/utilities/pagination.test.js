@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import pagination from '../../middlewares/pagination';
+import pagination from '../../utilities/pagination';
 
 describe('PAGINATION', () => {
   it('should return an offset when given a limit and page number', () => {

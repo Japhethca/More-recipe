@@ -5,13 +5,12 @@ import {
   ADD_NEW_REVIEW_SUCCESS,
   ADD_NEW_REVIEW_FAILED } from '../../Recipes/actionTypes';
 import reviewAction,
-  {
+{
   addNewReviewSuccess,
   addNewReviewFailed } from '../../Reviews/actions';
 
-
 describe('REVIEW RECIPE actions', () => {
-  it('creates ADD_NEW_REVIEW_SUCCESS actions when review ' +
+  it('dispatches ADD_NEW_REVIEW_SUCCESS action type when review ' +
     'has been added to recipe', () => {
     const reviewData = { content: 'nice one', recipeId: 1, userId: 1 };
     mock.onGet('/api/recipe/1/review', reviewData)
@@ -35,10 +34,10 @@ describe('REVIEW RECIPE actions', () => {
     });
   });
 
-  it('creates ADD_NEW_REVIEW_FAILED actions when adding ' +
+  it('dispatches ADD_NEW_REVIEW_FAILED action type when adding ' +
     'review to recipe fails', () => {
     mock.onGet('/api/recipe/1/review')
-      .replyOnce(400);
+      .replyOnce(400), { message: '' };
 
     const expectedActions = [
       {

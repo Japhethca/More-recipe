@@ -24,7 +24,7 @@ describe('REVIEWS CONTROLLER', () => {
       });
   });
 
-  it('should return created review for a recipe', (done) => {
+  it('should successfully return posted review for a recipe', (done) => {
     chai.request(app)
       .post('/api/recipe/2/review')
       .send({ content: 'this is serious' })
@@ -33,14 +33,16 @@ describe('REVIEWS CONTROLLER', () => {
         expect(response).to.have.status(201);
         expect(response.body).to.have.property('message');
         expect(response.body).to.have.property('review');
-        expect(response.body.message).to.be.eql('Review Added Successfully');
         expect(response.body.review).to.have.property('content');
+        expect(response.body.review.content).to.equal('This is serious');
+        expect(response.body.message).to.be.eql('Review Added Successfully');
         done();
       });
   });
 
   it(
-    'should return 404 status when adding a review for recipe that does not exist'
+    'should return 404 status when adding a review ' +
+    'for recipe with id that does not exist'
     , (done) => {
       chai.request(app)
         .post('/api/recipe/200/review')
@@ -68,34 +70,42 @@ describe('REVIEWS CONTROLLER', () => {
       });
   });
 
-  it('should return all reviews for a single recipe', (done) => {
-    chai.request(app)
-      .get('/api/recipe/2/reviews')
-      .query({ token })
-      .end((error, response) => {
-        expect(response).to.have.status(200);
-        expect(response.body).to.have.property('message');
-        expect(response.body.message)
-          .to.be.eql('Recipe reviews successfully returned');
-        expect(response.body).to.have.property('reviews');
-        expect(response.body.count).to.be.greaterThan(0);
-        done();
-      });
-  });
+  it(
+    'should successfully return all reviews for a single recipe',
+    (done) => {
+      chai.request(app)
+        .get('/api/recipe/2/reviews')
+        .query({ token })
+        .end((error, response) => {
+          expect(response).to.have.status(200);
+          expect(response.body).to.have.property('message');
+          expect(response.body.message)
+            .to.be.eql('Recipe reviews successfully returned');
+          expect(response.body).to.have.property('reviews');
+          expect(response.body.count).to.be.greaterThan(0);
+          done();
+        });
+    }
+  );
 
-  it('should return 404 when there are no review for a recipe', (done) => {
-    chai.request(app)
-      .get('/api/recipe/3/reviews')
-      .query({ token })
-      .end((error, response) => {
-        expect(response).to.have.status(404);
-        expect(response.body).to.have.property('message');
-        expect(response.body.message).to.be.eql('No reviews for this recipe');
-        done();
-      });
-  });
+  it(
+    'should return 404 when there are no reviews for a recipe',
+    (done) => {
+      chai.request(app)
+        .get('/api/recipe/3/reviews')
+        .query({ token })
+        .end((error, response) => {
+          expect(response).to.have.status(404);
+          expect(response.body).to.have.property('message');
+          expect(response.body.message)
+            .to.be.eql('No reviews for this recipe');
+          done();
+        });
+    }
+  );
 
-  it('should return 400 when an invalid params is passed', (done) => {
+  it('should return 400 when a string is passed as a recipe ' +
+  'id in url params', (done) => {
     chai.request(app)
       .get('/api/recipe/esggsf/reviews')
       .query({ token })

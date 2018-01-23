@@ -9,7 +9,7 @@ const props = {
 };
 
 describe('<ReviewButton />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<ReviewButton {...props} />);
     expect(wrapper.find('span').length).toBe(2);
     expect(wrapper.hasClass('action-btns')).toBe(true);
@@ -22,15 +22,15 @@ describe('<ReviewButton />', () => {
     expect(wrapper.find('#reivews').text()).toEqual(' 1 ');
   });
 
-  it('should change the number of reviews when a new props arrives', () => {
-  const wrapper = shallow(<ReviewButton {...props} />);
-  wrapper.setProps({reviews: 2});
-  expect(wrapper.find('#reivews').text()).toEqual(' 2 ');
-  })
-
-  it('should hide the review Button when the "hidden" is set', () => {
+  it('should update the number of reviews when a new review is added', () => {
     const wrapper = shallow(<ReviewButton {...props} />);
-    wrapper.setProps({hidden: true});
+    wrapper.setProps({ reviews: 2 });
+    expect(wrapper.find('#reivews').text()).toEqual(' 2 ');
+  });
+
+  it('should hide the review button when the "hidden" prop is set', () => {
+    const wrapper = shallow(<ReviewButton {...props} />);
+    wrapper.setProps({ hidden: true });
     expect(wrapper.find('.hide').length).toEqual(1);
-    })
+  });
 });

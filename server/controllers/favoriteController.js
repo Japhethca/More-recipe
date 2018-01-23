@@ -1,5 +1,5 @@
 import model from '../models';
-import pagination from '../middlewares/pagination';
+import pagination from '../utilities/pagination';
 
 const { Favorites, Recipes, Users } = model;
 
@@ -53,7 +53,7 @@ export const getUserFavorites = (request, response) => {
       } else {
         response.status(200).json({
           status: 'success',
-          message: `${request.decoded.user} Favorite recipes`,
+          message: 'Favorite recipes successfully loaded',
           currentPage: page,
           totalPages: limit === null ? 1 : Math.ceil(result.count / limit),
           count: result.count,

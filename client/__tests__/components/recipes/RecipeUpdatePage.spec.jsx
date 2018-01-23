@@ -13,13 +13,13 @@ const props = {
 };
 
 describe('<RecipeUpdatePage />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<RecipeUpdatePage {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
   });
 
-  it('should redirect if no update data', () => {
+  it('should redirect when there is not recipe update data', () => {
     const newProps = {
       location: {
         state: false

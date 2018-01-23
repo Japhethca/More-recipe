@@ -16,7 +16,7 @@ const props = {
 };
 
 describe('<LoginForm />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<LoginForm {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
@@ -28,14 +28,14 @@ describe('<LoginForm />', () => {
 
   it('should display server error messages', () => {
     const wrapper = shallow(<LoginForm {...props} />);
-    wrapper.setProps({...props, serverErrors: 'incorrect password'})
+    wrapper.setProps({ ...props, serverErrors: 'incorrect password' });
     expect(wrapper.find('.server-error-text')
-      .find('span').text()).toBe(' incorrect password ')
+      .find('span').text()).toBe(' incorrect password ');
   });
 
-  it('should display "loging in" on button when clikced', () => {
+  it('should display "logging in" when request is being handled', () => {
     const wrapper = shallow(<LoginForm {...props} />);
-    wrapper.setProps({...props, isFetching: true})
-    expect(wrapper.find('button').text()).toBe('Loging In...')
+    wrapper.setProps({ ...props, isFetching: true });
+    expect(wrapper.find('button').text()).toBe('Loging In...');
   });
 });

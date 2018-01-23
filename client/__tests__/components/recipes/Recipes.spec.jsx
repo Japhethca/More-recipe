@@ -12,7 +12,7 @@ const props = {
 };
 
 describe('<Recipes />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<Recipes {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);

@@ -18,7 +18,7 @@ const props = {
 };
 
 describe('<SignupForm />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<SignupForm {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
@@ -27,16 +27,20 @@ describe('<SignupForm />', () => {
     expect(wrapper.find('button').length).toBe(1);
   });
 
-  it('should display server error messages', () => {
+  it('should show server error messages', () => {
     const wrapper = shallow(<SignupForm {...props} />);
-    wrapper.setProps({...props, serverErrors: 'incorrect password'})
+    wrapper.setProps({ ...props, serverErrors: 'incorrect password' });
     expect(wrapper.find('.server-error-text')
-      .find('span').text()).toBe('incorrect password')
+      .find('span').text()).toBe('incorrect password');
   });
 
-  it('should display "Registering in" on button when signing up', () => {
-    const wrapper = shallow(<SignupForm {...props} />);
-    wrapper.setProps({...props, isFetching: true})
-    expect(wrapper.find('button').text()).toBe('Registering...')
-  });
+  it(
+    'should display "Registering in" text on button when sign ' +
+    'up requests are being handled',
+    () => {
+      const wrapper = shallow(<SignupForm {...props} />);
+      wrapper.setProps({ ...props, isFetching: true });
+      expect(wrapper.find('button').text()).toBe('Registering...');
+    }
+  );
 });

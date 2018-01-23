@@ -11,7 +11,7 @@ describe('SINGLE RECIPE reducer', () => {
     expect(reducer(initialState, {})).toEqual(initialState);
   });
 
-  it('should handle FETCH_SINGLE_RECIPE_START', () => {
+  it('should handle FETCH_SINGLE_RECIPE_START action type', () => {
     const fetchSingleRecipeStartAction = {
       type: types.FETCH_SINGLE_RECIPE_START,
     };
@@ -19,7 +19,7 @@ describe('SINGLE RECIPE reducer', () => {
       .toEqual(true);
   });
 
-  it('should handle FETCH_SINGLE_RECIPE_FAILED', () => {
+  it('should handle FETCH_SINGLE_RECIPE_FAILED action type', () => {
     const fetchSingleRecipeFailedAction = {
       type: types.FETCH_SINGLE_RECIPE_FAILED,
     };
@@ -31,7 +31,7 @@ describe('SINGLE RECIPE reducer', () => {
       .toEqual(true);
   });
 
-  it('should handle FETCH_SINGLE_RECIPE_SUCCESS', () => {
+  it('should handle FETCH_SINGLE_RECIPE_SUCCESS action type', () => {
     const fetchSingleRecipe = {
       type: types.FETCH_SINGLE_RECIPE_SUCCESS,
       recipe: mockData.recipe
@@ -42,7 +42,7 @@ describe('SINGLE RECIPE reducer', () => {
       .toEqual(false);
   });
 
-  it('should handle RECIPE_CREATED', () => {
+  it('should handle RECIPE_CREATED action type', () => {
     const fetchSingleRecipe = {
       type: types.RECIPE_CREATED,
     };
@@ -52,7 +52,7 @@ describe('SINGLE RECIPE reducer', () => {
 });
 
 describe('REVIEWS reducer', () => {
-  it('should handle ADD_NEW_REVIEW_SUCCESS', () => {
+  it('should handle ADD_NEW_REVIEW_SUCCESS action type', () => {
     const getReview = {
       type: types.ADD_NEW_REVIEW_SUCCESS,
       review: mockData.Review
@@ -62,7 +62,7 @@ describe('REVIEWS reducer', () => {
       .toEqual(mockData.Review);
   });
 
-  it('should handle ADD_NEW_REVIEW_FAILED', () => {
+  it('should handle ADD_NEW_REVIEW_FAILED action type', () => {
     const getReviewSucessAction = {
       type: types.ADD_NEW_REVIEW_FAILED,
     };
@@ -81,7 +81,7 @@ describe('VOTING reducer', () => {
   afterEach(() => {
     mockData.recipe.downvotes = 0;
   });
-  it('should handle UPVOTE_RECIPE', () => {
+  it('should handle UPVOTE_RECIPE action type', () => {
     const { recipe } = mockData;
     recipe.upvotes = 1;
     const upvoteAction = {
@@ -95,7 +95,7 @@ describe('VOTING reducer', () => {
       .toEqual(1);
   });
 
-  it('should handle DOWNVOTE_RECIPE', () => {
+  it('should handle DOWNVOTE_RECIPE action type', () => {
     const { recipe } = mockData;
     recipe.downvotes = 1;
 
@@ -119,7 +119,7 @@ describe('LATEST RECIPE reducer', () => {
     initialState.recipes.payload = [];
   });
 
-  it('should handle FETCH_LATEST_RECIPES_START', () => {
+  it('should handle FETCH_LATEST_RECIPES_START action type', () => {
     const latestRecipesStartAction = {
       type: types.FETCH_LATEST_RECIPES_START
     };
@@ -127,7 +127,7 @@ describe('LATEST RECIPE reducer', () => {
       .toEqual(true);
   });
 
-  it('should handle FETCH_LATEST_RECIPES_SUCCESS', () => {
+  it('should handle FETCH_LATEST_RECIPES_SUCCESS action type', () => {
     const latestRecipesAction = {
       type: types.FETCH_LATEST_RECIPES_SUCCESS,
       payload: mockData.recipes,
@@ -144,7 +144,7 @@ describe('LATEST RECIPE reducer', () => {
       .toEqual(1);
   });
 
-  it('should handle FETCH_LATEST_RECIPES_FAILED', () => {
+  it('should handle FETCH_LATEST_RECIPES_FAILED action type', () => {
     const latestRecipesFailedAction = {
       type: types.FETCH_LATEST_RECIPES_FAILED
     };
@@ -166,7 +166,7 @@ describe('DELETE RECIPE reducer', () => {
     initialState.favorites.payload = [];
   });
 
-  it('should handle DELETE_USER_RECIPE', () => {
+  it('should handle DELETE_USER_RECIPE action type', () => {
     const deleteRecipeAction = {
       type: types.DELETE_USER_RECIPE,
       id: 1
@@ -179,7 +179,7 @@ describe('DELETE RECIPE reducer', () => {
       .toEqual([mockData.recipes[1]]);
   });
 
-  it('should handle DELETE_USER_RECIPE_FAILED', () => {
+  it('should handle DELETE_USER_RECIPE_FAILED action type', () => {
     const deleteRecipeFailedAction = {
       type: types.DELETE_USER_RECIPE_FAILED,
       id: 1
@@ -194,7 +194,7 @@ describe('DELETE RECIPE reducer', () => {
 });
 
 describe('CREATE RECIPE reducer', () => {
-  it('should handle ADD_NEW_RECIPE', () => {
+  it('should handle ADD_NEW_RECIPE action type', () => {
     const createRecipeAction = {
       type: types.ADD_NEW_RECIPE,
       recipe: mockData.singleRecipe
@@ -208,7 +208,7 @@ describe('CREATE RECIPE reducer', () => {
 });
 
 describe('USER RECIPES reducer', () => {
-  it('should handle FETCH_USER_RECIPES_START', () => {
+  it('should handle FETCH_USER_RECIPES_START action type', () => {
     const getUserRecipesStartAction = {
       type: types.FETCH_USER_RECIPES_START,
     };
@@ -216,7 +216,7 @@ describe('USER RECIPES reducer', () => {
       .toEqual(true);
   });
 
-  it('should handle FETCH_USER_RECIPES_SUCCESS', () => {
+  it('should handle FETCH_USER_RECIPES_SUCCESS action type', () => {
     const getUserRecipesAction = {
       type: types.FETCH_USER_RECIPES_SUCCESS,
       isFetching: false,
@@ -230,7 +230,7 @@ describe('USER RECIPES reducer', () => {
       .toEqual(false);
   });
 
-  it('should handle FETCH_USER_RECIPES_FAILED', () => {
+  it('should handle FETCH_USER_RECIPES_FAILED action type', () => {
     const getUserRecipesFailedAction = {
       type: types.FETCH_USER_RECIPES_FAILED,
     };
@@ -240,7 +240,7 @@ describe('USER RECIPES reducer', () => {
 });
 
 describe('FAVORITES reducer', () => {
-  it('should handle FETCH_USER_FAVORITES_START', () => {
+  it('should handle FETCH_USER_FAVORITES_START action type', () => {
     const getUserFavoritesStartAction = {
       type: types.FETCH_USER_FAVORITES_START,
     };
@@ -248,7 +248,7 @@ describe('FAVORITES reducer', () => {
       .toEqual(true);
   });
 
-  it('should handle FETCH_USER_FAVORITES_SUCCESS', () => {
+  it('should handle FETCH_USER_FAVORITES_SUCCESS action type', () => {
     const getUserFavoritesAction = {
       type: types.FETCH_USER_FAVORITES_SUCCESS,
       isFetching: false,
@@ -260,7 +260,7 @@ describe('FAVORITES reducer', () => {
       .toEqual(false);
   });
 
-  it('should handle FETCH_USER_FAVORITES_FAILED', () => {
+  it('should handle FETCH_USER_FAVORITES_FAILED action type', () => {
     const getUserFailedFailedAction = {
       type: types.FETCH_USER_FAVORITES_FAILED,
     };
@@ -268,7 +268,7 @@ describe('FAVORITES reducer', () => {
       .toEqual(false);
   });
 
-  it('should handle REMOVE_FROM_FAVORITES', () => {
+  it('should handle REMOVE_FROM_FAVORITES action type', () => {
     initialState.favorites.payload = mockData.recipes;
     const removeFromFavoritesAction = {
       type: types.REMOVE_FROM_FAVORITES,
@@ -278,7 +278,7 @@ describe('FAVORITES reducer', () => {
       .toEqual([mockData.recipes[1]]);
   });
 
-  it('should handle REMOVE_FROM_FAVORITES_FAILED', () => {
+  it('should handle REMOVE_FROM_FAVORITES_FAILED action type', () => {
     initialState.favorites.payload = mockData.recipes;
     const removeFromFavoritesAction = {
       type: types.REMOVE_FROM_FAVORITES_FAILED,
@@ -290,7 +290,7 @@ describe('FAVORITES reducer', () => {
 });
 
 describe('ADD TO FAVORITES reducer', () => {
-  it('should handle ADD_TO_FAVORITES', () => {
+  it('should handle ADD_TO_FAVORITES action type', () => {
     initialState.favorites.payload = [];
     const recipe = mockData.singleRecipe;
     const AddToFavoritesAction = {

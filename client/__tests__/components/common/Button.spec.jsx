@@ -11,7 +11,7 @@ const props = {
 };
 
 describe('<Button /> ', () => {
-  it('renders without exploding', () => {
+  it('should render component without exploding', () => {
     const wrapper = shallow(<Button {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('div').length).toBe(1);

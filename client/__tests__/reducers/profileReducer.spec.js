@@ -14,7 +14,7 @@ describe('PROFILE reducer', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
-  it('should handle GET_USER_PROFILE_START', () => {
+  it('should handle GET_USER_PROFILE_START action type', () => {
     const getProfileStartAction = {
       type: types.GET_USER_PROFILE_START,
     };
@@ -23,7 +23,7 @@ describe('PROFILE reducer', () => {
     expect(reducer(initialState, getProfileStartAction).payload).toEqual({});
   });
 
-  it('should handle GET_USER_PROFILE', () => {
+  it('should handle GET_USER_PROFILE action type', () => {
     const getProfileAction = {
       type: types.GET_USER_PROFILE,
       profile: profileMock.profile
@@ -34,7 +34,7 @@ describe('PROFILE reducer', () => {
       .toEqual(profileMock.profile);
   });
 
-  it('should handle GET_USER_PROFILE_FAILED', () => {
+  it('should handle GET_USER_PROFILE_FAILED action type', () => {
     const getProfileFailedAction = {
       type: types.GET_USER_PROFILE_FAILED,
     };
@@ -43,7 +43,7 @@ describe('PROFILE reducer', () => {
     expect(reducer(initialState, getProfileFailedAction).payload).toEqual({});
   });
 
-  it('should handle UPDATE_USER_PROFILE_START', () => {
+  it('should handle UPDATE_USER_PROFILE_START action type', () => {
     const updateProfileStartAction = {
       type: types.UPDATE_USER_PROFILE_START,
     };
@@ -52,7 +52,7 @@ describe('PROFILE reducer', () => {
     expect(reducer(initialState, updateProfileStartAction).payload).toEqual({});
   });
 
-  it('should handle UPDATE_USER_PROFILE', () => {
+  it('should handle UPDATE_USER_PROFILE action type', () => {
     const updateProfileAction = {
       type: types.UPDATE_USER_PROFILE,
       newProfile: profileMock.profile
@@ -63,7 +63,7 @@ describe('PROFILE reducer', () => {
       .toEqual(profileMock.profile);
   });
 
-  it('should handle UPDATE_USER_PROFILE_FAILED', () => {
+  it('should handle UPDATE_USER_PROFILE_FAILED action type', () => {
     const updateProfileFailedAction = {
       type: types.UPDATE_USER_PROFILE_FAILED,
 

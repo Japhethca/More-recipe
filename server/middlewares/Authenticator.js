@@ -33,7 +33,7 @@ const Authenticator = {
         next();
       });
     } else {
-      response.status(403).json({
+      response.status(400).json({
         status: 'failed',
         message: 'failed! No token. Sign in to get one.'
       });

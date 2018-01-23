@@ -18,7 +18,7 @@ const props = {
 };
 
 describe('<TextField /> ', () => {
-  it('should mount without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<TextField {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('div').length).toBe(1);

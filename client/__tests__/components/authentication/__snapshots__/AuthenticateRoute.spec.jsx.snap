@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<AuthenticateRoute /> renders without exploding 1`] = `
+exports[`<AuthenticateRoute /> should handle routes authentication when a user navigates to a new page 1`] = `
 <Authenticate
   history={Object {}}
   isAuthenticated={true}
@@ -39,7 +39,7 @@ exports[`<AuthenticateRoute /> renders without exploding 1`] = `
 />
 `;
 
-exports[`<AuthenticateRoute /> should change authentication mode when new props arrives 1`] = `
+exports[`<AuthenticateRoute /> should render without exploding 1`] = `
 <Authenticate
   history={Object {}}
   isAuthenticated={true}

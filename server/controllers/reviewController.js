@@ -1,5 +1,5 @@
 import model from '../models';
-import pagination from '../middlewares/pagination';
+import pagination from '../utilities/pagination';
 
 const { Recipes, Users, Reviews } = model;
 

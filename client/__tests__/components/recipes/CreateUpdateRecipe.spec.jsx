@@ -38,68 +38,81 @@ const event = {
 };
 
 describe('<CreateUpdateRecipe />', () => {
-  it('renders without exploding', () => {
-    const wrapper = shallow(<CreateUpdateRecipe {...props} />);
-    expect(wrapper).toBeDefined();
-    expect(wrapper.length).toBe(1);
-    expect(wrapper.find('div').length).toBe(1);
-    expect(wrapper.find('RecipeForm').length).toBe(1);
+  describe('CreateUpdateRecipe component', () => {
+    it('should render without exploding', () => {
+      const wrapper = shallow(<CreateUpdateRecipe {...props} />);
+      expect(wrapper).toBeDefined();
+      expect(wrapper.length).toBe(1);
+      expect(wrapper.find('div').length).toBe(1);
+      expect(wrapper.find('RecipeForm').length).toBe(1);
+    });
   });
 
-  it('should receive new props', () => {
-    const wrapper = shallow(<CreateUpdateRecipe {...props} {...state} />);
-    const componentWillReceivePropSpy = jest
-      .spyOn(wrapper.instance(), 'componentWillReceiveProps');
-    wrapper.setProps({ ...props, recipe: { payload: [], created: false } });
-    expect(componentWillReceivePropSpy).toHaveBeenCalled();
-    expect(wrapper.instance().props.recipe).toEqual(
-      {
+  describe('onSubmit', () => {
+    it('should simulate form submission', () => {
+      const wrapper = shallow(<CreateUpdateRecipe {...props} {...state} />);
+      const form = wrapper.find('RecipeForm');
+      form.simulate('submit', event);
+
+      expect(wrapper.instance().props.handleCreateRecipe).toHaveBeenCalled();
+      wrapper.setProps({ type: 'update' });
+      form.simulate('submit', event);
+      expect(wrapper.instance().props.handleUpdateRecipe).toHaveBeenCalled();
+    });
+  });
+
+  describe('onChange()', () => {
+    it('should display selected image change', () => {
+      const wrapper = shallow(<CreateUpdateRecipe {...props} {...state} />);
+      const input = wrapper.find('RecipeForm');
+
+      const newEvent = {
+        target: {
+          name: 'image',
+          files: [new Blob()]
+        }
+      };
+
+      input.simulate('change', newEvent);
+      expect(wrapper.instance().state.image).toEqual(new Blob());
+    });
+
+    it('should handle input change', () => {
+      const wrapper = shallow(<CreateUpdateRecipe {...props} {...state} />);
+      const input = wrapper.find('RecipeForm');
+
+      input.simulate('change', event);
+      expect(wrapper.instance().state.name).toBe('a new recipe');
+
+      wrapper.instance().handleEditorChange({
+        target:
+        {
+          targetElm: { name: 'direction' },
+          getContent: () => 'just do it'
+        }
+      });
+      expect(wrapper.instance().state.direction).toBe('just do it');
+      wrapper.instance().handleEditorChange({
+        target:
+        {
+          targetElm: { name: 'ingredients' },
+          getContent: () => 'maggi'
+        }
+      });
+      expect(wrapper.instance().state.ingredients).toBe('maggi');
+    });
+  });
+
+  describe('componentWillReceiveProps', () => {
+    it('should receive new recipe', () => {
+      const wrapper = shallow(<CreateUpdateRecipe {...props} {...state} />);
+      const componentWillReceivePropSpy = jest
+        .spyOn(wrapper.instance(), 'componentWillReceiveProps');
+      wrapper.setProps({ ...props, recipe: { payload: [], created: false } });
+      expect(componentWillReceivePropSpy).toHaveBeenCalled();
+      expect(wrapper.instance().props.recipe).toEqual({
         payload: [], created: false
       });
-  });
-
-  it('should simulate input change', () => {
-    const wrapper = shallow(<CreateUpdateRecipe {...props} {...state} />);
-    const input = wrapper.find('RecipeForm');
-
-    input.simulate('change', event);
-    expect(wrapper.instance().state.name).toBe('a new recipe');
-    const newEvent = {
-      target: {
-        name: 'image',
-        files: [new Blob()]
-      }
-    };
-
-    input.simulate('change', newEvent);
-    expect(wrapper.instance().state.image).toEqual(new Blob());
-
-    wrapper.instance().handleEditorChange({
-      target:
-      {
-        targetElm: { name: 'direction' },
-        getContent: () => 'just do it'
-      }
     });
-    expect(wrapper.instance().state.direction).toBe('just do it');
-    wrapper.instance().handleEditorChange({
-      target:
-      {
-        targetElm: { name: 'ingredients' },
-        getContent: () => 'maggi'
-      }
-    });
-    expect(wrapper.instance().state.ingredients).toBe('maggi');
-  });
-
-  it('should simulate form submission', () => {
-    const wrapper = shallow(<CreateUpdateRecipe {...props} {...state} />);
-    const form = wrapper.find('RecipeForm');
-    form.simulate('submit', event);
-
-    expect(wrapper.instance().props.handleCreateRecipe).toHaveBeenCalled();
-    wrapper.setProps({ type: 'update' });
-    form.simulate('submit', event);
-    expect(wrapper.instance().props.handleUpdateRecipe).toHaveBeenCalled();
   });
 });

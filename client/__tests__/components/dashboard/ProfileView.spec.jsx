@@ -9,7 +9,7 @@ const props = {
 };
 
 describe('<ProfileView />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<ProfileView {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);

@@ -34,13 +34,15 @@ describe('FAVORITES CONTROLLER', () => {
         expect(response.body).to.have.property('favorites');
         expect(response.body.favorites).to.be.instanceof(Array);
         expect(response.body.count).to.be.greaterThan(0);
+        expect(response.body.message)
+          .to.equal('Favorite recipes successfully loaded');
         done();
       });
   });
 
   it(
     'should return 400 status when removing a ' +
-      'recipe that does not exist from favorites'
+      'recipe with a string Id'
     , (done) => {
       chai.request(app)
         .delete('/api/users/favorites/ere')
@@ -55,7 +57,7 @@ describe('FAVORITES CONTROLLER', () => {
     }
   );
 
-  it('should remove recipe from favorites', (done) => {
+  it('should successfully remove a single recipe from favorites', (done) => {
     chai.request(app)
       .delete('/api/users/favorites/1')
       .query({ token })
@@ -84,7 +86,7 @@ describe('FAVORITES CONTROLLER', () => {
     }
   );
 
-  it('should add recipe to favorites', (done) => {
+  it('should successfully add a recipe to favorites', (done) => {
     chai.request(app)
       .post('/api/users/favorites/1')
       .query({ token })
@@ -98,7 +100,7 @@ describe('FAVORITES CONTROLLER', () => {
   });
 
   it(
-    'should return 404 status when adding recipe with invalid id',
+    'should return 404 status when adding recipe with id that does not exist',
     (done) => {
       chai.request(app)
         .post('/api/users/favorites/899')
@@ -142,18 +144,21 @@ describe('FAVORITES CONTROLLER', () => {
         });
     });
 
-    it('should return 404 status when user has no favorites', (done) => {
-      chai.request(app)
-        .get('/api/users/favorites')
-        .query({ token })
-        .end((error, response) => {
-          expect(response).to.have.status(404);
-          expect(response.body.status).to.be.eql('failed');
-          expect(response.body).to.have.property('message');
-          expect(response.body.message)
-            .to.equal('You do not have favorite recipes');
-          done();
-        });
-    });
+    it(
+      'should return 404 status when user has no favorite recipes ',
+      (done) => {
+        chai.request(app)
+          .get('/api/users/favorites')
+          .query({ token })
+          .end((error, response) => {
+            expect(response).to.have.status(404);
+            expect(response.body.status).to.be.eql('failed');
+            expect(response.body).to.have.property('message');
+            expect(response.body.message)
+              .to.equal('You do not have favorite recipes');
+            done();
+          });
+      }
+    );
   });
 });

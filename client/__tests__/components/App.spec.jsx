@@ -7,10 +7,10 @@ const props = {
   location: {
     pathName: ''
   }
-}
+};
 
 describe('<App />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<App {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);

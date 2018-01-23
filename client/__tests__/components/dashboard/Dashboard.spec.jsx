@@ -10,7 +10,7 @@ const props = {
 };
 
 describe('<Dashboard />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<Dashboard {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
@@ -20,10 +20,15 @@ describe('<Dashboard />', () => {
     expect(wrapper.find('Route').length).toBe(2);
   });
 
-  it('should handle logout', () => {
-    const wrapper = shallow(<Dashboard {...props} />);
-    wrapper.find('#logout').simulate('click');
-    expect(wrapper.instance().props.handleLogout).toHaveBeenCalled();
-    expect(wrapper.instance().props.profile).toBe(props.profile);
+  describe('Logout Button', () => {
+    it(
+      'should logout authenticated users when clicked',
+      () => {
+        const wrapper = shallow(<Dashboard {...props} />);
+        wrapper.find('#logout').simulate('click');
+        expect(wrapper.instance().props.profile).toBe(props.profile);
+        expect(wrapper.instance().props.handleLogout).toHaveBeenCalled();
+      }
+    );
   });
 });

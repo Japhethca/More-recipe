@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import models from '../models';
-import pagination from '../middlewares/pagination';
+import pagination from '../utilities/pagination';
 import { checkQuery } from '../middlewares/validators';
 
 const { Recipes, Users, Reviews } = models;
@@ -89,7 +89,8 @@ export const searchRecipe = (request, response, next) => {
         if (result.count < 1) {
           response.status(404).json({
             status: 'failed',
-            message: 'Recipe not found'
+            message: 'Did not find a match for recipe/ingredient ' +
+            'with requested query'
           });
         } else {
           response.status(200).json({

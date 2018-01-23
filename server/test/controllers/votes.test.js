@@ -37,7 +37,7 @@ describe('VOTES CONTROLLER', () => {
       });
   });
 
-  it('should successfully unvote a recipe', (done) => {
+  it('should successfully unvote an upvoted recipe', (done) => {
     chai.request(app)
       .put('/api/recipe/2/upvote')
       .send({ token })
@@ -102,7 +102,7 @@ describe('VOTES CONTROLLER', () => {
   });
 
   it(
-    'should return 404 when downvoting a recipe with an invalid id',
+    'should return 404 when downvoting a recipe with an id that does not exist',
     (done) => {
       chai.request(app)
         .put('/api/recipe/300/downvote')
@@ -117,7 +117,8 @@ describe('VOTES CONTROLLER', () => {
   );
 
   it(
-    'should return 400 status when an unsupported parameter type is passed'
+    'should return 400 status when a string is passed as a recipe ' +
+    'id in url during downvote'
     , (done) => {
       chai.request(app)
         .put('/api/recipe/edf/downvote')
@@ -133,7 +134,8 @@ describe('VOTES CONTROLLER', () => {
   );
 
   it(
-    'should return 400 status when an unsupported parameter type is passed',
+    'should return 400 status when a string is passed as a recipe id ' +
+    'in url during upvote',
     (done) => {
       chai.request(app)
         .put('/api/recipe/e/upvote')

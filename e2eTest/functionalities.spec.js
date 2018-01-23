@@ -56,7 +56,7 @@ export default {
       .pause(1000)
       .click(signin.submitButton);
   },
-  'user should view create new recipe': (client) => {
+  'user should create new recipe': (client) => {
     client
       .url('http://localhost:50000/recipes')
       .pause(2000)
@@ -90,7 +90,7 @@ export default {
       .click(selectors.navigation.home)
       .pause(3000);
   },
-  'Single recipe view page': (client) => {
+  'users should be able to view the details of a single recipe': (client) => {
     client
       .pause(2000)
       .assert.visible(selectors.recipe)
@@ -124,7 +124,7 @@ export default {
       .assert.visible(navigationBar.search, 'search')
       .moveToElement(navigationBar.search, 10, 10)
       .pause(1000)
-      .setValue(navigationBar.search, 'recipe')
+      .setValue(navigationBar.search, 'maggi')
       .pause(1500)
       .submitForm(navigationBar.search)
       .pause(1000)

@@ -9,7 +9,7 @@ const props = {
 };
 
 describe('<UpvoteButton />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<UpvoteButton {...props} />);
     expect(wrapper.find('button').length).toBe(1);
     expect(wrapper.hasClass('action-btns')).toBe(true);

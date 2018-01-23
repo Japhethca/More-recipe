@@ -9,7 +9,7 @@ import searchAction from '../../SearchPage/actions';
 
 
 describe('SEARCH RECIPE actions', () => {
-  it('creates SEARCH_RECIPE_SUCCESS when fetching search ' +
+  it('dispatches SEARCH_RECIPE_SUCCESS when fetching search ' +
     'results has been done', () => {
     mock.onGet('/api/recipes?search=egusi')
       .replyOnce(200, {
@@ -33,7 +33,7 @@ describe('SEARCH RECIPE actions', () => {
     });
   });
 
-  it('creates SEARCH_RECIPE when fetching fails', () => {
+  it('dispatches SEARCH_RECIPE action type when fetching fails', () => {
     mock.onGet('/api/recipes?search=kkjkjnb')
       .replyOnce(404);
 

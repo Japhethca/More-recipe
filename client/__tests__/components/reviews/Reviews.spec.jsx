@@ -8,9 +8,6 @@ const props = {
   handleAddNewRecipeReview: jest.fn(),
 };
 
-const state = {
-  content: 'nice one'
-};
 
 const event = {
   target: {
@@ -21,32 +18,32 @@ const event = {
 };
 
 describe('<Reviews />', () => {
-  it('renders without exploding', () => {
-    const wrapper = shallow(<Reviews {...props} />);
-    expect(wrapper).toBeDefined();
-    expect(wrapper.length).toBe(1);
-    expect(wrapper.find('div').length).toBe(1);
-    expect(wrapper.hasClass('reviews-page')).toBe(true);
-    expect(wrapper.find('ListReviews').length).toBe(1);
-    expect(wrapper.find('AddReview').length).toBe(1);
+  describe('Reviews Component', () => {
+    it('should render without exploding', () => {
+      const wrapper = shallow(<Reviews {...props} />);
+      expect(wrapper).toBeDefined();
+      expect(wrapper.length).toBe(1);
+      expect(wrapper.find('div').length).toBe(1);
+      expect(wrapper.hasClass('reviews-page')).toBe(true);
+      expect(wrapper.find('ListReviews').length).toBe(1);
+      expect(wrapper.find('AddReview').length).toBe(1);
+    });
   });
 
-  it('should have a valid props', () => {
-    const wrapper = shallow(<Reviews {...props} {...state} />);
-    expect(wrapper.instance().props.recipe).toBe(props.recipe);
+  describe('onChange()', () => {
+    it('should set new state when input change', () => {
+      const wrapper = shallow(<Reviews {...props} />);
+      wrapper.find('AddReview').simulate('change', event);
+      expect(wrapper.instance().state.content).toBe('nice one');
+    });
   });
 
-
-  it('should set new state on input change', () => {
-    const wrapper = shallow(<Reviews {...props} />);
-    wrapper.find('AddReview').simulate('change', event);
-    expect(wrapper.instance().state.content).toBe('nice one');
-  });
-
-  it('should simulate submit new reviews', () => {
-    const wrapper = shallow(<Reviews {...props} />);
-    wrapper.find('AddReview').simulate('submit', event);
-    expect(wrapper.instance()
-      .props.handleAddNewRecipeReview).toHaveBeenCalled();
+  describe('onSubmit()', () => {
+    it('should simulate new reviews submission', () => {
+      const wrapper = shallow(<Reviews {...props} />);
+      wrapper.find('AddReview').simulate('submit', event);
+      expect(wrapper.instance()
+        .props.handleAddNewRecipeReview).toHaveBeenCalled();
+    });
   });
 });

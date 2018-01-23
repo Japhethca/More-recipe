@@ -8,11 +8,11 @@ const initialState = {
 };
 
 describe('LOADER reducer', () => {
-  it('should return the initial state', () => {
+  it('should return the initial state type', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
-  it('should handle IS_FETCHING', () => {
+  it('should handle IS_FETCHING action type', () => {
     const isFetchingAction = {
       type: IS_FETCHING,
       isFetching: true,

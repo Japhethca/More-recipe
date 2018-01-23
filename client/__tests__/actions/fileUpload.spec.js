@@ -16,18 +16,18 @@ superagent.post = () => ({
 
 
 describe('FILE UPLOAD', () => {
-  it("should successfully upload an image", () => {
+  it('should successfully upload an image', () => {
     const image = {
       name: '/Users/andeladeveloper/Desktop/More-Recipes/' +
       'template/images/sharwama.jpg',
       size: 61387,
       type: 'image/jpeg'
     };
-    fileUpload(image).end((error , response) => {
+    fileUpload(image).end((error, response) => {
       expect(error.message).toBe('error uploading image');
       expect(response.body.url)
         .toBe('http://res.cloudinary.com/dd3lv0o93/image/' +
-      'upload/v1516006383/hghev3xifrmlmeqbocmp.png')
-    })
-  })
-})
+      'upload/v1516006383/hghev3xifrmlmeqbocmp.png');
+    });
+  });
+});

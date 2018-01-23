@@ -10,7 +10,7 @@ const props = {
 };
 
 describe('<ListReviews /> ', () => {
-  it('should mount without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<ListReviews {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('h4').length).toBe(1);

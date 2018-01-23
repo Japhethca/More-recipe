@@ -26,43 +26,69 @@ const state = {
 };
 
 describe('<SignupPage />', () => {
-  it('renders without exploding', () => {
-    const wrapper = shallow(<SignupPage {...props} />);
-    expect(wrapper).toBeDefined();
-    expect(wrapper.length).toBe(1);
-    expect(wrapper.find('div').length).toBe(1);
+  describe('SignupPage component', () => {
+    it('should render without exploding', () => {
+      const wrapper = shallow(<SignupPage {...props} />);
+      expect(wrapper).toBeDefined();
+      expect(wrapper.length).toBe(1);
+      expect(wrapper.find('div').length).toBe(1);
+    });
+
+    it('should render a SignupForm', () => {
+      const wrapper = shallow(<SignupPage {...props} />);
+      expect(wrapper.find('SignupForm').length).toBe(1);
+    });
   });
 
-
-  it('should render a SignupForm', () => {
-    const wrapper = shallow(<SignupPage {...props} />);
-    expect(wrapper.find('SignupForm').length).toBe(1);
+  describe('onChange', () => {
+    it(
+      'should change state for email when a user types on the email field',
+      () => {
+        const wrapper = shallow(<SignupPage {...props} {...state} />);
+        wrapper.find('SignupForm').simulate('change', event);
+        expect(wrapper.instance().state.email).toBe('example@gmail.com');
+      }
+    );
   });
 
-  it('should alter state when change is simulated', () => {
-    const wrapper = shallow(<SignupPage {...props} {...state} />);
-    wrapper.find('SignupForm').simulate('change', event);
-    expect(wrapper.instance().state.email).toBe('example@gmail.com')
-  });
+  describe('onSubmit()', () => {
+    it('should handle form submission when the form inputs are valid', () => {
+      const wrapper = shallow(<SignupPage {...props} {...state} />);
+      const handleRequestSpy = jest
+        .spyOn(wrapper.instance().props, 'handleAuthRequest');
+      wrapper.instance().setState({ ...state });
+      wrapper.find('SignupForm').simulate('submit', event);
+      expect(handleRequestSpy).toHaveBeenCalled();
+      expect(wrapper.instance().state.username).toBe('name');
+      expect(wrapper.instance().state.email).toBe('name@gmail.com');
+    });
 
-  it('should simulate form submission', () => {
-    const wrapper = shallow(<SignupPage {...props} {...state} />);
-    const handleRequestSpy = jest.spyOn(wrapper.instance().props, 'handleAuthRequest');
-    wrapper.instance().setState({...state})
-    wrapper.find('SignupForm').simulate('submit', event);
-    expect(handleRequestSpy).toHaveBeenCalled();
+    it(
+      'should show validation errors when required form fields are empty',
+      () => {
+        const newState = {
+          email: '',
+          password: '',
+          validationErrors: { }
+        };
+        const wrapper = shallow(<SignupPage {...props} {...newState} />);
+        wrapper.find('SignupForm').simulate('submit', event);
+        expect(wrapper.instance().state.validationErrors.email)
+          .toEqual(['The email field is required.']);
+        expect(wrapper.instance().state.validationErrors.password)
+          .toEqual(['The password field is required.']);
+      }
+    );
   });
-
-  it('should redirect authenticated users', () => {
-    const wrapper = shallow(<SignupPage {...props} {...state} />);
-    wrapper.setProps({...props, authentication: {isAuthenticated: true}})
-    expect(wrapper.find('Redirect').length).toEqual(1);
-  });
-
-  it('should return validation errors if inputs fields are empty', () => {
-    const newState = {email: '', password: '', validationErrors: {}};
-    const wrapper = shallow(<SignupPage {...props} {...newState} />);
-    wrapper.find('SignupForm').simulate('submit', event);
-    expect(wrapper.instance().state.validationErrors).toBeDefined();
+  describe('Redirect', () => {
+    it(
+      'should redirect authenticated users to the homeopage ' +
+      'when accessing the signupt route',
+      () => {
+        const wrapper = shallow(<SignupPage {...props} {...state} />);
+        wrapper.setProps({ ...props, authentication: { isAuthenticated: true } });
+        expect(wrapper.find('Redirect').length).toEqual(1);
+      }
+    );
   });
 });

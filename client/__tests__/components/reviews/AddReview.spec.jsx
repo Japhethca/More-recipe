@@ -11,7 +11,7 @@ const props = {
 };
 
 describe('<AddReview /> ', () => {
-  it('should mount without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<AddReview {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('form').length).toBe(1);

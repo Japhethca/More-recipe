@@ -10,7 +10,7 @@ const props = {
 };
 
 describe('<Review /> ', () => {
-  it('should mount without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<Review {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('p').length).toBe(1);
@@ -18,7 +18,7 @@ describe('<Review /> ', () => {
     expect(wrapper.hasClass('single-review')).toBe(true);
   });
 
-  it('should render with new review', () => {
+  it('should display new review', () => {
     const newProps = {
       review: {
         content: 'this is an awesome recipe',
@@ -27,7 +27,7 @@ describe('<Review /> ', () => {
           username: 'chidex'
         }
       }
-    }
+    };
     const wrapper = shallow(<Review {...newProps} />);
     expect(wrapper.find('.review-content')
       .text()).toBe('this is an awesome recipe');

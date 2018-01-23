@@ -9,7 +9,7 @@ const props = {
 };
 
 describe('<DownvoteButton />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<DownvoteButton {...props} />);
     expect(wrapper.hasClass('action-btns')).toBe(true);
     expect(wrapper.find('i').hasClass('material-icons')).toBe(true);

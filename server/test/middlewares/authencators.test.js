@@ -25,7 +25,7 @@ describe('AUTHENTICATOR', () => {
     chai.request(app)
       .get('/api/recipes')
       .end((error, response) => {
-        expect(response).to.have.status(403);
+        expect(response).to.have.status(400);
         expect(response.body.message)
           .to.be.eqls('failed! No token. Sign in to get one.');
         done();
@@ -33,7 +33,8 @@ describe('AUTHENTICATOR', () => {
   });
 
   it(
-    'should return 405 status when an unsupported HTTP method is used'
+    'should return 405 status when an unsupported HTTP method ' +
+    'is used for signin endpoint'
     , (done) => {
       chai.request(app)
         .get('/api/users/signin')

@@ -23,8 +23,77 @@ describe('RECIPES >>', () => {
       });
   });
 
+  describe('RECIPES CREATE CONTROLLER', () => {
+    it('should successfully create new recipe', (done) => {
+      chai.request(app)
+        .post('/api/recipe')
+        .query({ token })
+        .send({
+          name: 'this is a new recipe',
+          description: 'this is an afr soup',
+          ingredients: 'maggi',
+          direction: 'first do then the other'
+        })
+        .end((error, response) => {
+          expect(response).to.have.status(201);
+          expect(response.body.status).to.eql('success');
+          expect(response.body).to.have.property('message');
+          expect(response.body).to.have.property('recipe');
+          expect(response.body.message)
+            .to.be.eql('Recipe successfully created');
+          done();
+        });
+    });
+
+    it(
+      'should return 409 when a user tries to create a recipe with the ' +
+      'same as the recipe he already created',
+      (done) => {
+        chai.request(app)
+          .post('/api/recipe')
+          .query({ token })
+          .send({
+            name: 'this is a new recipe',
+            description: 'this is an afr soup',
+            ingredients: 'maggi',
+            direction: 'first do then the other'
+          })
+          .end((error, response) => {
+            expect(response).to.have.status(409);
+            expect(response.body.status).to.eql('failed');
+            expect(response.body).to.have.property('message');
+            expect(response.body.message)
+              .to.be.eql('You have already created a ' +
+              'recipe with this name before');
+            done();
+          });
+      }
+    );
+
+    it(
+      'should return 400 status when a required field is empty',
+      (done) => {
+        chai.request(app)
+          .post('/api/recipe')
+          .query({ token })
+          .send({
+            name: '',
+            description: '',
+            ingredients: 'maggi',
+            direction: 'first do then the other'
+          })
+          .end((error, response) => {
+            expect(response).to.have.status(400);
+            expect(response.body.status).to.eql('failed');
+            expect(response.body).to.have.property('message');
+            done();
+          });
+      }
+    );
+  });
+
   describe('RECIPES CONTROLLER', () => {
-    it('should return all recipes', (done) => {
+    it('should successfully return all recipes', (done) => {
       chai.request(app)
         .get('/api/recipes')
         .send({ token })
@@ -33,14 +102,14 @@ describe('RECIPES >>', () => {
           expect(response.body).to.have.property('status');
           expect(response.body.status).to.eql = 'success';
           expect(response.body).to.have.property('recipes');
-          expect(response.body.recipes).length(3);
+          expect(response.body.recipes).length(4);
           expect(response.body.message)
             .to.be.eql('Successfully returned recipes');
           done();
         });
     });
 
-    it('should limit returned recipes to one', (done) => {
+    it('should limit returned recipes to one(1)', (done) => {
       chai.request(app)
         .get('/api/recipes?limit=1')
         .send({ token })
@@ -56,7 +125,7 @@ describe('RECIPES >>', () => {
         });
     });
 
-    it('should return all the recipe in the first page', (done) => {
+    it('should return all the recipes in the first page', (done) => {
       chai.request(app)
         .get('/api/recipes?limit=2&page=1')
         .send({ token })
@@ -74,23 +143,27 @@ describe('RECIPES >>', () => {
   });
 
   describe('RECIPES SORT CONTROLLER', () => {
-    it('should return sorted recipes by name in descending order', (done) => {
-      chai.request(app)
-        .get('/api/recipes?sort=name&order=descending')
-        .send({ token })
-        .end((error, response) => {
-          expect(response).to.have.status(200);
-          expect(response.body.status).to.eql('success');
-          expect(response.body).to.have.property('recipes');
-          expect(response.body.message)
-            .to.be.eql('Recipes successfully sorted');
-          expect(response.body.count).to.be.greaterThan(0);
-          done();
-        });
-    });
+    it(
+      'should return sorted recipes by name in descending order',
+      (done) => {
+        chai.request(app)
+          .get('/api/recipes?sort=name&order=descending')
+          .send({ token })
+          .end((error, response) => {
+            expect(response).to.have.status(200);
+            expect(response.body.status).to.eql('success');
+            expect(response.body).to.have.property('recipes');
+            expect(response.body.message)
+              .to.be.eql('Recipes successfully sorted');
+            expect(response.body.count).to.be.greaterThan(0);
+            done();
+          });
+      }
+    );
 
     it(
-      'should return 400 status when an invalid query type is passed',
+      'should return 400 status when an unsupported query string ' +
+      'is passed for sort and order query',
       (done) => {
         chai.request(app)
           .get('/api/recipes?sort=me&order=up')
@@ -121,78 +194,23 @@ describe('RECIPES >>', () => {
         });
     });
 
-    it('should return 404 if no result was found for a query', (done) => {
-      chai.request(app)
-        .get('/api/recipes?search=chocolate')
-        .send({ token })
-        .end((error, response) => {
-          expect(response).to.have.status(404);
-          expect(response.body.status).to.eql('failed');
-          expect(response.body.message).to.be.equal('Recipe not found');
-          done();
-        });
-    });
+    it(
+      'should return 404 if no search result was found for a query string',
+      (done) => {
+        chai.request(app)
+          .get('/api/recipes?search=chocolate')
+          .send({ token })
+          .end((error, response) => {
+            expect(response).to.have.status(404);
+            expect(response.body.status).to.eql('failed');
+            expect(response.body.message).to.be.equal('Did not find a match ' +
+            'for recipe/ingredient with requested query');
+            done();
+          });
+      }
+    );
   });
 
-  describe('RECIPES CREATE CONTROLLER', () => {
-    it('should successfully create new recipe', (done) => {
-      chai.request(app)
-        .post('/api/recipe')
-        .query({ token })
-        .send({
-          name: 'this is a new recipe',
-          description: 'this is an afr soup',
-          ingredients: 'maggi',
-          direction: 'first do then the other'
-        })
-        .end((error, response) => {
-          expect(response).to.have.status(201);
-          expect(response.body.status).to.eql('success');
-          expect(response.body).to.have.property('message');
-          expect(response.body).to.have.property('recipe');
-          expect(response.body.message).to.be.eql('Recipe successfully created');
-          done();
-        });
-    });
-
-    it('should not create recipe with name that already exist', (done) => {
-      chai.request(app)
-        .post('/api/recipe')
-        .query({ token })
-        .send({
-          name: 'this is a new recipe',
-          description: 'this is an afr soup',
-          ingredients: 'maggi',
-          direction: 'first do then the other'
-        })
-        .end((error, response) => {
-          expect(response).to.have.status(409);
-          expect(response.body.status).to.eql('failed');
-          expect(response.body).to.have.property('message');
-          expect(response.body.message)
-            .to.be.eql('You have already created a recipe with this name before');
-          done();
-        });
-    });
-
-    it('should return 400 status when a required field is empty', (done) => {
-      chai.request(app)
-        .post('/api/recipe')
-        .query({ token })
-        .send({
-          name: '',
-          description: '',
-          ingredients: 'maggi',
-          direction: 'first do then the other'
-        })
-        .end((error, response) => {
-          expect(response).to.have.status(400);
-          expect(response.body.status).to.eql('failed');
-          expect(response.body).to.have.property('message');
-          done();
-        });
-    });
-  });
 
   describe('SINGLE RECIPE CONTROLLER', () => {
     it('should successfully return a recipe with requested id', (done) => {
@@ -224,7 +242,7 @@ describe('RECIPES >>', () => {
     });
 
     it(
-      'should return 400 when an invalid request parameter type is passed in',
+      'should return 400 when a string is passed as a recipe Id',
       (done) => {
         chai.request(app)
           .get('/api/recipe/ere')
@@ -258,7 +276,9 @@ describe('RECIPES >>', () => {
           expect(response.body.status).to.eql('success');
           expect(response.body).to.have.property('message');
           expect(response.body).to.have.property('recipe');
-          expect(response.body.message).to.be.eql('Recipe updated Successfully');
+          expect(response.body.recipe.name).to.equal('Ogbono soup');
+          expect(response.body.message)
+            .to.be.eql('Recipe updated Successfully');
           done();
         });
     });
@@ -301,13 +321,16 @@ describe('RECIPES >>', () => {
             expect(response).to.have.status(400);
             expect(response.body.status).to.eql('failed');
             expect(response.body).to.have.property('message');
+            expect(response.body.message[0])
+              .to.equal('The name field is required.');
             done();
           });
       }
     );
 
     it(
-      'should return 401 status when a user tries to update another users recipe',
+      'should return 401 status when a user tries to ' +
+      'update another users recipe',
       (done) => {
         chai.request(app)
           .put('/api/recipe/2')
@@ -330,7 +353,7 @@ describe('RECIPES >>', () => {
     );
 
     it(
-      'should return 400 status when an invalid url parameter is passed',
+      'should return 400 status when a string passed as a recipe id in the url',
       (done) => {
         chai.request(app)
           .put('/api/recipe/ere')
@@ -355,35 +378,41 @@ describe('RECIPES >>', () => {
   });
 
   describe('USER RECIPES CONTROLLER', () => {
-    it('should return all recipes created by user', (done) => {
-      chai.request(app)
-        .get('/api/users/recipes')
-        .query({ token })
-        .end((error, response) => {
-          expect(response).to.have.status(200);
-          expect(response.body.status).to.eql('success');
-          expect(response.body.message)
-            .to.be.eql('Successfully loaded users recipes');
-          expect(response.body.count).to.be.greaterThan(0);
-          done();
-        });
-    });
+    it(
+      'should successfully return all recipes created by user',
+      (done) => {
+        chai.request(app)
+          .get('/api/users/recipes')
+          .query({ token })
+          .end((error, response) => {
+            expect(response).to.have.status(200);
+            expect(response.body.status).to.eql('success');
+            expect(response.body.message)
+              .to.be.eql('Successfully loaded users recipes');
+            expect(response.body.count).to.be.greaterThan(0);
+            done();
+          });
+      }
+    );
   });
 
   describe('DELETE RECIPE CONTROLLER', () => {
-    it('should delete a single recipe a user created', (done) => {
-      chai.request(app)
-        .delete('/api/recipe/1')
-        .query({ token })
-        .end((error, response) => {
-          expect(response).to.have.status(200);
-          expect(response.body.status).to.eql('success');
-          expect(response.body).to.have.property('message');
-          expect(response.body.message)
-            .to.be.eql('Recipe deleted successfully');
-          done();
-        });
-    });
+    it(
+      'should successfully delete a single recipe a user created',
+      (done) => {
+        chai.request(app)
+          .delete('/api/recipe/1')
+          .query({ token })
+          .end((error, response) => {
+            expect(response).to.have.status(200);
+            expect(response.body.status).to.eql('success');
+            expect(response.body).to.have.property('message');
+            expect(response.body.message)
+              .to.be.eql('Recipe deleted successfully');
+            done();
+          });
+      }
+    );
 
     it(
       'should return 404 when deleting a recipe that does not exist',
@@ -402,7 +431,8 @@ describe('RECIPES >>', () => {
     );
 
     it(
-      'should return 401 when user attempts to delete a recipe not created',
+      'should return 401 when user attempts to delete a ' +
+      'recipe he/she did not created',
       (done) => {
         chai.request(app)
           .delete('/api/recipe/2')
