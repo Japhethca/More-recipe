@@ -17,8 +17,14 @@ const options = {
 const apiRouter = express.Router();
 
 apiRouter.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs, options));
+
+apiRouter.get('/v1', (request, response) => response.json({
+  message: 'Welcome to More Recipes Api'
+}));
+
 apiRouter.use(Authenticator.authenticate);
 apiRouter.use(apiV1);
+
 apiRouter.use('/v1', Authenticator.authenticate, apiV1);
 
 export default apiRouter;
