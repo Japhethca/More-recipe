@@ -9,7 +9,7 @@ const props = {
 };
 
 describe('<Loader /> ', () => {
-  it('should mount without exploding', () => {
+  it('should render component without exploding', () => {
     const wrapper = shallow(<Loader {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('div').length).toBe(1);

@@ -34,14 +34,14 @@ export default (state = initialState, action) => {
         isFetching: false
       };
 
-    case types.EDIT_USER_PROFILE_START:
+    case types.UPDATE_USER_PROFILE_START:
       return {
         ...state,
         method: 'PUT',
         isFetching: true
       };
 
-    case types.EDIT_USER_PROFILE:
+    case types.UPDATE_USER_PROFILE:
       return {
         ...state,
         method: 'PUT',
@@ -49,11 +49,10 @@ export default (state = initialState, action) => {
         isFetching: false
       };
 
-    case types.EDIT_USER_PROFILE_FAILED:
+    case types.UPDATE_USER_PROFILE_FAILED:
       return {
         ...state,
         method: 'PUT',
-        payload: { ...action.newProfile },
         isFetching: false
       };
 

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { handleEditUserProfile } from '../actions';
+import { handleUpdateUserProfile } from '../actions';
 
 import '../styles/dashboard.scss';
 
 
 const propTypes = {
   profile: PropTypes.objectOf(PropTypes.any).isRequired,
-  handleEditUserProfile: PropTypes.func.isRequired,
+  handleUpdateUserProfile: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
 
@@ -83,7 +83,7 @@ export class ProfileModal extends Component {
    */
   onSubmit = (event) => {
     event.preventDefault();
-    this.props.handleEditUserProfile(this.state);
+    this.props.handleUpdateUserProfile(this.state);
   }
 
   /**
@@ -131,12 +131,18 @@ export class ProfileModal extends Component {
               <img
                 id="img1"
                 src={this.state.photo ||
-                  'https://res.cloudinary.com/dcmxbxzyj/image/upload/v1511526934/avatar_sq5zgy.png'}
+                  'https://res.cloudinary.com/dcmxbxzyj/image' +
+                  '/upload/v1511526934/avatar_sq5zgy.png'}
                 alt=""
               />
               <div className="upload-btn-wrapper">
                 <button className="btn">Upload an Image</button>
-                <input type="file" onChange={this.onChange} name="photo" accept=".jpg, .jpeg, .png" />
+                <input
+                  type="file"
+                  onChange={this.onChange}
+                  name="photo"
+                  accept=".jpg, .jpeg, .png"
+                />
               </div>
             </div>
             <form className="">
@@ -150,7 +156,13 @@ export class ProfileModal extends Component {
               >
                 {this.props.isFetching ? 'updating...' : 'Update Profile' }
               </button>
-              <button className="btn grey right" type="finish" onClick={this.onFinishClick}>Finish</button>
+              <button
+                className="btn grey right"
+                type="finish"
+                onClick={this.onFinishClick}
+              >
+                Finish
+              </button>
             </form>
           </div>
         </div>
@@ -162,4 +174,4 @@ export class ProfileModal extends Component {
 ProfileModal.propTypes = propTypes;
 
 
-export default connect(null, { handleEditUserProfile })(ProfileModal);
+export default connect(null, { handleUpdateUserProfile })(ProfileModal);

@@ -4,15 +4,16 @@ import { shallow } from 'enzyme';
 import Footer from '../../../common/Footer';
 
 describe('<Footer /> ', () => {
-  it('should mount without exploding', () => {
+  it('should render component without exploding', () => {
     const wrapper = shallow(<Footer />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('div').length).toBe(1);
   });
 
-  it('should have a footer text', () => {
+  it('should render a footer text', () => {
     const wrapper = shallow(<Footer />);
-    expect(wrapper.find('p').text()).toBe('© 2017 More Recipes Designed By Chidex');
+    expect(wrapper.find('p')
+      .text()).toBe('© 2017 More Recipes Designed By Chidex');
   });
 });
 

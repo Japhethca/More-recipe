@@ -22,11 +22,12 @@ export const downvoteAction = recipe => ({
  * @param {Number} id
  * @returns {Promise} axios promise
  */
-export const handleDownvote = id => dispatch => axios.put(`/api/recipe/${id}/downvote`)
-  .then((res) => {
-    toastr.info(res.data.message);
-    dispatch(downvoteAction(res.data.recipe));
-  });
+export const handleDownvote = id => dispatch =>
+  axios.put(`/api/recipe/${id}/downvote`)
+    .then((response) => {
+      toastr.info(response.data.message);
+      dispatch(downvoteAction(response.data.recipe));
+    });
 
 /**
   *@description dispatched on recipe upvote
@@ -43,8 +44,9 @@ export const upvoteAction = recipe => ({
  * @param {Number} id
  * @returns {Promise} axios promise
  */
-export const handleUpvote = id => dispatch => axios.put(`/api/recipe/${id}/upvote`)
-  .then((res) => {
-    toastr.info(res.data.message);
-    dispatch(upvoteAction(res.data.recipe));
-  });
+export const handleUpvote = id => dispatch =>
+  axios.put(`/api/recipe/${id}/upvote`)
+    .then((response) => {
+      toastr.info(response.data.message);
+      dispatch(upvoteAction(response.data.recipe));
+    });

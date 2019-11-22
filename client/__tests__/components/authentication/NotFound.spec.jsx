@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import NotFound from '../../../authentication/components/NotFound';
 
 describe('<NotFound />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<NotFound />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);

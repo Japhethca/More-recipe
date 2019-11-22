@@ -6,9 +6,12 @@ import { Provider } from 'react-redux';
 import jwt from 'jsonwebtoken';
 
 import { setCurrentUser } from './authentication/actions';
-import { isValidToken, setAuthorizationToken } from './authentication/helpers/setAuthorization';
+import {
+  isValidToken,
+  setAuthorizationToken
+} from './authentication/helpers/setAuthorization';
 import LandingPage from './authentication/containers/LandingPage';
-import store from './store/configureStore';
+import store from './store';
 import App from './App';
 
 

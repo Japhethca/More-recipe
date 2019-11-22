@@ -9,28 +9,12 @@ const props = {
 };
 
 describe('<UpvoteButton />', () => {
-  it('renders without exploding', () => {
-    const wrapper = shallow(<UpvoteButton {...props} />);
-    expect(wrapper).toBeDefined();
-  });
-
-  it('should contain a button element', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<UpvoteButton {...props} />);
     expect(wrapper.find('button').length).toBe(1);
-  });
-
-  it('should have a ".action-btns" class', () => {
-    const wrapper = shallow(<UpvoteButton {...props} />);
     expect(wrapper.hasClass('action-btns')).toBe(true);
-  });
-
-  it('should have a material icon', () => {
-    const wrapper = shallow(<UpvoteButton {...props} />);
     expect(wrapper.find('i').hasClass('material-icons')).toBe(true);
-  });
-
-  it('should have a title "Upvotes"', () => {
-    const wrapper = shallow(<UpvoteButton {...props} />);
     expect(wrapper.prop('title')).toBe('Upvotes');
+    expect(wrapper).toBeDefined();
   });
 });

@@ -2,6 +2,13 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { RecipeCard } from '../../../Recipes/containers/RecipeCard';
 import mockData from '../../__mock__/mockData';
+import sweetalert from 'sweetalert';
+
+jest.mock('../../../utilities/slugify.js');
+swal = jest.mock('sweetalert');
+
+swal.then = funct => funct(true);
+
 
 const props = {
   recipe: {
@@ -24,45 +31,52 @@ const state = {
 
 
 describe('<RecipeCard />', () => {
-  it('renders without exploding', () => {
-    const wrapper = shallow(<RecipeCard {...props} />);
-    expect(wrapper).toBeDefined();
-    expect(wrapper.length).toBe(1);
+  describe('RecipeCard Component', () => {
+    it('should render without exploding', () => {
+      const wrapper = shallow(<RecipeCard {...props} />);
+      expect(wrapper).toBeDefined();
+      expect(wrapper.length).toBe(1);
+    });
   });
 
-  it('should have a valid props', () => {
-    const wrapper = shallow(<RecipeCard {...props} />);
-    expect(wrapper.instance().props.recipe).toBe(props.recipe);
+  describe('onRemoveFavoriteClick', () => {
+    it('should be called to remove recipe from favorites', () => {
+      const wrapper = shallow(<RecipeCard {...props} {...state} />);
+      const onRemoveFavoriteClickSpy = jest
+        .spyOn(wrapper.instance(), 'onRemoveFavoriteClick');
+
+      wrapper.instance().onRemoveFavoriteClick();
+      expect(onRemoveFavoriteClickSpy).toHaveBeenCalled();
+    });
   });
 
-  it('should receive new props', () => {
-    const wrapper = shallow(<RecipeCard {...props} {...state} />);
-    const componentWillReceivePropSpy = jest.spyOn(wrapper.instance(), 'componentWillReceiveProps');
-    wrapper.setProps({ ...props, recipe: { payload: [] } });
-    expect(componentWillReceivePropSpy).toHaveBeenCalled();
-    expect(wrapper.instance().props.recipe).toEqual({ payload: [] });
+  describe('handleDeleteClick', () => {
+    it('should be called to delete recipe', () => {
+      const wrapper = shallow(<RecipeCard {...props} {...state} />);
+      const handleDeleteClickSpy = jest
+        .spyOn(wrapper.instance(), 'handleDeleteClick');
+
+      wrapper.instance().handleDeleteClick();
+      expect(handleDeleteClickSpy).toHaveBeenCalled();
+    });
   });
 
-  it('should handle delete favorite click', () => {
-    const wrapper = shallow(<RecipeCard {...props} {...state} />);
-    const onRemoveFavoriteClickSpy = jest.spyOn(wrapper.instance(), 'onRemoveFavoriteClick');
-    wrapper.instance().onRemoveFavoriteClick();
-    expect(onRemoveFavoriteClickSpy).toHaveBeenCalled();
+  describe('handleUpdateClick', () => {
+    it('should be called when a recipe button is clicked to update recipe', () => {
+      const wrapper = shallow(<RecipeCard {...props} {...state} />);
+      wrapper.instance().handleUpdateClick();
+      expect(wrapper.instance().props.history.push).toHaveBeenCalled();
+    });
   });
 
-
-  it('should handle delete recipe click', () => {
-    const wrapper = shallow(<RecipeCard {...props} {...state} />);
-    const handleDeleteClickSpy = jest.spyOn(wrapper.instance(), 'handleDeleteClick');
-
-    wrapper.instance().handleDeleteClick();
-    expect(handleDeleteClickSpy).toHaveBeenCalled();
-  });
-
-  it('should handle update recipe click', () => {
-    const wrapper = shallow(<RecipeCard {...props} {...state} />);
-
-    wrapper.instance().handleUpdateClick();
-    expect(wrapper.instance().props.history.push).toHaveBeenCalled();
+  describe('componentwillrecieveProps', () => {
+    it('should called when new props arrive', () => {
+      const wrapper = shallow(<RecipeCard {...props} {...state} />);
+      const componentWillReceivePropSpy = jest
+        .spyOn(wrapper.instance(), 'componentWillReceiveProps');
+      wrapper.setProps({ ...props, recipe: { payload: [] } });
+      expect(componentWillReceivePropSpy).toHaveBeenCalled();
+      expect(wrapper.instance().props.recipe).toEqual({ payload: [] });
+    });
   });
 });

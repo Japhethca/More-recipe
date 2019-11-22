@@ -82,4 +82,7 @@ const mapStateToProps = state => ({
   userRecipes: state.recipeReducer.userRecipes,
 });
 
-export default connect(mapStateToProps, { handleGetUserRecipes })(UserRecipesPage);
+export default connect(
+  mapStateToProps,
+  { handleGetUserRecipes }
+)(UserRecipesPage);

@@ -2,7 +2,7 @@ import Validator from 'validatorjs';
 
 const signinRules = {
   email: 'required|email',
-  password: 'required'
+  password: 'required|min:5'
 };
 
 const signupRules = {

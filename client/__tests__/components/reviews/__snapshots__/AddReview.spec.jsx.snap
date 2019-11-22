@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<AddReview />  should match match snapshot 1`] = `
+exports[`<AddReview />  should match snapshot 1`] = `
 <form
   className="review-form"
   onSubmit={[Function]}

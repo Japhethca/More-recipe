@@ -80,13 +80,17 @@ export class LoginPage extends Component {
    * @returns {ReactElement} markup
    */
   render() {
-    const formData = { email: this.state.email, password: this.state.password };
+    const formData = {
+      email: this.state.email,
+      password: this.state.password
+    };
 
     return (
       <div>
         {
-          this.props.authentication.isAuthenticated ? <Redirect to="/recipes" />
-        :
+          this.props.authentication.isAuthenticated
+          ? <Redirect to="/recipes" />
+          :
           <LoginForm
             onChange={this.onChange}
             onSubmit={this.onSubmit}

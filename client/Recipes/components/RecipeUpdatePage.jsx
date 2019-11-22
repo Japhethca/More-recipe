@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import UpdateRecipe from '../containers/CreateUpdateRecipe';
+import CreateUpdateRecipe from '../containers/CreateUpdateRecipe';
 
 
 const propTypes = {
@@ -17,7 +17,7 @@ const propTypes = {
 const RecipeUpdatePage = ({ location, history }) => {
   if (!location.state) history.push('/my-recipes');
   return (
-    <UpdateRecipe
+    <CreateUpdateRecipe
       title="Update Recipe"
       type="update"
       recipeUpdateData={location.state}

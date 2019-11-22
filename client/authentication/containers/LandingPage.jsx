@@ -8,7 +8,7 @@ import Footer from '../../common/Footer';
 import '../styles/landing.scss';
 
 const propTypes = {
-  Authentication: PropTypes.objectOf(PropTypes.any).isRequired
+  authentication: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 /**
@@ -24,29 +24,31 @@ export class LandingPage extends Component {
     return (
       <div>
         {
-          this.props.Authentication.isAuthenticated ? <Redirect to="/recipes" />
+          this.props.authentication.isAuthenticated
+          ?
+            <Redirect to="/recipes" />
         :
-          <div className="landing-image">
-            <NavigationBar bgColor="#e4e2dc94" />
-            <div className="wrapper">
-              <div className="quote-text">
+            <div className="landing-image">
+              <NavigationBar bgColor="#e4e2dc94" />
+              <div className="wrapper">
+                <div className="quote-text">
                 Find and Share Best and Exciting Recipes
-              </div>
-              <div className="authenticate">
-                <h4>Start Your Cooking Journey</h4>
-                <div id="main">
-                  <Link to="/signup" href="/signup" className="landing-btn">
+                </div>
+                <div className="authenticate">
+                  <h4>Start Your Cooking Journey</h4>
+                  <div id="main">
+                    <Link to="/signup" href="/signup" className="landing-btn">
                     Register Now
-                  </Link>
+                    </Link>
                   Or
                 <Link to="/signin" href="/signin" className="landing-btn">
-                  Log In
+                  Sign In
                 </Link>
+                  </div>
                 </div>
               </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
         }
       </div>
     );
@@ -56,7 +58,7 @@ export class LandingPage extends Component {
 LandingPage.propTypes = propTypes;
 
 const mapStateToProps = state => ({
-  Authentication: state.auth
+  authentication: state.auth
 });
 
 export default connect(mapStateToProps, {})(LandingPage);

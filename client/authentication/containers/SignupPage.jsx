@@ -91,7 +91,8 @@ export class SignupPage extends Component {
     return (
       <div>
         {
-          this.props.authentication.isAuthenticated ? <Redirect to="recipes" />
+          this.props.authentication.isAuthenticated
+          ? <Redirect to="recipes" />
           :
           <SignupForm
             onChange={this.onChange}

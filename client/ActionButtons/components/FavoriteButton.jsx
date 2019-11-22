@@ -17,7 +17,10 @@ const FavoritesButton = props => (
   <div className="action-btns">
     <button
       onClick={props.onFavoriteClick}
-      className={classname({ favorite: props.isInFavorites(), '': !props.isInFavorites() })}
+      className={classname({
+        favorite: props.isInFavorites(),
+        '': !props.isInFavorites()
+      })}
     >
       <i className={classname('material-icons')}>favorite_border</i>
     </button>

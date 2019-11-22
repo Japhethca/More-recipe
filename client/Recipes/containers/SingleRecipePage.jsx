@@ -32,7 +32,8 @@ export class SingleRecipePage extends Component {
       recipe: this.props.recipe,
     };
 
-    [this.id] = this.props.match.params.nameId.split('-').filter(val => !_.isNaN(parseInt(val, 10)));
+    [this.id] = this.props.match.params.nameId.split('-')
+      .filter(val => !_.isNaN(parseInt(val, 10)));
   }
 
   /**
@@ -83,4 +84,7 @@ const mapStateToProps = state => ({
   recipe: state.recipeReducer.recipe,
 });
 
-export default connect(mapStateToProps, { getSingleRecipe })(SingleRecipePage);
+export default connect(
+  mapStateToProps,
+  { getSingleRecipe }
+)(SingleRecipePage);

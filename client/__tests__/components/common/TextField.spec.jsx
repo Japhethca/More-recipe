@@ -18,14 +18,10 @@ const props = {
 };
 
 describe('<TextField /> ', () => {
-  it('should mount without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<TextField {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('div').length).toBe(1);
-  });
-
-  it('should have an input and label elements', () => {
-    const wrapper = shallow(<TextField {...props} />);
     expect(wrapper.find('input').length).toEqual(1);
     expect(wrapper.find('label').length).toEqual(1);
   });

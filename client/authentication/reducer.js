@@ -1,6 +1,9 @@
 import lodash from 'lodash';
 
-import { SET_CURRENT_USER, SIGNUP_FAILED_ERRORS, LOGIN_FAILED_ERRORS } from './actionTypes';
+import {
+  SET_CURRENT_USER,
+  SIGNUP_FAILED_ERRORS,
+  LOGIN_FAILED_ERRORS } from './actionTypes';
 
 
 const initialState = {

@@ -14,7 +14,7 @@ describe('PROFILE reducer', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
-  it('should handle GET_USER_PROFILE_START', () => {
+  it('should handle GET_USER_PROFILE_START action type', () => {
     const getProfileStartAction = {
       type: types.GET_USER_PROFILE_START,
     };
@@ -23,17 +23,18 @@ describe('PROFILE reducer', () => {
     expect(reducer(initialState, getProfileStartAction).payload).toEqual({});
   });
 
-  it('should handle GET_USER_PROFILE', () => {
+  it('should handle GET_USER_PROFILE action type', () => {
     const getProfileAction = {
       type: types.GET_USER_PROFILE,
       profile: profileMock.profile
     };
     expect(reducer(initialState, getProfileAction).isFetching).toEqual(false);
     expect(reducer(initialState, getProfileAction).method).toEqual('GET');
-    expect(reducer(initialState, getProfileAction).payload).toEqual(profileMock.profile);
+    expect(reducer(initialState, getProfileAction).payload)
+      .toEqual(profileMock.profile);
   });
 
-  it('should handle GET_USER_PROFILE_FAILED', () => {
+  it('should handle GET_USER_PROFILE_FAILED action type', () => {
     const getProfileFailedAction = {
       type: types.GET_USER_PROFILE_FAILED,
     };
@@ -42,32 +43,34 @@ describe('PROFILE reducer', () => {
     expect(reducer(initialState, getProfileFailedAction).payload).toEqual({});
   });
 
-  it('should handle EDIT_USER_PROFILE_START', () => {
-    const editProfileStartAction = {
-      type: types.EDIT_USER_PROFILE_START,
+  it('should handle UPDATE_USER_PROFILE_START action type', () => {
+    const updateProfileStartAction = {
+      type: types.UPDATE_USER_PROFILE_START,
     };
-    expect(reducer(initialState, editProfileStartAction).isFetching).toEqual(true);
-    expect(reducer(initialState, editProfileStartAction).method).toEqual('PUT');
-    expect(reducer(initialState, editProfileStartAction).payload).toEqual({});
+    expect(reducer(initialState, updateProfileStartAction).isFetching).toEqual(true);
+    expect(reducer(initialState, updateProfileStartAction).method).toEqual('PUT');
+    expect(reducer(initialState, updateProfileStartAction).payload).toEqual({});
   });
 
-  it('should handle EDIT_USER_PROFILE', () => {
-    const editProfileAction = {
-      type: types.EDIT_USER_PROFILE,
+  it('should handle UPDATE_USER_PROFILE action type', () => {
+    const updateProfileAction = {
+      type: types.UPDATE_USER_PROFILE,
       newProfile: profileMock.profile
     };
-    expect(reducer(initialState, editProfileAction).isFetching).toEqual(false);
-    expect(reducer(initialState, editProfileAction).method).toEqual('PUT');
-    expect(reducer(initialState, editProfileAction).payload).toEqual(profileMock.profile);
+    expect(reducer(initialState, updateProfileAction).isFetching).toEqual(false);
+    expect(reducer(initialState, updateProfileAction).method).toEqual('PUT');
+    expect(reducer(initialState, updateProfileAction).payload)
+      .toEqual(profileMock.profile);
   });
 
-  it('should handle EDIT_USER_PROFILE_FAILED', () => {
-    const editProfileFailedAction = {
-      type: types.EDIT_USER_PROFILE_FAILED,
+  it('should handle UPDATE_USER_PROFILE_FAILED action type', () => {
+    const updateProfileFailedAction = {
+      type: types.UPDATE_USER_PROFILE_FAILED,
 
     };
-    expect(reducer(initialState, editProfileFailedAction).isFetching).toEqual(false);
-    expect(reducer(initialState, editProfileFailedAction).method).toEqual('PUT');
-    expect(reducer(initialState, editProfileFailedAction).payload).toEqual({});
+    expect(reducer(initialState, updateProfileFailedAction).isFetching)
+      .toEqual(false);
+    expect(reducer(initialState, updateProfileFailedAction).method).toEqual('PUT');
+    expect(reducer(initialState, updateProfileFailedAction).payload).toEqual({});
   });
 });

@@ -5,7 +5,9 @@ import { withRouter } from 'react-router-dom';
 import swal from 'sweetalert';
 
 import Card from '../components/Card';
-import { handleDeleteRecipe, handleRemoveFromFavorites } from '../actions';
+import {
+  handleDeleteRecipe,
+  handleRemoveFromFavorites } from '../actions';
 
 
 const propTypes = {

@@ -16,24 +16,27 @@ describe('AUTHENCTICATION reducer', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
-  it('should handle SET_CURRENT_USER', () => {
+  it('should handle SET_CURRENT_USER action type', () => {
     const userAuthSuccessAction = {
       type: types.SET_CURRENT_USER,
       user: { id: 1 }
     };
-    expect(reducer(initialState, userAuthSuccessAction).isAuthenticated).toEqual(true);
-    expect(reducer(initialState, userAuthSuccessAction).user).toEqual(userAuthSuccessAction.user);
+    expect(reducer(initialState, userAuthSuccessAction).isAuthenticated)
+      .toEqual(true);
+    expect(reducer(initialState, userAuthSuccessAction).user)
+      .toEqual(userAuthSuccessAction.user);
   });
 
-  it('should handle LOGIN_FAILED_ERRORS', () => {
+  it('should handle LOGIN_FAILED_ERRORS action type', () => {
     const loginFailedAction = {
       type: types.LOGIN_FAILED_ERRORS,
       errors: 'User does not exist'
     };
-    expect(reducer(initialState, loginFailedAction).loginErrors).toEqual('User does not exist');
+    expect(reducer(initialState, loginFailedAction).loginErrors)
+      .toEqual('User does not exist');
   });
 
-  it('should handle SIGNUP_FAILED_ERRORS', () => {
+  it('should handle SIGNUP_FAILED_ERRORS action type', () => {
     const signupFailedAction = {
       type: types.SIGNUP_FAILED_ERRORS,
       errors: 'User with this Email/username already exists'

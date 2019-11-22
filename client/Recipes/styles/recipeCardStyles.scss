@@ -5,9 +5,10 @@ $card-linkl-color: $brown-color;
 $meta-data-color: $grey-color;
 
 #recipe-card {
-  height: 400px;
-  margin: 0 auto;
 
+  height: 400px;
+  margin: 10px auto;
+  max-height: 400px;
   img {
      height: 250px;
      width: fit-content;
@@ -15,6 +16,7 @@ $meta-data-color: $grey-color;
 
   .card {
     padding: 0;
+    margin: 0;
   }
 
   .ellipses {
@@ -34,9 +36,11 @@ $meta-data-color: $grey-color;
   }
 
   .recipe-author {
-    padding: 5px;
     color: $meta-data-color;
     font-family: 'Ubuntu', sans-serif;
+    font-size: small;
+    padding: 5px;
+
     span {
       color: $card-linkl-color
     }

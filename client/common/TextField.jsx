@@ -37,7 +37,8 @@ const defaultProps = {
  */
 const TextField = props => (
   <div>
-    {props.iconClassName && <i className={props.iconClassName}>{props.iconName}</i>}
+    {props.iconClassName
+      && <i className={props.iconClassName}>{props.iconName}</i>}
     <input
       type={props.type}
       name={props.name}
@@ -46,10 +47,16 @@ const TextField = props => (
       className={props.className}
       placeholder={props.placeholder}
     />
-    <label htmlFor={props.name} className={props.labelClass}> {props.label}</label>
-    {props.errorText.length > 0 ?
-      <span className={props.errorClass}>{props.errorText[0]}</span>
-    : <span />}
+    <label
+      htmlFor={props.name}
+      className={props.labelClass}
+    > {props.label}
+    </label>
+    {
+      props.errorText.length > 0 ?
+        <span className={props.errorClass}>{props.errorText[0]}</span>
+    : <span />
+    }
   </div>
 );
 

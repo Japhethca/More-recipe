@@ -1,5 +1,4 @@
 import React from 'react';
-// import expect from 'expect';
 import { shallow } from 'enzyme';
 import AuthenticateRoute from '../../../authentication/containers/AuthenticateRoute';
 import LoginForm from '../../../authentication/components/LoginForm';
@@ -36,18 +35,22 @@ class MockComponent extends React.Component {
 const WrappedComponent = AuthenticateRoute(MockComponent);
 
 describe('<AuthenticateRoute />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<WrappedComponent {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 
-  it('should receive new props', () => {
-    const wrapper = shallow(<WrappedComponent {...props} {...state} />);
-    const componentWillReceivePropsSpy = jest.spyOn(wrapper.instance(), 'componentWillReceiveProps');
-    wrapper.setProps({ ...props, isAuthenticated: true });
-    expect(componentWillReceivePropsSpy).toHaveBeenCalled();
-    expect(toJson(wrapper)).toMatchSnapshot();
-  });
+  it(
+    'should handle routes authentication when a user navigates to a new page',
+    () => {
+      const wrapper = shallow(<WrappedComponent {...props} {...state} />);
+      const componentWillReceivePropsSpy = jest
+        .spyOn(wrapper.instance(), 'componentWillReceiveProps');
+      wrapper.setProps({ ...props, isAuthenticated: true });
+      expect(componentWillReceivePropsSpy).toHaveBeenCalled();
+      expect(toJson(wrapper)).toMatchSnapshot();
+    }
+  );
 });

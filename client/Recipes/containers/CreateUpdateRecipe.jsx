@@ -18,6 +18,8 @@ const propTypes = {
   loader: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
+// title - title of the form header
+// type - type of request [create/update]
 const defaultProps = {
   title: 'Create Recipe',
   type: 'create',

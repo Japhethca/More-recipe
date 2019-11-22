@@ -4,26 +4,30 @@ import { shallow } from 'enzyme';
 import { LandingPage } from '../../../authentication/containers/LandingPage';
 
 const props = {
-  Authentication: {
+  authentication: {
     isAuthenticated: false
   }
 };
 
 describe('<LandingPage />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<LandingPage {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('div').length).toBe(6);
-  });
-
-  it('should contain a Signup/Login links', () => {
-    const wrapper = shallow(<LandingPage {...props} />);
     expect(wrapper.find('Link').length).toBe(2);
   });
 
-  it('should contain quoted text', () => {
+  it('should render quoted text', () => {
     const wrapper = shallow(<LandingPage {...props} />);
     expect(wrapper.find('.quote-text').length).toBe(1);
+    expect(wrapper.find('.quote-text')
+      .text()).toBe('Find and Share Best and Exciting Recipes');
+  });
+
+  it('should redirect authenticated users', () => {
+    const wrapper = shallow(<LandingPage {...props} />);
+    wrapper.setProps({ ...props, authentication: { isAuthenticated: true } });
+    expect(wrapper.find('Redirect').length).toEqual(1);
   });
 });

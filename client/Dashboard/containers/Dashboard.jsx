@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { NavLink, Route } from 'react-router-dom';
 
 import ProfilePage from './ProfilePage';
-import AuthenticateRoute from '../../authentication/containers/AuthenticateRoute';
+import
+AuthenticateRoute
+  from '../../authentication/containers/AuthenticateRoute';
 import UserRecipesPage from './UserRecipesPage';
 import FavoritesPage from './FavoritesPage';
 import { handleLogout } from '../../authentication/actions';
@@ -44,15 +46,50 @@ export class Dashboard extends Component {
           <div className="col s12 m3 l3 sidebar hide-on-small-only">
             <h5>Your Recipe Box</h5>
             <ul className="side-bar-link">
-              <li><NavLink to="/my-recipes" activeClassName="active" href>Personal Recipes</NavLink></li>
-              <li><NavLink to="/favorites" activeClassName="active" href>Favorite Recipes</NavLink></li>
-              <li><NavLink to="/create" activeClassName="active" href>Create Recipe</NavLink></li>
-              <li><NavLink to="/logout" activeClassName="active" onClick={this.onClick} href>Logout</NavLink></li>
+              <li><NavLink
+                to="/my-recipes"
+                activeClassName="active"
+                href
+              >
+                Personal Recipes
+                  </NavLink>
+              </li>
+              <li><NavLink
+                to="/favorites"
+                activeClassName="active"
+                href
+              >Favorite Recipes
+                  </NavLink>
+              </li>
+              <li><NavLink
+                to="/create"
+                activeClassName="active"
+                href
+              >Create Recipe
+                  </NavLink>
+              </li>
+              <li><NavLink
+                to=""
+                activeClassName="active"
+                onClick={this.onClick}
+                id="logout"
+                href
+              >Logout
+                  </NavLink>
+              </li>
             </ul>
           </div>
           <div className="col s12 m9 l9 content">
-            <Route path="/favorites" exact component={AuthenticateRoute(FavoritesPage)} />
-            <Route path="/my-recipes" exact component={AuthenticateRoute(UserRecipesPage)} />
+            <Route
+              path="/favorites"
+              exact
+              component={AuthenticateRoute(FavoritesPage)}
+            />
+            <Route
+              path="/my-recipes"
+              exact
+              component={AuthenticateRoute(UserRecipesPage)}
+            />
           </div>
         </div>
       </div>

@@ -10,20 +10,27 @@ const props = {
 };
 
 describe('<Review /> ', () => {
-  it('should mount without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<Review {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.find('p').length).toBe(1);
-  });
-
-  it('should have a ".review-content" class', () => {
-    const wrapper = shallow(<Review {...props} />);
     expect(wrapper.find('.review-content').length).toBe(1);
     expect(wrapper.hasClass('single-review')).toBe(true);
   });
-  it('should match match snapshot', () => {
-    const wrapper = shallow(<Review {...props} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+
+  it('should display new review', () => {
+    const newProps = {
+      review: {
+        content: 'this is an awesome recipe',
+        createdAt: new Date(),
+        User: {
+          username: 'chidex'
+        }
+      }
+    };
+    const wrapper = shallow(<Review {...newProps} />);
+    expect(wrapper.find('.review-content')
+      .text()).toBe('this is an awesome recipe');
   });
 });
 

@@ -36,10 +36,8 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 }
 
-
 // more recipe api routes
 app.use('/api', apiRouter);
-
 
 if (process.env.NODE_ENV !== 'development') {
   // react app node

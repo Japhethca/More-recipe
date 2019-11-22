@@ -15,16 +15,12 @@ const props = {
 };
 
 describe('<Card />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<Card {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('#recipe-card').length).toBe(1);
     expect(wrapper.find('div').length).toBe(4);
-  });
-
-  it('should contain an button and Link tag', () => {
-    const wrapper = shallow(<Card {...props} />);
     expect(wrapper.find('button').length).toBe(1);
     expect(wrapper.find('Link').length).toBe(1);
   });

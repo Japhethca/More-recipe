@@ -26,46 +26,55 @@ const state = {
 
 
 describe('<HomePage />', () => {
-  it('renders without exploding', () => {
-    const wrapper = shallow(<HomePage {...props} />);
-    expect(wrapper).toBeDefined();
-    expect(wrapper.length).toBe(1);
-    expect(wrapper.find('div').length).toBe(3);
-    expect(wrapper.hasClass('home-page')).toBe(true);
+  describe('homePage component', () => {
+    it('should render without exploding', () => {
+      const wrapper = shallow(<HomePage {...props} />);
+      expect(wrapper).toBeDefined();
+      expect(wrapper.length).toBe(1);
+      expect(wrapper.find('div').length).toBe(3);
+      expect(wrapper.hasClass('home-page')).toBe(true);
+      expect(wrapper.find('Recipes').length).toBe(1);
+      expect(wrapper.find('Pagination').length).toBe(1);
+    });
   });
 
-  it('should have Recipes and Pagination components', () => {
-    const wrapper = shallow(<HomePage {...props} />);
-    expect(wrapper.find('Recipes').length).toBe(1);
-    expect(wrapper.find('Pagination').length).toBe(1);
+  describe('componentDidMount', () => {
+    it('should call getAllRecipes to get latest recipes', () => {
+      const wrapper = shallow(<HomePage {...props} />);
+      wrapper.setProps({ ...props, recipes: { payload: [mockData.recipe] } });
+      wrapper.instance().componentDidMount();
+      expect(wrapper.instance().props.getAllRecipes).toHaveBeenCalled();
+      expect(wrapper.instance().props.recipes.payload).toEqual([mockData.recipe]);
+    });
+
+    it('should call handleGetFavorites to get users favorites recipes', () => {
+      const wrapper = shallow(<HomePage {...props} />);
+      wrapper.instance().componentDidMount();
+      expect(wrapper.instance().props.handleGetFavorites).toHaveBeenCalled();
+    });
+
+    it('should be rendered with current recipes list', () => {
+      const wrapper = shallow(<HomePage {...props} />);
+      expect(wrapper.instance().props.recipes).toBe(props.recipes);
+    });
   });
 
-  it('should have a valid props', () => {
-    const wrapper = shallow(<HomePage {...props} />);
-    expect(wrapper.instance().props.recipes).toBe(props.recipes);
+  describe('componentWillReceiveProps', () => {
+    it('should receive new latest recipes', () => {
+      const wrapper = shallow(<HomePage {...props} {...state} />);
+      const componentWillReceivePropSpy = jest
+        .spyOn(wrapper.instance(), 'componentWillReceiveProps');
+
+      wrapper.setProps({ ...props, recipes: { payload: [], isFetching: true } });
+      expect(componentWillReceivePropSpy).toHaveBeenCalled();
+    });
   });
 
-  it('should receive new props', () => {
-    const wrapper = shallow(<HomePage {...props} {...state} />);
-    const componentWillReceivePropSpy = jest.spyOn(wrapper.instance(), 'componentWillReceiveProps');
-
-    wrapper.setProps({ ...props, recipes: { payload: [], isFetching: true } });
-    expect(componentWillReceivePropSpy).toHaveBeenCalled();
-  });
-
-  it('should get favorites on mount', () => {
-    const wrapper = shallow(<HomePage {...props} />);
-    const componentDidMountSpy = jest.spyOn(wrapper.instance(), 'componentDidMount');
-    wrapper.setProps({ ...props, recipes: { payload: [] } });
-    wrapper.instance().componentDidMount();
-    expect(componentDidMountSpy).toHaveBeenCalled();
-    expect(wrapper.instance().props.getAllRecipes).toHaveBeenCalled();
-    expect(wrapper.instance().props.handleGetFavorites).toHaveBeenCalled();
-  });
-
-  it('should handle pagination', () => {
-    const wrapper = shallow(<HomePage {...props} />);
-    wrapper.instance().handlePagination({ selected: 1 });
-    expect(wrapper.instance().props.getAllRecipes).toHaveBeenCalledWith(2);
+  describe('handlePagination', () => {
+    it('should handle pagination click', () => {
+      const wrapper = shallow(<HomePage {...props} />);
+      wrapper.instance().handlePagination({ selected: 1 });
+      expect(wrapper.instance().props.getAllRecipes).toHaveBeenCalledWith(2);
+    });
   });
 });

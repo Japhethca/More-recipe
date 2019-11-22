@@ -1,17 +1,18 @@
 node_js:
   - 'node'
+node_js:
+  - 8.1.4
 services:
   - postgresql
 before_script:
   - npm install
+  - npm install -g codecov
   - psql -c 'create database test;' -U postgres
 script:
   - npm test
-
-after_success: 
-  - npm install -g codeclimate-test-reporter
-  - codeclimate-test-reporter < ./coverage/lcov.info
+after_success:
   - npm run coveralls
+  - codecov
 env:
   global:
     - NODE_ENV=test

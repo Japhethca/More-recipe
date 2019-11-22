@@ -1,17 +1,17 @@
 import expect from 'expect';
 
 import mockStore, { mock } from '../__mock__/configMockStore';
-import { ADD_NEW_REVIEW_SUCCESS, ADD_NEW_REVIEW_FAILED } from '../../Recipes/actionTypes';
-import reviewAction, { addNewReviewSuccess, addNewReviewFailed } from '../../Reviews/actions';
-
+import {
+  ADD_NEW_REVIEW_SUCCESS,
+  ADD_NEW_REVIEW_FAILED } from '../../Recipes/actionTypes';
+import reviewAction,
+{
+  addNewReviewSuccess,
+  addNewReviewFailed } from '../../Reviews/actions';
 
 describe('REVIEW RECIPE actions', () => {
-  afterEach(() => {
-    mock.reset();
-    mock.restore();
-  });
-
-  it('creates ADD_NEW_REVIEW_SUCCESS actions when review has been added to recipe', () => {
+  it('dispatches ADD_NEW_REVIEW_SUCCESS action type when review ' +
+    'has been added to recipe', () => {
     const reviewData = { content: 'nice one', recipeId: 1, userId: 1 };
     mock.onGet('/api/recipe/1/review', reviewData)
       .replyOnce(200, {
@@ -34,9 +34,10 @@ describe('REVIEW RECIPE actions', () => {
     });
   });
 
-  it('creates ADD_NEW_REVIEW_FAILED actions when adding review to recipe fails', () => {
+  it('dispatches ADD_NEW_REVIEW_FAILED action type when adding ' +
+    'review to recipe fails', () => {
     mock.onGet('/api/recipe/1/review')
-      .replyOnce(400);
+      .replyOnce(400), { message: '' };
 
     const expectedActions = [
       {
@@ -52,7 +53,7 @@ describe('REVIEW RECIPE actions', () => {
 });
 
 describe('REVIEW ACTION CREATORS', () => {
-  it('should return  ADD_NEW_REVIEW_SUCCESS ', () => {
+  it('should return  ADD_NEW_REVIEW_SUCCESS action type', () => {
     const expectedActions = review => (
       {
         type: ADD_NEW_REVIEW_SUCCESS,
@@ -61,7 +62,7 @@ describe('REVIEW ACTION CREATORS', () => {
     expect(addNewReviewSuccess('nice')).toEqual(expectedActions('nice'));
   });
 
-  it('should return  ADD_NEW_REVIEW_FAILED ', () => {
+  it('should return  ADD_NEW_REVIEW_FAILED acton type', () => {
     const expectedActions = () => (
       {
         type: ADD_NEW_REVIEW_FAILED,

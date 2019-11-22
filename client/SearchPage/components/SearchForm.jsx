@@ -11,7 +11,6 @@ import handleSearch from '../actions';
 const propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   handleSearch: PropTypes.func.isRequired,
-
 };
 
 
@@ -29,7 +28,9 @@ export class SearchForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: qs.parse(this.props.history.location.search, { ignoreQueryPrefix: true }).query || ''
+      query: qs
+        .parse(this.props.history.location.search, { ignoreQueryPrefix: true })
+        .query || ''
     };
   }
 

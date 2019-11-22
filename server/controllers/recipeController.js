@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import models from '../models';
-import pagination from '../middlewares/pagination';
+import pagination from '../utilities/pagination';
 import { checkQuery } from '../middlewares/validators';
 
 const { Recipes, Users, Reviews } = models;
@@ -32,7 +32,7 @@ export const sortOrOrderRecipes = (request, response, next) => {
         ]
       }).then(result => response.status(200).json({
         status: 'success',
-        message: 'Successfully filtered Recipes',
+        message: 'Recipes successfully sorted',
         count: result.count,
         recipes: result.rows
       }))
@@ -43,7 +43,7 @@ export const sortOrOrderRecipes = (request, response, next) => {
     }
     return response.status(400).json({
       status: 'failed',
-      message: 'Invalid request query'
+      message: 'Request query was not understood'
     });
   }
   next();
@@ -58,7 +58,12 @@ export const sortOrOrderRecipes = (request, response, next) => {
  */
 export const searchRecipe = (request, response, next) => {
   if (request.query.search) {
-    const { limit, page, offset } = pagination(request.query.limit, request.query.page);
+    const {
+      limit,
+      page,
+      offset
+    } = pagination(request.query.limit, request.query.page);
+
     return Recipes.findAndCountAll({
       limit,
       offset,
@@ -84,12 +89,13 @@ export const searchRecipe = (request, response, next) => {
         if (result.count < 1) {
           response.status(404).json({
             status: 'failed',
-            message: 'No recipe found'
+            message: 'Did not find a match for recipe/ingredient ' +
+            'with requested query'
           });
         } else {
           response.status(200).json({
             status: 'success',
-            message: 'Search Result(s)',
+            message: 'Search successful',
             currentPage: page,
             totalPages: limit === null ? 1 : Math.ceil(result.count / limit),
             count: result.count,
@@ -113,7 +119,10 @@ export const searchRecipe = (request, response, next) => {
  * @returns {Object} - Http response
  */
 export const allRecipes = (request, response) => {
-  const { limit, page, offset } = pagination(request.query.limit, request.query.page);
+  const { limit, page, offset } = pagination(
+    request.query.limit,
+    request.query.page
+  );
   return Recipes.findAndCountAll({
     include: [
       {
@@ -130,7 +139,7 @@ export const allRecipes = (request, response) => {
       if (request.query) {
         return response.status(200).json({
           status: 'success',
-          message: 'All recipes:',
+          message: 'Successfully returned recipes',
           currentPage: page,
           totalPages: limit === null ? 1 : Math.ceil(result.count / limit),
           count: result.count,
@@ -199,7 +208,7 @@ export const createRecipe = (request, response) => Recipes.findOne({
  * @param {object} response Express http response
  * @returns {object} HTTP response
  */
-export const getRecipeById = (request, response) => Recipes.findOne({
+export const getSingleRecipe = (request, response) => Recipes.findOne({
   include: [
     {
       model: Users,
@@ -230,6 +239,7 @@ export const getRecipeById = (request, response) => Recipes.findOne({
     }
     response.status(200).json({
       status: 'success',
+      message: 'Recipe returned successfully',
       recipe
     });
   });
@@ -271,14 +281,14 @@ export const updateRecipe = (request, response) => Recipes.findOne({
           })
             .then(updatedRecipe => response.status(201).json({
               status: 'success',
-              message: 'Recipe updated Successful',
+              message: 'Recipe updated Successfully',
               recipe: updatedRecipe,
             }));
         });
     } else {
       response.status(401).json({
         status: 'failed',
-        message: 'User is not authorized to update this recipe!'
+        message: 'You are not authorized to update this recipe!'
       });
     }
   })
@@ -311,9 +321,9 @@ export const deleteRecipe = (request, response) => {
         message: 'Recipe deleted successfully'
       });
     }
-    return response.status(403).json({
+    return response.status(401).json({
       status: 'failed',
-      message: 'User is not authorised to delete this recipe'
+      message: 'You are not authorised to delete this recipe'
     });
   })
     .catch(() => response.status(500).json({
@@ -329,7 +339,11 @@ export const deleteRecipe = (request, response) => {
  * @returns {object} Http response
  */
 export const getUserRecipes = (request, response) => {
-  const { limit, page, offset } = pagination(request.query.limit, request.query.page);
+  const {
+    limit,
+    page,
+    offset
+  } = pagination(request.query.limit, request.query.page);
   return Recipes.findAndCountAll({
     limit,
     offset,

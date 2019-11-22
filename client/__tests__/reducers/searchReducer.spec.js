@@ -13,7 +13,7 @@ describe('SEARCH reducer', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
-  it('should handle SEARCH_RECIPE_START', () => {
+  it('should handle SEARCH_RECIPE_START action type', () => {
     const getSearchStartAction = {
       type: types.SEARCH_RECIPE_START,
     };
@@ -21,16 +21,17 @@ describe('SEARCH reducer', () => {
     expect(reducer(initialState, getSearchStartAction).payload).toEqual([]);
   });
 
-  it('should handle SEARCH_RECIPE_SUCCESS', () => {
+  it('should handle SEARCH_RECIPE_SUCCESS action type', () => {
     const getSearchAction = {
       type: types.SEARCH_RECIPE_SUCCESS,
       payload: mockData.recipes
     };
     expect(reducer(initialState, getSearchAction).isFetching).toEqual(false);
-    expect(reducer(initialState, getSearchAction).payload).toEqual(mockData.recipes);
+    expect(reducer(initialState, getSearchAction).payload)
+      .toEqual(mockData.recipes);
   });
 
-  it('should handle SEARCH_RECIPE_FAILED', () => {
+  it('should handle SEARCH_RECIPE_FAILED action type', () => {
     const getSearchAction = {
       type: types.SEARCH_RECIPE_FAILED,
     };

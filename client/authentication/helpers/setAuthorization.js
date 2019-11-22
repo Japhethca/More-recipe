@@ -22,9 +22,11 @@ export const setAuthorizationToken = (token) => {
  * @returns {Boolean} - true/false
  */
 export const isValidToken = (token) => {
-  const expirationTime = jwt.decode(token) === null ? true : jwt.decode(token).exp;
+  const expirationTime = jwt.decode(token) === null ? true
+    : jwt.decode(token).exp;
   const currentDate = new Date();
-  if (expirationTime === true || expirationTime < Math.floor(currentDate.getTime() / 1000)) {
+  if (expirationTime === true
+    || expirationTime < Math.floor(currentDate.getTime() / 1000)) {
     localStorage.removeItem('token');
     return false;
   }

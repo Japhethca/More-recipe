@@ -9,16 +9,12 @@ const props = {
 };
 
 describe('<ProfileView />', () => {
-  it('renders without exploding', () => {
+  it('should render without exploding', () => {
     const wrapper = shallow(<ProfileView {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper.length).toBe(1);
     expect(wrapper.find('div').length).toBe(7);
     expect(wrapper.hasClass('profile-cover')).toBe(true);
-  });
-
-  it('should contain an anchor and image tag', () => {
-    const wrapper = shallow(<ProfileView {...props} />);
     expect(wrapper.find('img').length).toBe(1);
     expect(wrapper.find('a').length).toBe(1);
   });

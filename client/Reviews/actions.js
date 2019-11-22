@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 
-import { ADD_NEW_REVIEW_SUCCESS, ADD_NEW_REVIEW_FAILED } from '../Recipes/actionTypes';
+import {
+  ADD_NEW_REVIEW_SUCCESS,
+  ADD_NEW_REVIEW_FAILED } from '../Recipes/actionTypes';
 
 
 /**
@@ -27,12 +29,13 @@ export const addNewReviewFailed = () => ({
  * @param {Object} data - form content data
  * @returns {Promise} - returns a promise object
  */
-export default (id, data) => dispatch => axios.post(`/api/recipe/${id}/review`, data)
-  .then((response) => {
-    dispatch(addNewReviewSuccess(response.data.review));
-    toastr.success(response.data.message);
-  }).catch((error) => {
-    dispatch(addNewReviewFailed());
-    toastr.error(error.response.data.message);
-  });
+export default (id, data) => dispatch =>
+  axios.post(`/api/recipe/${id}/review`, data)
+    .then((response) => {
+      dispatch(addNewReviewSuccess(response.data.review));
+      toastr.success(response.data.message);
+    }).catch((error) => {
+      dispatch(addNewReviewFailed());
+      toastr.error(error.response.data.message);
+    });
 

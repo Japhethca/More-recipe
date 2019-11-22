@@ -70,21 +70,22 @@ const initialState = {
 
 
 /**
- * updates an object in state without mutation
- * @param {Array} array state array
- * @param {Object} newItem redux action
+ * updates a recipe in state without mutation
+ * @param {Array} recipeList list of recipes
+ * @param {Object} recipe recipe to be updated in array
  * @returns {Object} udpated object of item
  */
-const updateItemInArray = (array, newItem) => {
-  const arrayIndex = array.findIndex(itm => itm.id === newItem.id);
+const updateRecipeList = (recipeList, recipe) => {
+  const recipeIndex = recipeList
+    .findIndex(indexRecipe => indexRecipe.id === recipe.id);
 
-  const updatedItems = array.map((item, index) => {
-    if (index !== arrayIndex) {
-      return item;
+  const updatedRecipes = recipeList.map((recipeInList, index) => {
+    if (index !== recipeIndex) {
+      return recipeInList;
     }
-    return { ...item, ...newItem };
+    return { ...recipeInList, ...recipe };
   });
-  return updatedItems;
+  return updatedRecipes;
 };
 
 /**
@@ -95,7 +96,10 @@ const updateItemInArray = (array, newItem) => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case FETCH_SINGLE_RECIPE_START:
-      return { ...state, recipe: { ...state.recipe, payload: {}, isFetching: true } };
+      return {
+        ...state,
+        recipe: { ...state.recipe, payload: {}, isFetching: true }
+      };
 
     case FETCH_SINGLE_RECIPE_FAILED:
       return {
@@ -165,7 +169,7 @@ export default (state = initialState, action) => {
         },
         recipes: {
           ...state.recipes,
-          payload: updateItemInArray(state.recipes.payload, action.recipe)
+          payload: updateRecipeList(state.recipes.payload, action.recipe)
         }
       };
 
@@ -182,7 +186,7 @@ export default (state = initialState, action) => {
         },
         recipes: {
           ...state.recipes,
-          payload: updateItemInArray(state.recipes.payload, action.recipe)
+          payload: updateRecipeList(state.recipes.payload, action.recipe)
         }
       };
 
@@ -223,15 +227,15 @@ export default (state = initialState, action) => {
         ...state,
         recipes: {
           ...state.recipes,
-          payload: updateItemInArray(state.recipes.payload, action.recipe)
+          payload: updateRecipeList(state.recipes.payload, action.recipe)
         },
         userRecipes: {
           ...state.userRecipes,
-          payload: updateItemInArray(state.userRecipes.payload, action.recipe)
+          payload: updateRecipeList(state.userRecipes.payload, action.recipe)
         },
         favorites: {
           ...state.favorites,
-          payload: updateItemInArray(state.favorites.payload, action.recipe)
+          payload: updateRecipeList(state.favorites.payload, action.recipe)
         }
       };
 
@@ -240,15 +244,18 @@ export default (state = initialState, action) => {
         ...state,
         recipes: {
           ...state.recipes,
-          payload: state.recipes.payload.filter(recipe => recipe.id !== action.id)
+          payload: state.recipes.payload
+            .filter(recipe => recipe.id !== action.id)
         },
         userRecipes: {
           ...state.userRecipes,
-          payload: state.userRecipes.payload.filter(recipe => recipe.id !== action.id)
+          payload: state.userRecipes.payload
+            .filter(recipe => recipe.id !== action.id)
         },
         favorites: {
           ...state.favorites,
-          payload: state.favorites.payload.filter(recipe => recipe.id !== action.id)
+          payload: state.favorites.payload
+            .filter(recipe => recipe.id !== action.id)
         }
       };
 
@@ -353,7 +360,8 @@ export default (state = initialState, action) => {
         ...state,
         favorites: {
           ...state.favorites,
-          payload: state.favorites.payload.filter(favorite => favorite.id !== action.id)
+          payload: state.favorites.payload
+            .filter(favorite => favorite.id !== action.id)
         }
       };
     case REMOVE_FROM_FAVORITES_FAILED:

@@ -14,33 +14,38 @@ const state = {
 };
 
 describe('<NavigationBar />', () => {
-  it('renders without exploding', () => {
-    const wrapper = shallow(<NavigationBar {...props} {...state} />);
-    expect(wrapper).toBeDefined();
-    expect(wrapper.length).toBe(1);
-    expect(wrapper.find('nav').length).toBe(1);
+  describe('Navigationbar component', () => {
+    it('should render without exploding', () => {
+      const wrapper = shallow(<NavigationBar {...props} {...state} />);
+      expect(wrapper).toBeDefined();
+      expect(wrapper.length).toBe(1);
+      expect(wrapper.find('nav').length).toBe(1);
+      expect(wrapper.find('NavLink').length).toBe(12);
+    });
   });
 
-  it('should contain NavLink element', () => {
-    const wrapper = shallow(<NavigationBar {...props} {...state} />);
-    expect(wrapper.find('NavLink').length).toBe(12);
+  describe('logout button', () => {
+    it('should logout authenticated users when clicked', () => {
+      const wrapper = shallow(<NavigationBar {...props} />);
+
+      wrapper.find('.side-nav').find('button').simulate('click');
+      expect(wrapper.instance().props.logout).toHaveBeenCalled();
+      expect(wrapper.instance().props.history.push).toHaveBeenCalled();
+    });
   });
 
+  describe('search button', () => {
+    it(
+      'should toggle search input on/off when ' +
+      'clicked on mobile devices',
+      () => {
+        const wrapper = shallow(<NavigationBar {...props} />);
 
-  it('should handle logout', () => {
-    const wrapper = shallow(<NavigationBar {...props} />);
-
-    wrapper.instance().onClick();
-    expect(wrapper.instance().props.logout).toHaveBeenCalled();
-    expect(wrapper.instance().props.history.push).toHaveBeenCalled();
-  });
-
-  it('should handle search icon click on mobile', () => {
-    const wrapper = shallow(<NavigationBar {...props} />);
-
-    wrapper.instance().toggleSearch();
-    expect(wrapper.instance().state.isSearching).toBe(true);
-    wrapper.instance().toggleSearch();
-    expect(wrapper.instance().state.isSearching).toBe(false);
+        wrapper.find('.search-icon').find('button').simulate('click');
+        expect(wrapper.instance().state.isSearching).toBe(true);
+        wrapper.find('.search-icon').find('button').simulate('click');
+        expect(wrapper.instance().state.isSearching).toBe(false);
+      }
+    );
   });
 });

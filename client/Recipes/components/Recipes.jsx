@@ -27,14 +27,19 @@ const defaultProps = {
  * @returns {ReactElement} html markup
  */
 const Recipes = ({
-  recipes, showActionBtns, showModifyButtons, showRemoveFavorite, className, noItemText
+  recipes,
+  showActionBtns,
+  showModifyButtons,
+  showRemoveFavorite,
+  className,
+  noItemText
 }) => (
   <div className="recipe-list">
     {recipes.length < 1 && <span className="no-recipes">{noItemText}</span>}
     <ul className="row">
       {recipes.map(recipe =>
       (
-        <li className={className} key={recipe.id}>
+        <li className={className} key={recipe.id} id={recipe.id}>
           <RecipeCard
             showActionBtns={showActionBtns}
             showModifyButtons={showModifyButtons}

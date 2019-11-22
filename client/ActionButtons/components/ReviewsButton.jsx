@@ -22,7 +22,8 @@ const ReviewButton = ({ reviews, hidden }) => (
     className={`action-btns ${hidden && 'hide'}`}
     title="Reviews"
   >
-    <i className="material-icons">rate_review</i><span id="reivews" > {reviews} </span>
+    <i className="material-icons">rate_review</i>
+    <span id="reivews" > {reviews} </span>
   </span >
 );
 

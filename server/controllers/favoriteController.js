@@ -1,5 +1,5 @@
 import model from '../models';
-import pagination from '../middlewares/pagination';
+import pagination from '../utilities/pagination';
 
 const { Favorites, Recipes, Users } = model;
 
@@ -10,14 +10,26 @@ const { Favorites, Recipes, Users } = model;
  * @returns {object} response - Express response
  */
 export const getUserFavorites = (request, response) => {
-  const { limit, page, offset } = pagination(request.query.limit, request.query.page);
-  Favorites.findAndCountAll({
+  const {
+    limit,
+    page,
+    offset
+  } = pagination(request.query.limit, request.query.page);
+
+  return Favorites.findAndCountAll({
     limit,
     offset,
     where: {
       userId: request.decoded.id
     },
-    attributes: { exclude: ['id', 'userId', 'recipeId', 'createdAt', 'updatedAt'] },
+    attributes: {
+      exclude: [
+        'id',
+        'userId',
+        'recipeId',
+        'createdAt',
+        'updatedAt']
+    },
     include: [
       {
         model: Recipes,
@@ -36,12 +48,12 @@ export const getUserFavorites = (request, response) => {
       if (result.rows.length < 1) {
         response.status(404).json({
           status: 'failed',
-          message: 'User has no favorites'
+          message: 'You do not have favorite recipes'
         });
       } else {
         response.status(200).json({
           status: 'success',
-          message: `${request.decoded.user} Favorite recipes`,
+          message: 'Favorite recipes successfully loaded',
           currentPage: page,
           totalPages: limit === null ? 1 : Math.ceil(result.count / limit),
           count: result.count,
@@ -61,12 +73,13 @@ export const getUserFavorites = (request, response) => {
  * @param {object} response -HTTP response
  * @returns {object} response object
  */
-export const addToFavorites = (request, response) => Recipes.findById(request.params.recipeId)
+export const addToFavorites = (request, response) => Recipes
+  .findById(request.params.recipeId)
   .then((recipe) => {
     if (!recipe) {
       return response.status(404).json({
         status: 'failed',
-        message: 'Invalid recipe Id'
+        message: 'Recipe does not exist'
       });
     }
     Favorites.findAll({
